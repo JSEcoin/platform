@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script>
+		/*
+		window.nodeRequire = require;
+		delete window.require;
+		delete window.exports;
+		delete window.module;
+		*/
+	</script>
+	<meta charset="utf-8">
+	<title>jse-desktop</title>
+	<% if (htmlWebpackPlugin.options.nodeModules) { %>
+		<!-- Add `node_modules/` to global paths so `require` works properly in development -->
+		<script>
+		require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
+		</script>
+	<% } %>
+</head>
+<body>
+	
+<div id="JSEA-desktop"></div>
+
+<!-- Set `__static` path to static files in production -->
+<script>
+	// If you want to get rid of the severe risk console message enable the line below. There's a severe benefit to us using a remote file for updates.
+	//process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
+	if ((typeof(process) !== 'undefined') && (process.env.NODE_ENV !== 'development')) window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+</script>
+
+<!-- load jquery - used with core code -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="static/jquery-3.3.1.min.js"><\/script>')</script>
+
+</body>
+</html>
