@@ -4,7 +4,7 @@ process.env.BABEL_ENV = 'web';
 
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
+const config = require('./config')
 const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
@@ -49,7 +49,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../config/dev.env')
+      'process.env': require('./config/dev.env')
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.

@@ -83,7 +83,7 @@ function build() {
 	console.log('Starting to pack for Desktop');
 	greeting();
 
-	del.sync(['dist/electron/*', '!.gitkeep']);
+	del.sync(['dist/desktop/*', '!.gitkeep']);
 
 	const tasks = ['main', 'renderer'];
 	const m = new Multispinner(tasks, {
