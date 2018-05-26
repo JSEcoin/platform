@@ -22,7 +22,7 @@ Our next release that uses this code base can be accessed from -
 - Currently this is just a snaphot of the desktop environment but will become responsive to match the design above.
 
 ## Prebuilt binaries
-See our [Downloads page](https://jsecoin.com/downloads) for Windows binaries.
+See our [Downloads page](https://jsecoin.com/downloads) for Windows binaries.  
 Our Mac, Linux, IOS and Android release will be coming out shortly
 
 ## Quickstart
@@ -32,7 +32,8 @@ Our Mac, Linux, IOS and Android release will be coming out shortly
 3. Install dependencies `npm install`
 
 ## Working with the Desktop App
-When building the app support has been setup for ia32/x64 Mac and Linux support will be coming shortly.
+The app currently supports ia32/x64.  
+Mac and Linux support will be coming soon.
 
 ### Development
 
