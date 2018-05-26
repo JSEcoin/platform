@@ -1,8 +1,12 @@
 .DS_Store
-dist/
+dist/*
+build/*
+!build/icons
+coverage
 node_modules/
 plugins/
 npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
+
