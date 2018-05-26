@@ -31,7 +31,7 @@
       "output": "build"
     },
     "files": [
-      "dist/electron/**/*"
+      "dist/desktop/**/*"
     ],
     "dmg": {
       "contents": [
