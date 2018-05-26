@@ -1,17 +1,17 @@
+# JSE Platform
+
+**[JSECOIN](https://jsecoin.com/)** [THE FUTURE BLOCKCHAIN & ECOSYSTEM FOR ECOMMERCE AND DIGITAL ADVERTISING]
+
 <div align="center">
 
 ![JSECoin Ltd](https://jsecoin.com/docs/images/JSECoin_split_desktop_browser_small.png)
 </div>
 
-# JSE Platform
-
-**[JSECOIN](https://jsecoin.com/)** [THE FUTURE BLOCKCHAIN & ECOSYSTEM FOR ECOMMERCE AND DIGITAL ADVERTISING]
-
 
 ## Resources
 
 - [White Paper](https://jsecoin.com/whitepaper.pdf): Introduction to JSECoin Project.
-- [Platfom StyleGuide](https://jsecoin.com/styleguide): API Reference and Sample code.
+- [Platfom StyleGuide](https://jsecoin.com/styleguide): Reusable Platform Components breakdown.
 - [API Documentation](https://developer.jsecoin.com/API): API Reference and Sample code.
 
 ## Demo
@@ -43,9 +43,7 @@ Our Mac, Linux, IOS and Android release will be coming out shortly
 We've started documenting the platform and breaking it down into reusable components.
 Head over to the [Platfom StyleGuide](https://jsecoin.com/styleguide) and take a look.
 
-We've broken down the app into app pages and widgets as we introduce more extensive responsive widgets we will be 
-
-You can also generate your own styleguide from the source -
+To generate your own styleguide from the source -
 
 1. Executing `npm run styleguide` Initialises the developer environment
 2. or executing `npm run styleguide:build` will generate the documentation within `./styleguide`
@@ -53,7 +51,7 @@ You can also generate your own styleguide from the source -
 ### Style guide assets
 Additional assets are pulled from the `./docs` directory images css etc.
 
-### Bug Bounty
+## Bug Bounty
 This is an initial push alot of cleanup is still required if you spot an issue please report it and if we consider it a major issue we will credit your account as part of our bug bounty offering.
 [Bug Bounty Info Page](https://jsecoin.com/en/oddJobs/bugBounty)
 
