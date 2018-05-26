@@ -5,6 +5,7 @@
   "description": "JSE Desktop APP",
   "license": "(ISC OR GPL-3.0)",
   "main": "./dist/desktop/main.js",
+  "private": true,
   "scripts": {
     "styleguide": "vue-styleguidist server --config webpack/styleguide/styleguide.config.js",
     "styleguide:build": "vue-styleguidist build --config webpack/styleguide/styleguide.config.js",
@@ -17,6 +18,13 @@
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/desktop/webpack.main.config.js",
     "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config webpack/desktop/webpack.renderer.config.js",
     "web": "node webpack/web/build.js",
+    "mobile": "node webpack/mobile/build.js",
+	"mobile:dev": "node webpack/mobile/dev-server.js",
+	"mobile:cordova": "npm run mobile && cordova build",
+    "mobile:browser": "npm run mobile && cordova run browser",
+    "mobile:ios": "npm run mobile && cordova run ios",
+    "mobile:android": "npm run mobile && cordova run android --device",
+    "mobile:android-vm": "npm run mobile && cordova run android",
 	"e2e": "npm run pack && mocha test/e2e",
 	"test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js"
@@ -189,5 +197,20 @@
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-device": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-background-mode": {}
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }
