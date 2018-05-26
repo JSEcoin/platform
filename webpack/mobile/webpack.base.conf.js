@@ -1,16 +1,19 @@
 var path = require('path')
+const webpack = require('webpack')
 var utils = require('./utils')
-var config = require('../config')
+var config = require('./config')
 var vueLoaderConfig = require('./vue-loader.conf')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-  entry: {
-    app: ['babel-polyfill','./src/main.js']
-  },
+	context: path.resolve(__dirname, '../'),
+	entry: {
+	  app: '../src/renderer/main.js'
+	},
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -22,7 +25,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('../src/renderer')
     }
   },
   module: {
@@ -44,7 +47,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+		 include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -71,5 +74,22 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+		new webpack.IgnorePlugin(/^electron/), //only used for desktop app
+	],
+	node: {
+	  // prevent webpack from injecting useless setImmediate polyfill because Vue
+	  // source contains it (although only uses it if it's native).
+	  setImmediate: false,
+	  // prevent webpack from injecting mocks to Node native modules
+	  // that does not make sense for the client
+	  dgram: 'empty',
+	  fs: 'empty',
+	  net: 'empty',
+	  tls: 'empty',
+	  child_process: 'empty',
+	  __dirname: process.env.NODE_ENV !== 'production',
+	  __filename: process.env.NODE_ENV !== 'production'
+	}
 }
