@@ -12,8 +12,6 @@ const Multispinner = require('multispinner');
 
 const mainConfig = require('./webpack.main.config');
 const rendererConfig = require('./webpack.renderer.config');
-const webConfig = require('./webpack.web.config');
-const mobileConfig = require('./webpack.mobile.config');
 
 const doneLog = chalk.bgGreen.white(' DONE ') + ' ';
 const errorLog = chalk.bgRed.white(' ERROR ') + ' ';
@@ -123,49 +121,8 @@ function build() {
 	});
 }
 
-
-function web() {
-	console.log('Starting to pack for Web');
-	greeting();
-
-	del.sync(['dist/web/*', '!.gitkeep']);
-
-	webpack(webConfig, (err, stats) => {
-		if (err || stats.hasErrors()) console.log(err);
-
-		console.log(stats.toString({
-			chunks: false,
-			colors: true,
-		}));
-
-		process.exit();
-	});
-}
-
-function mobile () {
-	console.log('Starting to pack for Mobile');
-	greeting();
-
-	del.sync(['dist/mobile/*', '!.gitkeep']);
-
-	webpack(mobileConfig, (err, stats) => {
-		if (err || stats.hasErrors()) console.log(err);
-
-		console.log(stats.toString({
-			chunks: false,
-			colors: true,
-		}));
-
-		process.exit();
-	});
-}
-
 if (process.env.BUILD_TARGET === 'clean') {
 	clean();
-} else if (process.env.BUILD_TARGET === 'web') {
-	web();
-} else if (process.env.BUILD_TARGET === 'mobile') {
-	mobile();
 } else {
 	build();
 }
