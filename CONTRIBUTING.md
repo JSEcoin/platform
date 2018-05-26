@@ -21,7 +21,7 @@ JSEcoin is a large open source project that is broken down in to the following r
 
 With the exception of the ERC20 contract which is written in solidity the rest of the code base is Javascript. The server side code runs on node.js, clients are built out using Electron for the desktop app and Cordova for the mobile apps. We believe in Javascript everywhere as this makes it easier to bridge components and for all core developers and external contributors to work with the source code.
 
-##Why Get Involved?
+## Why Get Involved?
 
 - Working on an open source blockchain project is a great way to learn and grow as a developer
 - Meet people who are interested in blockchain technologies
@@ -66,7 +66,7 @@ You can either make suggestions for the code base using GitHub or you can contac
 
 Please don’t hold back if there’s something we could be doing better then let us know. Our team will not be offended and at the end of the day we all want what is best for the project.
 
-###Your First Code Contribution
+### Your First Code Contribution
 
 Code can be contributed to the project by forking a repository, creating a branch and then opening a pull request.
 
