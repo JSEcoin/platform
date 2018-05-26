@@ -4,7 +4,7 @@
   "author": "JSECOIN",
   "description": "JSE Desktop APP",
   "license": "(ISC OR GPL-3.0)",
-  "main": "./dist/electron/main.js",
+  "main": "./dist/desktop/main.js",
   "scripts": {
     "styleguide": "vue-styleguidist server --config webpack/styleguide/styleguide.config.js",
     "styleguide:build": "vue-styleguidist build --config webpack/styleguide/styleguide.config.js",
