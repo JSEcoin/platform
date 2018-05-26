@@ -39,6 +39,7 @@ export default {
 	right:0px;
 	overflow:hidden;
 	border-radius:0px 0px 4px 4px;
+	position: absolute !important;
 }
 
 #JSEA-appBody.noSubNav  {

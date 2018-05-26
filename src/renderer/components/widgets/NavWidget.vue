@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<nav id="JSEA-headerNavWrapper">
 		<nav id="JSEA-topLvlNav" class="cf">
 			<ul v-if="activeNav === 'test'">
 				<li class="active">Test 1</li>
@@ -63,7 +63,7 @@
 				</router-link>
 			</ul>
 		</nav>
-	</div>
+	</nav>
 </template>
 
 <script>
@@ -94,6 +94,10 @@ export default {
 </script>
 
 <style scoped>
+#JSEA-headerNavWrapper {
+	position: relative;
+	z-index: 10;
+}
 .platformWeb.mobile #JSEA-topLvlNav li {
 	/*font-size:0.6em;*/
 	padding: 8px 0px;
