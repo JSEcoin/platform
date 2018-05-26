@@ -33,11 +33,11 @@ Our Mac, Linux, IOS and Android release will be coming out shortly
 
 ### Run development environment
 
-1. Initialise developer environment `npm run dev`
+1. Initialise developer environment `npm run desktop:dev`
 
 ### Build Desktop App
 
-1. Executing `npm run build` generates a build within `./build`
+1. Executing `npm run desktop` generates a build within `./build`
 
 ## Generating the style guide
 We've started documenting the platform and breaking it down into reusable components.

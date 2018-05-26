@@ -62,7 +62,7 @@ function startRenderer () {
     const server = new WebpackDevServer(
       compiler,
       {
-        contentBase: path.join(__dirname, '../'),
+        contentBase: path.join(__dirname, '../../'),
         quiet: true,
         before (app, ctx) {
           app.use(hotMiddleware)
@@ -79,7 +79,7 @@ function startRenderer () {
 
 function startMain () {
   return new Promise((resolve, reject) => {
-    mainConfig.entry.main = [path.join(__dirname, '../src/main/index.dev.js')].concat(mainConfig.entry.main)
+    mainConfig.entry.main = [path.join(__dirname, '../../src/main/index.dev.js')].concat(mainConfig.entry.main)
 
     const compiler = webpack(mainConfig)
 
@@ -114,7 +114,7 @@ function startMain () {
 }
 
 function startElectron () {
-  electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../dist/electron/main.js')])
+  electronProcess = spawn(electron, ['--inspect=5858', path.join(__dirname, '../../dist/electron/main.js')])
 
   electronProcess.stdout.on('data', data => {
     electronLog(data, 'blue')

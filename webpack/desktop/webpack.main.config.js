@@ -3,14 +3,14 @@
 process.env.BABEL_ENV = 'main'
 
 const path = require('path')
-const { dependencies } = require('../package.json')
+const { dependencies } = require('../../package.json')
 const webpack = require('webpack')
 
 const BabiliWebpackPlugin = require('babili-webpack-plugin')
 
 let mainConfig = {
   entry: {
-    main: path.join(__dirname, '../src/main/index.js')
+    main: path.join(__dirname, '../../src/main/index.js')
   },
   externals: [
     ...Object.keys(dependencies || {})
@@ -46,7 +46,7 @@ let mainConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist/electron')
+    path: path.join(__dirname, '../../dist/electron')
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin()
@@ -63,7 +63,7 @@ let mainConfig = {
 if (process.env.NODE_ENV !== 'production') {
   mainConfig.plugins.push(
     new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+      '__static': `"${path.join(__dirname, '../../static').replace(/\\/g, '\\\\')}"`
     })
   )
 }

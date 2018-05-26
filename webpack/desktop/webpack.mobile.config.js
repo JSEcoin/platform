@@ -3,7 +3,7 @@
 process.env.BABEL_ENV = 'mobile'
 
 const path = require('path')
-const { dependencies } = require('../package.json')
+const { dependencies } = require('../../package.json')
 const webpack = require('webpack')
 
 const BabiliWebpackPlugin = require('babili-webpack-plugin')
@@ -25,7 +25,7 @@ let whiteListedModules = ['vue']
 let rendererConfig = {
   devtool: '#cheap-module-eval-source-map',
   entry: {
-    renderer: path.join(__dirname, '../src/renderer/main.js')
+    renderer: path.join(__dirname, '../../src/renderer/main.js')
   },
   externals: [
     ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
@@ -120,14 +120,14 @@ let rendererConfig = {
     new ExtractTextPlugin('styles.css'),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.resolve(__dirname, '../src/index-mobile.ejs'),
+      template: path.resolve(__dirname, '../../src/index-mobile.ejs'),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
         removeComments: true
       },
       nodeModules: process.env.NODE_ENV !== 'production'
-        ? path.resolve(__dirname, '../node_modules')
+        ? path.resolve(__dirname, '../../node_modules')
         : false
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -136,11 +136,11 @@ let rendererConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist/mobile')
+    path: path.join(__dirname, '../../dist/mobile')
   },
   resolve: {
     alias: {
-      '@': path.join(__dirname, '../src/renderer'),
+      '@': path.join(__dirname, '../../src/renderer'),
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']
@@ -154,7 +154,7 @@ let rendererConfig = {
 if (process.env.NODE_ENV !== 'production') {
   rendererConfig.plugins.push(
     new webpack.DefinePlugin({
-      '__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`
+      '__static': `"${path.join(__dirname, '../../static').replace(/\\/g, '\\\\')}"`
     })
   )
 }
@@ -169,8 +169,8 @@ if (process.env.NODE_ENV === 'production') {
     new BabiliWebpackPlugin(),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, '../static'),
-        to: path.join(__dirname, '../dist/mobile/static'),
+        from: path.join(__dirname, '../../static'),
+        to: path.join(__dirname, '../../dist/mobile/static'),
         ignore: ['.*']
       }
     ]),
