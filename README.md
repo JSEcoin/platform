@@ -74,7 +74,7 @@ We are actively working on this...
 
 ### Package - Cordova:android-VM
 
-1. Executing `npm run mobile:android-vm` will compile the mobile app into `./dist/mobile` and launch deploy to and android Virtual Machine if this has been setup.
+1. Executing `npm run mobile:android-vm` will compile the mobile app into `./dist/mobile` and launch deploy to an android Virtual Machine if this has been setup.
 
 ## Generating the style guide
 We've started documenting the platform and breaking it down into reusable components.
