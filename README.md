@@ -11,7 +11,7 @@
 ## Resources
 
 - [White Paper](https://jsecoin.com/whitepaper.pdf): Introduction to JSECoin Project.
-- [Platfom StyleGuide](https://jsecoin.com/styleguide): Reusable Platform Components breakdown.
+- [Platfom StyleGuide](https://jsecoin.com/styleguide): Reusable Platform Components overview.
 - [API Documentation](https://developer.jsecoin.com/API): API Reference and Sample code.
 
 ## Demo
@@ -55,5 +55,8 @@ Additional assets are pulled from the `./docs` directory images css etc.
 This is an initial push alot of cleanup is still required if you spot an issue please report it and if we consider it a major issue we will credit your account as part of our bug bounty offering.
 [Bug Bounty Info Page](https://jsecoin.com/en/oddJobs/bugBounty)
 
+## Contribute
+If you'd like to assist and help the team please first review our [Contribution Guidelines](./CONTRIBUTING.md).
+
 ## License
-This project is under the [GNU General Public License v3.0](./LICENSE).
+This project is under the [GNU General Public License v3.0](./LICENSE.md).
