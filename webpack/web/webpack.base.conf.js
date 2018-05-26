@@ -24,7 +24,7 @@ const createLintingRule = () => ({
 const webConfig = {
 	context: path.resolve(__dirname, '../'),
 	entry: {
-	  app: './src/renderer/main.js'
+	  app: '../src/renderer/main.js'
 	},
 	output: {
 	  path: config.build.assetsRoot,
@@ -39,7 +39,7 @@ const webConfig = {
 	  extensions: ['.js', '.vue', '.json'],
 	  alias: {
 		'vue$': 'vue/dist/vue.esm.js',
-		'@': resolve('src/renderer'),
+		'@': resolve('../src/renderer'),
 	  }
 	},
 	module: {
@@ -124,7 +124,7 @@ const webConfig = {
 if (process.env.NODE_ENV !== 'production') {
 	webConfig.plugins.push(
 		new webpack.DefinePlugin({
-			'__static': `"${path.join(__dirname, '../static').replace(/\\/g, '\\\\')}"`,
+			'__static': `"${path.join(__dirname, '../../static').replace(/\\/g, '\\\\')}"`,
 		}),
 	);
 }

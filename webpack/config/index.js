@@ -45,12 +45,12 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/web2/index.html'),
+    index: path.resolve(__dirname, '../../dist/web/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist/web2'),
+    assetsRoot: path.resolve(__dirname, '../../dist/web'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'file:///android_asset/www/',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps

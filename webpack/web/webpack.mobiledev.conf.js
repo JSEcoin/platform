@@ -57,16 +57,16 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
-	  template: path.resolve(__dirname, '../src/index-mobile.ejs'),
+	  template: path.resolve(__dirname, '../../src/index-mobile.ejs'),
 	  inject: true,
       nodeModules: process.env.NODE_ENV !== 'production'
-        ? path.resolve(__dirname, '../node_modules')
+        ? path.resolve(__dirname, '../../node_modules')
         : false
     }),
     // copy custom static assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
+        from: path.resolve(__dirname, '../../static'),
         to: config.dev.assetsSubDirectory,
         ignore: ['.*']
       }

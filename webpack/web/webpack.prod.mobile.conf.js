@@ -66,7 +66,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
         : config.build.index,
-	  template: path.resolve(__dirname, '../src/index-mobile.ejs'),
+	  template: path.resolve(__dirname, '../../src/index-mobile.ejs'),
       inject: true,
       minify: {
         removeComments: true,
@@ -91,7 +91,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           module.resource &&
           /\.js$/.test(module.resource) &&
           module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
+            path.join(__dirname, '../../node_modules')
           ) === 0
         )
       }
@@ -115,7 +115,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // copy custom static assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
+        from: path.resolve(__dirname, '../../static'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
