@@ -49,7 +49,7 @@ We will be updating this project and making the app responsive to support our pl
 
 1. Executing `npm run web` generates the compiled platform within `./dist/web`.
 
-## Generating the mobile Platform
+## Generating the Mobile App
 We are actively working on this...  
 If you try this out - Expect there to be sea krakens and unknown objects lurking in the deep ;).. 
 
@@ -68,6 +68,7 @@ npm install -g cordova
 cordova create JSECoinMobile com.jsecoin.mobile JSECoinMobile
 cd JSECoinMobile
 cordova platform add android
+cordova plugin add cordova-plugin-background-mode
 ```
 
 - Within the `./www` folder copy across the JSECoin mobile build from `~/platform/dist/mobile`.
