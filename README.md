@@ -77,8 +77,9 @@ cordova plugin add cordova-plugin-background-mode
 - Alternatively if you have an android VM setup you can run `cordova run android` - this will build the app and launch it within your Android VM.
 
 #### Active work
-We are currently in the process of bringing in cordova and dependencies into this project - so that you will be able to automatically initiate the above scripts using a simple command like `npm run mobile:cordova`.  
-For now use the above steps.. 
+We are currently in the process of bringing in cordova and dependencies into this project - so that you will be able to automatically initiate the above scripts using a simple command like `npm run mobile:android` and `npm run mobile:android-vm`... and even IOS liek this - `npm run mobile:ios`.  
+
+*For now use the above steps..*
 
 
 <!--
