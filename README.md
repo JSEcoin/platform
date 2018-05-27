@@ -50,15 +50,40 @@ We will be updating this project and making the app responsive to support our pl
 1. Executing `npm run web` generates the compiled platform within `./dist/web`.
 
 ## Generating the mobile Platform
-We are actively working on this... 
-
-### Development
-
-1. Initialise developer environment `npm run mobile:dev`
+We are actively working on this...  
+If you try this out - Expect there to be sea krakens and unknown objects lurking in the deep ;).. 
 
 ### Build
 
 1. Executing `npm run mobile` will compile the mobile app into `./dist/mobile`.
+
+#### Packaging and deploying Android binaries
+To build an android apk you will need to setup cordova.  
+First make sure you have the following required components setup - [Cordova Guide](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support)
+
+- Now setup and install cordova
+
+```bash
+npm install -g cordova
+cordova create JSECoinMobile com.jsecoin.mobile JSECoinMobile
+cd JSECoinMobile
+cordova platform add android
+```
+
+- Within the `./www` folder copy across the JSECoin mobile build from `~/platform/dist/mobile`.
+- With you android device in developer mode and connected via USB run `cordova run android --device` this will build the android binaries and deploy to your device.
+  
+- Alternatively if you have an android VM setup you can run `cordova run android` - this will build the app and launch it within your Android VM.
+
+#### Active work
+We are currently in the process of bringing in cordova and dependencies into this project - so that you will be able to automatically initiate the above scripts using a simple command like `npm run mobile:cordova`.  
+For now use the above steps.. 
+
+
+<!--
+### Development
+
+1. Initialise developer environment `npm run mobile:dev`
 
 ### Package - Cordova
 
@@ -76,6 +101,7 @@ We are actively working on this...
 ### Package - Cordova:android-VM
 
 1. Executing `npm run mobile:android-vm` will compile the mobile app into `./dist/mobile` and launch deploy to an android Virtual Machine if this has been setup.
+-->
 
 ## Generating the style guide
 We've started documenting the platform and breaking it down into reusable components.
