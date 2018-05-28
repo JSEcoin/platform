@@ -43,6 +43,35 @@ Mac and Linux support will be coming soon.
 
 1. Executing `npm run desktop` compiles the app within `./dist/desktop` and then builds the binaries within `./build`
 
+#### WARNING
+There is a known bug when building Desktop NSIS Binaries with x64 and ia32 bit support.
+This will cause the app to freeze.  
+If you do generate a build please edit the `./package.json` file.  
+And remove the target that you don't need.  
+
+```json
+{
+	"win": {
+		"icon": "build/icons/icon.ico",
+		"target": [
+			{
+				"target": "nsis",
+				"arch": [
+					"x64"
+				]
+			},
+			{
+				"target": "nsis",
+				"arch": [
+					"ia32"
+				]
+			}
+		]
+	}
+}
+```
+
+
 ## Generating the Web Platform
 Currently this is a snapshot of the desktop app - you can access it [here](https://alpha.jsecoin.com). 
 We will be updating this project and making the app responsive to support our plans for the advanced platform layout.
