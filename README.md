@@ -22,7 +22,7 @@ Our next release that uses this code base can be accessed from -
 - Currently this is just a snaphot of the desktop environment but will become responsive to match the design above.
 
 ## Prebuilt binaries
-See our [Downloads page](https://jsecoin.com/downloads) for Windows binaries.  
+See our [Releases Page](https://github.com/JSEcoin/platform/releases) for Windows binaries.  
 Our Mac, Linux, IOS and Android release will be coming out shortly
 
 ## Quickstart
