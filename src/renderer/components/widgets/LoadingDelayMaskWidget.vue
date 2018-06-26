@@ -5,7 +5,7 @@
 				[{{$store.state.user.countDownFrom - $store.state.user.waitTimer}}] Processing Transaction
 			</div>
 			<div v-else>
-				Initiating Transaction
+				{{msg}}
 			</div>
 		</div>
 	</div>
@@ -20,6 +20,15 @@ import { mapState } from 'vuex';
  */
 export default {
 	name: 'LoadingDelayMaskWidget',
+	props: {
+		/**
+		 * Display Message
+		 */
+		msg: {
+			type: String,
+			default: 'Initiating Transaction',
+		},
+	},
 	computed: mapState({
 		waitTimer: state => state.user.waitTimer,
 	}),

@@ -1,6 +1,6 @@
 {
 	"name": "jse-desktop",
-	"version": "0.4.7",
+	"version": "0.4.8",
 	"author": "JSECOIN",
 	"description": "JSE Desktop APP",
 	"license": "(ISC OR GPL-3.0)",
@@ -60,16 +60,7 @@
 			"icon": "build/icons/icon.icns"
 		},
 		"win": {
-			"icon": "build/icons/icon.ico",
-			"target": [
-				{
-					"target": "nsis",
-					"arch": [
-						"x64",				
-						"ia32"
-					]
-				}
-			]
+			"icon": "build/icons/icon.ico"
 		},
 		"linux": {
 			"icon": "build/icons"

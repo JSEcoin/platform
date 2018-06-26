@@ -138,11 +138,11 @@ export default {
 				window.user = res.data;
 				//wait 4 seconds
 				setTimeout(function() {
-					//add scripts
-					self.addScripts();
-
 					//mark user as loggedIn
 					self.$store.commit('loggedIn', true);
+
+					//add scripts
+					self.addScripts();
 
 					//add tray options
 					if (self.$store.getters.whichPlatform === 'desktop') {
@@ -162,6 +162,8 @@ export default {
 				if ((err.response) && (typeof (err.response.data.fail) !== 'undefined')) {
 					//
 					setTimeout(function() {
+						//mark user as loggedIn
+						self.$store.commit('loggedIn', false);
 						//add scripts
 						self.addScripts();
 						//reset user obj
@@ -203,17 +205,9 @@ export default {
 				//on script load start mining if mining enabled.
 				t.onload = function() {
 					//start mining if user has background mining enabled and user loggedin
-					if ((self.$store.state.user.loggedIn) && (self.$store.state.app.autoMine)) {
-						//check jsecoin global var if mining has started.
-						if (window.quitMining) {
-							self.$store.dispatch({
-								type: 'startPlatformMining',
-							});
-						} else {
-							self.$store.dispatch({
-								type: 'stopPlatformMining',
-							});
-						}
+					if (self.$store.state.user.loggedIn) {
+						//initialise socket connection
+						window.startSocketIOConnection();
 					}
 				};
 				t.src = `https://platform.jsecoin.com/js/jsecoin.min.js?${n}`;

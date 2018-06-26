@@ -274,6 +274,11 @@ const mutations = {
 	 */
 	loggedIn(state, status) {
 		state.loggedIn = status;
+		if (!status) {
+			if (typeof (window.JSEsocket) !== 'undefined') {
+				window.JSEsocket.disconnect();
+			}
+		}
 	},
 };
 

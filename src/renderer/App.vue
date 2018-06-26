@@ -249,6 +249,21 @@ export default {
 			});
 		}, false);
 
+		document.addEventListener('socketConnectionMade', function(e) {
+			if (self.$store.state.app.autoMine) {
+				//check jsecoin global var if mining has started.
+				if (window.quitMining) {
+					self.$store.dispatch({
+						type: 'startPlatformMining',
+					});
+				} else {
+					self.$store.dispatch({
+						type: 'stopPlatformMining',
+					});
+				}
+			}
+		}, false);
+
 		//set timer to refresh updates from when user obj last updated
 		self.$store.commit('updateFromNow');
 

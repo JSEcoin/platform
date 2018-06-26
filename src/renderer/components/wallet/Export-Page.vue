@@ -8,26 +8,33 @@
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
 				<!-- Transaction delay display -->
-				<LoadingDelayMaskWidget />
+				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
 				
 				<!-- Form Error Msg -->
 				<FormErrorDisplayWidget :errorMsg="form.error.msg" v-on:click.native="clearErrorDisplay" />
 				<!-- xForm Error Msg -->
 				
-				<p><b>Generate Export Coin Code:</b></p>
-				<div class="row" style="display:flex;">
-					<InputWidget 
-						v-model="form.amount.val"
-						placeholder="Amount *"
-						name="amount"
-						:showLabel="form.amount.displayLabel"
-						:flag="form.amount.flag"
-						:iconClass="{gold:form.amount.val >= 1, silver:form.amount.val < 1}"
-						@keyup="keyWatch('amount')" />
+				<div v-if="!showPin">
+					<p><b>Generate Export Coin Code:</b></p>
+					<div class="row" style="display:flex;">
+						<InputWidget 
+							v-model="form.amount.val"
+							placeholder="Amount *"
+							name="amount"
+							:showLabel="form.amount.displayLabel"
+							:flag="form.amount.flag"
+							:iconClass="{gold:form.amount.val >= 1, silver:form.amount.val < 1}"
+							@keyup="keyWatch('amount')" />
+					</div>
+					<div>
+						<ButtonWidget style="margin-top:10px;" v-on:click.native="exportCoins()" buttonTxt="Export Coins"/>
+					</div>
 				</div>
-				<div>
-					<ButtonWidget style="margin-top:10px;" v-on:click.native="exportCoins()" buttonTxt="Export Coins"/>
+				<div v-else>
+					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
+						<Pin v-on:submit-pin="signData" />
+					</form>
 				</div>
 			</ContentWidget>
 			<!-- xExport Coins -->
@@ -126,6 +133,8 @@ import CoinStatusWidget from '../widgets/CoinStatusWidget.vue';
 import LoadingDelayMaskWidget from '../widgets/LoadingDelayMaskWidget.vue';
 import FormErrorDisplayWidget from '../widgets/FormErrorDisplayWidget.vue';
 import InputWidget from '../widgets/InputWidget.vue';
+import Pin from '../widgets/Pin.vue';
+
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -145,9 +154,13 @@ export default {
 		LoadingDelayMaskWidget,
 		FormErrorDisplayWidget,
 		InputWidget,
+		Pin,
 	},
 	data() {
 		return {
+			showPin: false, //show pin display
+			transferRes: {}, //store transfer response obj
+			notificationMsg: '', //message to display during interaction request
 			loading: true,
 			showQR: false,
 			form: {
@@ -180,6 +193,51 @@ export default {
 		waitTimer: state => state.user.waitTimer,
 	}),
 	methods: {
+		/**
+		 * Sign data - apply pin and session info and make requests to initiate transfer
+		 *
+		 * @param {object} transferRes - transfer response Obj
+		 * @returns nothing
+		 * @public
+		 */
+		signData(pin) {
+			const self = this;
+			self.showPin = false;
+
+			//notification message
+			self.notificationMsg = 'Initiating Export';
+
+			//init transaction flag started
+			self.$store.commit('updateUserStateValue', {
+				val: true,
+				state: 'initTransaction',
+			});
+
+			window.signData(JSON.stringify(self.transferRes.data), window.user, function(signed) {
+				self.transferRes = {};
+				signed.pin = pin;
+				signed.session = self.$store.state.user.session;
+				axios.post(
+					`${self.$store.state.app.jseCoinServer}/push/data/`,
+					signed,
+				).then((res) => {
+					const transactionTimeSeconds = Math.ceil((res.data.timeTillConfirmation + 1000)/1000);
+					//init waiting time display
+					self.$store.commit('delay', transactionTimeSeconds);
+
+					window.refreshUser(function() {});
+					self.getMiningHistory();
+				}).catch((err) => {
+					self.$store.commit('clearDelay');
+					if (err.response.data.notification) {
+						self.form.error.msg = err.response.data.notification;
+					} else {
+						self.form.error.msg = 'Unknown Error';
+					}
+					self.$store.commit('ajaxError', err.response);
+				});
+			});
+		},
 		showQRCode(coin, i) {
 			const self = this;
 			if (!coin.used) {
@@ -238,6 +296,9 @@ export default {
 				return;
 			}
 
+			//notification message
+			self.notificationMsg = 'Initiating Request';
+
 			//init transaction flag started
 			self.$store.commit('updateUserStateValue', {
 				val: true,
@@ -260,26 +321,12 @@ export default {
 				`${self.$store.state.app.jseCoinServer}/push/requestexport/`,
 				exportReq,
 			).then((res) => {
-				window.signData(JSON.stringify(res.data), window.user, function(signed) {
-					axios.post(
-						`${self.$store.state.app.jseCoinServer}/push/data/`,
-						signed,
-					).then((res) => {
-						const transactionTimeSeconds = Math.ceil((res.data.timeTillConfirmation + 1000)/1000);
-						//init waiting time display
-						self.$store.commit('delay', transactionTimeSeconds);
-
-						window.refreshUser(function() {});
-						self.getMiningHistory();
-					}).catch((err) => {
-						self.$store.commit('clearDelay');
-						if (err.response.data.notification) {
-							self.form.error.msg = err.response.data.notification;
-						} else {
-							self.form.error.msg = 'Unknown Error';
-						}
-						self.$store.commit('ajaxError', err.response);
-					});
+				self.transferRes = res;
+				self.showPin = true;
+				//init transaction flag started
+				self.$store.commit('updateUserStateValue', {
+					val: false,
+					state: 'initTransaction',
 				});
 			}).catch((err) => {
 				self.$store.commit('clearDelay');
