@@ -5,6 +5,11 @@
 <div align="center">
 
 ![JSECoin Ltd](https://jsecoin.com/docs/images/JSECoin_split_desktop_browser_small.png)
+
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/JSEcoin/platform.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FJSEcoin%2Fplatform)
+
+[![GitHub license](https://img.shields.io/github/license/JSEcoin/platform.svg)](https://github.com/JSEcoin/platform/blob/master/LICENSE)
+
 </div>
 
 
@@ -51,23 +56,23 @@ And remove the target that you don't need.
 
 ```json
 {
-	"win": {
-		"icon": "build/icons/icon.ico",
-		"target": [
-			{
-				"target": "nsis",
-				"arch": [
-					"x64"
-				]
-			},
-			{
-				"target": "nsis",
-				"arch": [
-					"ia32"
-				]
-			}
-		]
-	}
+  "win": {
+    "icon": "build/icons/icon.ico",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      },
+      {
+        "target": "nsis",
+        "arch": [
+          "ia32"
+        ]
+      }
+    ]
+  }
 }
 ```
 

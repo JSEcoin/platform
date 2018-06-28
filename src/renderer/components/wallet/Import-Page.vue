@@ -8,12 +8,13 @@
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
 				<!-- Transaction delay display -->
-				<LoadingDelayMaskWidget />
+				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
 
 				<!-- Form Error Msg -->
 				<FormErrorDisplayWidget :errorMsg="form.error.msg" v-on:click.native="clearErrorDisplay" />
 				<!-- xForm Error Msg -->
+			
 				<p><b>Import Coins with code:</b></p>
 				<div class="row" style="display:flex;">
 					<InputWidget 
@@ -193,6 +194,9 @@ export default {
 	},
 	data() {
 		return {
+			showPin: false, //show pin display
+			transferRes: {}, //store transfer response obj
+			notificationMsg: '', //message to display during interaction request
 			loading: true,
 			showQR: false,
 			form: {
@@ -229,6 +233,50 @@ export default {
 		self.getExportHistory();
 	},
 	methods: {
+		/**
+		 * Sign data - apply pin and session info and make requests to initiate transfer
+		 *
+		 * @param {object} transferRes - transfer response Obj
+		 * @returns nothing
+		 * @public
+		 */
+		signData(pin) {
+			const self = this;
+			self.showPin = false;
+
+			//notification message
+			self.notificationMsg = 'Initiating Transaction';
+
+			//init transaction flag started
+			self.$store.commit('updateUserStateValue', {
+				val: true,
+				state: 'initTransaction',
+			});
+
+			window.signData(JSON.stringify(self.transferRes.data), window.user, function(signed) {
+				self.transferRes = {};
+				signed.pin = pin;
+				signed.session = self.$store.state.user.session;
+				axios.post(
+					`${self.$store.state.app.jseCoinServer}/push/data/`,
+					signed,
+				).then((res) => {
+					const transactionTimeSeconds = Math.ceil((res.data.timeTillConfirmation + 1000)/1000);
+					//init waiting time display
+					self.$store.commit('delay', transactionTimeSeconds);
+
+					window.refreshUser(function() {});
+				}).catch((err) => {
+					self.$store.commit('clearDelay');
+					if (err.response.data.notification) {
+						self.form.error.msg = err.response.data.notification;
+					} else {
+						self.form.error.msg = 'Unknown Error';
+					}
+					self.$store.commit('ajaxError', err.response);
+				});
+			});
+		},
 		removeCoin(coin) {
 			const self = this;
 			const msg = document.createElement('div');

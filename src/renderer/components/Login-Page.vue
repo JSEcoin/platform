@@ -465,17 +465,9 @@ export default {
 				document.dispatchEvent(event, window.user);
 
 				//start mining if user has background mining enabled and user loggedin
-				if ((self.$store.state.user.loggedIn) && (self.$store.state.app.autoMine)) {
-					//check jsecoin global var if mining has started.
-					if (window.quitMining) {
-						self.$store.dispatch({
-							type: 'startPlatformMining',
-						});
-					} else {
-						self.$store.dispatch({
-							type: 'stopPlatformMining',
-						});
-					}
+				if (self.$store.state.user.loggedIn) {
+					//initialise socket connection
+					window.startSocketIOConnection();
 				}
 
 				//add tray options

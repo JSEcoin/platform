@@ -28,6 +28,7 @@ export default {
 			const stats = state.miner.hashRateChartItems;
 			return stats;
 		},
+		showChart: state => state.miner.showChart,
 	}),
 	watch: {
 		stats: {
@@ -35,81 +36,104 @@ export default {
 			deep: true,
 			handler(newVal, oldVal) {
 				const self = this;
-				self.$chart.load({
-					columns: [self.stats],
-				});
+				if ((typeof (self.$chart) !== 'undefined') && (self.$chart !== null)) {
+					self.$chart.load({
+						columns: [self.stats],
+					});
+				}
+			},
+		},
+		showChart: {
+			deep: true,
+			handler(newVal, oldVal) {
+				const self = this;
+				if (self.showChart) {
+					self.generateChart();
+				} else {
+					self.destroyChart();
+				}
 			},
 		},
 	},
 	mounted () {
 		const self = this;
-
-		self.$chart = c3.generate({
-			bindto: this.$el,
-			transition: {
-				duration: 0,
-			},
-			size: {
-				height: 100,
-			},
-			tooltip: {
-				show: false,
-			},
-			grid: {
-				x: {
-					show: true,
-				},
-				y: {
-					show: true,
-				},
-			},
-			legend: {
-				show: false,
-			},
-			padding: {
-				top: 10,
-				left: 20,
-				right: 20,
-			},
-			area: {
-				zerobased: false,
-			},
-			point: {
-				focus: {
-					expand: {
-						enabled: false,
-					},
-				},
-			},
-			axis: {
-				y: {
-					min: 0,
-					max: 12000,
-					show: false,
-					padding: {
-						bottom: 0,
-					},
-					tick: {
-						count: 6,
-					},
-				},
-				x: {
-					show: false,
-				},
-			},
-			data: {
-				type: 'area',
-				columns: [self.stats],
-			},
-		});
+		self.generateChart();
 	},
 	methods: {
-		destroyChart () {
+		generateChart() {
 			const self = this;
-			//self.$chart = self.$chart.destroy();
+			self.$store.commit('updateMinerState', {
+				val: true,
+				state: 'showChart',
+			});
+
+			self.$chart = c3.generate({
+				bindto: this.$el,
+				transition: {
+					duration: 0,
+				},
+				size: {
+					height: 100,
+				},
+				tooltip: {
+					show: false,
+				},
+				grid: {
+					x: {
+						show: true,
+					},
+					y: {
+						show: true,
+					},
+				},
+				legend: {
+					show: false,
+				},
+				padding: {
+					top: 10,
+					left: 20,
+					right: 20,
+				},
+				area: {
+					zerobased: false,
+				},
+				point: {
+					focus: {
+						expand: {
+							enabled: false,
+						},
+					},
+				},
+				axis: {
+					y: {
+						min: 0,
+						max: 12000,
+						show: false,
+						padding: {
+							bottom: 0,
+						},
+						tick: {
+							count: 6,
+						},
+					},
+					x: {
+						show: false,
+					},
+				},
+				data: {
+					type: 'area',
+					columns: [self.stats],
+				},
+			});
+		},
+		destroyChart() {
+			const self = this;
+			if ((typeof (self.$chart) !== 'undefined') && (self.$chart !== null)) {
+				self.$chart = self.$chart.destroy();
+			}
 		},
 	},
-	beforeDestroy () {
+	beforeDestroy() {
 		const self = this;
 		//self.destroyChart();
 	},

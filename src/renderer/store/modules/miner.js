@@ -7,16 +7,26 @@ const state = {
 	hashRate: 0, //hash rate
 	hps: 0, //hashes per sec
 	hashRateAcc: (localStorage.getItem('hashRateAccStored') !== null)?localStorage.getItem('hashRateAccStored'):3, //hash rate acceleration value
-	displayStatusMsg: false,
-	startedMining: false,
-	miningLabel: 'Connecting to Blockchain...',
-	miningButton: 'START MINING',
-	hashesFound: 0,
-	consoleMsg: ['> Click the start mining button'],
-	animateHash: false,
+	displayStatusMsg: false, //
+	startedMining: false, //has user started mining
+	miningLabel: 'Connecting to Blockchain...', //mining label displaying during blockchain connection
+	miningButton: 'START MINING', //mining button display -stop / start
+	hashesFound: 0, //hashes found
+	consoleMsg: ['> Click the start mining button'], //initial console msg
+	animateHash: false, //animate hash ICO
+	showChart: false, //show animated mining chart
 };
 
 const mutations = {
+	/**
+	 * updateMinerState
+	 * Updates state value
+	 * @param {*} state
+	 * @param {*} update
+	 */
+	updateMinerState(state, update) {
+		state[update.state] = update.val;
+	},
 	/**
 	 * Start Mining
 	 * Starts Mining Process
