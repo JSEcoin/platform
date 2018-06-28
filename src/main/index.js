@@ -5,7 +5,7 @@ import { autoUpdater } from 'electron-updater';
 //import { readFileSync } from 'fs';
 //import crypto from 'crypto';
 
-const appVersion = '0.4.8';
+const appVersion = '0.4.8.1';
 
 //test
 app.disableHardwareAcceleration();
@@ -81,9 +81,15 @@ function createWindow() {
 	const tray = new Tray(iconPath);//appIcon iconPath
 
 	mainWindow.on('show', () => {
+		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
+		tray.setHighlightMode('always');
+	});
+	mainWindow.on('restore', () => {
+		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
 		tray.setHighlightMode('always');
 	});
 	mainWindow.on('hide', () => {
+		mainWindow.webContents.send('disableMiningChart'); //fix app freeze issue
 		tray.setHighlightMode('never');
 	});
 	//easy targetable traymenu ref

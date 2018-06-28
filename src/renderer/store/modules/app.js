@@ -1,5 +1,5 @@
 const state = {
-	version: '0.4.8', //app version no
+	version: '0.4.8.1', //app version no
 	major: 48, //support only this server release
 	platform: 'web', //platform type [desktop, mobile web]
 	isDev: true, //is in development mode

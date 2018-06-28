@@ -7,14 +7,14 @@
 				This alpha release {{$store.state.app.version}} - has now expired!
 			</p>
 			<p>
-				Please check the JSECoin forum for when the next release will be made available.
+				Please check the JSECoin GitHub Release for the latest supported app.
 			</p>
 			<!-- xInfo -->
 
 			<!-- Open Forums Window -->
 			<ButtonWidget
-				v-on:click.native="openExternalWindow('https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/')"
-				:buttonTxt="Upgrade"/>
+				v-on:click.native="openExternalWindow('https://github.com/JSEcoin/platform/releases')"
+				buttonTxt="JSECoin GitHub Release"/>
 			<!-- xOpen Forums Window -->
 		</ContentWidget>
 		<!-- xExpired Display -->

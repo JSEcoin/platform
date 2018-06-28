@@ -1,5 +1,5 @@
 <template>
-	<splashAnimation 
+	<splashAnimation v-if="show"
 		v-bind="{showWidget: splashWidget.activeAppIco, animateTxt: splashWidget.activeTxt}"
 		:textDisplay="splashWidget.splashTxt"></splashAnimation>
 </template>
@@ -25,6 +25,8 @@ export default {
 	},
 	data() {
 		return {
+			show: true, //show/hide splashanimation
+			checkSizeInterval: false,
 			splashWidget: {
 				activeAppIco: false, //fadeIn Animation flag
 				activeTxt: false, //text animation flag
@@ -42,6 +44,10 @@ export default {
 	 */
 	created() {
 		const self = this;
+		//allow splash screen to be movable
+		if (self.$store.getters.whichPlatform === 'desktop') {
+			self.$electron.remote.getCurrentWindow().setMovable(true);
+		}
 
 		//set initial window size
 		self.setWindowSize(true);
@@ -68,13 +74,50 @@ export default {
 	},
 	methods: {
 		/**
+		 * If mouse down delay route redirect
+		 *
+		 * @returns nothing
+		 * @private
+		 */
+		routeDelay(route) {
+			const self = this;
+			//disable moving capability during route and screensize change
+			self.$electron.remote.getCurrentWindow().setMovable(false);
+			//hide animation transition to dash
+			self.show = false;
+			//add delay to hide splash animation and transition to page
+			setTimeout(() => {
+				//resize window splash page
+				self.setWindowSize(false);
+				//confirm window resize worked and redirect else retry
+				self.checkSizeInterval = setInterval(() => {
+					if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+						self.routeDelay(route);
+					} else {
+						clearInterval(self.checkSizeInterval);
+						//detect resize and force correct size
+						self.$electron.remote.getCurrentWindow().on('resize',() => {
+							if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+								self.setWindowSize(false, true);
+							}
+						});
+						//app loading complete
+						self.$store.commit('loading', false);
+						//redirect to [dashboard,login] page
+						self.$router.push(route);
+						self.$electron.remote.getCurrentWindow().setMovable(true);
+					}
+				}, 500);
+			}, 100);
+		},
+		/**
 		 * Sets app size of window
 		 *
 		 * @param {boolean} val - app initialised show small loading box window else show large window
 		 * @returns nothing
 		 * @public
 		 */
-		setWindowSize(init) {
+		setWindowSize(init, disableCenter) {
 			const self = this;
 			if (self.$store.getters.whichPlatform === 'desktop') {
 				//setup window
@@ -87,7 +130,9 @@ export default {
 					appWindow.setSize(510, 656);
 				}
 				//centerise
-				appWindow.center();
+				if (typeof (disableCenter) === 'undefined') {
+					appWindow.center();
+				}
 			}
 		},
 		/**
@@ -148,10 +193,9 @@ export default {
 					if (self.$store.getters.whichPlatform === 'desktop') {
 						self.$electron.ipcRenderer.send('login');
 					}
-					//redirect to dashboard page
-					self.$router.push('dashboard');
-					//resize window splash page
-					self.setWindowSize(false);
+
+					//redirect to dashboard if mouse up or delay until up
+					self.routeDelay('dashboard');
 
 					//user session accepted update key app globals
 					const event = new Event('userDataRefresh');
@@ -168,10 +212,8 @@ export default {
 						self.addScripts();
 						//reset user obj
 						window.user = {};
-						//redirect to login page
-						self.$router.push('login');
-						//resize window splash page
-						self.setWindowSize(false);
+						//redirect to login if mouse up or delay until up
+						self.routeDelay('login');
 					}, 4000);
 				} else {
 					self.connectionErr();
@@ -187,7 +229,6 @@ export default {
 		 */
 		addScripts() {
 			const self = this;
-			self.$store.commit('loading', false);
 			//server & connection is up - load required scripts
 			if (document.getElementById('JSEW-coincode') === null) {
 				const t = document.createElement('script');

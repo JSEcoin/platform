@@ -1,5 +1,5 @@
 <template>
-	<div id="JSEA-desktop" :class="{'active':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
+	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
 		<!-- xHashrate acc need to remove -->
@@ -11,11 +11,10 @@
 		</header>
 		<!-- xApp Header -->
 		<!-- Offline Detection -->
-		<div id="JSEA-offline" v-if="((offline) && (!$store.state.app.loading))">
-			<dl>
-				<dt>Disconnected from Internet</dt>
-				<dd>Please Reconnect!</dd>
-			</dl>
+		<div  id="JSEA-offline" v-if="((offline) && (!$store.state.app.loading))">
+			<ContentWidget titleTxt="Disconnected from Internet">
+				Please Reconnect!
+			</ContentWidget>
 		</div>
 		<!-- xOffline Detection -->
 		<!-- App Page Content -->
@@ -26,9 +25,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import ContentWidget from './components/widgets/ContentWidget.vue';
 
 export default {
 	name: 'Application-Page',
+	components: {
+		ContentWidget,
+	},
 	data() {
 		return {
 			offline: false,
@@ -52,7 +55,9 @@ export default {
 			});
 		}
 
+		let displayType = 'web';
 		if ((typeof (cordova) !== 'undefined') && (typeof (cordova.on) === 'function')) {
+			displayType = 'mobile';
 			//console.log(self.$cordova.cordova);
 			cordova.on('deviceready', () => {
 				self.onDeviceReady();
@@ -94,14 +99,14 @@ export default {
 				state: 'isDev',
 			});
 		} else {
-			const bodyClass = `platformWeb mobile ${self.$store.state.app.theme}`;
+			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
 			document.body.className = bodyClass;
 			window.process = {
-				type: 'mobile', //['mobile','web']
+				type: displayType, //['mobile','web']
 			};
 			window.jseTestNet = true;
 			self.$store.commit('updateAppState', {
-				val: 'mobile',
+				val: displayType,
 				state: 'platform',
 			});
 		}
@@ -224,6 +229,22 @@ export default {
 						type: 'stopPlatformMining',
 					});
 				}
+			});
+			//enable chart display
+			self.$electron.ipcRenderer.on('enableMiningChart', (event, req) => {
+				//console.log('enable');
+				self.$store.commit('updateMinerState', {
+					val: true,
+					state: 'showChart',
+				});
+			});
+			//disable chart display
+			self.$electron.ipcRenderer.on('disableMiningChart', (event, req) => {
+				//console.log('disable');
+				self.$store.commit('updateMinerState', {
+					val: false,
+					state: 'showChart',
+				});
 			});
 		}
 
@@ -354,6 +375,11 @@ export default {
 			const self = this;
 			//this.$electron.remote.app.quit();
 			if (self.$store.getters.whichPlatform === 'desktop') {
+				//stop chart if hiding app - would cause app to freeze on some devices.
+				self.$store.commit('updateMinerState', {
+					val: false,
+					state: 'showChart',
+				});
 				self.$electron.ipcRenderer.send('hideApp');
 			}
 		},
@@ -364,6 +390,11 @@ export default {
 		minimiseWindow() {
 			const self = this;
 			if (self.$store.getters.whichPlatform === 'desktop') {
+				//stop chart if hiding app - would cause app to freeze on some devices.
+				self.$store.commit('updateMinerState', {
+					val: false,
+					state: 'showChart',
+				});
 				self.$electron.remote.BrowserWindow.getFocusedWindow().minimize();
 			}
 		},
@@ -711,13 +742,13 @@ header {
 #JSEA-offline {
 	background:rgba(0,0,0,0.6);
 	position: fixed;
-	top:0px;
+    top: 86px;
 	left: 0px;
 	right:0px;
 	bottom:0px;
 	z-index:1000000000;
-	margin:4px;
-	border-radius: 4px;
+    margin: 0px 4px 8px 4px;
+    border-radius: 0px 0px 4px 4px;
 }
 /* xTemplate*/
 

@@ -52,7 +52,7 @@
 				<!-- xMobile Settings -->
 
 				<!-- Login -->
-				<OptionsListWrapperWidget titleTxt="Login">
+				<OptionsListWrapperWidget titleTxt="Login"  v-if="(($store.getters.whichPlatform === 'desktop') || ($store.getters.whichPlatform === 'mobile'))">
 					<!-- Auto Login -->
 					<SettingsItemRowWidget settingName="Auto Login">
 						<ToggleSwitchWidget
