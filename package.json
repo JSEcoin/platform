@@ -1,6 +1,6 @@
 {
 	"name": "jse-desktop",
-	"version": "0.4.81",
+	"version": "0.4.9",
 	"author": "JSECOIN",
 	"description": "JSE Desktop APP",
 	"license": "(ISC OR GPL-3.0)",
@@ -27,7 +27,8 @@
 		"mobile:android-vm": "npm run mobile && cordova run android",
 		"e2e": "npm run pack && mocha test/e2e",
 		"test": "npm run unit && npm run e2e",
-		"unit": "karma start test/unit/karma.conf.js"
+		"unit": "karma start test/unit/karma.conf.js",
+		"postinstall": "electron-builder install-app-deps"
 	},
 	"build": {
 		"productName": "JSECoin",
@@ -59,16 +60,16 @@
 		"mac": {
 			"icon": "build/icons/icon.icns"
 		},
-		"win": { 
-			"icon": "build/icons/icon.ico", 
-			"target": [ 
-				{ 
-					"target": "nsis", 
-					"arch": [ 
-						"x64",         
-						"ia32" 
-					] 
-				} 
+		"win": {
+			"icon": "build/icons/icon.ico",
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"ia32",
+						"x64"
+					]
+				}
 			]
 		},
 		"linux": {
@@ -136,7 +137,7 @@
 		"del": "^3.0.0",
 		"devtron": "^1.4.0",
 		"electron": "^1.7.5",
-		"electron-builder": "^19.19.1",
+		"electron-builder": "^19.56.2",
 		"electron-debug": "^1.4.0",
 		"electron-devtools-installer": "^2.2.0",
 		"eslint": "^4.4.1",

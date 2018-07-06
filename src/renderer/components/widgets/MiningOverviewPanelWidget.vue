@@ -69,8 +69,8 @@
 import { mapState } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
-import ContentWidget from './ContentWidget.vue';
-import Coin from './Coin.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import Coin from '@/components/widgets/Coin.vue';
 
 /**
  * @description

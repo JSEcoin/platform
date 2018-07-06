@@ -55,8 +55,9 @@ const mutations = {
 			Vue.$electron.ipcRenderer.send('startedMining');
 		}
 		*/
-		state.miningInterval = setInterval(function(){
-			self.commit('updateHashInterval');
+		state.miningInterval = setInterval(() => {
+			const event = new Event('addHashInterval');
+			document.dispatchEvent(event);
 		}, 1000);
 		self.commit('updateHashInterval');
 	},

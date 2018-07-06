@@ -135,7 +135,7 @@ export default {
 	},
 	beforeDestroy() {
 		const self = this;
-		//self.destroyChart();
+		self.destroyChart();
 	},
 };
 </script>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Coin from './Coin.vue';
+import Coin from '@/components/widgets/Coin.vue';
 /**
  * @description
  * Overview Coin Dispay Widget

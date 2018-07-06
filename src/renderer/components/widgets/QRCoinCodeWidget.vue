@@ -41,9 +41,9 @@
 <script>
 import moment from 'moment';
 import QRious from 'qrious';
-import ButtonWidget from './ButtonWidget.vue';
-import GenerateCoinPageWidget from './GenerateCoinPageWidget.vue';
-import Coin from './Coin.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import GenerateCoinPageWidget from '@/components/widgets/GenerateCoinPageWidget.vue';
+import Coin from '@/components/widgets/Coin.vue';
 
 /**
  * @description

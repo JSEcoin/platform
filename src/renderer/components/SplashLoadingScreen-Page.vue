@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios';
-import splashAnimation from './widgets/Splash.vue';
+import splashAnimation from '@/components/widgets/Splash.vue';
 
 /**
  * @description
@@ -26,6 +26,7 @@ export default {
 	data() {
 		return {
 			show: true, //show/hide splashanimation
+			route: '', //route to take - dash/login
 			checkSizeInterval: false,
 			splashWidget: {
 				activeAppIco: false, //fadeIn Animation flag
@@ -56,6 +57,36 @@ export default {
 		self.$store.commit('loading', true);
 		self.$store.commit('loggedIn', false);
 
+		//controll callback issues with setInterval
+		document.addEventListener('checkSizeInterval', function() {
+			if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+				self.routeDelay(self.route);
+			} else {
+				clearInterval(self.checkSizeInterval);
+				//detect resize and force correct size
+				self.$electron.remote.getCurrentWindow().on('resize',() => {
+					if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+						self.setWindowSize(false, true);
+					}
+				});
+				//app loading complete
+				self.$store.commit('loading', false);
+				//redirect to [dashboard,login] page
+				self.$router.push(self.route);
+				self.$electron.remote.getCurrentWindow().setMovable(true);
+			}
+		});
+		document.addEventListener('connectionInterval', function() {
+			self.splashWidget.splashTxt = `CONNECTION FAILED<br />RETRYING IN ${self.offline.connectionCounter} SEC`;
+			self.offline.connectionCounter--;
+			if (self.offline.connectionCounter <= 0) {
+				clearInterval(self.offline.connectionInterval);
+				self.offline.connectionCounter = 30;
+				self.splashWidget.splashTxt = 'LOADING MINING<br/>INTERFACE';
+				self.getLogin();
+			}
+		});
+
 		//splash animation intro setup
 		setTimeout(function(){
 			self.splashWidget.activeAppIco = true;
@@ -81,34 +112,29 @@ export default {
 		 */
 		routeDelay(route) {
 			const self = this;
-			//disable moving capability during route and screensize change
-			self.$electron.remote.getCurrentWindow().setMovable(false);
-			//hide animation transition to dash
-			self.show = false;
-			//add delay to hide splash animation and transition to page
-			setTimeout(() => {
-				//resize window splash page
-				self.setWindowSize(false);
-				//confirm window resize worked and redirect else retry
-				self.checkSizeInterval = setInterval(() => {
-					if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-						self.routeDelay(route);
-					} else {
-						clearInterval(self.checkSizeInterval);
-						//detect resize and force correct size
-						self.$electron.remote.getCurrentWindow().on('resize',() => {
-							if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-								self.setWindowSize(false, true);
-							}
-						});
-						//app loading complete
-						self.$store.commit('loading', false);
-						//redirect to [dashboard,login] page
-						self.$router.push(route);
-						self.$electron.remote.getCurrentWindow().setMovable(true);
-					}
-				}, 500);
-			}, 100);
+
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				self.route = route;
+				//disable moving capability during route and screensize change
+				self.$electron.remote.getCurrentWindow().setMovable(false);
+				//hide animation transition to dash
+				self.show = false;
+				//add delay to hide splash animation and transition to page
+				setTimeout(() => {
+					//resize window splash page
+					self.setWindowSize(false);
+					//confirm window resize worked and redirect else retry
+					self.checkSizeInterval = setInterval(() => {
+						const event = new Event('checkSizeInterval');
+						document.dispatchEvent(event);
+					}, 500);
+				}, 100);
+			} else {
+				//app loading complete
+				self.$store.commit('loading', false);
+				//redirect to [dashboard,login] page
+				self.$router.push(route);
+			}
 		},
 		/**
 		 * Sets app size of window
@@ -143,15 +169,9 @@ export default {
 		 */
 		connectionErr() {
 			const self = this;
-			self.connectionInterval = setInterval(function() {
-				self.splashWidget.splashTxt = `CONNECTION FAILED<br />RETRYING IN ${self.offline.connectionCounter} SEC`;
-				self.offline.connectionCounter--;
-				if (self.offline.connectionCounter <= 0) {
-					clearInterval(self.offline.connectionInterval);
-					self.offline.connectionCounter = 30;
-					self.splashWidget.splashTxt = 'LOADING MINING<br/>INTERFACE';
-					self.getLogin();
-				}
+			self.offline.connectionInterval = setInterval(() => {
+				const event = new Event('connectionInterval');
+				document.dispatchEvent(event);
 			},1000);
 		},
 		/**

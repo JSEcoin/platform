@@ -10,7 +10,7 @@ import moment from 'moment';
 import QRious from 'qrious';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import ButtonWidget from './ButtonWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 /**

@@ -10,7 +10,7 @@
 <script>
 import moment from 'moment';
 import QRious from 'qrious';
-import ButtonWidget from './ButtonWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 
 /**
  * @description

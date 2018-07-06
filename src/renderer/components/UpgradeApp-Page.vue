@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import AppWrapperWidget from './widgets/AppWrapperWidget.vue';
-import ContentWidget from './widgets/ContentWidget.vue';
-import ButtonWidget from './widgets/ButtonWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 
 /**
  * @description
