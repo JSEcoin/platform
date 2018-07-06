@@ -9,7 +9,7 @@
 	"scripts": {
 		"styleguide": "vue-styleguidist server --config webpack/styleguide/styleguide.config.js",
 		"styleguide:build": "vue-styleguidist build --config webpack/styleguide/styleguide.config.js",
-		"desktop": "node webpack/desktop/build.js && electron-builder -wl",
+		"desktop": "node webpack/desktop/build.js && electron-builder",
 		"desktop:publish": "build -p always",
 		"desktop:dev": "node webpack/desktop/dev-runner.js",
 		"desktop:dir": "node webpack/desktop/build.js && electron-builder --dir",

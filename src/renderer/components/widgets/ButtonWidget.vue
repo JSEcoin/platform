@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import LoadingDots from './LoadingDots.vue';
+import LoadingDots from '@/components/widgets/LoadingDots.vue';
 /**
  * @description
  * Button Widget

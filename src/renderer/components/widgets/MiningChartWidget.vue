@@ -11,7 +11,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import ChartWidgetC3 from './ChartWidgetC3.vue';
+import ChartWidgetC3 from '@/components/widgets/ChartWidgetC3.vue';
 /**
  * @description
  * Mining Chart Widget

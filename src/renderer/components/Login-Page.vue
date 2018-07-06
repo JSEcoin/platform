@@ -115,13 +115,13 @@
 <script>
 //import VueRecaptcha from 'vue-recaptcha';
 import axios from 'axios';
-import AppWrapperWidget from './widgets/AppWrapperWidget.vue';
-import ContentWidget from './widgets/ContentWidget.vue';
-import FormErrorDisplayWidget from './widgets/FormErrorDisplayWidget.vue';
-import SpinnerWidget from './widgets/SpinnerWidget.vue';
-import InputWidget from './widgets/InputWidget.vue';
-import ButtonWidget from './widgets/ButtonWidget.vue';
-import TwoFA from './widgets/TwoFA.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import SpinnerWidget from '@/components/widgets/SpinnerWidget.vue';
+import InputWidget from '@/components/widgets/InputWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import TwoFA from '@/components/widgets/TwoFA.vue';
 
 /**
  * @description
