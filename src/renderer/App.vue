@@ -257,6 +257,10 @@ export default {
 			console.log('offline');
 			self.offline = true;
 		});
+		//help prevent mem leak on chart..
+		document.addEventListener('addHashInterval', function() {
+			self.$store.commit('updateHashInterval');
+		});
 		document.addEventListener('miningLogUpdate', function(e) {
 			//update overlay graph message
 			if ((e.detail.indexOf('Data Received') >= 0) || (e.detail.indexOf('Connected!') >= 0)) {
