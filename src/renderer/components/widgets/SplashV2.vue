@@ -96,6 +96,7 @@ export default {
 	padding-bottom: 20px;
     background: rgba(0,0,0,0.2);
     padding-top: 15px;
+	text-transform: uppercase;
 	text-shadow:
    -1px -1px 0 rgba(0,0,0,0.5),  
     1px -1px 0 rgba(0,0,0,0.5),
