@@ -19,9 +19,9 @@
 			<!-- xHeader Button Slot -->
 
 			<!-- Console Header Buttons -->
-			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fe6963; border-radius:20px; margin-left:6px;"></div>	
-			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fcbc3c; border-radius:20px; margin-left:6px;"></div>	
-			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#34c748; border-radius:20px; margin-left:6px;"></div>	
+			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fe6963; border-radius:20px; margin-left:6px; margin-top:6px;"></div>	
+			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fcbc3c; border-radius:20px; margin-left:6px; margin-top:6px;"></div>	
+			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#34c748; border-radius:20px; margin-left:6px; margin-top:6px;"></div>	
 			<!-- xConsole Header Buttons -->
 		</dt>
 		<!-- xTitle Header -->
@@ -413,8 +413,9 @@ dl.console dt {
 	font-family:Courier New, Courier, monospace;
 }
 .platformWeb.mobile dl.console dt {
-	padding: 8px 8px 8px 12px;
+	padding: 0px 8px 0px 12px;
 	justify-content: inherit;
+	display:block;
 }
 
 dl.console dd {

@@ -6,18 +6,18 @@
 		</p>
 		<label style="margin-bottom:10px;">
 			<div class="inputLabel" style="opacity:1">User Pin *</div>
-			<input maxlength="1" type="text" placeholder="0" ref="pinCode1" @keyup="focusInput('val1', 1, $event)" v-model="form.pinCode.val1" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="0" ref="pinCode2" @keyup="focusInput('val2', 2, $event)" v-model="form.pinCode.val2" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="0" ref="pinCode3" @keyup="focusInput('val3', 3, $event)" v-model="form.pinCode.val3" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="0" ref="pinCode4" @keyup="focusInput('val4', 4, $event)" v-model="form.pinCode.val4" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode5" @keyup="focusInput('val5', 5, $event)" v-model="form.pinCode.val5" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode6" @keyup="focusInput('val6', 6, $event)" v-model="form.pinCode.val6" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode7" @keyup="focusInput('val7', 7, $event)" v-model="form.pinCode.val7" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode8" @keyup="focusInput('val8', 8, $event)" v-model="form.pinCode.val8" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode9" @keyup="focusInput('val9', 9, $event)" v-model="form.pinCode.val9" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode10" @keyup="focusInput('val10', 10, $event)" v-model="form.pinCode.val10" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode11" @keyup="focusInput('val11', 11, $event)" v-model="form.pinCode.val11" style="width:26px; margin:26px 2px 8px; text-align:center" />
-			<input maxlength="1" type="text" placeholder="" ref="pinCode12" @keyup="focusInput('val12', 12, $event)" v-model="form.pinCode.val12" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.pinCode.val1" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode2" @touchend="focusInput('val2', 2, $event)" @keyup="focusInput('val2', 2, $event)" v-model="form.pinCode.val2" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode3" @touchend="focusInput('val3', 3, $event)" @keyup="focusInput('val3', 3, $event)" v-model="form.pinCode.val3" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode4" @touchend="focusInput('val4', 4, $event)" @keyup="focusInput('val4', 4, $event)" v-model="form.pinCode.val4" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode5" @touchend="focusInput('val5', 5, $event)" @keyup="focusInput('val5', 5, $event)" v-model="form.pinCode.val5" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode6" @touchend="focusInput('val6', 6, $event)" @keyup="focusInput('val6', 6, $event)" v-model="form.pinCode.val6" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode7" @touchend="focusInput('val7', 7, $event)" @keyup="focusInput('val7', 7, $event)" v-model="form.pinCode.val7" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode8" @touchend="focusInput('val8', 8, $event)" @keyup="focusInput('val8', 8, $event)" v-model="form.pinCode.val8" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode9" @touchend="focusInput('val9', 9, $event)" @keyup="focusInput('val9', 9, $event)" v-model="form.pinCode.val9" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode10" @touchend="focusInput('val10', 10, $event)" @keyup="focusInput('val10', 10, $event)" v-model="form.pinCode.val10" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode11" @touchend="focusInput('val11', 11, $event)" @keyup="focusInput('val11', 11, $event)" v-model="form.pinCode.val11" style="width:26px; margin:26px 2px 8px; text-align:center" />
+			<input maxlength="1" :type="form.inputType" placeholder="" ref="pinCode12" @touchend="focusInput('val12', 12, $event)" @keyup="focusInput('val12', 12, $event)" v-model="form.pinCode.val12" style="width:26px; margin:26px 2px 8px; text-align:center" />
 		</label>
 		
 		<!-- Transfer Funds Button -->
@@ -56,6 +56,7 @@ export default {
 					val11: this.val[10],
 					val12: this.val[11],
 				},
+				inputType: 'text',
 			},
 		};
 	},
@@ -80,6 +81,13 @@ export default {
 				'',
 			],
 		},
+	},
+	created() {
+		const self = this;
+		//update type to number for easy mobile keypad display
+		if (self.$store.getters.whichPlatform === 'mobile') {
+			self.form.inputType = 'number';
+		}
 	},
 	mounted() {
 		const self = this;
