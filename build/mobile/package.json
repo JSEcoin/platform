@@ -1,14 +1,14 @@
 {
     "name": "com.jsecoin.mobile",
-    "displayName": "HelloCordova",
-    "version": "1.0.0",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
+    "displayName": "JSEcoin Wallet",
+    "version": "0.5.1",
+    "description": "JSE Mobile APP",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "Apache Cordova Team",
-    "license": "Apache-2.0",
+    "author": "JSEcoin Ltd Team",
+    "license": "(ISC OR GPL-3.0)",
     "dependencies": {
         "cordova-android": "^7.0.0",
         "cordova-plugin-background-mode": "^0.7.2",

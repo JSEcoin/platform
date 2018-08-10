@@ -1,5 +1,5 @@
 <template>
-	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
+	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, 'loggedIn':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
 		<!-- xHashrate acc need to remove -->
@@ -663,6 +663,11 @@ header {
 	z-index:1000000;
 }
 
+.platformWeb.mobile header {
+     background-position: 0px -4px;
+	height: 56px;
+}
+
 .cf:before,
 .cf:after {
     content: " "; /* 1 */
@@ -764,7 +769,7 @@ header {
 #JSEA-desktop.loading.light,
 #JSEA-desktop.loading.night {
 	background: transparent;
-	box-shadow: none;
+	box-shadow: none !important;
 }
 #JSEA-desktop.light {
 	background:#fff;
@@ -811,8 +816,10 @@ header {
     margin-top: -100px;
 	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
 }
-
 #JSEA-desktop.active {
+	background:#fff;
+}
+#JSEA-desktop.active.loggedIn {
 	background:#fafbfd;
 }
 

@@ -2,7 +2,8 @@
 dist/*
 build/*
 !build/mobile
-build/mobile/platforms/android
+build/mobile/www/*
+build/mobile/platforms/android/*
 !build/icons
 coverage
 node_modules/

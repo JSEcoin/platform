@@ -188,7 +188,7 @@ dl.console.mini dd {
 }
 .platformWeb.mobile .titleInfo {
 	height:34px;
-    min-width: 184px;
+    min-width: 188px;
 }
 dl dt {
 	border-bottom:solid 1px #eee;
