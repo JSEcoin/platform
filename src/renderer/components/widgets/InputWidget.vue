@@ -8,7 +8,7 @@
 			
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
-				<input type="text" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
+				<input autocapitalize="off" type="text" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
 			</div>
 			<!-- xInput plus Ico -->
 
@@ -18,7 +18,7 @@
 				<!-- xPassword Field Ico -->
 
 				<!-- Input no Ico -->
-				<input :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
+				<input autocapitalize="off" :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
 				<!-- xInput no Ico -->
 			</div>
 		</label>

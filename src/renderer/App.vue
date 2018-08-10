@@ -56,12 +56,13 @@ export default {
 		}
 
 		let displayType = 'web';
-		if ((typeof (cordova) !== 'undefined') && (typeof (cordova.on) === 'function')) {
+		if (typeof (cordova) !== 'undefined') {
 			displayType = 'mobile';
 			//console.log(self.$cordova.cordova);
-			cordova.on('deviceready', () => {
+			document.addEventListener('deviceready', () => {
 				self.onDeviceReady();
-			});
+			}, false);
+			//background mode
 			cordova.plugins.backgroundMode.on('activate', () => {
 				console.log('activate - disable web optimisations - silent', self.silentMode);
 				//timeout required or disable optimisation ignored when autosleep set
