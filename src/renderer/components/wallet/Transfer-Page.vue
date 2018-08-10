@@ -5,7 +5,7 @@
 			<!-- Transfer JSE -->
 			<ContentWidget 
 				titleTxt="Transfer JSE" 
-				contentPadding="16px 16px 90px 16px" 
+				contentPadding="16px 10px 90px 10px" 
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
 				<!-- Transaction delay display -->
@@ -250,6 +250,11 @@ export default {
 		signData(pin) {
 			const self = this;
 			self.showPin = false;
+
+			//no pin provided
+			if (!pin) {
+				return;
+			}
 
 			//notification message
 			self.notificationMsg = 'Initiating Transaction';

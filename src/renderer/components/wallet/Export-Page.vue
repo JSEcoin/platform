@@ -205,6 +205,11 @@ export default {
 			const self = this;
 			self.showPin = false;
 
+			//no pin provided
+			if (!pin) {
+				return;
+			}
+
 			//notification message
 			self.notificationMsg = 'Initiating Export';
 

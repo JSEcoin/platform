@@ -132,6 +132,18 @@ button.small {
 }
 
 
+.night button.cancel {
+	background-color:#161924;
+}
+.night button.cancel:hover {
+	background-color:#000;
+}
+.light button.cancel {
+	background-color:#2c3442;
+}
+.light button.cancel:hover {
+	background-color:#2d384d;
+}
 button.red {
     background-color: #fe6963;
     color: #fff;
