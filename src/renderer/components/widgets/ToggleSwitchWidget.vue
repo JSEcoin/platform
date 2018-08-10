@@ -71,10 +71,14 @@ export default {
     text-align: left;
     width: 80px;
     height: 30px;
-    -webkit-border-radius: 30px;
     border-radius: 30px;
     line-height: 1.2;
     font-size: 14px;
+}
+.platformWeb.mobile .checkbox-switch {
+    height: 24px;
+    border-radius: 24px;
+    font-size: 10px;
 }
 
 .checkbox-switch input.input-checkbox {
@@ -89,6 +93,9 @@ export default {
 	z-index: 2;
 	cursor: pointer;
 }
+.platformWeb.mobile input.input-checkbox {
+	height: 24px;
+}
 
 .checkbox-switch .checkbox-animate {
     position: relative;
@@ -98,6 +105,10 @@ export default {
     -webkit-transition: background 0.25s ease-out 0s;
     transition: background 0.25s ease-out 0s;	
 	border-radius: 30px;
+}
+.platformWeb.mobile .checkbox-switch .checkbox-animate {
+    height: 24px;
+    border-radius: 24px;
 }
 
 .checkbox-switch .checkbox-animate:before {
@@ -114,6 +125,10 @@ export default {
 	 -webkit-transition: left 0.3s ease-out 0s;
     transition: left 0.3s ease-out 0s;
     z-index: 10;
+}
+.platformWeb.mobile .checkbox-switch .checkbox-animate:before {
+	top: 2px;
+	left: 5px;
 }
 
 .checkbox-switch input.input-checkbox:checked + .checkbox-animate {

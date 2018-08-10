@@ -105,12 +105,15 @@ export default {
     border-bottom: solid 1px #eee;
 }
 
-.sliderWrapper{
+.sliderWrapper {
 	position: absolute;
     top: 0px;
     left: 0px;
     right: 0px;
     padding: 10px;
+}
+.platformWeb.mobile .sliderWrapper {
+	padding: 20px 0px 4px 0px;
 }
 .night .accText {
 }

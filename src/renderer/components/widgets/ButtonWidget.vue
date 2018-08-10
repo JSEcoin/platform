@@ -73,6 +73,13 @@ button * {
 	font-family: 'Nunito', sans-serif;
 	justify-content: center;
 }
+
+.platformWeb.mobile button {
+	padding:0px 8px;
+	height: 36px;
+	line-height: 36px;
+}
+
 .disable {
 	opacity:0.1;
 	cursor: default;
@@ -103,6 +110,10 @@ button.small {
 	font-size:0.7em;
 	width:auto;
 	margin:0px 2px;
+}
+.platformWeb.mobile button.small {
+	height:24px;
+	line-height:24px;
 }
 
 .night button.green {
@@ -161,5 +172,8 @@ button.red:hover {
 	mask: url('../../assets/pickaxe.svg') no-repeat 50% 50%;
 	-webkit-mask-size: cover;
 	mask-size: cover;
+}
+.platformWeb.mobile .miningIco {
+	height: 36px;
 }
 </style>

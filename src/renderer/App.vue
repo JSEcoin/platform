@@ -349,9 +349,9 @@ export default {
 			const self = this;
 			console.log(cordova.plugins);
 			// Handle the device ready event.
-			cordova.on('pause', self.onPause, false);
-			cordova.on('resume', self.onResume, false);
-			if (cordova.device.platform === 'Android') {
+			document.addEventListener('pause', self.onPause, false);
+			document.addEventListener('resume', self.onResume, false);
+			if (device.platform === 'Android') {
 				document.addEventListener('backbutton', self.onBackKeyDown, false);
 			}
 		},
@@ -615,6 +615,9 @@ tbody td {
 	height:40px;
 	line-height: 40px;
 	font-size:0.8em;
+}
+.platformWeb.mobile tbody td {
+	padding:0px 6px;
 }
 
 .night tbody tr:nth-child(even) td {
@@ -996,20 +999,32 @@ header .fa-minus:hover {
     font-weight: bold;
     font-size: 0.8em;
     letter-spacing: 1px;
-    padding: 12px 18px;
 	position: relative;
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.platformWeb.mobile .popupHeader {
+	height:30px;
+	margin-bottom:0px;
+}
+
 .popupHeader i {
 	position: absolute;
 	top:4px;
 	right:6px;
 	cursor: pointer;
+	font-size:1.4em;
 }
 .popupHeader i:hover {
 	color:red;
 }
 .popupContent {
 	margin:10px;
+}
+.platformWeb.mobile .popupContent {
+	margin:6px;
 }
 #JSEA-QRBGImage {
 	background-image: url('./assets/images/QR_logo2.png');
@@ -1030,10 +1045,11 @@ header .fa-minus:hover {
 	border:solid 1px #eee;
 	margin:10px 0px;
 	display: flex;
+    align-items: center;
 }
 .coinInfoLabel b {
 	background:#eee;
-	padding:4px 8px;
+	padding:0px 8px;
 	display: inline-block;
 	min-width:100px;
 	margin-right:10px;
@@ -1054,6 +1070,10 @@ header .fa-minus:hover {
     font-family: courier;
     font-weight: bold;
 }
+.platformWeb.mobile #JSEA-coinCode {
+    font-size: 0.6em;
+}
+
 .platformWeb #JSEA-QRMask {
 	top:0px;
 	bottom:0px;
@@ -1087,6 +1107,10 @@ header .fa-minus:hover {
 	margin-top:-222px;
 	background:#fff;
 	border-radius:4px;
+}
+.platformWeb.mobile #JSEA-QRMask > div {
+	width:340px;
+	margin-left:-170px;
 }
 
 .popupContent .fa-angle-right,
@@ -1134,5 +1158,22 @@ header .fa-minus:hover {
 }
 .swal-modal {
 	width:458px;
+}
+.platformWeb.mobile .swal-modal {
+	width:338px;
+}
+.platformWeb.mobile .swal-icon:first-child {
+	margin:22px auto 0px auto;
+}
+.platformWeb.mobile .swal-title {
+	font-size:20px;
+}
+
+.platformWeb.mobile .popupMessage {
+	font-size:0.9em;
+}
+
+.platformWeb.mobile .infoBox {
+	word-wrap: break-word;
 }
 </style>

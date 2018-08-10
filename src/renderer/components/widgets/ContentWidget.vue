@@ -141,7 +141,10 @@ export default {
     padding: 10px;
 }
 .platformWeb.mobile dl {
-	margin:16px 6px;
+	margin: 10px;
+}
+.platformWeb.mobile dl.mini {
+	margin:0px;
 }
 dl {
 	background:#fff;
@@ -162,8 +165,15 @@ dl.mini dt {
 	padding: 0px;
     line-height: 30px;
     text-align: center;
+	justify-content:center;
     font-size: 0.6em;
 }
+.platformWeb.mobile dl.mini dt {
+	height:24px;
+	padding: 0px;
+    line-height: 24px;
+}
+
 dl.console.mini dt {
 	font-size:0.8em;
 	text-align:left;
@@ -178,14 +188,17 @@ dl.console.mini dd {
 }
 .platformWeb.mobile .titleInfo {
 	height:34px;
+    min-width: 184px;
 }
 dl dt {
 	border-bottom:solid 1px #eee;
-	padding:12px 18px;
+	padding:0px 18px;
 	font-weight: bold;
 	font-size:0.8em;
 	letter-spacing: 1px;
 	height: 44px;
+	align-items: center;
+	display:flex
 }
 
 dl dd {
@@ -193,7 +206,14 @@ dl dd {
 	margin:0px;
 	/*position: relative;*/
 }
+.platformWeb.mobile dl dd {
+	padding:10px;
+}
 .mini dd {
+	padding: 0px 0px 4px 0px;
+    margin: 4px 8px 0px 8px;
+}
+.platformWeb.mobile .mini dd {
 	padding: 0px 0px 4px 0px;
     margin: 4px 8px 0px 8px;
 }
@@ -224,11 +244,12 @@ dl dd {
 	right: 0px;
 	top:0px;
 	height:44px;
-    padding: 12px 18px 12px 70px;
+    padding: 0px 18px 0px 70px;
 	display: flex;
 	border-radius: 0px 6px 0px 0px;
 	min-width:240px;
 	text-align:right;
+	align-items: center;
 }
 
 .night .titleButton {
@@ -278,6 +299,10 @@ dt button {
     line-height: 30px;
     width: initial;
 	text-transform: none;
+}
+.platformWeb.mobile dt button {
+	top:4px;
+	right:2px;
 }
 
 .titleInfo .coin,
@@ -354,6 +379,9 @@ dt button {
 	color:#3598db; 
 	letter-spacing:1px;
 }
+.platformWeb.mobile .footerTxt {
+	font-size: 0.6em;
+}
 .night dl.console {
 	background:#171820;
 }
@@ -365,6 +393,10 @@ dl.console {
 	box-shadow:none;
 	margin:10px 0px;
 	padding:0px;
+}
+
+.platformWeb.mobile dl.console {
+	margin:10px 0px;
 }
 
 .night dl.console dt {
@@ -379,6 +411,10 @@ dl.console {
 dl.console dt {
 	padding: 8px 8px 8px 12px;
 	font-family:Courier New, Courier, monospace;
+}
+.platformWeb.mobile dl.console dt {
+	padding: 8px 8px 8px 12px;
+	justify-content: inherit;
 }
 
 dl.console dd {
@@ -409,13 +445,27 @@ dd dt {
 dd dd dl {
 	margin:0px;
 }
+.platformWeb.mobile dd dd dl {
+	margin:0px;
+}
+
 dd dd dt {
 	margin:0px;
 	padding:0px;
 	height:20px;
 }
+.platformWeb.mobile dd dd dt {
+	margin:0px;
+	padding:0px;
+	height:20px;
+}
+
 dd dd dd {
 	margin:0px 0px 10px 0px;
 	padding:0px;
+}
+.platformWeb.mobile dd dd dd {
+	margin:0px 0px 10px 0px;
+	padding:8px;
 }
 </style>

@@ -555,6 +555,10 @@ iframe {
     align-self: center;
     width: 100%;
 }
+.platformWeb.mobile #JSEA-loginWrapper {
+    align-self: inherit;
+	margin-top: 20px;
+}
 
 .night #JSEA-loginHeader {
 	color:#eee;

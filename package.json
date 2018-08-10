@@ -23,7 +23,7 @@
 		"mobile:cordova": "npm run mobile && cordova build",
 		"mobile:browser": "npm run mobile && cordova run browser",
 		"mobile:ios": "npm run mobile && cordova run ios",
-		"mobile:android": "npm run mobile && cordova run android --device",
+		"mobile:android": "npm run mobile && cd build/mobile && cordova run android --device",
 		"mobile:android-vm": "npm run mobile && cordova run android",
 		"e2e": "npm run pack && mocha test/e2e",
 		"test": "npm run unit && npm run e2e",

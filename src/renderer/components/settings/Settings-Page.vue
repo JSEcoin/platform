@@ -285,7 +285,12 @@ export default {
 
 			//set theme if web
 			if (self.$store.getters.whichPlatform === 'web') {
-				const bodyClass = `platformWeb ${self.$store.state.app.theme}`;
+				const bodyClass = `platformWeb web ${self.$store.state.app.theme}`;
+				document.body.className = bodyClass;
+			}
+			//set theme if web
+			if (self.$store.getters.whichPlatform === 'mobile') {
+				const bodyClass = `platformWeb mobile ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
 		},
@@ -320,5 +325,11 @@ export default {
 	margin-right:20px;
 	cursor: pointer;
 	transition: background 0.2s;
+}
+
+.platformWeb.mobile #JSEA-themeSelector {
+	width: 34px;
+	height: 34px;
+	line-height:34px;
 }
 </style>
