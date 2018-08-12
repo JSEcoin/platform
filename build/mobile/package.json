@@ -13,12 +13,14 @@
         "cordova-android": "^7.0.0",
         "cordova-plugin-background-mode": "^0.7.2",
         "cordova-plugin-device": "^2.0.2",
+        "cordova-plugin-qrscanner": "^2.6.0",
         "cordova-plugin-whitelist": "^1.3.3"
     },
     "cordova": {
         "plugins": {
             "cordova-plugin-whitelist": {},
-            "cordova-plugin-background-mode": {}
+            "cordova-plugin-background-mode": {},
+            "cordova-plugin-qrscanner": {}
         },
         "platforms": [
             "android"
