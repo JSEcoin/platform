@@ -285,13 +285,25 @@ export default {
 		},
 		/**
 		 * Maps 2FA Keys to form.authCode dataset from key-up event
+		 * Check to make sure only 1 character returned
 		 * @param {string} ref - authcode ref
 		 * @param {string} val - autcode val
 		 * @public
 		 */
 		updateKey(ref, val) {
 			const self = this;
-			self.form.authCode[ref] = val;
+			//check value returned
+			if (typeof (val) === 'undefined') {
+				self.form.authCode[ref] = '0';
+				return;
+			}
+			//val returned check length returned
+			const inputVal = String(val);
+			if (inputVal.length > 1) {
+				self.form.authCode[ref] = inputVal.substring(inputVal.length - 1);
+			} else {
+				self.form.authCode[ref] = val;
+			}
 		},
 		/**
 		 * onKeyUp set field display and check field value is correct (email etc)
@@ -554,6 +566,10 @@ iframe {
 #JSEA-loginWrapper {
     align-self: center;
     width: 100%;
+}
+.platformWeb.mobile #JSEA-loginWrapper {
+    align-self: inherit;
+	margin-top: 20px;
 }
 
 .night #JSEA-loginHeader {

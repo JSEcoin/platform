@@ -25,9 +25,12 @@
 						:showLabel="form.coinCode.displayLabel"
 						:flag="form.coinCode.flag"
 						:iconClass="{'coincode': true}"
+						eventaction="initQRImport"
+						@initQRImport="initQRImport"
 						@keyup="keyWatch('coinCode', $event)" />
 				</div>
-				<div>
+				<div class="row">
+					<ButtonWidget v-if="$store.getters.whichPlatform === 'mobile'" style="margin-top:10px;margin-right:10px;" v-on:click.native="initQRImport()" buttonTxt="Scanner"/>
 					<ButtonWidget style="margin-top:10px;" v-on:click.native="importCoins()" buttonTxt="Import Coins"/>
 				</div>
 			</ContentWidget>
@@ -57,7 +60,7 @@
 					bookletData: initAvailableCoins,
 				}"
 				titleTxt="Available Coin Codes" 
-				infoPanelTxt="Generate Booklet"
+				:infoPanelTxt="($store.getters.whichPlatform !== 'mobile')?'Generate Booklet':'Share Booklet'"
 				:infoPanelIcoClassName="{booklet: true}">
 
 				<!-- Header Button -->
@@ -99,7 +102,7 @@
 								<!-- xCopy Coin Code -->
 								
 								<!-- Import Coin Code -->
-								<ButtonWidget 
+								<ButtonWidget
 									iconClassName="fa fa-download" 
 									v-on:click.native="importCoins(coin.coinCode)"
 									title="Import Coin Code"
@@ -233,6 +236,66 @@ export default {
 		self.getExportHistory();
 	},
 	methods: {
+		foundQRCode(err, text) {
+			const self = this;
+			if (err){
+				// an error occurred, or the scan was canceled (error code `6`)
+				console.error(err);
+			} else {
+				// The scan completed, display the contents of the QR code:
+				console.log(text);
+				self.form.coinCode.val = text;
+			}
+			console.log('destroy scanner');
+			//destroy scanner
+			document.body.classList.remove('QRScanner');
+			QRScanner.cancelScan();
+			QRScanner.hide();
+			QRScanner.destroy();
+		},
+		QRInitialised(err, status) {
+			const self = this;
+			console.log('QRInitialised');
+			if (err) {
+				// here we can handle errors and clean up any loose ends.
+				console.error(err);
+			}
+			if (status.authorized) {
+				console.log('show scanner');
+				//show QR Scanner
+				document.body.classList.add('QRScanner');
+				//enable scanner and callback
+				QRScanner.scan(self.foundQRCode);
+				QRScanner.show();
+			} else if (status.denied) {
+				// The video preview will remain black, and scanning is disabled. We can
+				// try to ask the user to change their mind, but we'll have to send them
+				// to their device settings with
+				QRScanner.getStatus((status) => {
+					if ((!status.authorized) && (status.canOpenSettings)) {
+						if (confirm('Would you like to enable QR code scanning? You can allow camera access in your settings.')) {
+							QRScanner.openSettings();
+						}
+					}
+				});
+			} else {
+				// we didn't get permission, but we didn't get permanently denied. (On
+				// Android, a denial isn't permanent unless the user checks the "Don't
+				// ask again" box.) We can ask again at the next relevant opportunity.
+			}
+		},
+		initQRImport() {
+			const self = this;
+			console.log('init');
+			//check scanner obj exists
+			if (typeof (QRScanner) !== 'undefined') {
+				console.log('prep');
+				//make sure the user is ready
+				QRScanner.prepare(self.QRInitialised); // show the prompt
+			} else {
+				console.log('Unable to find QRScanner Lib');
+			}
+		},
 		/**
 		 * Sign data - apply pin and session info and make requests to initiate transfer
 		 *

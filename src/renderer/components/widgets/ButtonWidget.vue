@@ -73,6 +73,13 @@ button * {
 	font-family: 'Nunito', sans-serif;
 	justify-content: center;
 }
+
+.platformWeb.mobile button {
+	padding:0px 8px;
+	height: 36px;
+	line-height: 36px;
+}
+
 .disable {
 	opacity:0.1;
 	cursor: default;
@@ -104,6 +111,10 @@ button.small {
 	width:auto;
 	margin:0px 2px;
 }
+.platformWeb.mobile button.small {
+	height:24px;
+	line-height:24px;
+}
 
 .night button.green {
 	background-color:#1bb394;
@@ -121,6 +132,18 @@ button.small {
 }
 
 
+.night button.cancel {
+	background-color:#161924;
+}
+.night button.cancel:hover {
+	background-color:#000;
+}
+.light button.cancel {
+	background-color:#2c3442;
+}
+.light button.cancel:hover {
+	background-color:#2d384d;
+}
 button.red {
     background-color: #fe6963;
     color: #fff;
@@ -161,5 +184,8 @@ button.red:hover {
 	mask: url('../../assets/pickaxe.svg') no-repeat 50% 50%;
 	-webkit-mask-size: cover;
 	mask-size: cover;
+}
+.platformWeb.mobile .miningIco {
+	height: 36px;
 }
 </style>

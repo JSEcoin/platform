@@ -8,7 +8,8 @@
 			
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
-				<input type="text" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
+				<div class="interactiveIco" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
+				<input autocapitalize="off" :type="inputType" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
 			</div>
 			<!-- xInput plus Ico -->
 
@@ -18,7 +19,7 @@
 				<!-- xPassword Field Ico -->
 
 				<!-- Input no Ico -->
-				<input :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
+				<input autocapitalize="off" :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
 				<!-- xInput no Ico -->
 			</div>
 		</label>
@@ -55,6 +56,13 @@ export default {
 		 * input name
 		 */
 		name: {
+			type: String,
+			default: '',
+		},
+		/**
+		 * icon has an action event
+		 */
+		eventaction: {
 			type: String,
 			default: '',
 		},
@@ -144,6 +152,22 @@ export default {
 			const self = this;
 			self.$refs.input.focus();
 		},
+		/**
+		 * Emit event
+		 */
+		emitEvent(eventName, e) {
+			const self = this;
+			e.preventDefault();
+			e.stopPropagation();
+			/**
+			 * keyup event.
+			 *
+			 * @event success
+			 * @type {string} value of input
+			 */
+			console.log(eventName);
+			self.$emit(eventName);
+		},
 	},
 };
 </script>
@@ -193,6 +217,15 @@ input {
 	color:#666;
 	border-radius: 3px;
 	cursor:text
+}
+.interactiveIco {
+    display: block;
+    position: absolute;
+    left: 0px;
+    bottom: 8px;
+    width: 30px;
+    height: 30px;
+	cursor: pointer;
 }
 
 .night .error input,
@@ -286,100 +319,4 @@ input[name="password"] {
 	right: 14px;
 	cursor: pointer;
 }
-/* Checkbox switch 
-
-.checkbox-switch {
-    cursor: pointer;
-    display: inline-block;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
-    width: 80px;
-    height: 30px;
-    -webkit-border-radius: 30px;
-    border-radius: 30px;
-    line-height: 1.2;
-    font-size: 14px;
-}
-
-.checkbox-switch input.input-checkbox {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 80px;
-	height: 30px;
-	padding: 0;
-	margin: 0;
-	opacity: 0;
-	z-index: 2;
-	cursor: pointer;
-}
-
-.checkbox-switch .checkbox-animate {
-    position: relative;
-    width: 80px;
-    height: 30px;
-    background-color: #95a5a6;
-    -webkit-transition: background 0.25s ease-out 0s;
-    transition: background 0.25s ease-out 0s;	
-	border-radius: 30px;
-}
-
-.checkbox-switch .checkbox-animate:before {
-	content: "";
-	display: block;
-	position: absolute;
-	width: 20px;
-	height: 20px;
-	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	background-color: #7f8c8d;
-	top: 5px;
-	left: 5px;
-	 -webkit-transition: left 0.3s ease-out 0s;
-    transition: left 0.3s ease-out 0s;
-    z-index: 10;
-}
-
-.checkbox-switch input.input-checkbox:checked + .checkbox-animate {
-	background-color: #2ecc71;
-	border-radius: 30px;
-}
-
-.checkbox-switch input.input-checkbox:checked + .checkbox-animate:before {
-	left: 55px;
-	background-color: #27ae60;
-}
-
-.checkbox-switch .checkbox-off,
-.checkbox-switch .checkbox-on {
-	float: left;
-	color: #fff;
-	font-weight: 700;
-	padding-top: 6px;
-	 -webkit-transition: all 0.3s ease-out 0s;
-    transition: all 0.3s ease-out 0s;
-}
-
-.checkbox-switch .checkbox-off {
-	margin-left: 30px;
-	opacity: 1;
-}
-
-.checkbox-switch .checkbox-on {
-	display: none;
-	float: right;
-	margin-right: 35px;
-	opacity: 0;
-}
-
-.checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-off {
-	display: none;
-	opacity: 0;
-}
-
-.checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-on {
-	display: block;
-	opacity: 1;
-}*/
 </style>

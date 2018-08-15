@@ -8,17 +8,17 @@
 			<div class="row" style="">
 				<div v-if="balanceMajor >= 1" class="valueIconDisplay">
 					<Coin :coinClass="{gold: balanceMajor >= 1}"/>
-					{{balanceMajor}} <span>JSE</span>
+					{{balanceMajor}}&nbsp;<span>JSE</span>
 				</div>
 			</div>
 			<div v-if="balanceMinor > 0" class="row" style="">
 				<div class="valueIconDisplay">
 					<Coin :coinClass="{silver: balanceMinor > 0}"/>
-					0.{{balanceMinor}} <span>JSE</span>
+					0.{{balanceMinor}}&nbsp;<span>JSE</span>
 				</div>
 			</div>
 			<template slot="footer">
-				<p class="footerTxt">Updated {{ fromNow }}</p>
+				<p class="footerTxt">Updated <br v-if="$store.getters.whichPlatform === 'mobile'"/> {{ fromNow }}</p>
 			</template>
 		</ContentWidget>
 		<!-- xCurrent Balance -->
@@ -28,11 +28,11 @@
 			<div class="row" style="">
 				<div class="valueIconDisplay">
 					<Coin :coinClass="{anim:animateCoin, gold:todaysEarnings > 0, silver:todaysEarnings < 1}"/>
-					{{todaysEarnings}} <span>JSE</span>
+					{{todaysEarnings}}&nbsp;<span>JSE</span>
 				</div>
 			</div>
 			<template slot="footer" v-if="rewardReceivedFromNow">
-				<p class="footerTxt">Received {{ rewardReceivedFromNow }}</p>
+				<p class="footerTxt">Received <br v-if="$store.getters.whichPlatform === 'mobile'"/> {{ rewardReceivedFromNow }}</p>
 			</template>
 		</ContentWidget>
 		<!-- xEarnings Today -->
@@ -51,13 +51,13 @@
 							</div>
 						</div>
 					</div>
-					{{hashesFound}} <span>Hashes</span>
+					{{hashesFound}}&nbsp;<span>Hashes</span>
 				</div>
 			</div>
 			<div class="row" style="">
 				<div class="valueIconDisplay">
 					<div class="miner"></div>
-						{{activeMiners}} <span>{{minersTitle}}</span>
+						{{activeMiners}}&nbsp;<span>{{minersTitle}}</span>
 				</div>
 			</div>
 		</ContentWidget>
@@ -139,10 +139,16 @@ export default {
 .miningOverview  {
 	margin:12px 12px 0px 12px;
 }
+.platformWeb.mobile .miningOverview {
+	margin:12px 6px 0px 6px;
+}
 .miningOverview dl {
 	margin:0px 8px;
 	flex-grow: 1;
 	width:33%;
+}
+.platformWeb.mobile .miningOverview dl {
+	margin:0px 4px;
 }
 .miningOverview dl.hasFooter {
 	padding-bottom:28px;
@@ -161,11 +167,12 @@ export default {
 }
 .valueIconDisplay {
 	align-self: center;
+	align-items: center;
     padding-left: 26px;
     font-size: 2em;
     color: #3598db;
     font-weight: bold;
-	display: inline-block;
+	display: flex;
 	width:100%;
 }
 .valueIconDisplay span {
@@ -179,6 +186,7 @@ export default {
 .valueIconDisplay .miner {
 	margin-left: -26px;
 	float:left;
+	margin-right:4px;
 }
 .hash {
 	background-image:url('../../assets/hashes.png');
@@ -236,6 +244,7 @@ export default {
 .flip-container, .front, .back {
 	width: 20px;
 	height: 20px;
+	margin-right:4px;
 }
 
 .flipper {

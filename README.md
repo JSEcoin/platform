@@ -89,31 +89,21 @@ If you try this out - Expect there to be sea krakens and unknown objects lurking
 
 ### Build
 
-1. Executing `npm run mobile` will compile the mobile app into `./dist/mobile`.
+1. Executing `npm run mobile` will compile the platform into `./build/mobile/www/` and will not build the apk.
+2. Executing `npm run mobile:android` will compile the platform app into `./build/mobile/www/` - build the apk and deploy to android vm or device if attached.
 
 #### Packaging and deploying Android binaries
-To build an android apk you will need to setup cordova.  
+To build an android apk you will need to first setup cordova.  
 First make sure you have the following required components setup - [Cordova Guide](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support)
 
 - Now setup and install cordova
 
 ```bash
 npm install -g cordova
-cordova create JSECoinMobile com.jsecoin.mobile JSECoinMobile
-cd JSECoinMobile
-cordova platform add android
-cordova plugin add cordova-plugin-background-mode
+cd ./build/mobile/
+npm install
+cordova add android
 ```
-
-- Within the `./www` folder copy across the JSECoin mobile build from `~/platform/dist/mobile`.
-- With you android device in developer mode and connected via USB run `cordova run android --device` this will build the android binaries and deploy to your device.
-  
-- Alternatively if you have an android VM setup you can run `cordova run android` - this will build the app and launch it within your Android VM.
-
-#### Active work
-We are currently in the process of bringing in cordova and dependencies into this project - so that you will be able to automatically initiate the above scripts using a simple command like `npm run mobile:android` and `npm run mobile:android-vm`... and even IOS liek this - `npm run mobile:ios`.  
-
-*For now use the above steps..*
 
 
 <!--

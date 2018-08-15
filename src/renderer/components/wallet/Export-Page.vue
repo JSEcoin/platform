@@ -22,6 +22,7 @@
 							v-model="form.amount.val"
 							placeholder="Amount *"
 							name="amount"
+							inputType="number"
 							:showLabel="form.amount.displayLabel"
 							:flag="form.amount.flag"
 							:iconClass="{gold:form.amount.val >= 1, silver:form.amount.val < 1}"
@@ -203,6 +204,11 @@ export default {
 		signData(pin) {
 			const self = this;
 			self.showPin = false;
+
+			//no pin provided
+			if (!pin) {
+				return;
+			}
 
 			//notification message
 			self.notificationMsg = 'Initiating Export';

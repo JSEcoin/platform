@@ -1,5 +1,5 @@
 <template>
-	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
+	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, 'loggedIn':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
 		<!-- xHashrate acc need to remove -->
@@ -20,17 +20,24 @@
 		<!-- App Page Content -->
 		<router-view></router-view>
 		<!-- xApp Page Content -->
+		<!-- QR scanner -->
+		<footer>
+			<ButtonWidget buttonTxt="Cancel"  v-on:click.native="closeQR()" />
+		</footer>
+		<!-- QR scanner -->
 	</div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import ContentWidget from './components/widgets/ContentWidget.vue';
+import ButtonWidget from './components/widgets/ButtonWidget.vue';
 
 export default {
 	name: 'Application-Page',
 	components: {
 		ContentWidget,
+		ButtonWidget,
 	},
 	data() {
 		return {
@@ -56,12 +63,13 @@ export default {
 		}
 
 		let displayType = 'web';
-		if ((typeof (cordova) !== 'undefined') && (typeof (cordova.on) === 'function')) {
+		if (typeof (cordova) !== 'undefined') {
 			displayType = 'mobile';
 			//console.log(self.$cordova.cordova);
-			cordova.on('deviceready', () => {
+			document.addEventListener('deviceready', () => {
 				self.onDeviceReady();
-			});
+			}, false);
+			//background mode
 			cordova.plugins.backgroundMode.on('activate', () => {
 				console.log('activate - disable web optimisations - silent', self.silentMode);
 				//timeout required or disable optimisation ignored when autosleep set
@@ -90,6 +98,8 @@ export default {
 
 		//define platform
 		if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
+			const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme}`;
+			document.body.className = bodyClass;
 			self.$store.commit('updateAppState', {
 				val: 'desktop',
 				state: 'platform',
@@ -344,13 +354,19 @@ export default {
 	 * Global App Functions
 	 */
 	methods: {
+		closeQR() {
+			document.body.classList.remove('QRScanner');
+			QRScanner.cancelScan();
+			QRScanner.hide();
+			QRScanner.destroy();
+		},
 		onDeviceReady() {
 			const self = this;
 			console.log(cordova.plugins);
 			// Handle the device ready event.
-			cordova.on('pause', self.onPause, false);
-			cordova.on('resume', self.onResume, false);
-			if (cordova.device.platform === 'Android') {
+			document.addEventListener('pause', self.onPause, false);
+			document.addEventListener('resume', self.onResume, false);
+			if (device.platform === 'Android') {
 				document.addEventListener('backbutton', self.onBackKeyDown, false);
 			}
 		},
@@ -523,6 +539,8 @@ export default {
 /* Globals */
 * {
 	outline:none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -564,9 +582,45 @@ body.platformWeb.mobile {
 	font-size:12px;
 }
 
+body.QRScanner {
+	background:transparent !important;
+}
+
+body.QRScanner #JSEA-desktop {
+	background: transparent !important;
+}
+body.QRScanner #JSEA-wrapper {
+	display: none;
+}
+
 p {
 	color:#676666;
 	font-size:0.8em;
+}
+
+footer {
+	display: none;
+}
+
+body.QRScanner footer {
+	display:block;
+	background:#052a79;
+	padding:4px 8px;
+	position: fixed;
+	z-index:1000;
+    bottom: 5px;
+    left: 4px;
+    right: 4px;
+    border-radius: 0px 0px 4px 4px;
+    border-bottom: solid 1px #000;
+}
+
+body.QRScanner.mobile footer {
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    border-radius: 0px;
+    border-bottom: none;
 }
 
 /* Global Table Format */
@@ -615,6 +669,9 @@ tbody td {
 	line-height: 40px;
 	font-size:0.8em;
 }
+.platformWeb.mobile tbody td {
+	padding:0px 6px;
+}
 
 .night tbody tr:nth-child(even) td {
 	background:#14151c;
@@ -657,6 +714,11 @@ header {
 	height:86px;
 	position: relative;
 	z-index:1000000;
+}
+
+.platformWeb.mobile header {
+     background-position: 0px -4px;
+	height: 56px;
 }
 
 .cf:before,
@@ -755,12 +817,11 @@ header {
 /* xTemplate*/
 
 
-
 #JSEA-desktop.loading,
 #JSEA-desktop.loading.light,
 #JSEA-desktop.loading.night {
 	background: transparent;
-	box-shadow: none;
+	box-shadow: none !important;
 }
 #JSEA-desktop.light {
 	background:#fff;
@@ -769,6 +830,7 @@ header {
 	background: #171820;
 }
 #JSEA-desktop {
+	display:none;
 	background:#fff;
 	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
 	border-radius: 4px;
@@ -781,7 +843,11 @@ header {
 .platformWeb.light {
 	background:#fff;
 }
+.platformDesktop #JSEA-desktop {
+	display: block;
+}
 .platformWeb #JSEA-desktop {
+	display: block;;
 	position: absolute;
 	top:50%;
 	left:50%;
@@ -807,8 +873,10 @@ header {
     margin-top: -100px;
 	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
 }
-
 #JSEA-desktop.active {
+	background:#fff;
+}
+#JSEA-desktop.active.loggedIn {
 	background:#fafbfd;
 }
 
@@ -995,14 +1063,23 @@ header .fa-minus:hover {
     font-weight: bold;
     font-size: 0.8em;
     letter-spacing: 1px;
-    padding: 12px 18px;
 	position: relative;
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.platformWeb.mobile .popupHeader {
+	height:30px;
+	margin-bottom:0px;
+}
+
 .popupHeader i {
 	position: absolute;
 	top:4px;
 	right:6px;
 	cursor: pointer;
+	font-size:1.4em;
 }
 .popupHeader i:hover {
 	color:red;
@@ -1010,10 +1087,13 @@ header .fa-minus:hover {
 .popupContent {
 	margin:10px;
 }
+.platformWeb.mobile .popupContent {
+	margin:6px;
+}
 #JSEA-QRBGImage {
 	background-image: url('./assets/images/QR_logo2.png');
 	background-repeat:no-repeat;
-	background-size:20%;
+	background-size:12%;
 	background-position: center;
 	position: absolute;
 	top:0px;
@@ -1029,10 +1109,11 @@ header .fa-minus:hover {
 	border:solid 1px #eee;
 	margin:10px 0px;
 	display: flex;
+    align-items: center;
 }
 .coinInfoLabel b {
 	background:#eee;
-	padding:4px 8px;
+	padding:0px 8px;
 	display: inline-block;
 	min-width:100px;
 	margin-right:10px;
@@ -1053,6 +1134,10 @@ header .fa-minus:hover {
     font-family: courier;
     font-weight: bold;
 }
+.platformWeb.mobile #JSEA-coinCode {
+    font-size: 0.6em;
+}
+
 .platformWeb #JSEA-QRMask {
 	top:0px;
 	bottom:0px;
@@ -1086,6 +1171,10 @@ header .fa-minus:hover {
 	margin-top:-222px;
 	background:#fff;
 	border-radius:4px;
+}
+.platformWeb.mobile #JSEA-QRMask > div {
+	width:340px;
+	margin-left:-170px;
 }
 
 .popupContent .fa-angle-right,
@@ -1133,5 +1222,22 @@ header .fa-minus:hover {
 }
 .swal-modal {
 	width:458px;
+}
+.platformWeb.mobile .swal-modal {
+	width:338px;
+}
+.platformWeb.mobile .swal-icon:first-child {
+	margin:22px auto 0px auto;
+}
+.platformWeb.mobile .swal-title {
+	font-size:20px;
+}
+
+.platformWeb.mobile .popupMessage {
+	font-size:0.9em;
+}
+
+.platformWeb.mobile .infoBox {
+	word-wrap: break-word;
 }
 </style>

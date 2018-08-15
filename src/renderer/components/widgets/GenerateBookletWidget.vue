@@ -47,18 +47,21 @@ export default {
 	},
 	created() {
 		const self = this;
-
+		let imgPath = '';
+		if (self.$store.getters.whichPlatform === 'mobile') {
+			imgPath = 'file:///android_asset/www/';
+		}
 		// load logo to stick on qr code
-		self.logo.src = 'static/QR_logo2.png';
+		self.logo.src = imgPath+'static/QR_logo2.png';
 		// load logocard to stick on qr code
-		self.logoCard.src = 'static/jseLogo_card2.png';
+		self.logoCard.src = imgPath+'static/jseLogo_card2.png';
 		// folding Instructions
-		self.foldingInstructions.src = 'static/foldingInstructions2.png';
-		self.notes.src = 'static/notes.png';
-		self.accountInfo.src = 'static/accountInfo.png';
-		self.importingMobile.src = 'static/importMobile.png';
-		self.importingDesktop.src = 'static/importDesktop.png';
-		self.coinCodeTitle.src = 'static/coinCodeTitle.png';
+		self.foldingInstructions.src = imgPath+'static/foldingInstructions2.png';
+		self.notes.src = imgPath+'static/notes.png';
+		self.accountInfo.src = imgPath+'static/accountInfo.png';
+		self.importingMobile.src = imgPath+'static/importMobile.png';
+		self.importingDesktop.src = imgPath+'static/importDesktop.png';
+		self.coinCodeTitle.src = imgPath+'static/coinCodeTitle.png';
 	},
 	methods: {
 		/**
@@ -153,16 +156,16 @@ export default {
 					pdfContent.push({
 						//layout: 'exampleLayout', // optional
 						style: 'coinBooklet',
+						pageBreak: 'after',
 						table: {
 							// headers are automatically repeated if the table spans over multiple pages
 							// you can declare how many rows should be treated as headers
 							//headerRows: 1,
 							widths: equalTblWidths,
-							heights: [292, 292],
+							heights: ['auto', 'auto'],
 							margin: [0,0,0,0],
 
 							body: pdfBodyContainer,
-							pageBreak: 'after',
 						},
 					});
 					pdfBody.length = 0;
@@ -181,12 +184,12 @@ export default {
 						pdfContent.push({
 							//layout: 'exampleLayout', // optional
 							style: 'coinBooklet',
+							pageBreak: 'after',
 							table: {
 								widths: equalTblWidths,
-								heights: [292, 292],
+								heights: ['auto', 'auto'],
 								margin: [0,0,0,0],
 								body: pdfBody,
-								pageBreak: 'after',
 							},
 						});
 					}
@@ -195,6 +198,7 @@ export default {
 			}
 			//PDF Markup
 			const dd = {
+				pageSize: 'A4',
 				pageOrientation: 'landscape',
 				pageMargins: [0,0,0,0],
 				content: pdfContent,
@@ -216,14 +220,87 @@ export default {
 					},
 					leftAlignCoinCode: {
 						alignment: 'left',
-						margin: [5,0,0,0],
+						margin: [15,10,10,10],
 						fontSize: 4,
 					},
 				},
 			};
+			console.log(dd);
 
 			//download PDF of coin codes booklet
-			pdfMake.createPdf(dd).download('JSE_CoinCode_Booklet');
+			if (self.$store.getters.whichPlatform === 'mobile') {
+				self.saveToMobile(dd);
+			} else {
+				pdfMake.createPdf(dd).download('JSE_CoinCode_Booklet');
+			}
+		},
+		saveToMobile(docDefinition) {
+			let binaryArray = null;
+			let currentfileEntry = null;
+
+			//error display
+			function fail(error) {
+				console.log(error.code);
+			}
+
+			//share file after generation
+			function shareFile(filePath) {
+				const options = {
+					message: 'JSE Token Coin Code Booklet Attached',
+					subject: 'JSE Coin Code Booklet',
+					files: [filePath],
+					chooserTitle: 'Pick an app',
+				};
+
+				//on success
+				function onSuccess(result) {
+					console.log('Share completed? ' + result.completed);
+					console.log('Shared to app: ' + result.app);
+				}
+
+				//on error
+				function onError(msg) {
+					console.log('Sharing failed with message: ' + msg);
+				}
+
+				//init share file
+				window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+			}
+
+			//
+			function gotFileWriter(writer) {
+				console.log(currentfileEntry);
+				writer.onwriteend = (evt) => {
+					shareFile(currentfileEntry.nativeURL);
+				};
+				writer.onerror = function(e) {
+					console.log('Failed file read: ' + e.toString());
+				};
+				writer.write(binaryArray);
+			}
+
+			//
+			function gotFileEntry(fileEntry) {
+				currentfileEntry = fileEntry;
+				fileEntry.createWriter(gotFileWriter, fail);
+			}
+
+			//
+			function gotFS(fs) {
+   				console.log('file system open: ' + fs.name);
+				const fileName = 'JSE_CoinCode_Booklet.pdf';
+				fs.root.getFile(fileName, {
+					create: true,
+					exclusive: false,
+				}, gotFileEntry, fail);
+			}
+
+			//
+			pdfMake.createPdf(docDefinition).getBuffer((buffer) => {
+				const utf8 = new Uint8Array(buffer);
+				binaryArray = utf8.buffer;
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+			});
 		},
 	},
 };

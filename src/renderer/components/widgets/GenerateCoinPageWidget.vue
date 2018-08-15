@@ -73,18 +73,23 @@ export default {
 	},
 	created() {
 		const self = this;
-
+		let imgPath = '';
+		if (self.$store.getters.whichPlatform === 'mobile') {
+			imgPath = 'file:///android_asset/www/';
+		} else if (self.$store.getters.whichPlatform === 'web') {
+			imgPath = '/';
+		}
 		// load logo to stick on qr code
-		self.logo.src = 'static/QR_logo2.png';
+		self.logo.src = imgPath+'static/QR_logo2.png';
 		// load logocard to stick on qr code
-		self.logoCard.src = 'static/jseLogo_card2.png';
+		self.logoCard.src = imgPath+'static/jseLogo_card2.png';
 		// folding Instructions
-		self.foldingInstructions.src = 'static/foldingInstructions2.png';
-		self.notes.src = 'static/notes.png';
-		self.accountInfo.src = 'static/accountInfo.png';
-		self.importingMobile.src = 'static/importMobile.png';
-		self.importingDesktop.src = 'static/importDesktop.png';
-		self.coinCodeTitle.src = 'static/coinCodeTitle.png';
+		self.foldingInstructions.src = imgPath+'static/foldingInstructions2.png';
+		self.notes.src = imgPath+'static/notes.png';
+		self.accountInfo.src = imgPath+'static/accountInfo.png';
+		self.importingMobile.src = imgPath+'static/importMobile.png';
+		self.importingDesktop.src = imgPath+'static/importDesktop.png';
+		self.coinCodeTitle.src = imgPath+'static/coinCodeTitle.png';
 	},
 	methods: {
 		/**
@@ -274,10 +279,87 @@ export default {
 				},
 			};
 
-			//download PDF of coin codes
-			pdfMake.createPdf(dd).download('JSE_CoinCode',() => {
-				//after download hide loading anim
+			//download PDF of coin codes booklet
+			if (self.$store.getters.whichPlatform === 'mobile') {
+				self.saveToMobile(dd);
+			} else {
+				//download PDF of coin codes
+				pdfMake.createPdf(dd).download('JSE_CoinCode',() => {
+					//after download hide loading anim
+					self.stopLoading();
+				});
+			}
+		},
+		saveToMobile(docDefinition) {
+			const self = this;
+			let binaryArray = null;
+			let currentfileEntry = null;
+
+			//error display
+			function fail(error) {
+				console.log(error.code);
+			}
+
+			//share file after generation
+			function shareFile(filePath) {
+				const options = {
+					message: 'JSE Token Coin Code Attached',
+					subject: 'JSE Coin Code',
+					files: [filePath],
+					chooserTitle: 'Pick an app',
+				};
+
+				//on success
+				function onSuccess(result) {
+					console.log('Share completed? ' + result.completed);
+					console.log('Shared to app: ' + result.app);
+				}
+
+				//on error
+				function onError(msg) {
+					console.log('Sharing failed with message: ' + msg);
+				}
+
+				//remove loading gif on button
 				self.stopLoading();
+
+				//init share file
+				window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+			}
+
+			//
+			function gotFileWriter(writer) {
+				//console.log(currentfileEntry);
+				writer.onwriteend = (evt) => {
+					shareFile(currentfileEntry.nativeURL);
+				};
+				writer.onerror = function(e) {
+					console.log('Failed file read: ' + e.toString());
+				};
+				writer.write(binaryArray);
+			}
+
+			//
+			function gotFileEntry(fileEntry) {
+				currentfileEntry = fileEntry;
+				fileEntry.createWriter(gotFileWriter, fail);
+			}
+
+			//
+			function gotFS(fs) {
+   				//console.log('file system open: ' + fs.name);
+				const fileName = 'JSE_CoinCode.pdf';
+				fs.root.getFile(fileName, {
+					create: true,
+					exclusive: false,
+				}, gotFileEntry, fail);
+			}
+
+			//
+			pdfMake.createPdf(docDefinition).getBuffer((buffer) => {
+				const utf8 = new Uint8Array(buffer);
+				binaryArray = utf8.buffer;
+				window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
 			});
 		},
 		stopLoading() {

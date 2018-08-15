@@ -15,7 +15,7 @@
 				
 				<!-- Download Coin Code PDF Page -->
 				<GenerateCoinPageWidget
-					buttonTxt="Paper Download"
+					:buttonTxt="($store.getters.whichPlatform !== 'mobile')?'Paper Download':'Share Code'"
 					v-bind="{coinData: coinData}" />
 				<!-- xDownload Coin Code PDF Page -->
 

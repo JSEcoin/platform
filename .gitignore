@@ -1,6 +1,11 @@
 .DS_Store
 dist/*
 build/*
+!build/mobile
+build/mobile/www/*
+build/mobile/www
+build/mobile/platforms/android/*
+build/mobile/platforms/browser/*
 !build/icons
 coverage
 node_modules/
