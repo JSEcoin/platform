@@ -8,6 +8,7 @@
 			
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
+				<div class="interactiveIco" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
 				<input autocapitalize="off" :type="inputType" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
 			</div>
 			<!-- xInput plus Ico -->
@@ -55,6 +56,13 @@ export default {
 		 * input name
 		 */
 		name: {
+			type: String,
+			default: '',
+		},
+		/**
+		 * icon has an action event
+		 */
+		eventaction: {
 			type: String,
 			default: '',
 		},
@@ -144,6 +152,22 @@ export default {
 			const self = this;
 			self.$refs.input.focus();
 		},
+		/**
+		 * Emit event
+		 */
+		emitEvent(eventName, e) {
+			const self = this;
+			e.preventDefault();
+			e.stopPropagation();
+			/**
+			 * keyup event.
+			 *
+			 * @event success
+			 * @type {string} value of input
+			 */
+			console.log(eventName);
+			self.$emit(eventName);
+		},
 	},
 };
 </script>
@@ -193,6 +217,15 @@ input {
 	color:#666;
 	border-radius: 3px;
 	cursor:text
+}
+.interactiveIco {
+    display: block;
+    position: absolute;
+    left: 0px;
+    bottom: 8px;
+    width: 30px;
+    height: 30px;
+	cursor: pointer;
 }
 
 .night .error input,

@@ -20,17 +20,24 @@
 		<!-- App Page Content -->
 		<router-view></router-view>
 		<!-- xApp Page Content -->
+		<!-- QR scanner -->
+		<footer>
+			<ButtonWidget buttonTxt="Cancel"  v-on:click.native="closeQR()" />
+		</footer>
+		<!-- QR scanner -->
 	</div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import ContentWidget from './components/widgets/ContentWidget.vue';
+import ButtonWidget from './components/widgets/ButtonWidget.vue';
 
 export default {
 	name: 'Application-Page',
 	components: {
 		ContentWidget,
+		ButtonWidget,
 	},
 	data() {
 		return {
@@ -91,6 +98,8 @@ export default {
 
 		//define platform
 		if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
+			const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme}`;
+			document.body.className = bodyClass;
 			self.$store.commit('updateAppState', {
 				val: 'desktop',
 				state: 'platform',
@@ -345,6 +354,12 @@ export default {
 	 * Global App Functions
 	 */
 	methods: {
+		closeQR() {
+			document.body.classList.remove('QRScanner');
+			QRScanner.cancelScan();
+			QRScanner.hide();
+			QRScanner.destroy();
+		},
 		onDeviceReady() {
 			const self = this;
 			console.log(cordova.plugins);
@@ -524,6 +539,8 @@ export default {
 /* Globals */
 * {
 	outline:none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -565,9 +582,45 @@ body.platformWeb.mobile {
 	font-size:12px;
 }
 
+body.QRScanner {
+	background:transparent !important;
+}
+
+body.QRScanner #JSEA-desktop {
+	background: transparent !important;
+}
+body.QRScanner #JSEA-wrapper {
+	display: none;
+}
+
 p {
 	color:#676666;
 	font-size:0.8em;
+}
+
+footer {
+	display: none;
+}
+
+body.QRScanner footer {
+	display:block;
+	background:#052a79;
+	padding:4px 8px;
+	position: fixed;
+	z-index:1000;
+    bottom: 5px;
+    left: 4px;
+    right: 4px;
+    border-radius: 0px 0px 4px 4px;
+    border-bottom: solid 1px #000;
+}
+
+body.QRScanner.mobile footer {
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    border-radius: 0px;
+    border-bottom: none;
 }
 
 /* Global Table Format */
@@ -764,7 +817,6 @@ header {
 /* xTemplate*/
 
 
-
 #JSEA-desktop.loading,
 #JSEA-desktop.loading.light,
 #JSEA-desktop.loading.night {
@@ -778,6 +830,7 @@ header {
 	background: #171820;
 }
 #JSEA-desktop {
+	display:none;
 	background:#fff;
 	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
 	border-radius: 4px;
@@ -790,7 +843,11 @@ header {
 .platformWeb.light {
 	background:#fff;
 }
+.platformDesktop #JSEA-desktop {
+	display: block;
+}
 .platformWeb #JSEA-desktop {
+	display: block;;
 	position: absolute;
 	top:50%;
 	left:50%;
@@ -1036,7 +1093,7 @@ header .fa-minus:hover {
 #JSEA-QRBGImage {
 	background-image: url('./assets/images/QR_logo2.png');
 	background-repeat:no-repeat;
-	background-size:20%;
+	background-size:12%;
 	background-position: center;
 	position: absolute;
 	top:0px;

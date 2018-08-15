@@ -24,12 +24,23 @@
         <icon density="xhdpi" src="res/icon/android/icon-96-xhdpi.png" />
         <icon density="xxhdpi" src="res/icon/android/icon-144-xxhdpi.png" />
         <icon density="xxxhdpi" src="res/icon/android/icon-192-xxxhdpi.png" />
+        <preference name="Fullscreen" value="false" />
+        <preference name="Orientation" value="portrait" />
+        <preference name="BackgroundColor" value="0xFF000000" />
+        <preference name="AppendUserAgent" value="JSEMobile" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <preference name="AppendUserAgent" value="JSEMobile" />
     </platform>
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
-    <engine name="android" spec="^7.0.0" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <plugin name="cordova-android-support-gradle-release" spec="^1.4.4">
+        <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
+    </plugin>
+    <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
+    <engine name="browser" spec="^5.0.4" />
+    <engine name="android" spec="^7.1.1" />
 </widget>
