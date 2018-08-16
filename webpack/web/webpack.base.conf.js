@@ -24,7 +24,7 @@ const createLintingRule = () => ({
 const webConfig = {
 	context: path.resolve(__dirname, '../'),
 	entry: {
-	  app: '../../src/renderer/main.js'
+	  app: '../src/renderer/main.js'
 	},
 	output: {
 	  path: config.build.assetsRoot,
