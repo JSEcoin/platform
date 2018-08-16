@@ -62,6 +62,13 @@ export default {
 			});
 		}
 
+		//build for google
+		self.$store.commit('updateAppState', {
+			val: process.env.ISGOOGLE,
+			state: 'isGoogle',
+		});
+
+		//define if mobile
 		let displayType = 'web';
 		if (typeof (cordova) !== 'undefined') {
 			displayType = 'mobile';
@@ -142,18 +149,18 @@ export default {
 		//mobile background mining support - silent mode
 		if (localStorage.getItem('silentMode') !== null) {
 			self.$store.commit('updateAppState', {
-				val: (String(localStorage.getItem('silentMode')) === 'true'),
+				val: ((String(localStorage.getItem('silentMode')) === 'true') && (!process.env.ISGOOGLE)),
 				state: 'silentMode',
 			});
 		}
 		//mobile background mining support
 		if (localStorage.getItem('mobileBackgroundMode') !== null) {
 			self.$store.commit('updateAppState', {
-				val: (String(localStorage.getItem('mobileBackgroundMode')) === 'true'),
+				val: ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.ISGOOGLE)),
 				state: 'mobileBackgroundMode',
 			});
 
-			if ((String(localStorage.getItem('mobileBackgroundMode')) === 'true')) {
+			if ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.ISGOOGLE)) {
 				console.log('enabling background mode');
 				cordova.plugins.backgroundMode.enable();
 			}
@@ -162,7 +169,7 @@ export default {
 		//should app auto mine
 		if (localStorage.getItem('autoMine') !== null) {
 			self.$store.commit('updateAppState', {
-				val: (String(localStorage.getItem('autoMine')) === 'true'),
+				val: ((String(localStorage.getItem('autoMine')) === 'true') && (!process.env.ISGOOGLE)),
 				state: 'autoMine',
 			});
 		} else if (self.$store.getters.whichPlatform === 'web') {

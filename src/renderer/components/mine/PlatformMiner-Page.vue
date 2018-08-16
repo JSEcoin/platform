@@ -2,12 +2,41 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="mine" activeSubNav="mine"></NavWidget>
 		<ScrollWidget>
+			
+			<ContentWidget 
+				v-if="($store.getters.isAppGoogle)"
+				titleTxt="Mining functionality: [Disabled]" 
+				class="mini buttonFooter"
+				style="text-align:center; margin:10px;">
+				<p style="color:#fff;">
+					This to comply with Googles Restricted Content policy.
+				</p>
+					
+				<p style="color:#fff;">
+					If you would like to enable the mining feature on your mobile please download and install our "Alpha Mobile App" available from gitHub.
+				</p>
+				
+				<template slot="footer">
+					<div style="font-size: 12px; display: flex; justify-content: space-around; padding: 10px;">
+						<ButtonWidget
+							:isSmall="true"
+							v-on:click.native="openExternalWindow('https://play.google.com/about/restricted-content/financial-instruments/cryptocurrencies/')"
+							buttonTxt="Googles guidelines"/>
+
+						<ButtonWidget
+							:isSmall="true"
+							v-on:click.native="openExternalWindow('https://github.com/JSEcoin/platform/releases')"
+							buttonTxt="Alpha mobile release"/>
+					</div>
+				</template>
+			</ContentWidget>
 			<!-- Mining Overview -->
 			<MiningOverviewPanelWidget/>
 			<!-- xMining Overview -->
 
 			<!-- Hash Rate Percentage Chart -->
 			<ContentWidget 
+				v-if="(!$store.getters.isAppGoogle)"
 				titleTxt="Hash Rate Percentage Chart" 
 				contentPadding="60px 10px 0px 10px" 
 				hasRelativeContent="true" 
@@ -102,6 +131,23 @@ export default {
 				self.$store.dispatch({
 					type: 'stopPlatformMining',
 				});
+			}
+		},
+		/**
+		 * Opens an external browser window and takes the user to the official upgrade forum post
+		 * https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/
+		 *
+		 * @param {string} url Web address to open in a new browser window
+		 * @public
+		 */
+		openExternalWindow(url) {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
 			}
 		},
 	},

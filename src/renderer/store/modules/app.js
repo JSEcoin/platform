@@ -1,6 +1,6 @@
 const state = {
-	version: '0.5.1', //app version no
-	major: 51, //support only this server release
+	version: '0.5.2', //app version no
+	major: 52, //support only this server release
 	platform: 'web', //platform type [desktop, mobile web]
 	isDev: true, //is in development mode
 	loading: true, //app loading indicator
@@ -12,6 +12,7 @@ const state = {
 	autoLogin: true, //try to login on app load
 	storeUsername: true, //on login store username for quick login
 	jseCoinServer: 'https://server.jsecoin.com', //app server connection address
+	isGoogle: false, //is app hosted on google then disable miner
 };
 
 const mutations = {
@@ -39,6 +40,7 @@ const actions = {};
 
 const getters = {
 	whichPlatform: state => state.platform,
+	isAppGoogle: state => state.isGoogle,
 };
 
 

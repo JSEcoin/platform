@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.jsecoin.mobile" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.jsecoin.alpha" version="0.5.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>JSECoin</name>
     <description>
-        JSECoin Mobile Wallet
+        JSECoin Mobile Wallet Designed to manage and transfer JSE Tokens.
     </description>
     <author email="support@jsecoin.com" href="https://jsecoin.com">
         JSEcoin Ltd
@@ -41,6 +41,7 @@
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^7.1.1" />
 </widget>
