@@ -80,6 +80,7 @@ export default {
 		 * @public
 		 */
 		focusInput(val, refNext, e) {
+			console.log('press', e.which);
 			const self = this;
 			//enter
 			if (e.which === 13) {

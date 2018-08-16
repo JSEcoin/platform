@@ -49,7 +49,14 @@ export default {
 		 * @public
 		 */
 		openExternalWindow(url) {
-			this.$electron.shell.openExternal(url);
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
+			}
 		},
 	},
 };

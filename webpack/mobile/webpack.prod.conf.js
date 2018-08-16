@@ -16,6 +16,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const env = process.env.NODE_ENV === 'testing' ?
 	require('./config/test.env') :
 	config.build.env;
+	
+env.ISGOOGLE = (process.env.ISGOOGLE === 'TRUE');
 
 const webpackConfig = merge(baseWebpackConfig, {
 	//mode: 'production',

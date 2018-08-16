@@ -31,7 +31,7 @@ export default {
 			splashWidget: {
 				activeAppIco: false, //fadeIn Animation flag
 				activeTxt: false, //text animation flag
-				splashTxt: 'LOADING MINING<br/>INTERFACE', //text to display
+				splashTxt: 'LOADING INTERFACE', //text to display
 			},
 			offline: {
 				connectionCounter: 30, //counter when user offline
@@ -82,7 +82,7 @@ export default {
 			if (self.offline.connectionCounter <= 0) {
 				clearInterval(self.offline.connectionInterval);
 				self.offline.connectionCounter = 30;
-				self.splashWidget.splashTxt = 'LOADING MINING<br/>INTERFACE';
+				self.splashWidget.splashTxt = 'LOADING INTERFACE';
 				self.getLogin();
 			}
 		});

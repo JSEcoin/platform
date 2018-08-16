@@ -29,7 +29,7 @@
 				<!-- xOn Boot -->
 
 				<!-- Mobile Settings-->
-				<OptionsListWrapperWidget titleTxt="Mobile" v-if="$store.getters.whichPlatform === 'mobile'">
+				<OptionsListWrapperWidget titleTxt="Mobile" v-if="(($store.getters.whichPlatform === 'mobile') && (!$store.getters.isAppGoogle))">
 					<!-- Background Mode -->
 					<SettingsItemRowWidget settingName="Background Support">
 						<ToggleSwitchWidget
@@ -52,7 +52,7 @@
 				<!-- xMobile Settings -->
 
 				<!-- Login -->
-				<OptionsListWrapperWidget titleTxt="Login"  v-if="(($store.getters.whichPlatform === 'desktop') || ($store.getters.whichPlatform === 'mobile'))">
+				<OptionsListWrapperWidget titleTxt="Login" v-if="(($store.getters.whichPlatform === 'desktop') || ($store.getters.whichPlatform === 'mobile'))">
 					<!-- Auto Login -->
 					<SettingsItemRowWidget settingName="Auto Login">
 						<ToggleSwitchWidget
@@ -64,7 +64,7 @@
 					<!-- xAuto Login -->
 					
 					<!-- Auto Mine -->
-					<SettingsItemRowWidget settingName="Auto Mine">
+					<SettingsItemRowWidget settingName="Auto Mine" v-if="(!$store.getters.isAppGoogle)">
 						<ToggleSwitchWidget
 							v-model="autoMine"
 							v-bind="{
