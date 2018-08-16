@@ -222,6 +222,26 @@ export default {
 				setTimeout(() => {
 					self.$refs['pinCode'+refNextItem].focus();
 				}, 10);
+			} else {
+				let inputVal = e.target.valueAsNumber;
+				if (inputVal >= 0) {
+					inputVal = Number(String(inputVal).substr(String(inputVal).length - 1));
+				} else {
+					inputVal = 0;
+				}
+				self.form.pinCode[val] = inputVal;
+				if (refNextItem >= 4) {
+					if (refPrevItem >= 3) {
+						if (self.form.pinCode[`val${refPrevItem}`].length === 0) {
+							self.form.showPin[`val${refNextItem}`] = false;
+						} else {
+							self.form.showPin[`val${refNextItem}`] = true;
+						}
+					}
+				}
+				setTimeout(() => {
+					self.$refs['pinCode'+refNextItem].focus();
+				}, 10);
 			}
 		},
 	},

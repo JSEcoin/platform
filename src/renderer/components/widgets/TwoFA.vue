@@ -80,7 +80,6 @@ export default {
 		 * @public
 		 */
 		focusInput(val, refNext, e) {
-			console.log('press', e.which);
 			const self = this;
 			//enter
 			if (e.which === 13) {
@@ -124,6 +123,7 @@ export default {
 
 			//number pressed
 			if (isFinite(e.key)) {
+				console.log(e.key);
 				self.form.authCode[val] = e.key;
 				/**
 				 * key-up event.
@@ -136,7 +136,16 @@ export default {
 				refNext = (refNext === 6)?1:refNext+1;
 				self.$refs['authCode'+refNext].focus();
 			} else {
-				self.$emit('key-up', val, 0);
+				let inputVal = e.target.valueAsNumber;
+				if (inputVal >= 0) {
+					inputVal = Number(String(inputVal).substr(String(inputVal).length - 1));
+				} else {
+					inputVal = 0;
+				}
+				self.form.authCode[val] = inputVal;
+				self.$emit('key-up', val, inputVal);
+				refNext = (refNext === 6)?1:refNext+1;
+				self.$refs['authCode'+refNext].focus();
 			}
 		},
 	},
