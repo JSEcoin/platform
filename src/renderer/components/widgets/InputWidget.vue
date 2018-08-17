@@ -19,15 +19,26 @@
 				<!-- xPassword Field Ico -->
 
 				<!-- Input no Ico -->
-				<input autocapitalize="off" :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
+				<input autocapitalize="off" :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value, 'password')" />
 				<!-- xInput no Ico -->
 			</div>
 		</label>
+		<!-- Password strength display -->
+		<ul class="passwordStrengthDisplay" v-if="passwordStrength">
+			<li :class="{'highlight':passScore > 0}"></li>
+			<li :class="{'highlight':passScore > 1}"></li>
+			<li :class="{'highlight':passScore > 2}"></li>
+			<li :class="{'highlight':passScore > 3}"></li>
+		</ul>
+		<span class="passwordStrengthText" v-if="passwordStrength">{{passScoreText[passScore]}}</span>
+		<!-- xPassword strength display -->
 		<!-- xInput Field -->
 	</div>
 </template>
 
 <script>
+import zxcvbn from 'zxcvbn';
+
 /**
  * @description
  * Input Widget
@@ -38,6 +49,14 @@ export default {
 		return {
 			showPass: false,			//password input set eye icon
 			passDisplay: this.inputType,	//password input type ['password','text']
+			passScore: 0,
+			passScoreText: [
+				'Password Strength',
+				'Weak',
+				'Ok',
+				'Strong',
+				'Very Strong',
+			],
 		};
 	},
 	model: {
@@ -117,6 +136,13 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		/**
+		 * Show input password strength
+		 */
+		passwordStrength: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	methods: {
 		/**
@@ -135,7 +161,7 @@ export default {
 		/**
 		 * Emit keyup event
 		 */
-		keyUp(val) {
+		keyUp(val, inputType) {
 			const self = this;
 			/**
 			 * keyup event.
@@ -144,6 +170,10 @@ export default {
 			 * @type {string} value of input
 			 */
 			self.$emit('keyup', val);
+			//if password set score
+			if ((inputType === 'password') && (self.passwordStrength)) {
+				self.passScore = zxcvbn(val).score;
+			}
 		},
 		/**
 		 * Used to focus the input from the parent
@@ -318,5 +348,34 @@ input[name="password"] {
 	bottom: 18px;
 	right: 14px;
 	cursor: pointer;
+}
+
+.passwordStrengthDisplay {
+	display: flex;
+	border: solid 1px rgba(0,0,0,0.06);
+    padding: 4px 0px;
+    border-radius: 8px;
+    margin: 0px 6px;
+}
+.passwordStrengthDisplay li {
+	flex:1; 
+	height:4px; 
+	border-radius:4px; 
+	background:#ccc;
+	list-style:none;
+	margin:0px 6px;
+	transition: background 0.2s;
+}
+.passwordStrengthDisplay li.highlight {
+	background:#3598db;
+}
+.passwordStrengthText{
+    text-align: center;
+    font-size: 0.55em;
+    text-transform: uppercase;
+    font-weight: bold;
+    /* color: #ccc; */
+    padding-right: 6px;
+    display: block;
 }
 </style>
