@@ -680,7 +680,7 @@ footer {
 	text-align:center;
 	color:#30c1ea;
 	font-size:0.9em;
-	padding:0px 20px;
+	padding:10px 8px;
 	cursor: pointer;
 	float:right;
 }
