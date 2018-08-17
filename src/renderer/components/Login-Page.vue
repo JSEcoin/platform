@@ -75,7 +75,7 @@
 								</div>
 								<!-- xPassword Input -->
 								<!-- Request Password -->
-								<!--<div id="JSEA-forgotPass">Forgot Password</div>-->
+								<div id="JSEA-forgotPass">Forgot Password</div>
 								<!-- xRequest Password -->
 							</div>
 							<!-- xUser Pass login interface -->
@@ -95,8 +95,13 @@
 							<!-- x2FA interface -->
 						</ContentWidget>
 						
-						<ButtonWidget type="submit"
-							buttonTxt="Continue"/>
+						<div class="row">
+							<ButtonWidget type="submit"
+								buttonTxt="Login" style="margin-right:5px;"/>
+
+							<ButtonWidget
+								buttonTxt="Register" style="margin-left:5px;" v-on:click.native="registerUser"/>
+						</div>
 					</div>
 				</form>				
 				<!-- xLogin Form -->
@@ -239,6 +244,16 @@ export default {
 	 * Login Functions
 	 */
 	methods: {
+		/**
+		 * Redirect users to registration screen
+		 *
+		 * @returns nothing
+		 * @public
+		 */
+		registerUser() {
+			const self = this;
+			self.$router.push('register');
+		},
 		/**
 		 * Processes captcha iframe response success/fail from the server
 		 * https://jsecoin.com/iCaptcha/iCaptcha.html?x=1
