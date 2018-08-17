@@ -1,5 +1,5 @@
 <template>
-	<div id="JSEA-appBody" class="vb" v-bar :class="{'noSubNav': noSubNav}">
+	<div id="JSEA-appBody" class="vb" v-bar :class="{'noSubNav': noSubNav, 'noNav': noNav}">
 		<div>
 			<!-- @slot Content to scroll -->
 			<slot/>
@@ -22,6 +22,13 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		/**
+		 * Does page have a nav - changes position of scroll bar
+		 */
+		noNav: {
+			type: Boolean,
+			default: false,
+		},
 	},
 };
 </script>
@@ -40,6 +47,9 @@ export default {
 	overflow:hidden;
 	border-radius:0px 0px 4px 4px;
 	position: absolute !important;
+}
+#JSEA-appBody.noNav  {
+	top:0px;
 }
 
 #JSEA-appBody.noSubNav  {
