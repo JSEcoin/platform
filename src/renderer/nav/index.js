@@ -7,6 +7,9 @@ import splashLoadingScreen from '@/components/SplashLoadingScreen-Page';
 //login
 import login from '@/components/Login-Page';
 
+//Register
+import register from '@/components/Register-Page';
+
 //upgradeApp
 import upgradeApp from '@/components/UpgradeApp-Page';
 
@@ -55,6 +58,11 @@ const router = new Router({
 			path: '/login',
 			name: 'login',
 			component: login,
+		},
+		{
+			path: '/register',
+			name: 'register',
+			component: register,
 		},
 		{
 			path: '/dashboard',
