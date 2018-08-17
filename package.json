@@ -115,7 +115,8 @@
 		"vue-slider-component": "^2.6.2",
 		"vue-swal": "^0.1.0",
 		"vuebar": "0.0.18",
-		"vuex": "^2.3.1"
+		"vuex": "^2.3.1",
+		"zxcvbn": "^4.4.2"
 	},
 	"devDependencies": {
 		"autoprefixer": "^7.1.2",
