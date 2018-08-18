@@ -21,7 +21,7 @@
 		<router-view></router-view>
 		<!-- xApp Page Content -->
 		<!-- QR scanner -->
-		<footer>
+		<footer v-if="($store.getters.whichPlatform === 'mobile')">
 			<ButtonWidget buttonTxt="Cancel"  v-on:click.native="closeQR()" />
 		</footer>
 		<!-- QR scanner -->
@@ -606,6 +606,9 @@ p {
 }
 
 footer {
+	display: none;
+}
+.hide {
 	display: none;
 }
 
