@@ -1,10 +1,11 @@
 <template>
 	<div class="col">
 		<b>Enter Pin:</b>
-		<p>
+		<slot></slot>
+		<!--<p>
 			Your pin is 4-12 characters long<br />
 			<i>Please make sure you have set it within the web platform interface.</i>
-		</p>
+		</p>-->
 		<label style="margin-bottom:10px;">
 			<div class="inputLabel" style="opacity:1">User Pin *</div>
 			<input class="pin" :class="{'show':form.showPin.val1}" maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.pinCode.val1" />
@@ -22,9 +23,9 @@
 		</label>
 		
 		<!-- Transfer Funds Button -->
-		<div class="row">
-			<ButtonWidget style="margin:10px;" v-on:click.native="transfer()" buttonTxt="Initiate Transfer"/>
-			<ButtonWidget style="margin:10px;" class="cancel" v-on:click.native="cancel()" buttonTxt="Cancel" />
+		<div class="row" :class="{'justifyCenter':!enableCancelButton}">
+			<ButtonWidget style="margin:10px;" v-on:click.native="transfer()" :buttonTxt="submitButtonTxt"/>
+			<ButtonWidget v-if="enableCancelButton" style="margin:10px;" class="cancel" v-on:click.native="cancel()" buttonTxt="Cancel" />
 		</div>
 		<!-- xTransfer Funds Button -->
 	</div>
@@ -99,6 +100,20 @@ export default {
 				'',
 			],
 		},
+		/**
+		 * submit button text
+		 */
+		submitButtonTxt: {
+			type: String,
+			default: 'Initiate Transfer',
+		},
+		/**
+		 * Enable Cancel button
+		 */
+		enableCancelButton: {
+			type: Boolean,
+			default: true,
+		},
 	},
 	created() {
 		const self = this;
@@ -157,6 +172,7 @@ export default {
 			const refNextItem = (refNext === 12) ? 1 : refNext+1;
 			const refPrevItem = (refNext === 1) ? 12 : refNext-1;
 
+			this.$emit('keypress');
 			//enter
 			if (e.which === 13) {
 				self.transfer();
@@ -168,7 +184,7 @@ export default {
 				refNext = (refNext === 1)?12:refNext-1;
 				if (refNextItem >= 4) {
 					if (refPrevItem >= 3) {
-						console.log('x', self.form.pinCode[`val${refNextItem}`]);
+					//	console.log('x', self.form.pinCode[`val${refNextItem}`]);
 					//	if (self.form.pinCode[`val${refNextItem}`].length === 0) {
 							let step = refNextItem;
 							for (step; step <= 12; step++) {
@@ -249,6 +265,9 @@ export default {
 </script>
 
 <style scoped>
+.justifyCenter {
+	justify-content: center;
+}
 
 label {
 	font-size:0.9em;
