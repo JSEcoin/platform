@@ -1,5 +1,7 @@
 <template>
 	<AppWrapperWidget>
+		<!-- register -->
+		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=2"></iframe>
 		<ScrollWidget v-bind="{noNav:true}">
 			<!-- register Page -->
 			<div id="JSEA-registerPage">
@@ -83,7 +85,6 @@
 									<!-- xPassword Input -->
 								</div>
 							</ContentWidget>
-
 									
 							<ContentWidget class="registerFormContainer">
 								<div>
@@ -158,14 +159,15 @@
 									<!-- Country Input -->
 									<div class="row">
 										<InputWidget 
+											inputFieldType="select"
 											v-model="form.country.val"
 											placeholder="Country"
 											name="country"
 											maxlength="254"
 											ref="country"
-											:showLabel="form.country.displayLabel"
-											:flag="!form.country.valid || form.country.flag"
-											@keyup="keyWatch('country')" />
+											@input="updateCountryCodeVal"
+											v-bind="{showLabel:true}"
+											:flag="!form.country.valid || form.country.flag" />
 									</div>
 									<!-- xCountry Input -->
 								</div>
@@ -185,12 +187,14 @@
 								<div class="hr" style="margin:10px;"></div>
 								<ButtonWidget 
 									v-bind="{isSmall:true}"
-									buttonTxt="View Terms and Policy" />
+									style="width:100%"
+									class="cancel"
+									buttonTxt="View Terms and Policy" v-on:click.native="openExternalWindow('https://jsecoin.com/en/legal/privacyPolicy')" />
 							</ContentWidget>			
 							
 							<div class="row">
-								<ButtonWidget :class="{'disable':!acceptTerms}" type="submit"
-									buttonTxt="Register Account" style="margin-right:5px; margin-left:15px;" v-on:click.native="registerAccount" />
+								<ButtonWidget :class="{'disable':!acceptTerms}" :disabled="!acceptTerms" type="submit"
+									buttonTxt="Register Account" style="margin-right:5px; margin-left:15px;" />
 
 								<ButtonWidget
 									buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancelRegister" />
@@ -236,8 +240,27 @@ export default {
 	},
 	data() {
 		return {
+			showCaptcha: false, 		//show iframe captcha
+			captchaResponse: '',		//store captcha response
 			acceptTerms: false,
 			loading: false,	//communicating with the server.
+			badEmailProviders: [
+				'cobin2hood.com',
+				'mailinator',
+				'inboxalias',
+				'maildrop.cc',
+				'guerrillamail',
+				'tm2mail.com',
+				'muimail.com',
+				'hitbts.com',
+				'minex-coin.com',
+				'c1oramn.com',
+				'balanc3r.com',
+				'c1oramn.com',
+				'letsmail9.com',
+				'crymail2.com',
+				'ax80mail.com',
+			],
 			//form modal
 			form: {
 				required: ['fullName', 'email', 'confirmEmail', 'password'], //required fields
@@ -297,7 +320,7 @@ export default {
 					flag: false,
 				},
 				country: {
-					val: '',
+					val: 'US',
 					displayLabel: false,
 					valid: true,			//valid value
 					flag: false,
@@ -316,10 +339,51 @@ export default {
 		};
 	},
 	/**
+	 * Created
+	 * on app init
+	 * - make sure loggedIn flag is off
+	 */
+	created() {
+		const self = this;
+		//listen to messages from iframe
+		window.addEventListener('message', self.captureMsg);
+	},
+	/**
+	 * before leaving remove event listeners
+	 */
+	beforeDestroy() {
+		const self = this;
+		window.removeEventListener('message', self.captureMsg);
+	},
+	/**
 	 * Register Functions
 	 */
 	methods: {
-		registerAccount() {
+		/**
+		 * Processes captcha iframe response success/fail from the server
+		 * https://jsecoin.com/iCaptcha/iCaptcha.html?x=1
+		 * and initialises verification method to display 2FA or proceed and authenticate
+		 *
+		 * @param {object} e - Event response from captcha message listener
+		 * @param {object} e.data - Captcha data obj response
+		 * @param {string} e.data.token - Captcha token
+		 * @returns nothing
+		 * @public
+		 */
+		captureMsg(e) {
+			const self = this;
+			if (-1*e.origin.indexOf('https://jsecoin.com') <= 0) {
+				if ((e.data) && (e.data.token)) {
+					//store token
+					self.captchaResponse = e.data.token;
+					//hide iframe
+					self.showCaptcha = false;
+					//verify and login
+					self.onVerify(self.captchaResponse);
+				}
+			}
+		},
+		onSubmit() {
 			const self = this;
 			//
 			self.form.error.msg = '';
@@ -347,27 +411,123 @@ export default {
 
 				self.loading = true;
 				self.form.error.display = false;
-				//skip recaptcha already done checking 2fa
-				if (self.user.msg2fa) { // dont do recaptcha again for 2fa login
-					self.onVerify();
-				//run recaptcha.
-				} else {
-					self.showCaptcha = true; //shows jsecoin.com captcha screen
-					//self.$refs.invisibleRecaptcha.execute();
-				}
-			} else {
-				self.form.error.display = true;
-				self.form.error.msg = 'Failed to submit form - please check all required fields';
+				self.showCaptcha = true; //shows jsecoin.com captcha screen
 			}
+		},
+		onVerify(response) {
+			const self = this;
+			const localTime = new Date();
+			const localTS = localTime.getTime();
+			const address = `${self.form.addressLine1.val}, ${self.form.addressLine2.val}, ${self.form.cityTown.val}, ${self.form.stateProvinceRegion.val}, ${self.form.zipPostalCode.val}`;
+
+			const registerUserInfo = {
+				name: self.form.fullName.val,
+				email: self.form.email.val,
+				address,
+				country: self.form.country.val,
+				'g-recaptcha-response': response,
+				password: self.form.password.val,
+				app: self.$store.getters.whichPlatform,
+				preRegHashes: 0,
+				localTS,
+				timeOffset: localTime.getTimezoneOffset(),
+				regTime: localTS - window.scriptLoadTS,
+				language: window.navigator.userLanguage || window.navigator.language,
+			};
+			//check cookies
+			if (document.cookie.indexOf('utmSource') > -1) { registerUserInfo.source = window.getCookie('utmSource'); }
+			if (document.cookie.indexOf('utmCampaign') > -1) { registerUserInfo.campaign = window.getCookie('utmCampaign'); }
+			if (document.cookie.indexOf('utmContent') > -1) { registerUserInfo.content = window.getCookie('utmContent'); }
+			//check localstorage
+			if (localStorage.getItem('utmSource') !== null) { registerUserInfo.source = localStorage.getItem('utmSource'); }
+			if (localStorage.getItem('utmCampaign') !== null) { registerUserInfo.campaign = localStorage.getItem('utmCampaign'); }
+			if (localStorage.getItem('utmContent') !== null) { registerUserInfo.content = localStorage.getItem('utmContent'); }
+			if (localStorage.getItem('jseUnique') !== null) { registerUserInfo.jseUnique = localStorage.getItem('jseUnique'); }
+			// check get variables
+			if (window.get.utm_source) { registerUserInfo.source = window.get.utm_source; }
+			if (window.get.utm_campaign) { registerUserInfo.campaign = window.get.utm_campaign; }
+			if (window.get.utm_content) { registerUserInfo.content = window.get.utm_content; }
+
+			//post registration params
+			axios.post(
+				`${self.$store.state.app.jseCoinServer}/register/`,
+				registerUserInfo,
+			).then((res) => {
+				self.user = res.data;
+				//show form
+				self.loading = false;
+				//failed
+				if (self.user.fail === 1) {
+					self.form.error.display = true;
+					self.form.error.msg = res.data.notification;
+					return false;
+				}
+				//self.$store.state.user.session = user.session;
+				window.user = self.user;
+
+				//load dashboard route
+				self.$store.commit('loggedIn', true);
+
+				//user session accepted update key app globals
+				const event = new Event('userDataRefresh');
+				document.dispatchEvent(event, window.user);
+
+				//start mining if user has background mining enabled and user loggedin
+				if (self.$store.state.user.loggedIn) {
+					//initialise socket connection
+					window.startSocketIOConnection();
+				}
+
+				//add tray options
+				if (self.$store.getters.whichPlatform === 'desktop') {
+					self.$electron.ipcRenderer.send('login');
+				}
+
+				//check if new user display PIN requirements form
+				if (self.user.requirePin) {
+					self.$router.push('enterSecurityPin');
+				//else redirect to dashboard
+				} else {
+					self.$router.push('dashboard');
+				}
+				return true;
+			}).catch((err) => {
+				console.log(err);
+				self.status.displayForm = true;
+				self.form.error.display = true;
+				self.loading = false;
+				if (err.response.data.notification) {
+					self.form.error.msg = err.response.data.notification;
+				} else {
+					self.form.error.msg = 'Failed to submit form - please check your connection';
+				}
+			});
 		},
 		checkEmail(input) {
 			const self = this;
+			self.form.error.display = false;
+
 			//email has value
 			if (self.form[input].val.length > 0) {
+				self.form[input].flag = false;
 				self.form[input].valid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.form[input].val);
+				//check against bad domains
+				const result = self.badEmailProviders.filter((domain) => {
+					if (self.form[input].val.indexOf(domain) >= 0) {
+						return domain;
+					}
+					return false;
+				});
+				if (result.length > 0) {
+					self.form[input].flag = true;
+					self.form[input].valid = false;
+					self.form.error.msg = 'This domain has been blacklisted - please use another email provider.';
+					self.form.error.display = true;
+				}
 			//no value reset
 			} else {
 				self.form[input].valid = true;
+				self.form[input].flag = false;
 			}
 		},
 		cancelRegister() {
@@ -407,6 +567,11 @@ export default {
 						self.form[input].valid = false;
 						self.form[input].flag = true;
 					}
+				} else {
+					//clean strings entered
+					setTimeout(() => {
+						self.form[input].val = window.cleanString(self.form[input].val);
+					},10);
 				}
 			//no value reset field
 			} else {
@@ -418,6 +583,27 @@ export default {
 			const self = this;
 			self.form.error.msg = '';
 			self.form.error.display = false;
+		},
+		updateCountryCodeVal(val) {
+			const self = this;
+			self.form.country.val = val;
+		},
+		/**
+		 * Opens an external browser window and takes the user to the official upgrade forum post
+		 * https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/
+		 *
+		 * @param {string} url Web address to open in a new browser window
+		 * @public
+		 */
+		openExternalWindow(url) {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
+			}
 		},
 	},
 };
@@ -513,5 +699,21 @@ export default {
 
 #JSEA-forgotPass:hover {
 	color:#042a7a;
+}
+select {
+	border: 0px;
+    /* border-bottom: solid 1.5px #30c1ea; */
+    border-bottom: solid 1px #ddd;
+    background: #fff;
+    color: #a5a5a5;
+    padding: 4px 8px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 1em;
+    flex-grow: 1;
+	margin: 26px 6px 8px;
+    color: #666;
+    border-radius: 3px;
+    cursor: text;
 }
 </style>
