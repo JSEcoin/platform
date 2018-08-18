@@ -2,118 +2,120 @@
 	<AppWrapperWidget>
 		<!-- login -->
 		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=1"></iframe>
-		<!-- Login Page -->
-		<div id="JSEA-loginPage">
-			<div id="JSEA-loginWrapper">
-				<!-- Login Headers -->
-				
-				<div v-if="loading">
-					<h2 id="JSEA-loginHeader" class="center">Checking Credentials</h2>
-					<h4 id="JSEA-loginSubHeader" class="center">Attempting to log in...</h4>
-				</div>
-				<div v-else>
-					<!-- Login Form -->
-					<div v-if="!show2FA_interface">
-						<h2 id="JSEA-loginHeader" class="center">Your Cryptocurrency Platform</h2>
-						<h4 id="JSEA-loginSubHeader" class="center">Sign in to continue</h4>
+		<ScrollWidget v-bind="{noNav:true}">
+			<!-- Login Page -->
+			<div id="JSEA-loginPage">
+				<div id="JSEA-loginWrapper">
+					<!-- Login Headers -->
+					
+					<div v-if="loading">
+						<h2 id="JSEA-loginHeader" class="center">Checking Credentials</h2>
+						<h4 id="JSEA-loginSubHeader" class="center">Attempting to log in...</h4>
 					</div>
-					<!-- xLogin Form -->
-					<!-- 2FA Form -->
 					<div v-else>
-						<h2 id="JSEA-loginHeader" class="center">Please enter your two factor authentication code</h2>
-						<h4 id="JSEA-loginSubHeader" class="center">(Please note there is a 30 second window to submit your code)</h4>
-					</div>
-					<!-- x2FA Form -->
-				</div>
-				<!-- xLogin Headers -->
-			
-				<!-- Animation to display during server requests -->
-				<SpinnerWidget :class="{active:loading}"/>
-				<!-- xAnimation to display during server requests -->
-
-				<!-- Login error display -->
-				<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
-				<!--<div v-if="form.error.display" class="errorMsg cf" style="width: 60%; margin: 10px auto;">
-					<div><b>Error:</b> "{{}}"</div>
-				</div>-->
-				<!-- xLogin error display -->
-				<!-- Login Form -->
-				<form id="JSEA-loginForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
-					<div v-if="status.displayForm" id="JSEA-loginFormWrapper">
-						<ContentWidget class="loginFormContainer">
-							<!-- User Pass login interface -->
-							<div :class="{hidden:show2FA_interface}">
-								<!-- User Input -->
-								<div class="row">
-									<InputWidget 
-										v-model="form.email.val"
-										placeholder="Email *"
-										name="email"
-										maxlength="254"
-										ref="email"
-										:showLabel="form.email.displayLabel"
-										:flag="!form.email.valid || form.email.flag"
-										@keyup="keyWatch('email')" />
-								</div>
-								<!-- xUser Input -->
-								
-								<!-- Password Input -->
-								<div class="row">
-									<div class="col">
-										<InputWidget 
-											inputType="password"
-											v-bind="{hideShow: true}"
-											v-model="form.password.val"
-											placeholder="Password *"
-											name="password"
-											maxlength="254"
-											ref="password"
-											:showLabel="form.password.displayLabel"
-											:flag="form.password.flag"
-											@keyup="keyWatch('password')" />
-									</div>
-								</div>
-								<!-- xPassword Input -->
-								<!-- Request Password -->
-								<div id="JSEA-forgotPass">Forgot Password</div>
-								<!-- xRequest Password -->
-							</div>
-							<!-- xUser Pass login interface -->
-							<!-- 2FA interface -->
-							<div :class="{hidden:!show2FA_interface}">
-								<div class="row">
-									<!-- 2FA -->
-									<TwoFA v-if="show2FA_interface"
-										v-on:key-up="updateKey" 
-										v-on:submit-code="submitCode" />
-									<!-- X2FA -->
-								</div>
-								<!-- 2FA Timer -->
-								<div id="JSEA-timeout" :style="{width:(timeout*3.34)+'%'}"></div>
-								<!-- x2FA Timer -->
-							</div>
-							<!-- x2FA interface -->
-						</ContentWidget>
-						
-						<div class="row">
-							<ButtonWidget type="submit"
-								buttonTxt="Login" style="margin-right:5px;"/>
-
-							<ButtonWidget
-								buttonTxt="Register" style="margin-left:5px;" v-on:click.native="registerUser"/>
+						<!-- Login Form -->
+						<div v-if="!show2FA_interface">
+							<h2 id="JSEA-loginHeader" class="center">Your Cryptocurrency Platform</h2>
+							<h4 id="JSEA-loginSubHeader" class="center">Sign in to continue</h4>
 						</div>
+						<!-- xLogin Form -->
+						<!-- 2FA Form -->
+						<div v-else>
+							<h2 id="JSEA-loginHeader" class="center">Please enter your two factor authentication code</h2>
+							<h4 id="JSEA-loginSubHeader" class="center">(Please note there is a 30 second window to submit your code)</h4>
+						</div>
+						<!-- x2FA Form -->
 					</div>
-				</form>				
-				<!-- xLogin Form -->
+					<!-- xLogin Headers -->
+				
+					<!-- Animation to display during server requests -->
+					<SpinnerWidget :class="{active:loading}"/>
+					<!-- xAnimation to display during server requests -->
+
+					<!-- Login error display -->
+					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
+					<!--<div v-if="form.error.display" class="errorMsg cf" style="width: 60%; margin: 10px auto;">
+						<div><b>Error:</b> "{{}}"</div>
+					</div>-->
+					<!-- xLogin error display -->
+					<!-- Login Form -->
+					<form id="JSEA-loginForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+						<div v-if="status.displayForm" id="JSEA-loginFormWrapper">
+							<ContentWidget class="loginFormContainer">
+								<!-- User Pass login interface -->
+								<div :class="{hidden:show2FA_interface}">
+									<!-- User Input -->
+									<div class="row">
+										<InputWidget 
+											v-model="form.email.val"
+											placeholder="Email *"
+											name="email"
+											maxlength="254"
+											ref="email"
+											:showLabel="form.email.displayLabel"
+											:flag="!form.email.valid || form.email.flag"
+											@keyup="keyWatch('email')" />
+									</div>
+									<!-- xUser Input -->
+									
+									<!-- Password Input -->
+									<div class="row">
+										<div class="col">
+											<InputWidget 
+												inputType="password"
+												v-bind="{hideShow: true}"
+												v-model="form.password.val"
+												placeholder="Password *"
+												name="password"
+												maxlength="254"
+												ref="password"
+												:showLabel="form.password.displayLabel"
+												:flag="form.password.flag"
+												@keyup="keyWatch('password')" />
+										</div>
+									</div>
+									<!-- xPassword Input -->
+									<!-- Request Password -->
+									<div id="JSEA-forgotPass">Forgot Password</div>
+									<!-- xRequest Password -->
+								</div>
+								<!-- xUser Pass login interface -->
+								<!-- 2FA interface -->
+								<div :class="{hidden:!show2FA_interface}">
+									<div class="row">
+										<!-- 2FA -->
+										<TwoFA v-if="show2FA_interface"
+											v-on:key-up="updateKey" 
+											v-on:submit-code="submitCode" />
+										<!-- X2FA -->
+									</div>
+									<!-- 2FA Timer -->
+									<div id="JSEA-timeout" :style="{width:(timeout*3.34)+'%'}"></div>
+									<!-- x2FA Timer -->
+								</div>
+								<!-- x2FA interface -->
+							</ContentWidget>
+							
+							<div class="row">
+								<ButtonWidget type="submit"
+									buttonTxt="Login" style="margin-right:5px;"/>
+
+								<ButtonWidget
+									buttonTxt="Register" style="margin-left:5px;" v-on:click.native="registerUser"/>
+							</div>
+						</div>
+					</form>				
+					<!-- xLogin Form -->
+				</div>
 			</div>
-		</div>
-		<!-- xLogin Page -->
-		<!-- Footer -->
-		<footer>
-			<div class="hr"></div>
-			<div class="loginCopy center">Copyright JSECoin.com 2018</div>
-		</footer>
-		<!-- xFooter -->
+			<!-- xLogin Page -->
+			<!-- Footer -->
+			<footer>
+				<div class="hr"></div>
+				<div class="loginCopy center">Copyright JSECoin.com 2018</div>
+			</footer>
+			<!-- xFooter -->
+		</ScrollWidget>
 	</AppWrapperWidget>
 </template>
 
@@ -127,6 +129,7 @@ import SpinnerWidget from '@/components/widgets/SpinnerWidget.vue';
 import InputWidget from '@/components/widgets/InputWidget.vue';
 import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 import TwoFA from '@/components/widgets/TwoFA.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
 
 /**
  * @description
@@ -147,6 +150,7 @@ export default {
 		InputWidget,
 		ButtonWidget,
 		TwoFA,
+		ScrollWidget,
 	},
 	data() {
 		return {
@@ -566,9 +570,6 @@ iframe {
 	width: 100%;
     height: 100%;
 	z-index:10000000;
-}
-.hide {
-	display: none;
 }
 #JSEA-loginPage {
 	position: absolute;
