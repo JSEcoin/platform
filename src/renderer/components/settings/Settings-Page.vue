@@ -97,14 +97,14 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import OptionsListWrapperWidget from '../widgets/OptionsListWrapperWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import ToggleSwitchWidget from '../widgets/ToggleSwitchWidget.vue';
-import SettingsItemRowWidget from '../widgets/SettingsItemRowWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import ToggleSwitchWidget from '@/components/widgets/ToggleSwitchWidget.vue';
+import SettingsItemRowWidget from '@/components/widgets/SettingsItemRowWidget.vue';
 
 /**
  * @description

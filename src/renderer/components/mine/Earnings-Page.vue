@@ -35,11 +35,11 @@
 <script>
 import { mapState } from 'vuex';
 import axios from 'axios';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import CoinCodeWidget from '../widgets/CoinCodeWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import CoinCodeWidget from '@/components/widgets/CoinCodeWidget.vue';
 
 /**
  * @description

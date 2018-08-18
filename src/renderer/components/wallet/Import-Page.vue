@@ -164,19 +164,19 @@ import { mapState } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
 import QRious from 'qrious';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import SpinnerWidget from '../widgets/SpinnerWidget.vue';
-import QRCoinCodeWidget from '../widgets/QRCoinCodeWidget.vue';
-import GenerateBookletWidget from '../widgets/GenerateBookletWidget.vue';
-import CoinCodeWidget from '../widgets/CoinCodeWidget.vue';
-import LoadingDelayMaskWidget from '../widgets/LoadingDelayMaskWidget.vue';
-import FormErrorDisplayWidget from '../widgets/FormErrorDisplayWidget.vue';
-import InputWidget from '../widgets/InputWidget.vue';
-import GenerateCoinPageWidget from '../widgets/GenerateCoinPageWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import SpinnerWidget from '@/components/widgets/SpinnerWidget.vue';
+import QRCoinCodeWidget from '@/components/widgets/QRCoinCodeWidget.vue';
+import GenerateBookletWidget from '@/components/widgets/GenerateBookletWidget.vue';
+import CoinCodeWidget from '@/components/widgets/CoinCodeWidget.vue';
+import LoadingDelayMaskWidget from '@/components/widgets/LoadingDelayMaskWidget.vue';
+import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import InputWidget from '@/components/widgets/InputWidget.vue';
+import GenerateCoinPageWidget from '@/components/widgets/GenerateCoinPageWidget.vue';
 
 export default {
 	name: 'Import-Page',

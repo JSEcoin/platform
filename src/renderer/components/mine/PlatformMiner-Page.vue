@@ -69,15 +69,15 @@
 
 <script>
 import { mapState } from 'vuex';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import MiningOverviewPanelWidget from '../widgets/MiningOverviewPanelWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import MiningAcceleratorWidget from '../widgets/MiningAcceleratorWidget.vue';
-import MiningChartWidget from '../widgets/MiningChartWidget.vue';
-import ConsoleWidget from '../widgets/ConsoleWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import MiningOverviewPanelWidget from '@/components/widgets/MiningOverviewPanelWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import MiningAcceleratorWidget from '@/components/widgets/MiningAcceleratorWidget.vue';
+import MiningChartWidget from '@/components/widgets/MiningChartWidget.vue';
+import ConsoleWidget from '@/components/widgets/ConsoleWidget.vue';
 
 /**
  * @description

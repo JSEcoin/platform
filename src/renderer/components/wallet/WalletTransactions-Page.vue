@@ -51,10 +51,10 @@
 
 <script>
 import moment from 'moment';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
 
 /**
  * @description

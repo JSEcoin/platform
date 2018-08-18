@@ -61,7 +61,13 @@
 				</div>
 				<div v-else>
 					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
-						<Pin v-on:submit-pin="signData" />
+						<Pin v-on:submit-pin="signData">
+							
+							<p>
+								Your pin is 4-12 characters long<br />
+								<i>Please make sure you have set it within the web platform interface.</i>
+							</p>
+						</Pin>
 					</form>
 				</div>
 				<!-- Footer Info Txt -->
@@ -82,15 +88,15 @@
 <script>
 import { mapState } from 'vuex';
 import axios from 'axios';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import LoadingDelayMaskWidget from '../widgets/LoadingDelayMaskWidget.vue';
-import FormErrorDisplayWidget from '../widgets/FormErrorDisplayWidget.vue';
-import InputWidget from '../widgets/InputWidget.vue';
-import Pin from '../widgets/Pin.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import LoadingDelayMaskWidget from '@/components/widgets/LoadingDelayMaskWidget.vue';
+import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import InputWidget from '@/components/widgets/InputWidget.vue';
+import Pin from '@/components/widgets/Pin.vue';
 
 /**
  * @description
