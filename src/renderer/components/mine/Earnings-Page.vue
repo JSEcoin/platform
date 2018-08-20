@@ -2,8 +2,18 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="mine" activeSubNav="earnings"></NavWidget>
 		<ScrollWidget>
+			
+			<!-- No Earnings -->
+			<ContentWidget titleTxt="No Earnings Found" v-if="(miningRewardHistory.length <= 0)">
+				<p>
+					We were unable to find any earnings made on this account. <br /> 
+					Please start mining to begin earning JSE Tokens.
+				</p>
+			</ContentWidget>
+			<!-- xNo Earnings -->
+
 			<!-- Recent Platform Mining Earnings -->
-			<ContentWidget titleTxt="Recent Platform Mining Earnings">	
+			<ContentWidget titleTxt="Recent Platform Mining Earnings" v-if="(miningRewardHistory.length > 0)">	
 				<table>
 				<thead>
 					<tr>
