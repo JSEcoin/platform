@@ -26,7 +26,11 @@
 		<!-- xConfirm account -->
 		<!-- Account confirm email sent -->
 		<div class="confirmDisplay" v-else>
-
+			<h4>Email has been resent:</h4>
+			
+			<p>
+				Please check the junk folder in case it has been marked by your mail provider as spam.
+			</p>
 		</div>
 		<!-- xAccount confirm email sent -->
 	</div>
@@ -76,15 +80,12 @@ export default {
 			).then((res) => {
 				console.log('success', res);
 				self.loading = false;
-				if (res.data) {
-					self.form.error.msg = res.data;
-					self.form.error.display = true;
-				} else {
-					self.confirmationSent = true;
-				}
+				self.confirmationSent = true;
 			}).catch((err) => {
 				console.log('err', err);
 				self.loading = false;
+				self.form.error.msg = err.response.data;
+				self.form.error.display = true;
 			});
 		},
 		closeError() {
