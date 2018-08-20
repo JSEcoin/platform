@@ -76,7 +76,7 @@
 									</div>
 									<!-- xPassword Input -->
 									<!-- Request Password -->
-									<div id="JSEA-forgotPass">Forgot Password</div>
+									<!--div id="JSEA-forgotPass">Forgot Passwords</div>-->
 									<!-- xRequest Password -->
 								</div>
 								<!-- xUser Pass login interface -->
