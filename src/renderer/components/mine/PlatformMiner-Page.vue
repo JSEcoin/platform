@@ -8,11 +8,11 @@
 				titleTxt="Mining functionality: [Disabled]" 
 				class="mini buttonFooter"
 				style="text-align:center; margin:10px;">
-				<p style="color:#fff;">
+				<p>
 					This to comply with Googles Restricted Content policy.
 				</p>
 					
-				<p style="color:#fff;">
+				<p>
 					If you would like to enable the mining feature on your mobile please download and install our "Alpha Mobile App" available from gitHub.
 				</p>
 				
