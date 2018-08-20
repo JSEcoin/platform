@@ -64,7 +64,7 @@
 					<!-- xAuto Login -->
 					
 					<!-- Auto Mine -->
-					<SettingsItemRowWidget settingName="Auto Mine" v-if="(!$store.getters.isAppGoogle)">
+					<SettingsItemRowWidget settingName="Auto Mine" v-if="((!$store.getters.isAppGoogle) && (confirmed))">
 						<ToggleSwitchWidget
 							v-model="autoMine"
 							v-bind="{
@@ -149,6 +149,11 @@ export default {
 	 * Computed
 	 * */
 	computed: {
+		confirmed: {
+			get() {
+				return this.$store.state.user.confirmed;
+			},
+		},
 		autoLaunch: {
 			get() {
 				return this.$store.state.app.autoLaunch;
@@ -288,9 +293,14 @@ export default {
 				const bodyClass = `platformWeb web ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
-			//set theme if web
+			//set theme if mobile
 			if (self.$store.getters.whichPlatform === 'mobile') {
 				const bodyClass = `platformWeb mobile ${self.$store.state.app.theme}`;
+				document.body.className = bodyClass;
+			}
+			//set theme if desktop
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				const bodyClass = `platformWeb desktop ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
 		},
