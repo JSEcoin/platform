@@ -4,6 +4,7 @@ import moment from 'moment';
 
 const state = {
 	loggedIn: false, //is user logged in
+	confirmed: false, //has user comfirmed his account via email?
 	balance: '0', //users balance
 	balanceMajor: '0', //major currency
 	balanceMinor: '0', //fractional currency
@@ -81,6 +82,7 @@ const mutations = {
 	 */
 	updateState(state, data) {
 		//update any other user required state items
+		state.confirmed = data.confirmed;
 		state.todaysEarnings = data.todaysEarnings;
 		state.minedLifetime = data.minedLifetime;
 		//state.registrationDate = data.registrationDate;
