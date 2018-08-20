@@ -14,6 +14,9 @@ module.exports = {
 		url: 'https://github.com/jsecoin',
 		text: 'JSECoin on GitHub',
 	},
+	styleguideComponents: {
+		'@': path.join(__dirname, '../../src/renderer'),
+	},
 	//load in additional required images
 	require: [
 		path.join(__dirname, '../../docs/global.requires.js'),
