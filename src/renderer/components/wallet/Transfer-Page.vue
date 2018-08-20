@@ -8,6 +8,11 @@
 				contentPadding="16px 10px 90px 10px" 
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
+
+				<!-- Confirm Account -->
+				<ConfirmAccountMaskWidget v-if="!confirmed" />
+				<!-- xConfirm Account -->
+
 				<!-- Transaction delay display -->
 				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
@@ -56,7 +61,7 @@
 						<!-- xReference Input -->
 					</div>
 					<!-- Transfer Funds Button -->
-					<ButtonWidget style="margin-top:10px;" v-on:click.native="transfer()" buttonTxt="Transfer Funds"/>
+					<ButtonWidget style="margin-top:10px;" :class="{'disable':!confirmed}" :disabled="!confirmed" v-on:click.native="transfer()" buttonTxt="Transfer Funds"/>
 					<!-- xTransfer Funds Button -->
 				</div>
 				<div v-else>
@@ -97,6 +102,7 @@ import LoadingDelayMaskWidget from '@/components/widgets/LoadingDelayMaskWidget.
 import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
 import InputWidget from '@/components/widgets/InputWidget.vue';
 import Pin from '@/components/widgets/Pin.vue';
+import ConfirmAccountMaskWidget from '@/components/widgets/ConfirmAccountMaskWidget.vue';
 
 /**
  * @description
@@ -114,6 +120,7 @@ export default {
 		FormErrorDisplayWidget,
 		InputWidget,
 		Pin,
+		ConfirmAccountMaskWidget,
 	},
 	data() {
 		return {
@@ -146,6 +153,7 @@ export default {
 		};
 	},
 	computed: mapState({
+		confirmed: state => state.user.confirmed,
 		balance: state => state.user.balance,
 	}),
 	created() {

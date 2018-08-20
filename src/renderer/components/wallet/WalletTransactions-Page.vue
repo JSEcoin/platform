@@ -2,8 +2,16 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="wallet" activeSubNav="transactions"></NavWidget>
 		<ScrollWidget>
+			<!-- No Transactions -->
+			<ContentWidget titleTxt="No Transactions Found" v-if="(userHistory.length <= 0)">
+				<p>
+					We were unable to find any transactions made on this account.
+				</p>
+			</ContentWidget>
+			<!-- xNo Transactions -->
+
 			<!-- Sent -->
-			<ContentWidget titleTxt="Sent JSE To">
+			<ContentWidget titleTxt="Sent JSE To" v-if="(userHistory.length > 0)">
 				<ContentWidget 
 					class="containedTransferItem" 
 					:titleTxt="coinDate(transaction.ts)" 
@@ -25,8 +33,8 @@
 			<!-- xSent -->
 			
 			<!-- Received -->
-			<ContentWidget titleTxt="Received JSE From">
-				<ContentWidget  
+			<ContentWidget titleTxt="Received JSE From" v-if="(userHistory.length > 0)">
+				<ContentWidget
 					class="containedTransferItem" 
 					:titleTxt="coinDate(transaction.ts)" 
 					:infoPanelTxt="`${transaction.value}`" 
