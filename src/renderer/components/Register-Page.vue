@@ -714,8 +714,6 @@ export default {
 select {
 	border: 0px;
     /* border-bottom: solid 1.5px #30c1ea; */
-    border-bottom: solid 1px #ddd;
-    background: #fff;
     color: #a5a5a5;
     padding: 4px 8px;
     height: 32px;
@@ -726,5 +724,13 @@ select {
     color: #666;
     border-radius: 3px;
     cursor: text;
+}
+.light select {
+    background: #fff;
+    border-bottom: solid 1px #ddd;
+}
+.night select {
+	background: #101219;
+    border-bottom: solid 1px #444;
 }
 </style>
