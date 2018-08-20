@@ -22,7 +22,7 @@
 						<!-- 2FA Form -->
 						<div v-else>
 							<h2 id="JSEA-loginHeader" class="center">Please enter your two factor authentication code</h2>
-							<h4 id="JSEA-loginSubHeader" class="center">(Please note there is a 30 second window to submit your code)</h4>
+							<h4 id="JSEA-loginSubHeader" class="center">(Please note there is a 60 second window to submit your code)</h4>
 						</div>
 						<!-- x2FA Form -->
 					</div>
@@ -90,7 +90,7 @@
 										<!-- X2FA -->
 									</div>
 									<!-- 2FA Timer -->
-									<div id="JSEA-timeout" :style="{width:(timeout*3.34)+'%'}"></div>
+									<div id="JSEA-timeout" :style="{width:(timeout*1.67)+'%'}"></div>
 									<!-- x2FA Timer -->
 								</div>
 								<!-- x2FA interface -->
@@ -98,9 +98,9 @@
 							
 							<div class="row">
 								<ButtonWidget type="submit"
-									buttonTxt="Login" style="margin-right:5px;"/>
+									buttonTxt="Login" :class="{'singleButton':!show2FA_interface}" />
 
-								<ButtonWidget
+								<ButtonWidget v-if="!show2FA_interface" type="button"
 									buttonTxt="Register" style="margin-left:5px;" v-on:click.native="registerUser"/>
 							</div>
 						</div>
@@ -157,8 +157,8 @@ export default {
 			showCaptcha: false, 		//show iframe captcha
 			showPass: false,			//password input set eye icon
 			passDisplay: 'password',	//password input type ['password','text']
-			TwoFaInterval: false,		//2FA 30 second countdown : setInterval ();
-			timeout: 0,					//TwoFaInterval interval 30 second countdown
+			TwoFaInterval: false,		//2FA 60 second countdown : setInterval ();
+			timeout: 0,					//TwoFaInterval interval 60 second countdown
 			user: {},					//loggedin User Obj
 			captchaResponse: '',		//store captcha response for use if 2FA is setup
 			show2FA_interface: false,	//enable/disable 2FA interface
@@ -469,7 +469,7 @@ export default {
 					self.TwoFaInterval = setInterval(function(){
 						self.timeout++;
 						//counter reached 30seconds reset form to login
-						if (self.timeout >= 30) {
+						if (self.timeout >= 60) {
 							clearInterval(self.TwoFaInterval);
 							self.show2FA_interface = false;
 						}
@@ -481,9 +481,9 @@ export default {
 				self.show2FA_interface = false;
 
 				// No 2fa required
-				if (!self.user.confirmed) {
+				//if (!self.user.confirmed) {
 					//alert('You need to confirm your email address using the link provided in the registration email<br><br><a href="self.$store.state.app.jseCoinServer/resendwelcome/'+user.uid+'/'+user.email+'/" target="_blank">Resend Welcome Email</a>');
-				}
+				//}
 
 				//self.$store.state.user.session = user.session;
 				window.user = self.user;
@@ -506,8 +506,13 @@ export default {
 					self.$electron.ipcRenderer.send('login');
 				}
 
-				//redirect to dashboard
-				self.$router.push('dashboard');
+				//check if new user display PIN requirements form
+				if (self.user.requirePin) {
+					self.$router.push('enterSecurityPin');
+				//else redirect to dashboard
+				} else {
+					self.$router.push('dashboard');
+				}
 				return true;
 			}).catch((err) => {
 				console.log(err);
@@ -570,6 +575,9 @@ iframe {
 	width: 100%;
     height: 100%;
 	z-index:10000000;
+}
+.singleButton {
+	margin-right:5px;
 }
 #JSEA-loginPage {
 	position: absolute;
