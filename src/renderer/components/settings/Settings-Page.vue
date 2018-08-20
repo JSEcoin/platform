@@ -64,7 +64,7 @@
 					<!-- xAuto Login -->
 					
 					<!-- Auto Mine -->
-					<SettingsItemRowWidget settingName="Auto Mine" v-if="(!$store.getters.isAppGoogle)">
+					<SettingsItemRowWidget settingName="Auto Mine" v-if="((!$store.getters.isAppGoogle) && (confirmed))">
 						<ToggleSwitchWidget
 							v-model="autoMine"
 							v-bind="{
@@ -97,14 +97,14 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import OptionsListWrapperWidget from '../widgets/OptionsListWrapperWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import ToggleSwitchWidget from '../widgets/ToggleSwitchWidget.vue';
-import SettingsItemRowWidget from '../widgets/SettingsItemRowWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import ToggleSwitchWidget from '@/components/widgets/ToggleSwitchWidget.vue';
+import SettingsItemRowWidget from '@/components/widgets/SettingsItemRowWidget.vue';
 
 /**
  * @description
@@ -149,6 +149,11 @@ export default {
 	 * Computed
 	 * */
 	computed: {
+		confirmed: {
+			get() {
+				return this.$store.state.user.confirmed;
+			},
+		},
 		autoLaunch: {
 			get() {
 				return this.$store.state.app.autoLaunch;
@@ -288,9 +293,14 @@ export default {
 				const bodyClass = `platformWeb web ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
-			//set theme if web
+			//set theme if mobile
 			if (self.$store.getters.whichPlatform === 'mobile') {
 				const bodyClass = `platformWeb mobile ${self.$store.state.app.theme}`;
+				document.body.className = bodyClass;
+			}
+			//set theme if desktop
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				const bodyClass = `platformWeb desktop ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
 		},

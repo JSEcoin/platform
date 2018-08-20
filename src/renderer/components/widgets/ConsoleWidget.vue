@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import ContentWidget from '../widgets/ContentWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
 /**
  * @description
  * Console Widget

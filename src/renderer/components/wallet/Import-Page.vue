@@ -7,6 +7,11 @@
 				titleTxt="Import Coins" 
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
+				
+				<!-- Confirm Account -->
+				<ConfirmAccountMaskWidget v-if="!confirmed" />
+				<!-- xConfirm Account -->
+
 				<!-- Transaction delay display -->
 				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
@@ -31,130 +36,132 @@
 				</div>
 				<div class="row">
 					<ButtonWidget v-if="$store.getters.whichPlatform === 'mobile'" style="margin-top:10px;margin-right:10px;" v-on:click.native="initQRImport()" buttonTxt="Scanner"/>
-					<ButtonWidget style="margin-top:10px;" v-on:click.native="importCoins()" buttonTxt="Import Coins"/>
+					<ButtonWidget style="margin-top:10px;" :class="{'disable':!confirmed}" :disabled="!confirmed" v-on:click.native="importCoins()" buttonTxt="Import Coins"/>
 				</div>
 			</ContentWidget>
 			<!-- xImport Coins -->
 			
-			<!-- Animation to display during server requests -->
-			<SpinnerWidget :class="{active:loading}"/>
+			<div v-if="confirmed">
+				<!-- Animation to display during server requests -->
+				<SpinnerWidget :class="{active:loading}"/>
 
-			<!-- QR Display Coin Code-->
-			<QRCoinCodeWidget 
-				v-on:click.native="hideQRCode()"
-				v-bind="{
-					initActiveCode,
-					initActiveCodeValue,
-					initActiveCodeExportDate,
-					initCoinCodePos,
-					initCoinData,
-					initAvailableCoins,
-				}"
-				:class="{active: showQR}" />
+				<!-- QR Display Coin Code-->
+				<QRCoinCodeWidget 
+					v-on:click.native="hideQRCode()"
+					v-bind="{
+						initActiveCode,
+						initActiveCodeValue,
+						initActiveCodeExportDate,
+						initCoinCodePos,
+						initCoinData,
+						initAvailableCoins,
+					}"
+					:class="{active: showQR}" />
 
-			<!-- Available Coin Codes -->
-			<ContentWidget 
-				v-if="exportCoinHistory.length > 0" 
-				v-bind="{
-					infoPanelTypeButton: true,
-					bookletData: initAvailableCoins,
-				}"
-				titleTxt="Available Coin Codes" 
-				:infoPanelTxt="($store.getters.whichPlatform !== 'mobile')?'Generate Booklet':'Share Booklet'"
-				:infoPanelIcoClassName="{booklet: true}">
+				<!-- Available Coin Codes -->
+				<ContentWidget 
+					v-if="exportCoinHistory.length > 0" 
+					v-bind="{
+						infoPanelTypeButton: true,
+						bookletData: initAvailableCoins,
+					}"
+					titleTxt="Available Coin Codes" 
+					:infoPanelTxt="($store.getters.whichPlatform !== 'mobile')?'Generate Booklet':'Share Booklet'"
+					:infoPanelIcoClassName="{booklet: true}">
 
-				<!-- Header Button -->
-				<template slot="headerButton">
-					<GenerateBookletWidget
-						v-bind="{
-							bookletData: initAvailableCoins
-						}"/>
-				</template>
-				<!-- xHeader Button -->
-			
-				<table>
-				<thead>
-					<tr>
-						<th>JSE</th>
-						<th align="left">Date</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-if="coin.used === false" v-for="(coin, i) in exportCoinHistory">
-						<td>
-							<CoinCodeWidget 
-								v-on:click.native="showQRCode(coin, i)"
-								v-bind="{
-									coin,
-									showQR: true,
-								}" />
-						</td>
-						<td>{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
-						<td>										
-							<div class="row buttonActions">
-								<!-- Copy Coin Code -->
-								<ButtonWidget 
-									iconClassName="fa fa-copy" 
-									v-on:click.native="copyCoinCode(coin.coinCode)"
-									title="Copy Coin Code"
-									class="small"/>
-								<!-- xCopy Coin Code -->
-								
-								<!-- Import Coin Code -->
-								<ButtonWidget
-									iconClassName="fa fa-download" 
-									v-on:click.native="importCoins(coin.coinCode)"
-									title="Import Coin Code"
-									:class="{disable: (initTransaction)}"
-									class="small"/>
-								<!-- xImport Coin Code -->
-								
-								<!-- Remove Coin Code -->
-								<ButtonWidget 
-									iconClassName="fa fa-close" 
-									v-on:click.native="removeCoin(coin)"
-									title="Remove Coin Code"
-									class="small"/>
-								<!-- xRemove Coin Code -->
-							</div>
-						</td>
-					</tr>
-				</tbody>
-				</table>
-			</ContentWidget>
-			<!-- xAvailable Coin Codes -->
-			
-			<!-- Imported Coin History -->
-			<ContentWidget 
-				v-if="importHistory.length > 0" 
-				titleTxt="Imported Coin History">
-				<table>
-				<thead>
-					<tr>
-						<th align="left" style="text-align:left;padding-left:22px;">JSE</th>
-						<th width="50%">Imported</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(coin, i) in importHistory">
-						<td>
-							<CoinCodeWidget
-								v-bind="{
-									coin,
-									showQR: false,
-								}" />
-						</td>
-						<td style="text-align:center;">{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
-					</tr>
-				</tbody>
-				</table>	
-			</ContentWidget>
-			<!-- xImported Coin History -->
+					<!-- Header Button -->
+					<template slot="headerButton">
+						<GenerateBookletWidget
+							v-bind="{
+								bookletData: initAvailableCoins
+							}"/>
+					</template>
+					<!-- xHeader Button -->
+				
+					<table>
+					<thead>
+						<tr>
+							<th>JSE</th>
+							<th align="left">Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-if="coin.used === false" v-for="(coin, i) in exportCoinHistory">
+							<td>
+								<CoinCodeWidget 
+									v-on:click.native="showQRCode(coin, i)"
+									v-bind="{
+										coin,
+										showQR: true,
+									}" />
+							</td>
+							<td>{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
+							<td>										
+								<div class="row buttonActions">
+									<!-- Copy Coin Code -->
+									<ButtonWidget 
+										iconClassName="fa fa-copy" 
+										v-on:click.native="copyCoinCode(coin.coinCode)"
+										title="Copy Coin Code"
+										class="small"/>
+									<!-- xCopy Coin Code -->
+									
+									<!-- Import Coin Code -->
+									<ButtonWidget
+										iconClassName="fa fa-download" 
+										v-on:click.native="importCoins(coin.coinCode)"
+										title="Import Coin Code"
+										:class="{disable: (initTransaction)}"
+										class="small"/>
+									<!-- xImport Coin Code -->
+									
+									<!-- Remove Coin Code -->
+									<ButtonWidget 
+										iconClassName="fa fa-close" 
+										v-on:click.native="removeCoin(coin)"
+										title="Remove Coin Code"
+										class="small"/>
+									<!-- xRemove Coin Code -->
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					</table>
+				</ContentWidget>
+				<!-- xAvailable Coin Codes -->
+				
+				<!-- Imported Coin History -->
+				<ContentWidget 
+					v-if="importHistory.length > 0" 
+					titleTxt="Imported Coin History">
+					<table>
+					<thead>
+						<tr>
+							<th align="left" style="text-align:left;padding-left:22px;">JSE</th>
+							<th width="50%">Imported</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(coin, i) in importHistory">
+							<td>
+								<CoinCodeWidget
+									v-bind="{
+										coin,
+										showQR: false,
+									}" />
+							</td>
+							<td style="text-align:center;">{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
+						</tr>
+					</tbody>
+					</table>	
+				</ContentWidget>
+				<!-- xImported Coin History -->
 
-			<!-- Listener -->
-			<GenerateCoinPageWidget v-bind="{autoGenerate:true, coinData:genCoin}" />
-			<!-- xListener -->
+				<!-- Listener -->
+				<GenerateCoinPageWidget v-bind="{autoGenerate:true, coinData:genCoin}" />
+				<!-- xListener -->
+			</div>
 		</ScrollWidget>
 	</AppWrapperWidget>
 </template>
@@ -164,19 +171,20 @@ import { mapState } from 'vuex';
 import axios from 'axios';
 import moment from 'moment';
 import QRious from 'qrious';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import SpinnerWidget from '../widgets/SpinnerWidget.vue';
-import QRCoinCodeWidget from '../widgets/QRCoinCodeWidget.vue';
-import GenerateBookletWidget from '../widgets/GenerateBookletWidget.vue';
-import CoinCodeWidget from '../widgets/CoinCodeWidget.vue';
-import LoadingDelayMaskWidget from '../widgets/LoadingDelayMaskWidget.vue';
-import FormErrorDisplayWidget from '../widgets/FormErrorDisplayWidget.vue';
-import InputWidget from '../widgets/InputWidget.vue';
-import GenerateCoinPageWidget from '../widgets/GenerateCoinPageWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import SpinnerWidget from '@/components/widgets/SpinnerWidget.vue';
+import QRCoinCodeWidget from '@/components/widgets/QRCoinCodeWidget.vue';
+import GenerateBookletWidget from '@/components/widgets/GenerateBookletWidget.vue';
+import CoinCodeWidget from '@/components/widgets/CoinCodeWidget.vue';
+import LoadingDelayMaskWidget from '@/components/widgets/LoadingDelayMaskWidget.vue';
+import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import InputWidget from '@/components/widgets/InputWidget.vue';
+import GenerateCoinPageWidget from '@/components/widgets/GenerateCoinPageWidget.vue';
+import ConfirmAccountMaskWidget from '@/components/widgets/ConfirmAccountMaskWidget.vue';
 
 export default {
 	name: 'Import-Page',
@@ -194,6 +202,7 @@ export default {
 		FormErrorDisplayWidget,
 		InputWidget,
 		GenerateCoinPageWidget,
+		ConfirmAccountMaskWidget,
 	},
 	data() {
 		return {
@@ -226,6 +235,7 @@ export default {
 		};
 	},
 	computed: mapState({
+		confirmed: state => state.user.confirmed,
 		balance: state => state.user.balance,
 		waitTimer: state => state.user.waitTimer,
 		importHistory: state => state.user.importHistory,

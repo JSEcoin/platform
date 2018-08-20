@@ -2,62 +2,70 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="mine" activeSubNav="mine"></NavWidget>
 		<ScrollWidget>
-			
+			<!-- Google enforced Policy Display -->
 			<ContentWidget 
 				v-if="($store.getters.isAppGoogle)"
 				titleTxt="Mining functionality: [Disabled]" 
 				class="mini buttonFooter"
 				style="text-align:center; margin:10px;">
-				<p style="color:#fff;">
+				<p>
 					This to comply with Googles Restricted Content policy.
 				</p>
 					
-				<p style="color:#fff;">
+				<p>
 					If you would like to enable the mining feature on your mobile please download and install our "Alpha Mobile App" available from gitHub.
 				</p>
 				
 				<template slot="footer">
 					<div style="font-size: 12px; display: flex; justify-content: space-around; padding: 10px;">
 						<ButtonWidget
+							type="button"
 							:isSmall="true"
 							v-on:click.native="openExternalWindow('https://play.google.com/about/restricted-content/financial-instruments/cryptocurrencies/')"
 							buttonTxt="Googles guidelines"/>
 
 						<ButtonWidget
+							type="button"
 							:isSmall="true"
 							v-on:click.native="openExternalWindow('https://github.com/JSEcoin/platform/releases')"
 							buttonTxt="Alpha mobile release"/>
 					</div>
 				</template>
 			</ContentWidget>
+			<!-- xGoogle enforced Policy Display -->
+
 			<!-- Mining Overview -->
-			<MiningOverviewPanelWidget/>
+			<MiningOverviewPanelWidget v-if="((balanceMajor > 0) || (balanceMinor > 0))"/>
 			<!-- xMining Overview -->
 
 			<!-- Hash Rate Percentage Chart -->
 			<ContentWidget 
 				v-if="(!$store.getters.isAppGoogle)"
 				titleTxt="Hash Rate Percentage Chart" 
-				contentPadding="60px 10px 0px 10px" 
-				hasRelativeContent="true" 
+				contentPadding="10px 10px 0px 10px"
 				:infoPanelTxt="`${hps} H/s`" 
 				:infoPanelIcoClassName="{hash: true}">
-				<!-- Mining Accelerator -->
-				<MiningAcceleratorWidget/>
-				<!-- xMining Accelerator -->
+				<!-- Confirm Account -->
+				<ConfirmAccountMaskWidget v-if="!confirmed" />
+				<!-- xConfirm Account -->
 
-				<!-- Toggle Mining Button -->
-				<ButtonWidget 
-					iconClassName="miningIco" 
-					v-on:click.native="toggleMining" 
-					:buttonTxt="miningButton" 
-					:class="{green:!startedMining, red:startedMining}"/>
-				<!-- xToggle Mining Button -->
-				
-				<!-- Mining HashRate Chart -->
-				<MiningChartWidget/>
-				<!-- xMining HashRate Chart -->
-				
+				<div style="position:relative; padding-top:60px;">
+					<!-- Mining Accelerator -->
+					<MiningAcceleratorWidget/>
+					<!-- xMining Accelerator -->
+					<!-- Toggle Mining Button -->
+					<ButtonWidget :disabled="!confirmed"
+						iconClassName="miningIco" 
+						v-on:click.native="toggleMining" 
+						:buttonTxt="miningButton" 
+						:class="{'green':!startedMining, 'red':startedMining, 'disable':!confirmed}"/>
+					<!-- xToggle Mining Button -->
+					
+					<!-- Mining HashRate Chart -->
+					<MiningChartWidget/>
+					<!-- xMining HashRate Chart -->
+					
+				</div>
 				<!-- Console -->
 				<ConsoleWidget/>
 				<!-- xConsole -->
@@ -69,15 +77,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import MiningOverviewPanelWidget from '../widgets/MiningOverviewPanelWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import MiningAcceleratorWidget from '../widgets/MiningAcceleratorWidget.vue';
-import MiningChartWidget from '../widgets/MiningChartWidget.vue';
-import ConsoleWidget from '../widgets/ConsoleWidget.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import MiningOverviewPanelWidget from '@/components/widgets/MiningOverviewPanelWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import MiningAcceleratorWidget from '@/components/widgets/MiningAcceleratorWidget.vue';
+import MiningChartWidget from '@/components/widgets/MiningChartWidget.vue';
+import ConsoleWidget from '@/components/widgets/ConsoleWidget.vue';
+import ConfirmAccountMaskWidget from '@/components/widgets/ConfirmAccountMaskWidget.vue';
 
 /**
  * @description
@@ -107,11 +116,15 @@ export default {
 		ButtonWidget,
 		MiningChartWidget,
 		ConsoleWidget,
+		ConfirmAccountMaskWidget,
 	},
 	computed: mapState({
+		confirmed: state => state.user.confirmed,
 		hps: state => state.miner.hps,
 		miningButton: state => state.miner.miningButton,
 		startedMining: state => state.miner.startedMining,
+		balanceMajor: state => state.user.balanceMajor,
+		balanceMinor: state => state.user.balanceMinor,
 	}),
 	methods: {
 		/**

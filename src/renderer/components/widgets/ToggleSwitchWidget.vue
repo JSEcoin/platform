@@ -1,11 +1,15 @@
 <template>
-	<div class="checkbox-switch">
+	<div class="checkbox-switch" :class="{'acceptToggle':(type === 'accept')}">
 		<!-- Checkbox -->
 		<input type="checkbox" :checked="checked" :name="name" class="input-checkbox" v-on:change="change($event.target.checked)">
 		<!-- xCheckbox -->
 
 		<!-- UI -->
-		<div class="checkbox-animate">
+		<div class="checkbox-animate" v-if="type === 'accept'">
+			<span class="checkbox-off">DECLINE</span>
+			<span class="checkbox-on">ACCEPT</span>
+		</div>
+		<div class="checkbox-animate" v-else>
 			<span class="checkbox-off">OFF</span>
 			<span class="checkbox-on">ON</span>
 		</div>
@@ -37,6 +41,13 @@ export default {
 		 * input field name
 		 */
 		name: {
+			type: String,
+			default: '',
+		},
+		/**
+		 * type
+		 */
+		type: {
 			type: String,
 			default: '',
 		},
@@ -171,5 +182,14 @@ export default {
 .checkbox-switch input.input-checkbox:checked + .checkbox-animate .checkbox-on {
 	display: block;
 	opacity: 1;
+}
+.acceptToggle.checkbox-switch,
+.acceptToggle.checkbox-switch .checkbox-animate,
+.acceptToggle.checkbox-switch input.input-checkbox,
+.acceptToggle.checkbox-switch input.input-checkbox:checked + .checkbox-animate {
+	width:100px;
+}
+.acceptToggle.checkbox-switch input.input-checkbox:checked + .checkbox-animate:before {
+	left:75px;
 }
 </style>

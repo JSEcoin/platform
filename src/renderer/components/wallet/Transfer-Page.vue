@@ -8,6 +8,11 @@
 				contentPadding="16px 10px 90px 10px" 
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
+
+				<!-- Confirm Account -->
+				<ConfirmAccountMaskWidget v-if="!confirmed" />
+				<!-- xConfirm Account -->
+
 				<!-- Transaction delay display -->
 				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
@@ -56,12 +61,18 @@
 						<!-- xReference Input -->
 					</div>
 					<!-- Transfer Funds Button -->
-					<ButtonWidget style="margin-top:10px;" v-on:click.native="transfer()" buttonTxt="Transfer Funds"/>
+					<ButtonWidget style="margin-top:10px;" :class="{'disable':!confirmed}" :disabled="!confirmed" v-on:click.native="transfer()" buttonTxt="Transfer Funds"/>
 					<!-- xTransfer Funds Button -->
 				</div>
 				<div v-else>
 					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
-						<Pin v-on:submit-pin="signData" />
+						<Pin v-on:submit-pin="signData">
+							
+							<p>
+								Your pin is 4-12 characters long<br />
+								<i>Please make sure you have set it within the web platform interface.</i>
+							</p>
+						</Pin>
 					</form>
 				</div>
 				<!-- Footer Info Txt -->
@@ -82,15 +93,16 @@
 <script>
 import { mapState } from 'vuex';
 import axios from 'axios';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import LoadingDelayMaskWidget from '../widgets/LoadingDelayMaskWidget.vue';
-import FormErrorDisplayWidget from '../widgets/FormErrorDisplayWidget.vue';
-import InputWidget from '../widgets/InputWidget.vue';
-import Pin from '../widgets/Pin.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import LoadingDelayMaskWidget from '@/components/widgets/LoadingDelayMaskWidget.vue';
+import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import InputWidget from '@/components/widgets/InputWidget.vue';
+import Pin from '@/components/widgets/Pin.vue';
+import ConfirmAccountMaskWidget from '@/components/widgets/ConfirmAccountMaskWidget.vue';
 
 /**
  * @description
@@ -108,6 +120,7 @@ export default {
 		FormErrorDisplayWidget,
 		InputWidget,
 		Pin,
+		ConfirmAccountMaskWidget,
 	},
 	data() {
 		return {
@@ -140,6 +153,7 @@ export default {
 		};
 	},
 	computed: mapState({
+		confirmed: state => state.user.confirmed,
 		balance: state => state.user.balance,
 	}),
 	created() {

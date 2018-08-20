@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-
+console.log('HELLLLLLO WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+console.log(__dirname);
 module.exports = {
 	title: 'JSECoin Platform Guide',
 	components: '../../src/renderer/components/**/*.vue',
@@ -13,6 +14,9 @@ module.exports = {
 	ribbon: {
 		url: 'https://github.com/jsecoin',
 		text: 'JSECoin on GitHub',
+	},
+	styleguideComponents: {
+		'@': path.join(__dirname, '../../src/renderer'),
 	},
 	//load in additional required images
 	require: [
@@ -89,6 +93,11 @@ module.exports = {
 			new webpack.IgnorePlugin(/electron/), //only used for desktop app
 			new webpack.IgnorePlugin(/nav/), //not needed for documentation
 		],
+		resolve: {
+			alias: {
+				'@': path.join(__dirname, '../../src/renderer'),
+			},
+		},
 		module: {
 			rules: [
 				{

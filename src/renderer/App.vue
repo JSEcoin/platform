@@ -21,7 +21,7 @@
 		<router-view></router-view>
 		<!-- xApp Page Content -->
 		<!-- QR scanner -->
-		<footer>
+		<footer v-if="($store.getters.whichPlatform === 'mobile')">
 			<ButtonWidget buttonTxt="Cancel"  v-on:click.native="closeQR()" />
 		</footer>
 		<!-- QR scanner -->
@@ -64,7 +64,7 @@ export default {
 
 		//build for google
 		self.$store.commit('updateAppState', {
-			val: process.env.ISGOOGLE,
+			val: (typeof (process.env.ISGOOGLE) !== 'undefined')? process.env.ISGOOGLE : false,
 			state: 'isGoogle',
 		});
 
@@ -172,11 +172,6 @@ export default {
 				val: ((String(localStorage.getItem('autoMine')) === 'true') && (!process.env.ISGOOGLE)),
 				state: 'autoMine',
 			});
-		} else if (self.$store.getters.whichPlatform === 'web') {
-			self.$store.commit('updateAppState', {
-				val: false,
-				state: 'autoMine',
-			});
 		}
 
 		//should app autologin
@@ -185,22 +180,12 @@ export default {
 				val: (String(localStorage.getItem('autoLogin')) === 'true'),
 				state: 'autoLogin',
 			});
-		} else if (self.$store.getters.whichPlatform === 'web') {
-			self.$store.commit('updateAppState', {
-				val: false,
-				state: 'autoMine',
-			});
 		}
 
 		//should we track username of login for faster login
 		if (localStorage.getItem('storeUsername') !== null) {
 			self.$store.commit('updateAppState', {
 				val: (String(localStorage.getItem('storeUsername')) === 'true'),
-				state: 'storeUsername',
-			});
-		} else if (self.$store.getters.whichPlatform === 'web') {
-			self.$store.commit('updateAppState', {
-				val: false,
 				state: 'storeUsername',
 			});
 		}
@@ -338,9 +323,10 @@ export default {
 				//set update user globals
 				self.$store.dispatch({
 					type: 'updateUserState',
+					confirmed: (window.user.confirmed)?window.user.confirmed:false,
 					balance: (window.user.balance)?window.user.balance:0,
 					todaysEarnings: (window.user.statsToday)?window.user.statsToday.c:0,
-					minedLifetime: (window.user.statsTotal)?window.user.statsTotal.c:0,
+					minedLifetime: ((window.user.statsTotal) && (window.user.statsTotal.c))?window.user.statsTotal.c:0,
 					registrationDate: (window.user.registrationDate)?window.user.registrationDate:'',
 					session: window.user.session,
 					miningHistory: (window.user.mining)?Object.values(window.user.mining).slice().reverse().filter(hist => ((hist.command === 'mining') && (hist.siteid === 'Platform Mining'))):[],
@@ -608,6 +594,9 @@ p {
 footer {
 	display: none;
 }
+.hide {
+	display: none;
+}
 
 body.QRScanner footer {
 	display:block;
@@ -850,6 +839,11 @@ header {
 .platformWeb.light {
 	background:#fff;
 }
+.platformWeb.desktop.night,
+.platformWeb.desktop.light {
+	background:transparent;
+}
+
 .platformDesktop #JSEA-desktop {
 	display: block;
 }

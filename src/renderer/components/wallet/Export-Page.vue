@@ -7,6 +7,11 @@
 				titleTxt="Export Coins" 
 				:infoPanelTxt="balance" 
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
+
+				<!-- Confirm Account -->
+				<ConfirmAccountMaskWidget v-if="!confirmed" />
+				<!-- xConfirm Account -->
+
 				<!-- Transaction delay display -->
 				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
@@ -29,87 +34,94 @@
 							@keyup="keyWatch('amount')" />
 					</div>
 					<div>
-						<ButtonWidget style="margin-top:10px;" v-on:click.native="exportCoins()" buttonTxt="Export Coins"/>
+						<ButtonWidget style="margin-top:10px;" :class="{'disable':!confirmed}" :disabled="!confirmed" v-on:click.native="exportCoins()" buttonTxt="Export Coins"/>
 					</div>
 				</div>
 				<div v-else>
 					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
-						<Pin v-on:submit-pin="signData" />
+						<Pin v-on:submit-pin="signData">
+							<p>
+								Your pin is 4-12 characters long<br />
+								<i>Please make sure you have set it within the web platform interface.</i>
+							</p>
+						</Pin>
 					</form>
 				</div>
 			</ContentWidget>
 			<!-- xExport Coins -->
 			
-			<!-- Animation to display during server requests -->
-			<SpinnerWidget :class="{active:loading}"/>
-			<!-- xAnimation to display during server requests -->
+			<div v-if="confirmed">
+				<!-- Animation to display during server requests -->
+				<SpinnerWidget :class="{active:loading}"/>
+				<!-- xAnimation to display during server requests -->
 
-			<!-- QR Display Coin Code-->
-			<QRCoinCodeWidget 
-				v-on:click.native="hideQRCode()"
-				v-bind="{
-					initActiveCode,
-					initActiveCodeValue,
-					initActiveCodeExportDate,
-					initCoinCodePos,
-					initCoinData,
-					initAvailableCoins,
-				}"
-				:class="{active: showQR}" />
-			<!-- xQR Display Coin Code-->
+				<!-- QR Display Coin Code-->
+				<QRCoinCodeWidget 
+					v-on:click.native="hideQRCode()"
+					v-bind="{
+						initActiveCode,
+						initActiveCodeValue,
+						initActiveCodeExportDate,
+						initCoinCodePos,
+						initCoinData,
+						initAvailableCoins,
+					}"
+					:class="{active: showQR}" />
+				<!-- xQR Display Coin Code-->
 
-			<!-- Export History -->
-			<ContentWidget 
-				v-if="exportCoinHistory.length > 0" 
-				v-bind="{
-					infoPanelTypeButton:true,
-					bookletData: initAvailableCoins,
-				}"
-				titleTxt="Export History" 
-				infoPanelTxt="Generate Booklet" 
-				:infoPanelIcoClassName="{booklet: true}">
+				<!-- Export History -->
+				<ContentWidget 
+					v-if="exportCoinHistory.length > 0" 
+					v-bind="{
+						infoPanelTypeButton:true,
+						bookletData: initAvailableCoins,
+					}"
+					titleTxt="Export History" 
+					infoPanelTxt="Generate Booklet" 
+					:infoPanelIcoClassName="{booklet: true}">
 
-				<!-- Header Button -->
-				<template slot="headerButton">
-					<GenerateBookletWidget 
-						v-bind="{
-							bookletData: initAvailableCoins,
-						}"/>
-				</template>
-				<!-- xHeader Button -->
+					<!-- Header Button -->
+					<template slot="headerButton">
+						<GenerateBookletWidget 
+							v-bind="{
+								bookletData: initAvailableCoins,
+							}"/>
+					</template>
+					<!-- xHeader Button -->
 
-				<!-- Coin Data Table -->
-				<table>
-				<thead>
-					<tr>
-						<th>JSE</th>
-						<th align="left">Date</th>
-						<th align="left">Status</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(coin, i) in exportCoinHistory">
-						<td>
-							<CoinCodeWidget 
-								v-on:click.native="showQRCode(coin, i)"
-								v-bind="{
-									coin,
-									showQR: !coin.used,
-								}" />
-						</td>
-						<td>{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
-						<td>
-							<CoinStatusWidget
-								v-bind="{
-									coin,
-								}" />
-						</td>
-					</tr>
-				</tbody>
-				</table>
-				<!-- xCoin Data Table -->
-			</ContentWidget>
-			<!-- xExport History -->
+					<!-- Coin Data Table -->
+					<table>
+					<thead>
+						<tr>
+							<th>JSE</th>
+							<th align="left">Date</th>
+							<th align="left">Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(coin, i) in exportCoinHistory">
+							<td>
+								<CoinCodeWidget 
+									v-on:click.native="showQRCode(coin, i)"
+									v-bind="{
+										coin,
+										showQR: !coin.used,
+									}" />
+							</td>
+							<td>{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
+							<td>
+								<CoinStatusWidget
+									v-bind="{
+										coin,
+									}" />
+							</td>
+						</tr>
+					</tbody>
+					</table>
+					<!-- xCoin Data Table -->
+				</ContentWidget>
+				<!-- xExport History -->
+			</div>
 		</ScrollWidget>
 	</AppWrapperWidget>
 </template>
@@ -121,20 +133,21 @@ import moment from 'moment';
 import QRious from 'qrious';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import AppWrapperWidget from '../widgets/AppWrapperWidget.vue';
-import NavWidget from '../widgets/NavWidget.vue';
-import ScrollWidget from '../widgets/ScrollWidget.vue';
-import ContentWidget from '../widgets/ContentWidget.vue';
-import ButtonWidget from '../widgets/ButtonWidget.vue';
-import SpinnerWidget from '../widgets/SpinnerWidget.vue';
-import QRCoinCodeWidget from '../widgets/QRCoinCodeWidget.vue';
-import GenerateBookletWidget from '../widgets/GenerateBookletWidget.vue';
-import CoinCodeWidget from '../widgets/CoinCodeWidget.vue';
-import CoinStatusWidget from '../widgets/CoinStatusWidget.vue';
-import LoadingDelayMaskWidget from '../widgets/LoadingDelayMaskWidget.vue';
-import FormErrorDisplayWidget from '../widgets/FormErrorDisplayWidget.vue';
-import InputWidget from '../widgets/InputWidget.vue';
-import Pin from '../widgets/Pin.vue';
+import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
+import NavWidget from '@/components/widgets/NavWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
+import ContentWidget from '@/components/widgets/ContentWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
+import SpinnerWidget from '@/components/widgets/SpinnerWidget.vue';
+import QRCoinCodeWidget from '@/components/widgets/QRCoinCodeWidget.vue';
+import GenerateBookletWidget from '@/components/widgets/GenerateBookletWidget.vue';
+import CoinCodeWidget from '@/components/widgets/CoinCodeWidget.vue';
+import CoinStatusWidget from '@/components/widgets/CoinStatusWidget.vue';
+import LoadingDelayMaskWidget from '@/components/widgets/LoadingDelayMaskWidget.vue';
+import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import InputWidget from '@/components/widgets/InputWidget.vue';
+import Pin from '@/components/widgets/Pin.vue';
+import ConfirmAccountMaskWidget from '@/components/widgets/ConfirmAccountMaskWidget.vue';
 
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -156,6 +169,7 @@ export default {
 		FormErrorDisplayWidget,
 		InputWidget,
 		Pin,
+		ConfirmAccountMaskWidget,
 	},
 	data() {
 		return {
@@ -191,6 +205,7 @@ export default {
 	},
 	computed: mapState({
 		balance: state => state.user.balance,
+		confirmed: state => state.user.confirmed,
 		waitTimer: state => state.user.waitTimer,
 	}),
 	methods: {

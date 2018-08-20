@@ -1,12 +1,12 @@
 <template>
-	<splashAnimation v-if="show"
+	<SplashAnimation v-if="show"
 		v-bind="{showWidget: splashWidget.activeAppIco, animateTxt: splashWidget.activeTxt}"
-		:textDisplay="splashWidget.splashTxt"></splashAnimation>
+		:textDisplay="splashWidget.splashTxt"></SplashAnimation>
 </template>
 
 <script>
 import axios from 'axios';
-import splashAnimation from '@/components/widgets/SplashV2.vue';
+import SplashAnimation from '@/components/widgets/SplashV2.vue';
 
 /**
  * @description
@@ -21,7 +21,7 @@ import splashAnimation from '@/components/widgets/SplashV2.vue';
 export default {
 	name: 'SplashLoadingScreen-Page',
 	components: {
-		splashAnimation,
+		SplashAnimation,
 	},
 	data() {
 		return {
