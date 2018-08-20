@@ -110,7 +110,7 @@ export default {
     top: 0px;
     left: 0px;
     right: 0px;
-    padding: 10px;
+    padding: 0px 0px 10px 0px;
 }
 .platformWeb.mobile .sliderWrapper {
 	padding: 20px 0px 4px 0px;
@@ -125,7 +125,7 @@ export default {
     font-weight: bold;
     letter-spacing: 1px;
     position: absolute;
-    top: 6px;
-    left: 18px;
+    bottom: 6px;
+    right: 8px;
 }
 </style>
