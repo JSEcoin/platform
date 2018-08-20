@@ -21,7 +21,7 @@
 					<!-- xregister error display -->
 
 					<!-- register Form -->
-					<form id="JSEA-registerForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+					<form id="JSEA-registerForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-registerFormWrapper">
 							<ContentWidget class="registerFormContainer">
 								<h4 class="title">Account Details</h4>
@@ -186,6 +186,7 @@
 								</SettingsItemRowWidget>
 								<div class="hr" style="margin:10px;"></div>
 								<ButtonWidget 
+									type="button"
 									v-bind="{isSmall:true}"
 									style="width:100%"
 									class="cancel"
@@ -196,7 +197,7 @@
 								<ButtonWidget :class="{'disable':!acceptTerms}" :disabled="!acceptTerms" type="submit"
 									buttonTxt="Register Account" style="margin-right:5px; margin-left:15px;" />
 
-								<ButtonWidget
+								<ButtonWidget type="button"
 									buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancelRegister" />
 							</div>
 						</div>
@@ -385,13 +386,20 @@ export default {
 		},
 		onSubmit() {
 			const self = this;
+
+			//check scrollTo available - customised code
+			if (typeof (self.$vuebar.scrollTo) !== 'undefined') {
+				const bodyScroll = document.getElementById('JSEA-appBody');
+				self.$vuebar.scrollTo(bodyScroll,0);
+			}
+
 			//
 			self.form.error.msg = '';
 			self.form.error.display = false;
 			if (!self.acceptTerms) {
 				self.form.error.msg = 'You must review and accept the JSEcoin terms before registering your account.';
 				self.form.error.display = true;
-				//return;
+				return;
 			}
 
 			let checkRequiredFields = true;
@@ -412,6 +420,9 @@ export default {
 				self.loading = true;
 				self.form.error.display = false;
 				self.showCaptcha = true; //shows jsecoin.com captcha screen
+			} else {
+				self.form.error.msg = 'Please check all highlighted fields are complete.';
+				self.form.error.display = true;
 			}
 		},
 		onVerify(response) {
