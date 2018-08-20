@@ -90,7 +90,8 @@ button.disable * {
 }
 
 .night button {
-	background-color:#101219;
+	/*background-color:#101219;*/
+	background-color:#0a0b0f;
 	color:#afafaf;
 }
 .light button {
