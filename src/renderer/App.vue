@@ -76,31 +76,6 @@ export default {
 			document.addEventListener('deviceready', () => {
 				self.onDeviceReady();
 			}, false);
-			//background mode
-			cordova.plugins.backgroundMode.on('activate', () => {
-				console.log('activate - disable web optimisations - silent', self.silentMode);
-				//timeout required or disable optimisation ignored when autosleep set
-				setTimeout(() => {
-					cordova.plugins.backgroundMode.disableWebViewOptimizations();
-				}, 5000);
-				cordova.plugins.backgroundMode.disableWebViewOptimizations();
-			});
-			cordova.plugins.backgroundMode.on('enable', () => {
-				cordova.plugins.backgroundMode.setDefaults({
-					title: 'JSECoin Mobile',
-					text: 'Altcoin Miner app',
-					silent: self.silentMode,
-				});
-			});
-			cordova.plugins.backgroundMode.on('disable', () => {
-				console.log('disable');
-			});
-			cordova.plugins.backgroundMode.on('deactivate', () => {
-				console.log('deactivate');
-			});
-			cordova.plugins.backgroundMode.on('failure', () => {
-				console.log('failure');
-			});
 		}
 
 		//define platform
@@ -355,13 +330,44 @@ export default {
 		},
 		onDeviceReady() {
 			const self = this;
-			console.log(cordova.plugins);
+
 			// Handle the device ready event.
 			document.addEventListener('pause', self.onPause, false);
 			document.addEventListener('resume', self.onResume, false);
 			if (device.platform === 'Android') {
 				document.addEventListener('backbutton', self.onBackKeyDown, false);
 			}
+
+			if (typeof (cordova.plugins) === 'undefined') {
+				console.log('Error: Plugins not defined..');
+				return;
+			}
+
+			//background mode
+			cordova.plugins.backgroundMode.on('activate', () => {
+				console.log('activate - disable web optimisations - silent', self.silentMode);
+				//timeout required or disable optimisation ignored when autosleep set
+				setTimeout(() => {
+					cordova.plugins.backgroundMode.disableWebViewOptimizations();
+				}, 5000);
+				cordova.plugins.backgroundMode.disableWebViewOptimizations();
+			});
+			cordova.plugins.backgroundMode.on('enable', () => {
+				cordova.plugins.backgroundMode.setDefaults({
+					title: 'JSECoin Mobile',
+					text: 'Altcoin Miner app',
+					silent: self.silentMode,
+				});
+			});
+			cordova.plugins.backgroundMode.on('disable', () => {
+				console.log('disable');
+			});
+			cordova.plugins.backgroundMode.on('deactivate', () => {
+				console.log('deactivate');
+			});
+			cordova.plugins.backgroundMode.on('failure', () => {
+				console.log('failure');
+			});
 		},
 		onPause() {
 			// Handle the pause lifecycle event.
