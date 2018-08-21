@@ -580,11 +580,11 @@ iframe {
 	margin-right:5px;
 }
 #JSEA-loginPage {
-	position: absolute;
+	/*position: absolute;
     left: 0px;
     right: 0px;
     top: 0px;
-    bottom: 0px;
+    bottom: 0px;*/
     display: flex;
 }
 #JSEA-loginWrapper {
