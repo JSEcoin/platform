@@ -5,7 +5,7 @@ import { autoUpdater } from 'electron-updater';
 //import { readFileSync } from 'fs';
 //import crypto from 'crypto';
 
-const appVersion = '0.5.4';
+const appVersion = '0.5.5';
 
 //test
 app.disableHardwareAcceleration();
