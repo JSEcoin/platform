@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-console.log('HELLLLLLO WORLD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-console.log(__dirname);
+
 module.exports = {
 	title: 'JSECoin Platform Guide',
 	components: '../../src/renderer/components/**/*.vue',
