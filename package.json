@@ -28,7 +28,7 @@
 		"mobile:android": "npm run mobile:www && cd build/mobile && cordova run android --device",
 		"mobile:android:google": "cross-env ISGOOGLE=TRUE npm run mobile:www && cd build/mobile && cordova run android --device",
 		"mobile:android-vm": "npm run mobile:www && cd build/mobile && cordova run android",
-		"mobile:android:sign": "npm run mobile:www cd build/mobile && cordova build --release --buildConfig=../../../signAndroidBuild.json",
+		"mobile:android:sign": "npm run mobile:www && cd build/mobile && cordova build --release --buildConfig=../../../signAndroidBuild.json",
 		"mobile:android:google:build:sign": "cross-env ISGOOGLE=TRUE npm run mobile:www && cd build/mobile && cordova build --release --buildConfig=../../../signAndroidBuild.json",
 		"all:build": "npm run styleguide:build && npm run desktop:build && npm run web:build && npm run mobile:android:sign",
 		"e2e": "npm run pack && mocha test/e2e",
