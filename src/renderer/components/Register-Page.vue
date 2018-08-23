@@ -71,6 +71,7 @@
 										<div class="col">
 											<InputWidget 
 												inputType="password"
+												newpassword="new-password"
 												v-bind="{hideShow: true, passwordStrength:true}"
 												v-model="form.password.val"
 												placeholder="Password *"
@@ -193,7 +194,7 @@
 									buttonTxt="View Terms and Policy" v-on:click.native="openExternalWindow('https://jsecoin.com/en/legal/privacyPolicy')" />
 							</ContentWidget>			
 							
-							<div class="row">
+							<div class="row" style="min-height:60px;">
 								<ButtonWidget :class="{'disable':!acceptTerms}" :disabled="!acceptTerms" type="submit"
 									buttonTxt="Register Account" style="margin-right:5px; margin-left:15px;" />
 
