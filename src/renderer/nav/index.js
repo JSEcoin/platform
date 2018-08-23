@@ -66,6 +66,9 @@ const router = new Router({
 			path: '/enterSecurityPin',
 			name: 'enterSecurityPin',
 			component: enterSecurityPin,
+			meta: {
+				requiresAuth: true,
+			},
 		},
 		{
 			path: '/register',
@@ -161,7 +164,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-	if (requiresAuth && !store.state.user.loggedIn) {
+	if ((requiresAuth) && (!store.state.user.loggedIn)) {
 		next('login');
 	} else {
 		next();
