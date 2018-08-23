@@ -13,6 +13,7 @@ const state = {
 	storeUsername: true, //on login store username for quick login
 	jseCoinServer: 'https://server.jsecoin.com', //app server connection address
 	isGoogle: false, //is app hosted on google then disable miner
+	initLander: 'login', //set initial landing page for splash screen
 };
 
 const mutations = {
@@ -41,6 +42,7 @@ const actions = {};
 const getters = {
 	whichPlatform: state => state.platform,
 	isAppGoogle: state => state.isGoogle,
+	whichLandingPage: state => state.initLander,
 };
 
 
