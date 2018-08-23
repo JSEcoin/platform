@@ -91,18 +91,29 @@ export default {
 				state: 'isDev',
 			});
 		} else {
+			//if small display revert to mobile
+			if (window.innerWidth < 520) {
+				displayType = 'mobile';
+			}
 			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
 			document.body.className = bodyClass;
 			window.process = {
 				type: displayType, //['mobile','web']
 			};
-			window.jseTestNet = true;
+			window.jseTestNet = window.jseTestNet || false;
 			self.$store.commit('updateAppState', {
 				val: displayType,
 				state: 'platform',
 			});
+			//check if window resize on mobile/web app and browser
+			window.addEventListener('resize', self.getWindowWidth);
 		}
 
+		//store initial landing page to redirect - after splash screen loaded.
+		self.$store.commit('updateAppState', {
+			val: self.$route.name,
+			state: 'initLander',
+		});
 		//on app load redirect to splash screen to regenerate and redirect to login or dashboard
 		self.$router.push('splash');
 
@@ -322,6 +333,25 @@ export default {
 	 * Global App Functions
 	 */
 	methods: {
+		getWindowWidth(e) {
+			const self = this;
+
+			let displayType = 'web';
+			if (window.innerWidth < 520) {
+				displayType = 'mobile';
+			}
+
+			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
+			document.body.className = bodyClass;
+			window.process = {
+				type: displayType, //['mobile','web']
+			};
+			window.jseTestNet = true;
+			self.$store.commit('updateAppState', {
+				val: displayType,
+				state: 'platform',
+			});
+		},
 		closeQR() {
 			document.body.classList.remove('QRScanner');
 			QRScanner.cancelScan();
@@ -1018,6 +1048,10 @@ header .fa-minus:hover {
 .tableListDisplay .row span {
 	display:block;
 	flex-grow:1;
+}
+.col {
+    position: relative;
+    flex-grow: 1;
 }
 #JSEA-wrapper {
 	position: relative;
