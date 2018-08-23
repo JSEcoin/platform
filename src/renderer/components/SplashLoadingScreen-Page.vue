@@ -26,7 +26,7 @@ export default {
 	data() {
 		return {
 			show: true, //show/hide splashanimation
-			route: '', //route to take - dash/login
+			route: 'login', //route to take - dash/login/register
 			checkSizeInterval: false,
 			splashWidget: {
 				activeAppIco: false, //fadeIn Animation flag
@@ -57,25 +57,27 @@ export default {
 		self.$store.commit('loading', true);
 		self.$store.commit('loggedIn', false);
 
-		//controll callback issues with setInterval
-		document.addEventListener('checkSizeInterval', function() {
-			if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-				self.routeDelay(self.route);
-			} else {
-				clearInterval(self.checkSizeInterval);
-				//detect resize and force correct size
-				self.$electron.remote.getCurrentWindow().on('resize',() => {
-					if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-						self.setWindowSize(false, true);
-					}
-				});
-				//app loading complete
-				self.$store.commit('loading', false);
-				//redirect to [dashboard,login] page
-				self.$router.push(self.route);
-				self.$electron.remote.getCurrentWindow().setMovable(true);
-			}
-		});
+		//controll callback issues with setInterval\
+		if (self.$store.getters.whichPlatform === 'desktop') {
+			document.addEventListener('checkSizeInterval', function() {
+				if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+					self.routeDelay(self.route);
+				} else {
+					clearInterval(self.checkSizeInterval);
+					//detect resize and force correct size
+					self.$electron.remote.getCurrentWindow().on('resize',() => {
+						if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+							self.setWindowSize(false, true);
+						}
+					});
+					//app loading complete
+					self.$store.commit('loading', false);
+					//redirect to [dashboard,login] page
+					self.$router.push(self.route);
+					self.$electron.remote.getCurrentWindow().setMovable(true);
+				}
+			});
+		}
 		document.addEventListener('connectionInterval', function() {
 			self.splashWidget.splashTxt = `CONNECTION FAILED<br />RETRYING IN ${self.offline.connectionCounter} SEC`;
 			self.offline.connectionCounter--;
@@ -99,9 +101,25 @@ export default {
 		if (!self.$store.state.app.autoLogin) {
 			localStorage.removeItem('userSession');
 		}
+		console.log(self.$route);
 
-		//attempt to login
-		self.getLogin();
+		//check if user session exists try to login
+		if (localStorage.getItem('userSession') !== null) {
+			//attempt to login
+			self.getLogin();
+		} else {
+			//mark user as not loggedIn
+			self.$store.commit('loggedIn', false);
+			//add scripts
+			self.addScripts();
+			//reset user obj
+			window.user = {};
+			//check route
+			if (self.$store.getters.whichLandingPage !== 'splash') {
+				self.route = self.$store.getters.whichLandingPage;
+			}
+			self.routeDelay(self.route);
+		}
 	},
 	methods: {
 		/**
