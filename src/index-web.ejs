@@ -5,10 +5,19 @@
 		
 	<meta charset="utf-8">
 	<title>JSECoin Alpha Web Platform</title>
+	
+	<% for (var chunk of webpack.chunks) {
+		for (var file of chunk.files) {
+			if (file.match(/\.(js|css)$/)) { %>
+		<link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>"><% }}} %>
+
 </head>
 <body>
 
 <div id="JSEA-desktop"></div>
+
+<!-- Service Worker Code -->
+<%= htmlWebpackPlugin.options.serviceWorkerLoader %>
 
 <!-- load jquery - used with core code -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
