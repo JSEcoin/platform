@@ -26,12 +26,15 @@ Vue.http = Vue.prototype.$http = axios;
 //Vue.config.productionTip = false;
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
+//platformName analytics display
+const platformName = 'JSEapp_'+(typeof (process.env.platform) !== 'undefined')? process.env.platform : 'unknown';
+
 //setup analytics on platform.
 Vue.use(VueMultianalytics, {
 	modules: {
 		ga: {
-			appName: 'JSEapp', // Mandatory
-			appVersion: '0.5.5', // Mandatory
+			appName: platformName, // Mandatory
+			appVersion: store.state.app.version, // Mandatory
 			trackingId: 'UA-48537439-16', // Mandatory
 			//debug: true, // Whether or not display console logs debugs (optional)
 		},
