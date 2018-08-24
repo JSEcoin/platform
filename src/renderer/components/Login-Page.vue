@@ -65,6 +65,7 @@
 												inputType="password"
 												v-bind="{hideShow: true}"
 												v-model="form.password.val"
+												newpassword="current-password"
 												placeholder="Password *"
 												name="password"
 												maxlength="254"
@@ -205,6 +206,7 @@ export default {
 	 * - make sure loggedIn flag is off
 	 */
 	created() {
+		//console.log('login init');
 		const self = this;
 		self.$store.commit('loggedIn', false);
 		self.$store.commit('loading', false);
@@ -566,16 +568,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-iframe {
-	position: absolute;
-	top:0px;
-	left: 0px;
-	bottom:0px;
-	right:0px;
-	width: 100%;
-    height: 100%;
-	z-index:10000000;
-}
 .singleButton {
 	margin-right:5px;
 }

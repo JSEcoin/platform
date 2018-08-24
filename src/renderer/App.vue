@@ -1,5 +1,6 @@
 <template>
 	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, 'loggedIn':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
+		<iframe id="JSEA-registerFrame" v-if="registered" src="https://jsecoin.com/pixels.php?conversion=signup" frameborder="0" width="1" height="1"></iframe>
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
 		<!-- xHashrate acc need to remove -->
@@ -53,7 +54,7 @@ export default {
 	 */
 	created() {
 		const self = this;
-
+		console.log(self.$ma);
 		//set theme
 		if (localStorage.getItem('theme') !== null) {
 			self.$store.commit('updateAppState', {
@@ -91,20 +92,32 @@ export default {
 				state: 'isDev',
 			});
 		} else {
+			//if small display revert to mobile
+			if (window.innerWidth < 520) {
+				displayType = 'mobile';
+			}
 			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
 			document.body.className = bodyClass;
 			window.process = {
 				type: displayType, //['mobile','web']
 			};
-			window.jseTestNet = true;
+			window.jseTestNet = window.jseTestNet || false;
 			self.$store.commit('updateAppState', {
 				val: displayType,
 				state: 'platform',
 			});
+			//check if window resize on mobile/web app and browser
+			window.addEventListener('resize', self.getWindowWidth);
 		}
 
+		//console.log('set splash landing route ', self.$route, self.$route.name);
+		//store initial landing page to redirect - after splash screen loaded.
+		self.$store.commit('updateAppState', {
+			val: self.$route.name || '/login',
+			state: 'initLander',
+		});
 		//on app load redirect to splash screen to regenerate and redirect to login or dashboard
-		self.$router.push('splash');
+		self.$router.push('/');
 
 		//should app auto launch
 		if (localStorage.getItem('autoLaunch') !== null) {
@@ -317,11 +330,31 @@ export default {
 		waitTimer: state => ((100/state.user.countDownFrom) * state.user.waitTimer),
 		hashRateAcc: state => state.miner.hashRateAcc,
 		silentMode: state => state.app.silentMode,
+		registered: state => state.user.registered,
 	}),
 	/**
 	 * Global App Functions
 	 */
 	methods: {
+		getWindowWidth(e) {
+			const self = this;
+
+			let displayType = 'web';
+			if (window.innerWidth < 520) {
+				displayType = 'mobile';
+			}
+
+			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
+			document.body.className = bodyClass;
+			window.process = {
+				type: displayType, //['mobile','web']
+			};
+			window.jseTestNet = true;
+			self.$store.commit('updateAppState', {
+				val: displayType,
+				state: 'platform',
+			});
+		},
 		closeQR() {
 			document.body.classList.remove('QRScanner');
 			QRScanner.cancelScan();
@@ -623,6 +656,27 @@ body.QRScanner.mobile footer {
     right: 0px;
     border-radius: 0px;
     border-bottom: none;
+}
+
+/*iframe*/
+#JSEA-iCaptcha {
+	position: absolute;
+	top:0px;
+	left: 0px;
+	bottom:0px;
+	right:0px;
+	width: 100%;
+    height: 100%;
+	z-index:10000000;
+}
+#JSEA-registerFrame {
+	position: absolute;
+	bottom:0px;
+	left: -1px;
+	bottom:0px;
+	width: 1px;
+    height: 1px;
+	z-index:10000000;
 }
 
 /* Global Table Format */
@@ -1018,6 +1072,10 @@ header .fa-minus:hover {
 .tableListDisplay .row span {
 	display:block;
 	flex-grow:1;
+}
+.col {
+    position: relative;
+    flex-grow: 1;
 }
 #JSEA-wrapper {
 	position: relative;

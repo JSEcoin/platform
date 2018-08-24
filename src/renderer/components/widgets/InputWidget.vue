@@ -9,7 +9,7 @@
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
 				<div class="interactiveIco" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
-				<input autocapitalize="off" :type="inputType" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" />
+				<input autocapitalize="off" :type="inputType" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" autocomplete="false" />
 			</div>
 			<!-- xInput plus Ico -->
 
@@ -19,7 +19,7 @@
 				<!-- xPassword Field Ico -->
 
 				<!-- Input no Ico -->
-				<input v-if="(inputFieldType === 'input')" autocapitalize="off" :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value, 'password')" />
+				<input v-if="(inputFieldType === 'input')" autocapitalize="off" :type="passDisplay" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value, 'password')" :autocomplete="newpassword" />
 				<!-- xInput no Ico -->
 
 				<!-- to clean up make dynamic in seperate widget -->
@@ -404,6 +404,13 @@ export default {
 		inputFieldType: {
 			type: String,
 			default: 'input',
+		},
+		/***
+		 * type of field default input
+		 */
+		newpassword: {
+			type: String,
+			default: 'false',
 		},
 	},
 	methods: {

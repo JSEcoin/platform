@@ -12,6 +12,7 @@ var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
   baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
 })
+const env = config.dev.env;
 
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
@@ -23,7 +24,8 @@ module.exports = merge(baseWebpackConfig, {
   plugins: [
     new webpack.LoaderOptionsPlugin({ options: {} }),
     new webpack.DefinePlugin({
-      'process.env': config.dev.env
+      'process.env': env,
+	  'process.platform': '"mobile"',
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
