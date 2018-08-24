@@ -1,11 +1,23 @@
 <!doctype html>
 <html>
 <head>
-	<script>if (((location.protocol !== 'https:') && (location.href.indexOf('localhost') === -1)) || (location.href.indexOf('/alpha/') > 0)) { location.href = 'https://alpha.jsecoin.com';}</script> 
+	<script>
+		if ((location.protocol !== 'https:') && (location.href.indexOf('localhost') === -1)) {
+			if (location.href.indexOf('/alpha/') > 0) {
+				location.href = 'https://alpha.jsecoin.com';
+			} else {
+				location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+			}
+		}
+	</script> 
 		
 	<meta charset="utf-8">
 	<title>JSECoin Alpha Web Platform</title>
-	
+	<script>window.app='web';</script>
+	<!-- load jquery - used with core code -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="/static/jquery-3.3.1.min.js"><\/script>')</script>
+
 	<% for (var chunk of webpack.chunks) {
 		for (var file of chunk.files) {
 			if (file.match(/\.(js|css)$/)) { %>
@@ -18,10 +30,6 @@
 
 <!-- Service Worker Code -->
 <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
-
-<!-- load jquery - used with core code -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="static/jquery-3.3.1.min.js"><\/script>')</script>
 
 </body>
 </html>
