@@ -18,6 +18,8 @@ import store from './store';
 if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
 //if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 	Vue.use(require('vue-electron'));
+	window.ActiveXObject = undefined;
+	window.ga('set', 'checkProtocolTask', null);
 }
 
 //quick axios access
@@ -51,6 +53,12 @@ Vue.use(VueMultianalytics, {
 		//ignoredModules: ['ga'], // Modules that will not send route change events. The event sent will be this.$ma.trackView({viewName: 'homepage'}, ['ga'])
 	},
 });
+
+//disable file:// check analytics requirement
+if (((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) || ((typeof (process) !== 'undefined') && (process.platform === 'mobile'))) {
+	window.ActiveXObject = undefined;
+	window.ga('set', 'checkProtocolTask', null);
+}
 
 //date time calc
 Vue.use(VueMoment);
