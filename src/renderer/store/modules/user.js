@@ -22,6 +22,7 @@ const state = {
 	registrationDate: 0, //users Registration date
 	miningHistory: [], //users mining reward history
 	globalErrMsg: '', //global error message notifacation - used on redirect to login
+	registered: false, //has user gone through registration process
 };
 
 const mutations = {
