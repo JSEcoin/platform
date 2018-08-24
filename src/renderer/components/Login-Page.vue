@@ -65,6 +65,7 @@
 												inputType="password"
 												v-bind="{hideShow: true}"
 												v-model="form.password.val"
+												newpassword="current-password"
 												placeholder="Password *"
 												name="password"
 												maxlength="254"
@@ -205,6 +206,7 @@ export default {
 	 * - make sure loggedIn flag is off
 	 */
 	created() {
+		//console.log('login init');
 		const self = this;
 		self.$store.commit('loggedIn', false);
 		self.$store.commit('loading', false);
