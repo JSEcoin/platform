@@ -346,6 +346,7 @@ export default {
 	 * - make sure loggedIn flag is off
 	 */
 	created() {
+		//console.log('register init');
 		const self = this;
 		//listen to messages from iframe
 		window.addEventListener('message', self.captureMsg);
