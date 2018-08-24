@@ -26,7 +26,7 @@ export default {
 	data() {
 		return {
 			show: true, //show/hide splashanimation
-			route: 'login', //route to take - dash/login/register
+			route: '/login', //route to take - dash/login/register
 			checkSizeInterval: false,
 			splashWidget: {
 				activeAppIco: false, //fadeIn Animation flag
@@ -44,7 +44,9 @@ export default {
 	 * on app init set default config
 	 */
 	created() {
+		//console.log('splash init');
 		const self = this;
+
 		//allow splash screen to be movable
 		if (self.$store.getters.whichPlatform === 'desktop') {
 			self.$electron.remote.getCurrentWindow().setMovable(true);
@@ -101,7 +103,7 @@ export default {
 		if (!self.$store.state.app.autoLogin) {
 			localStorage.removeItem('userSession');
 		}
-		console.log(self.$route);
+		//console.log(self.$route);
 
 		//check if user session exists try to login
 		if (localStorage.getItem('userSession') !== null) {
@@ -150,6 +152,7 @@ export default {
 			} else {
 				//app loading complete
 				self.$store.commit('loading', false);
+				//console.log('splash to', route);
 				//redirect to [dashboard,login] page
 				self.$router.push(route);
 			}
@@ -233,7 +236,7 @@ export default {
 					}
 
 					//redirect to dashboard if mouse up or delay until up
-					self.routeDelay('dashboard');
+					self.routeDelay('/dashboard');
 
 					//user session accepted update key app globals
 					const event = new Event('userDataRefresh');
@@ -251,7 +254,7 @@ export default {
 						//reset user obj
 						window.user = {};
 						//redirect to login if mouse up or delay until up
-						self.routeDelay('login');
+						self.routeDelay('/login');
 					}, 4000);
 				} else {
 					self.connectionErr();
