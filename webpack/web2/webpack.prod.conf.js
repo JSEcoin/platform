@@ -20,7 +20,9 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const env = process.env.NODE_ENV === 'testing'
 	? require('./config/test.env')
 	: config.build.env;
-
+	
+env.platform = 'web';
+	
 const webpackConfig = merge(baseWebpackConfig, {
 	module: {
 		rules: utils.styleLoaders({

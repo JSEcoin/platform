@@ -18,6 +18,7 @@ const env = process.env.NODE_ENV === 'testing' ?
 	config.build.env;
 	
 env.ISGOOGLE = (process.env.ISGOOGLE === 'TRUE');
+env.platform = 'mobile';
 
 const webpackConfig = merge(baseWebpackConfig, {
 	//mode: 'production',
