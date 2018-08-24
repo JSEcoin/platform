@@ -495,6 +495,12 @@ export default {
 				if (self.$store.getters.whichPlatform === 'desktop') {
 					self.$electron.ipcRenderer.send('login');
 				}
+				
+				//mark user as registered enable tracker
+				self.$store.commit('updateUserStateValue', {
+					val: true,
+					state: 'registered',
+				});
 
 				//check if new user display PIN requirements form
 				if (self.user.requirePin) {
