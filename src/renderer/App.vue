@@ -109,13 +109,14 @@ export default {
 			window.addEventListener('resize', self.getWindowWidth);
 		}
 
+		//console.log('set splash landing route ', self.$route, self.$route.name);
 		//store initial landing page to redirect - after splash screen loaded.
 		self.$store.commit('updateAppState', {
-			val: self.$route.name,
+			val: self.$route.name || '/login',
 			state: 'initLander',
 		});
 		//on app load redirect to splash screen to regenerate and redirect to login or dashboard
-		self.$router.push('splash');
+		self.$router.push('/');
 
 		//should app auto launch
 		if (localStorage.getItem('autoLaunch') !== null) {
