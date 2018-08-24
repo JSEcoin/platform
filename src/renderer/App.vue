@@ -1,5 +1,6 @@
 <template>
 	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, 'loggedIn':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
+		<iframe id="JSEA-registerFrame" v-if="registered" src="https://jsecoin.com/pixels.php?conversion=signup" frameborder="0" width="1" height="1"></iframe>
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
 		<!-- xHashrate acc need to remove -->
@@ -53,7 +54,7 @@ export default {
 	 */
 	created() {
 		const self = this;
-
+		console.log(self.$ma);
 		//set theme
 		if (localStorage.getItem('theme') !== null) {
 			self.$store.commit('updateAppState', {
@@ -329,6 +330,7 @@ export default {
 		waitTimer: state => ((100/state.user.countDownFrom) * state.user.waitTimer),
 		hashRateAcc: state => state.miner.hashRateAcc,
 		silentMode: state => state.app.silentMode,
+		registered: state => state.user.registered,
 	}),
 	/**
 	 * Global App Functions
@@ -654,6 +656,27 @@ body.QRScanner.mobile footer {
     right: 0px;
     border-radius: 0px;
     border-bottom: none;
+}
+
+/*iframe*/
+#JSEA-iCaptcha {
+	position: absolute;
+	top:0px;
+	left: 0px;
+	bottom:0px;
+	right:0px;
+	width: 100%;
+    height: 100%;
+	z-index:10000000;
+}
+#JSEA-registerFrame {
+	position: absolute;
+	bottom:0px;
+	left: -1px;
+	bottom:0px;
+	width: 1px;
+    height: 1px;
+	z-index:10000000;
 }
 
 /* Global Table Format */
