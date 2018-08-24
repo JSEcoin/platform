@@ -14,8 +14,6 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 })
 const env = config.dev.env;
 
-env.platform = 'mobile';
-
 module.exports = merge(baseWebpackConfig, {
   mode: 'development',
   module: {
@@ -27,6 +25,7 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.LoaderOptionsPlugin({ options: {} }),
     new webpack.DefinePlugin({
       'process.env': env,
+	  'process.platform': '"mobile"',
     }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),

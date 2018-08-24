@@ -16,7 +16,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 });
 const env = config.dev.env;
 
-env.platform = 'web';
+//env.platform = 'webs';
 
 module.exports = merge(baseWebpackConfig, {
 	module: {
@@ -27,6 +27,7 @@ module.exports = merge(baseWebpackConfig, {
 	plugins: [
 		new webpack.DefinePlugin({
 			'process.env': env,
+			'process.platform': '"web"',
 			STATIC_PATH: JSON.stringify(config.dev.assetsPublicPath + config.dev.assetsSubDirectory),
 		}),
 		// https://github.com/glenjamin/webpack-hot-middleware#installation--usage

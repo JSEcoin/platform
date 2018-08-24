@@ -20,9 +20,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const env = process.env.NODE_ENV === 'testing'
 	? require('./config/test.env')
 	: config.build.env;
-	
-env.platform = 'web';
-	
+
 const webpackConfig = merge(baseWebpackConfig, {
 	module: {
 		rules: utils.styleLoaders({
@@ -40,6 +38,7 @@ const webpackConfig = merge(baseWebpackConfig, {
 		// http://vuejs.github.io/vue-loader/en/workflow/production.html
 		new webpack.DefinePlugin({
 			'process.env': env,
+			'process.platform': '"web"',
 			STATIC_PATH: JSON.stringify(config.build.assetsPublicPath + config.build.assetsSubDirectory),
 		}),
 		new UglifyJsPlugin({

@@ -64,7 +64,6 @@ if (process.env.NODE_ENV !== 'production') {
   mainConfig.plugins.push(
     new webpack.DefinePlugin({
       '__static': `"${path.join(__dirname, '../../static').replace(/\\/g, '\\\\')}"`,
-      'process.env.platform': '"desktop"'
     })
   )
 }
@@ -77,7 +76,6 @@ if (process.env.NODE_ENV === 'production') {
     new BabiliWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
-      'process.env.platform': '"desktop"'
     })
   )
 }
