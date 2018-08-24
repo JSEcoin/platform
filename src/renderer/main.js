@@ -8,6 +8,7 @@ import VueSwal from 'vue-swal';
 //todo replace and use with QR coin generator
 import VueQriously from 'vue-qriously';
 import VueHead from 'vue-head';
+import VueMultianalytics from 'vue-multianalytics';
 
 //App, Router and Vuex Store
 import App from './App';
@@ -24,6 +25,28 @@ Vue.http = Vue.prototype.$http = axios;
 
 //Vue.config.productionTip = false;
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
+
+//setup analytics on platform.
+Vue.use(VueMultianalytics, {
+	modules: {
+		ga: {
+			appName: 'JSEapp', // Mandatory
+			appVersion: '0.5.5', // Mandatory
+			trackingId: 'UA-48537439-16', // Mandatory
+			//debug: true, // Whether or not display console logs debugs (optional)
+		},
+		//facebook: {
+		//	token: '500910373434901',
+			//debug: true, // Whether or not display console logs debugs (optional)
+		//},
+	},
+	routing: {
+		vueRouter: nav, //  Pass the router instance to automatically sync with router (optional)
+		//preferredProperty: 'name', // By default 'path' and related with vueRouter (optional)
+		//ignoredViews: ['homepage'], // Views that will not be tracked
+		//ignoredModules: ['ga'], // Modules that will not send route change events. The event sent will be this.$ma.trackView({viewName: 'homepage'}, ['ga'])
+	},
+});
 
 //date time calc
 Vue.use(VueMoment);
