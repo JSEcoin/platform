@@ -27,8 +27,9 @@ Vue.http = Vue.prototype.$http = axios;
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
 //platformName analytics display
-const platformName = 'JSEapp_'+(typeof (process.env.platform) !== 'undefined')? process.env.platform : 'unknown';
+const platformName = `JSEapp_${(typeof (process.platform) !== 'undefined')? process.platform : 'unknown'}`;
 
+//console.log(`initiating app - ${platformName}`);
 //setup analytics on platform.
 Vue.use(VueMultianalytics, {
 	modules: {
