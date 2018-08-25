@@ -54,7 +54,7 @@ export default {
 	 */
 	created() {
 		const self = this;
-		console.log(self.$ma);
+
 		//set theme
 		if (localStorage.getItem('theme') !== null) {
 			self.$store.commit('updateAppState', {
