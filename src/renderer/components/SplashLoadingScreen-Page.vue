@@ -120,7 +120,9 @@ export default {
 			if (self.$store.getters.whichLandingPage !== 'splash') {
 				self.route = self.$store.getters.whichLandingPage;
 			}
-			self.routeDelay(self.route);
+			setTimeout(() => {
+				self.routeDelay(self.route);
+			}, 5000);
 		}
 	},
 	methods: {
