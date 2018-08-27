@@ -162,6 +162,14 @@ export default {
 			});
 		}
 
+		//should app auto mine only when plugged in
+		if (localStorage.getItem('mineWhenpluggedIn') !== null) {
+			self.$store.commit('updateAppState', {
+				val: ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')),
+				state: 'mineWhenpluggedIn',
+			});
+		}
+
 		//should app autologin
 		if (localStorage.getItem('autoLogin') !== null) {
 			self.$store.commit('updateAppState', {
@@ -363,7 +371,17 @@ export default {
 		},
 		onDeviceReady() {
 			const self = this;
-
+			window.addEventListener('batterystatus', (status) => {
+				if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
+					self.$store.dispatch({
+						type: 'startPlatformMining',
+					});
+				} else {
+					self.$store.dispatch({
+						type: 'stopPlatformMining',
+					});
+				}
+			}, false);
 			// Handle the device ready event.
 			document.addEventListener('pause', self.onPause, false);
 			document.addEventListener('resume', self.onResume, false);
