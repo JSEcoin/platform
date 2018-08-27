@@ -14,6 +14,7 @@ const state = {
 	jseCoinServer: 'https://server.jsecoin.com', //app server connection address
 	isGoogle: false, //is app hosted on google then disable miner
 	initLander: 'login', //set initial landing page for splash screen
+	mineWhenpluggedIn: false, //for mobile - mine only when device plugged into power
 };
 
 const mutations = {
