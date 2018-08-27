@@ -43,10 +43,10 @@ Vue.use(Router);
 
 const router = new Router({
 	mode: ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined'))?'hash':'history',
-	routes: [{
+	routes: [/*{
 			path: '*',
 			redirect: '/',
-		},
+	},*/
 		{
 			path: '/upgradeApp',
 			name: 'upgradeApp',
