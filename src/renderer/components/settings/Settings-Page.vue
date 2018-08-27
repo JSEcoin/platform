@@ -48,6 +48,15 @@
 							}" />
 					</SettingsItemRowWidget>
 					<!-- xSilent -->
+					<!-- Silent -->
+					<SettingsItemRowWidget v-if="autoMine" settingName="Only Auto Mine When Power Plugged In">
+						<ToggleSwitchWidget
+							v-model="mineWhenpluggedIn"
+							v-bind="{
+								name: 'mineWhenpluggedIn',
+							}" />
+					</SettingsItemRowWidget>
+					<!-- xSilent -->
 				</OptionsListWrapperWidget>
 				<!-- xMobile Settings -->
 
@@ -182,6 +191,18 @@ export default {
 					state: 'autoMine',
 				});
 				localStorage.setItem('autoMine', val);
+			},
+		},
+		mineWhenpluggedIn: {
+			get() {
+				return this.$store.state.app.mineWhenpluggedIn;
+			},
+			set(val) {
+				this.$store.commit('updateAppState', {
+					val,
+					state: 'mineWhenpluggedIn',
+				});
+				localStorage.setItem('mineWhenpluggedIn', val);
 			},
 		},
 		mobileBackgroundMode: {
