@@ -433,6 +433,8 @@ export default {
 				jseUnique: localStorage.getItem('jseUnique'),
 				password: self.form.password.val,
 				app: self.$store.getters.whichPlatform,
+				screen: (window.screen.width+'x'+window.screen.height) || 'unkown',
+				userAgent: window.navigator.userAgent || self.$store.getters.whichPlatform || 'unknown',
 			};
 
 			//if captcha then send captcha else must be 2fa
