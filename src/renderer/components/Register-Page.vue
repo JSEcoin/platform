@@ -446,7 +446,7 @@ export default {
 				timeOffset: localTime.getTimezoneOffset(),
 				regTime: localTS - window.scriptLoadTS,
 				language: window.navigator.userLanguage || window.navigator.language,
-				screen: (window.screen.width+'x'+window.screen.height) || 'unkown',
+				screen: (window.screen.width+'x'+window.screen.height) || 'unknown',
 				userAgent: window.navigator.userAgent || self.$store.getters.whichPlatform || 'unknown',
 			};
 			//check cookies
