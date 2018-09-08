@@ -433,7 +433,7 @@ export default {
 		},
 		onBackKeyDown() {
 			// Handle the back-button event on Android. By default it will exit the app.
-			navigator.app.exitApp();
+			//navigator.app.exitApp();
 		},
 		/**
 		 * Close Window
