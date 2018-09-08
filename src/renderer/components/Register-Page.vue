@@ -495,7 +495,7 @@ export default {
 				if (self.$store.getters.whichPlatform === 'desktop') {
 					self.$electron.ipcRenderer.send('login');
 				}
-				
+
 				//mark user as registered enable tracker
 				self.$store.commit('updateUserStateValue', {
 					val: true,
