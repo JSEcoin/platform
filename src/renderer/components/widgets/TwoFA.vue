@@ -123,7 +123,7 @@ export default {
 
 			//number pressed
 			if (isFinite(e.key)) {
-				console.log(e.key);
+				//console.log(e.key);
 				self.form.authCode[val] = e.key;
 				/**
 				 * key-up event.
