@@ -3,6 +3,11 @@ import axios from 'axios';
 import moment from 'moment';
 
 const state = {
+	txLimit: 0, //user transaction limit
+	pendingTotal: 0, //total rewards pending to be paid out
+	pendingSelfMining: 0, //self mining rewards
+	pendingPublisherMining: 0, //publisher mining rewards
+	pendingReferrals: 0, //referral rewards
 	loggedIn: false, //is user logged in
 	confirmed: false, //has user comfirmed his account via email?
 	balance: '0', //users balance
@@ -18,7 +23,7 @@ const state = {
 	countDownFrom: 30, //interval to countdown from
 	statsReset: 0, //reset midnight UTC hrs
 	lastUpdated: new Date(), //last updated
-	fromNow: 'x', //last updated text display
+	fromNow: '', //last updated text display
 	registrationDate: 0, //users Registration date
 	miningHistory: [], //users mining reward history
 	globalErrMsg: '', //global error message notifacation - used on redirect to login
@@ -82,6 +87,13 @@ const mutations = {
 	 * @param {*} data
 	 */
 	updateState(state, data) {
+		//user transaction limit
+		state.txLimit = data.txLimit;
+		//update rewards
+		state.pendingTotal = data.pendingTotal;
+		state.pendingSelfMining = data.pendingSelfMining;
+		state.pendingPublisherMining = data.pendingPublisherMining;
+		state.pendingReferrals = data.pendingReferrals;
 		//update any other user required state items
 		state.confirmed = data.confirmed;
 		state.todaysEarnings = data.todaysEarnings;
