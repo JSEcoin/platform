@@ -216,8 +216,6 @@ export default {
 			const loginSession = {
 				session: localStorage.getItem('userSession'),
 				app: self.$store.getters.whichPlatform,
-				screen: (window.screen.width+'x'+window.screen.height) || 'unknown',
-				userAgent: window.navigator.userAgent || self.$store.getters.whichPlatform || 'unknown',
 			};
 			//attempt login
 			axios.post(
