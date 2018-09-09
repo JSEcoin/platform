@@ -316,9 +316,20 @@ export default {
 					self.$router.push('upgradeApp');
 					return;
 				}
+
+				//update Pending rewards system user obj
+				if (typeof (window.calculatePendingTotal) === 'function') {
+					window.calculatePendingTotal();
+				}
+
 				//set update user globals
 				self.$store.dispatch({
 					type: 'updateUserState',
+					txLimit: (window.user.txLimit)?window.user.txLimit:0,
+					pendingTotal: (window.user.pendingTotal)?window.user.pendingTotal:0,
+					pendingSelfMining: (window.user.pendingSelfMining)?window.user.pendingSelfMining:0,
+					pendingPublisherMining: (window.user.pendingPublisherMining)?window.user.pendingPublisherMining:0,
+					pendingReferrals: (window.user.pendingReferrals)?window.user.pendingReferrals:0,
 					confirmed: (window.user.confirmed)?window.user.confirmed:false,
 					balance: (window.user.balance)?window.user.balance:0,
 					todaysEarnings: (window.user.statsToday)?window.user.statsToday.c:0,
@@ -674,6 +685,10 @@ body.QRScanner.mobile footer {
     right: 0px;
     border-radius: 0px;
     border-bottom: none;
+}
+
+.hr hr {
+	display: none;
 }
 
 /*iframe*/
