@@ -55,6 +55,14 @@ export default {
 	created() {
 		const self = this;
 
+		//confirm if server needs to change as may be blocked
+		window.addEventListener('jseServerUpdate', (e) => {
+			self.$store.commit('updateAppState', {
+				val: e.detail,
+				state: 'jseCoinServer',
+			});
+		});
+
 		//set theme
 		if (localStorage.getItem('theme') !== null) {
 			self.$store.commit('updateAppState', {
