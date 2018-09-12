@@ -42,7 +42,7 @@
     </plugin>
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.1" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
+    <plugin name="cordova-plugin-battery-status" spec="^2.0.2" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^7.1.1" />
-    <plugin name="cordova-plugin-battery-status" spec="^2.0.2" />
 </widget>
