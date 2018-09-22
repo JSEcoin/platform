@@ -6,32 +6,51 @@
 			<ContentWidget 
 				titleTxt="Balance" 
 				:infoPanelTxt="`Updated ${fromNow}`">
-				<OverviewCoinDispayWidget 
+				<OverviewCoinDispayWidget style="font-size:0.8em;" 
 					:coinTotal="`${balance}`"
 					:coinClass="{gold:balance >= 1, silver:balance < 1}"></OverviewCoinDispayWidget>
 			</ContentWidget>
 			<!-- xBalance -->
 			
-			<!-- Earnings Today -->
+			<!-- Earnings Today
 			<ContentWidget 
-				v-if="todaysEarnings !== 0" titleTxt="Earnings Today" 
+				v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
 				:infoPanelTxt="`Reset ${statsReset} Hrs Ago`">
 				<OverviewCoinDispayWidget 
 					:coinTotal="`${todaysEarnings}`"
 					:coinClass="{gold:todaysEarnings >= 1, silver:todaysEarnings < 1}"></OverviewCoinDispayWidget>
 			</ContentWidget>
-			<!-- xEarnings Today -->
+			xEarnings Today -->
 			
-			<!-- Mined Lifetime -->
+			<!-- Mined Lifetime
 			<ContentWidget 
-				v-if="((minedLifetime !== 0) && (minedLifetime !== 0))" 
+				v-if="(minedLifetime > 0)" 
 				titleTxt="Mined Lifetime" 
 				:infoPanelTxt="`Registered ${registrationDate}`">
 				<OverviewCoinDispayWidget 
 					:coinTotal="`${minedLifetime}`"
 					:coinClass="{gold:minedLifetime >= 1, silver:minedLifetime < 1}"></OverviewCoinDispayWidget>
 			</ContentWidget>
-			<!-- xMined Lifetime -->
+			 xMined Lifetime -->
+
+
+			<!-- Rewards Pending -->
+			<ContentWidget 
+				v-if="(pendingTotal > 0)" 
+				titleTxt="Rewards Pending"
+				:infoPanelTxt="`${pendingTotal}`"
+				:infoPanelIcoClassName="{gold:pendingTotal >= 1, silver:pendingTotal < 1}">
+				<RewardPanelWidget />
+			</ContentWidget>
+			<!-- xRewards Pending -->
+
+			<!-- Mining Overview -->
+			<ContentWidget 
+				v-if="(pendingTotal > 0)" 
+				titleTxt="Mining Overview">
+				<MinerPanelWidget />
+			</ContentWidget>
+			<!-- Mining Overview -->
 		</ScrollWidget>
 	</AppWrapperWidget>
 </template>
@@ -43,6 +62,8 @@ import NavWidget from '@/components/widgets/NavWidget.vue';
 import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
 import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import OverviewCoinDispayWidget from '@/components/widgets/OverviewCoinDispayWidget.vue';
+import RewardPanelWidget from '@/components/widgets/RewardPanelWidget.vue';
+import MinerPanelWidget from '@/components/widgets/MinerPanelWidget.vue';
 
 /**
  * @description
@@ -61,14 +82,29 @@ export default {
 		ScrollWidget,
 		ContentWidget,
 		OverviewCoinDispayWidget,
+		RewardPanelWidget,
+		MinerPanelWidget,
 	},
 	computed: mapState({
 		balance: state => state.user.balance,
 		todaysEarnings: state => state.user.todaysEarnings,
 		minedLifetime: state => state.user.minedLifetime,
+		pendingTotal: state => state.user.pendingTotal,
 		statsReset: state => state.user.statsReset,
 		fromNow: state => state.user.fromNow,
 		registrationDate: state => state.user.registrationDate,
 	}),
 };
 </script>
+
+<style scoped>
+.hr-divider {
+	background:#eee;
+	height:4px;
+	border-radius: 4px;
+	margin:20px 0px;
+}
+.hr-divider hr {
+	display: none;
+}
+</style>

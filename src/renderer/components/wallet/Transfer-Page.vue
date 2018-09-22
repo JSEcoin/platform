@@ -155,6 +155,7 @@ export default {
 	computed: mapState({
 		confirmed: state => state.user.confirmed,
 		balance: state => state.user.balance,
+		txLimit: state => state.user.txLimit,
 	}),
 	created() {
 		this.user = window.user;
@@ -343,6 +344,7 @@ export default {
 		 */
 		keyWatch(input) {
 			const self = this;
+			self.form.error.msg = '';
 			//if text remove placeholder and show above input
 			if (this.form[input].val.length > 0) {
 				this.form[input].flag = false;
@@ -372,8 +374,10 @@ export default {
 
 					//if gt current balance fix to balance amount
 					amountVal = Number(this.form.amount.val);
-					if (amountVal > self.$store.state.balance) {
-						this.form.amount.val = self.$store.state.balance;
+					//console.log(self.$store.state.user.txLimit);
+					if (amountVal > self.$store.state.user.txLimit) {
+						this.form.amount.val = String(self.$store.state.user.txLimit);
+						self.form.error.msg = `Daily transaction limit set: ${self.$store.state.user.txLimit} JSE`;
 					}
 
 					//make sure min value is set to 0.000001

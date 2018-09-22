@@ -16,7 +16,7 @@
 					class="containedTransferItem" 
 					:titleTxt="coinDate(transaction.ts)" 
 					:infoPanelTxt="`${transaction.value}`" 
-					:infoPanelIcoClassName="{gold:transaction.value >= 1, silver:transaction.value < 1}" 
+					:infoPanelIcoClassName="{gold:((transaction.value >= 1) || (transaction.value <= -1)), silver:((transaction.value < 1) && (transaction.value > -1))}" 
 					:key="`id${i}`" 
 					v-if="((transaction.command === 'transfer') && (transaction.value < 0))" 
 					v-for="(transaction, i) in userHistory">

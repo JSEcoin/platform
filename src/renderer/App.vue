@@ -54,7 +54,15 @@ export default {
 	 */
 	created() {
 		const self = this;
-		console.log(self.$ma);
+
+		//confirm if server needs to change as may be blocked
+		window.addEventListener('jseServerUpdate', (e) => {
+			self.$store.commit('updateAppState', {
+				val: e.detail,
+				state: 'jseCoinServer',
+			});
+		});
+
 		//set theme
 		if (localStorage.getItem('theme') !== null) {
 			self.$store.commit('updateAppState', {
@@ -159,6 +167,14 @@ export default {
 			self.$store.commit('updateAppState', {
 				val: ((String(localStorage.getItem('autoMine')) === 'true') && (!process.env.ISGOOGLE)),
 				state: 'autoMine',
+			});
+		}
+
+		//should app auto mine only when plugged in
+		if (localStorage.getItem('mineWhenpluggedIn') !== null) {
+			self.$store.commit('updateAppState', {
+				val: ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')),
+				state: 'mineWhenpluggedIn',
 			});
 		}
 
@@ -308,9 +324,20 @@ export default {
 					self.$router.push('upgradeApp');
 					return;
 				}
+
+				//update Pending rewards system user obj
+				if (typeof (window.calculatePendingTotal) === 'function') {
+					window.calculatePendingTotal();
+				}
+
 				//set update user globals
 				self.$store.dispatch({
 					type: 'updateUserState',
+					txLimit: (window.user.txLimit)?window.user.txLimit:0,
+					pendingTotal: (window.user.pendingTotal)?window.user.pendingTotal:0,
+					pendingSelfMining: (window.user.pendingSelfMining)?window.user.pendingSelfMining:0,
+					pendingPublisherMining: (window.user.pendingPublisherMining)?window.user.pendingPublisherMining:0,
+					pendingReferrals: (window.user.pendingReferrals)?window.user.pendingReferrals:0,
 					confirmed: (window.user.confirmed)?window.user.confirmed:false,
 					balance: (window.user.balance)?window.user.balance:0,
 					todaysEarnings: (window.user.statsToday)?window.user.statsToday.c:0,
@@ -363,7 +390,17 @@ export default {
 		},
 		onDeviceReady() {
 			const self = this;
-
+			window.addEventListener('batterystatus', (status) => {
+				if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
+					self.$store.dispatch({
+						type: 'startPlatformMining',
+					});
+				} else {
+					self.$store.dispatch({
+						type: 'stopPlatformMining',
+					});
+				}
+			}, false);
 			// Handle the device ready event.
 			document.addEventListener('pause', self.onPause, false);
 			document.addEventListener('resume', self.onResume, false);
@@ -415,7 +452,7 @@ export default {
 		},
 		onBackKeyDown() {
 			// Handle the back-button event on Android. By default it will exit the app.
-			navigator.app.exitApp();
+			//navigator.app.exitApp();
 		},
 		/**
 		 * Close Window
@@ -656,6 +693,10 @@ body.QRScanner.mobile footer {
     right: 0px;
     border-radius: 0px;
     border-bottom: none;
+}
+
+.hr hr {
+	display: none;
 }
 
 /*iframe*/

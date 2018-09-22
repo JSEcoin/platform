@@ -18,8 +18,6 @@ import store from './store';
 if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
 //if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 	Vue.use(require('vue-electron'));
-	window.ActiveXObject = undefined;
-	window.ga('set', 'checkProtocolTask', null);
 }
 
 //quick axios access

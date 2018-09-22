@@ -24,7 +24,7 @@
 		<!-- xCurrent Balance -->
 
 		<!-- Earnings Today -->
-		<ContentWidget v-if="todaysEarnings > 0" titleTxt="Earnings Today" class="mini hasFooter">
+		<ContentWidget v-if="todaysEarnings > 0" titleTxt="Mined Today" class="mini hasFooter">
 			<div class="row" style="">
 				<div class="valueIconDisplay">
 					<Coin :coinClass="{anim:animateCoin, gold:todaysEarnings > 0, silver:todaysEarnings < 1}"/>

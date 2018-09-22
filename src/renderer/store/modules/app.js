@@ -1,6 +1,6 @@
 const state = {
-	version: '0.5.5', //app version no
-	major: 55, //support only this server release
+	version: '0.5.6', //app version no
+	major: 56, //support only this server release
 	platform: 'web', //platform type [desktop, mobile web]
 	isDev: true, //is in development mode
 	loading: true, //app loading indicator
@@ -14,6 +14,7 @@ const state = {
 	jseCoinServer: 'https://server.jsecoin.com', //app server connection address
 	isGoogle: false, //is app hosted on google then disable miner
 	initLander: 'login', //set initial landing page for splash screen
+	mineWhenpluggedIn: false, //for mobile - mine only when device plugged into power
 };
 
 const mutations = {
