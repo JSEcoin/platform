@@ -216,7 +216,6 @@ export default {
 		 * @public
 		 */
 		getLogin() {
-			console.log('1');
 			const self = this;
 			//session obj
 			const loginSession = {
@@ -237,6 +236,12 @@ export default {
 
 					//add scripts
 					//self.addScripts();
+
+					//start mining if user has background mining enabled and user loggedin
+					if (self.$store.state.user.loggedIn) {
+						//initialise socket connection
+						window.startSocketIOConnection();
+					}
 
 					//add tray options
 					if (self.$store.getters.whichPlatform === 'desktop') {
@@ -295,12 +300,6 @@ export default {
 				t.id = 'JSEW-coincode';
 				//on script load start mining if mining enabled.
 				t.onload = () => {
-					//start mining if user has background mining enabled and user loggedin
-					if (self.$store.state.user.loggedIn) {
-						//initialise socket connection
-						window.startSocketIOConnection();
-					}
-
 					//check if user session exists try to login
 					if (localStorage.getItem('userSession') !== null) {
 						//attempt to login
