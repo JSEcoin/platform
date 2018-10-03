@@ -1,28 +1,24 @@
 import { app, BrowserWindow, Menu, Tray, nativeImage, ipcMain, protocol } from 'electron'; // eslint-disable-line
-//import 'hazardous';
 import { join, normalize } from 'path';
 import { autoUpdater } from 'electron-updater';
-//import { readFileSync } from 'fs';
-//import crypto from 'crypto';
 
-const appVersion = '0.5.6';
+//version
+const appVersion = '0.5.7';
+
+// Don't show the app in the doc
+app.dock.hide();
 
 //test
 app.disableHardwareAcceleration();
 
-//app.commandLine.appendSwitch('inspect', '5858');
-//app.commandLine.appendSwitch('ignore-certificate-errors');
-//app.commandLine.appendSwitch('disable-web-security');
 //enable background mining when app is minimised
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
-//console.log(app.getAppPath());
 
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-	//global.__static = join(__dirname, '/static');//.replace(/\\/g, '\\\\'); // eslint-disable-line
 	global.__static = join(__dirname, '/static').replace(/\\/g, '\\\\'); // eslint-disable-line
 }
 
@@ -30,19 +26,40 @@ let mainWindow;
 
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
-  : 'jsecoin://index.html';//`file://${__dirname}/index.html`;//
-//file:///C:/Users/xxx/AppData/Local/Programs/jse-…esources/app.asar/dist/electron/index.html#/login
+  : 'jsecoin://index.html';
 
 /**
  * Initialise and create application Window
  */
 function createWindow() {
 	//setup app ico
-	const iconPath = join(__static, 'android-chrome-192x192.png');
-	const iconTrayPath = join(__static, 'favicon-16x16.png');
+	let iconPath = join(__static, 'app/icon.png');
+	let iconTrayPath = join(__static, 'app/trayIco.png');
+	switch (process.platform) {
+		case 'win32':
+			iconPath = join(__static, 'app/windows-icon.png');
+			iconTrayPath = join(__static, 'app/windows-trayIco.png');
+		break;
+		case 'sunos':
+			iconPath = join(__static, 'app/sunos-icon.png');
+			iconTrayPath = join(__static, 'app/sunos-trayIco.png');
+		break;
+		case 'linux':
+			iconPath = join(__static, 'app/linux-icon.png');
+			iconTrayPath = join(__static, 'app/linux-trayIco.png');
+		break;
+		case 'freebsd':
+			iconPath = join(__static, 'app/freebsd-icon.png');
+			iconTrayPath = join(__static, 'app/freebsd-trayIco.png');
+		break;
+		case 'darwin':
+			iconPath = join(__static, 'app/mac-icon.png');
+			iconTrayPath = join(__static, 'app/mac-trayIco.png');
+		break;
+	}
+
+	//generate nativeImg app icon
 	const appIcon = nativeImage.createFromPath(iconPath);
-	//..To review
-	const iconName = process.platform === 'win32' ? 'windows-icon@2x.png' : 'iconTemplate.png';
 
 	//Initial window options
 	mainWindow = new BrowserWindow({
@@ -58,7 +75,6 @@ function createWindow() {
 		webPreferences: {
 			backgroundThrottling: false,
 			nodeIntegrationInWorker: true,
-			//If backgroundThrottling is disabled, the visibility state will remain visible even if the window is minimized, occluded, or hidden.
 		},
 	});
 
@@ -76,9 +92,7 @@ function createWindow() {
 
 	//add tray icon support
 	const trayIcon = nativeImage.createFromPath(iconPath);
-	//trayIcon = trayIcon.resize({ width: 16, height: 16 });
-	//const nimage = nativeImage.createFromPath(trayIcon);
-	const tray = new Tray(iconPath);//appIcon iconPath
+	const tray = new Tray(iconPath);
 
 	mainWindow.on('show', () => {
 		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
