@@ -5,9 +5,6 @@ import { autoUpdater } from 'electron-updater';
 //version
 const appVersion = '0.5.7';
 
-// Don't show the app in the doc
-app.dock.hide();
-
 //test
 app.disableHardwareAcceleration();
 
@@ -55,6 +52,8 @@ function createWindow() {
 		case 'darwin':
 			iconPath = join(__static, 'app/mac-icon.png');
 			iconTrayPath = join(__static, 'app/mac-trayIco.png');
+			// Don't show the app in the doc
+			app.dock.hide();
 		break;
 	}
 
