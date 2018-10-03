@@ -51,6 +51,10 @@
 								<span>{{loginRecord.geo}}</span>
 							</div>
 							<div class="row">
+								<label>Platform</label>
+								<span>{{loginRecord.app}}</span>
+							</div>
+							<div class="row">
 								<label>IP Address</label>
 								<span>{{loginRecord.ip}}</span>
 							</div>
