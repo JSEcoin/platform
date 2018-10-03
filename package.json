@@ -1,8 +1,19 @@
 {
 	"name": "jse-desktop",
-	"version": "0.5.6",
-	"author": "JSECOIN",
-	"description": "JSE Desktop APP",
+	"version": "0.5.7",
+	"author": {
+		"name": "JSEcoin Ltd",
+		"email": "support@jsecoin.com"
+	},
+	"keywords": [
+		"JSEcoin",
+		"Cryptominer",
+		"altcoin",
+		"platform",
+		"adtech",
+		"cryptocurrency"
+	],
+	"description": "JSE Platfrom Agnostic APP - Web/Desktop/Mobile/PWA",
 	"license": "(ISC OR GPL-3.0)",
 	"main": "./dist/desktop/main.js",
 	"private": true,
@@ -36,6 +47,14 @@
 		"unit": "karma start test/unit/karma.conf.js",
 		"postinstall": "electron-builder install-app-deps"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jsecoin/platform.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jsecoin/platform/issues"
+	},
+	"homepage": "https://github.com/jsecoin/platform#readme",
 	"build": {
 		"productName": "JSECoin",
 		"appId": "com.jsecoin.desktop",
@@ -97,7 +116,6 @@
 		"pdfmake": "^0.1.36",
 		"promise-polyfill": "7.1.2",
 		"qrious": "^4.0.2",
-		"vue": "^2.3.3",
 		"vue-clipboard2": "^0.1.0",
 		"vue-cordova": "^0.1.2",
 		"vue-directive-tooltip": "^1.4.5",
@@ -208,6 +226,9 @@
 		"webpack-dev-server": "^2.9.1",
 		"webpack-hot-middleware": "^2.18.2",
 		"webpack-merge": "^4.1.0"
+	},
+	"peerDependencies": {
+		"vue": "^2.5.13"
 	},
 	"engines": {
 		"node": ">= 6.0.0",
