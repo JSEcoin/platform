@@ -417,12 +417,14 @@ export default {
 
 					const myRequest = new Request(self.captchaUrl, myInit);
 
-					fetch(myRequest).then(function(response) {
+					fetch(myRequest).then((response) => {
+						//
+						console.log('');
 						return response;
-					}).then(function(response) {
+					}).then((response) => {
 						//console.log(response);
 						self.showCaptcha = true; //shows jsecoin.com captcha screen
-					}).catch(function(e){
+					}).catch((e) => {
 						//console.log(e);
 						self.showCaptcha = false;
 						self.form.error.display = true;
