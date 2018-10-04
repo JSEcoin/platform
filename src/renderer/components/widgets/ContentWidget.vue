@@ -214,6 +214,16 @@ dl dd {
 .platformWeb.mobile dl dd {
 	padding:10px;
 }
+
+.night fieldset .mini {
+	background:#1c1e28;
+}
+.light fieldset .mini {
+	background:#fafafa;
+}
+.night .mini {
+	border: solid 1px #171820
+}
 .mini dd {
 	padding: 0px 0px 4px 0px;
     margin: 4px 8px 0px 8px;
