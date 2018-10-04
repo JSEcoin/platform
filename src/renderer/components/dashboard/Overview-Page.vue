@@ -19,7 +19,7 @@
 				</template>
 			</ContentWidget>
 			<!-- xBalance -->
-			
+
 			<!-- Earnings Today
 			<ContentWidget 
 				v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
@@ -41,14 +41,18 @@
 			</ContentWidget>
 			 xMined Lifetime -->
 
+			<div class="hr split"><hr /></div>
 
 			<!-- Mining Overview -->
 			<ContentWidget 
 				v-if="(minedLifetime > 0)" 
-				titleTxt="Mining Overview">
+				titleTxt="Mining Overview"
+				:infoPanelTxt="`Registered ${registrationDate}`">
 				<MinerPanelWidget />
 			</ContentWidget>
 			<!-- Mining Overview -->
+
+			<div class="hr split"><hr /></div>
 
 			<!-- Rewards Pending -->
 			<ContentWidget 
@@ -60,6 +64,8 @@
 			</ContentWidget>
 			<!-- xRewards Pending -->
 
+			<div class="hr split"><hr /></div>
+			
 			<!-- Payment Overview -->
 			<ContentWidget 
 				v-if="(pendingTotal > 0)" 
@@ -135,6 +141,12 @@ export default {
 }
 .hr-divider hr {
 	display: none;
+}
+.hr.split {
+	height:8px;
+	border-radius: 8px;
+	width:40px;
+	margin: 0px auto;
 }
 
 .dashCoinTotalDisplay {
