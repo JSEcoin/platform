@@ -5,10 +5,18 @@
 			<!-- Balance -->
 			<ContentWidget 
 				titleTxt="Balance" 
-				:infoPanelTxt="`Updated ${fromNow}`">
-				<OverviewCoinDispayWidget style="font-size:0.8em;" 
+				:infoPanelTxt="`Updated ${fromNow}`"
+				style="padding-bottom:50px;">
+				<OverviewCoinDispayWidget class="dashCoinTotalDisplay" style="font-size:0.8em;" 
 					:coinTotal="`${balance}`"
 					:coinClass="{gold:balance >= 1, silver:balance < 1}"></OverviewCoinDispayWidget>
+				<template slot="footer">
+					<div class="row" style="justify-content:center;">
+						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Transfer" v-on:click.native="goto('/wallet');"/>
+						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Export" v-on:click.native="goto('/wallet/export');"/>
+						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Import" v-on:click.native="goto('/wallet/import');"/>
+					</div>
+				</template>
 			</ContentWidget>
 			<!-- xBalance -->
 			
@@ -34,6 +42,14 @@
 			 xMined Lifetime -->
 
 
+			<!-- Mining Overview -->
+			<ContentWidget 
+				v-if="(minedLifetime > 0)" 
+				titleTxt="Mining Overview">
+				<MinerPanelWidget />
+			</ContentWidget>
+			<!-- Mining Overview -->
+
 			<!-- Rewards Pending -->
 			<ContentWidget 
 				v-if="(pendingTotal > 0)" 
@@ -44,13 +60,15 @@
 			</ContentWidget>
 			<!-- xRewards Pending -->
 
-			<!-- Mining Overview -->
+			<!-- Payment Overview -->
 			<ContentWidget 
 				v-if="(pendingTotal > 0)" 
-				titleTxt="Mining Overview">
-				<MinerPanelWidget />
+				titleTxt="Payment Overview"
+				:infoPanelTxt="`${pendingNextPayment}`"
+				:infoPanelIcoClassName="{gold:pendingNextPayment >= 1, silver:pendingNextPayment < 1}">
+				<RewardPaymentPanelWidget />
 			</ContentWidget>
-			<!-- Mining Overview -->
+			<!-- xPayment Overview -->
 		</ScrollWidget>
 	</AppWrapperWidget>
 </template>
@@ -64,6 +82,8 @@ import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import OverviewCoinDispayWidget from '@/components/widgets/OverviewCoinDispayWidget.vue';
 import RewardPanelWidget from '@/components/widgets/RewardPanelWidget.vue';
 import MinerPanelWidget from '@/components/widgets/MinerPanelWidget.vue';
+import RewardPaymentPanelWidget from '@/components/widgets/RewardPaymentPanelWidget.vue';
+import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 
 /**
  * @description
@@ -84,16 +104,25 @@ export default {
 		OverviewCoinDispayWidget,
 		RewardPanelWidget,
 		MinerPanelWidget,
+		RewardPaymentPanelWidget,
+		ButtonWidget,
 	},
 	computed: mapState({
 		balance: state => state.user.balance,
 		todaysEarnings: state => state.user.todaysEarnings,
 		minedLifetime: state => state.user.minedLifetime,
+		pendingNextPayment: state => state.user.pendingNextPayment,
 		pendingTotal: state => state.user.pendingTotal,
 		statsReset: state => state.user.statsReset,
 		fromNow: state => state.user.fromNow,
 		registrationDate: state => state.user.registrationDate,
 	}),
+	methods: {
+		goto(route) {
+			const self = this;
+			self.$router.push(route);
+		},
+	},
 };
 </script>
 
@@ -106,5 +135,19 @@ export default {
 }
 .hr-divider hr {
 	display: none;
+}
+
+.dashCoinTotalDisplay {
+	margin:0px auto;
+	border-radius: 30px;
+	padding-right:20px;
+}
+
+.night .dashCoinTotalDisplay {
+	background: #1c1e28;
+}
+	
+.light .dashCoinTotalDisplay {
+	background: #fafafa;
 }
 </style>
