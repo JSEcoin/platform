@@ -248,12 +248,12 @@ export default {
 						self.$electron.ipcRenderer.send('login');
 					}
 
-					//redirect to dashboard if mouse up or delay until up
-					self.routeDelay('/dashboard');
-
 					//user session accepted update key app globals
 					const event = new Event('userDataRefresh');
 					document.dispatchEvent(event, window.user);
+
+					//redirect to dashboard if mouse up or delay until up
+					self.routeDelay('/dashboard');
 				}, 4000);
 			}).catch((err) => {
 				console.error(err);
