@@ -334,6 +334,7 @@ export default {
 				self.$store.dispatch({
 					type: 'updateUserState',
 					txLimit: (window.user.txLimit)?window.user.txLimit:0,
+					rewards: (window.user.rewards)?window.user.rewards:{},
 					pendingToday: (window.user.pendingToday)?window.user.pendingToday:0,
 					pendingNextPayment: (window.user.pendingNextPayment)?window.user.pendingNextPayment:0,
 					pendingTotal: (window.user.pendingTotal)?window.user.pendingTotal:0,
