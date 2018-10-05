@@ -38,8 +38,6 @@
 			<!-- xReferral Rewards -->
 		</div>
 
-		<div class="hr"><hr /></div>
-
 		<EarningsChartWidgetC3 />
 	</OptionsListWrapperWidget>
 </template>
@@ -77,10 +75,6 @@ export default {
 };
 </script>
 <style scoped>
-.hr {
-	height:8px;
-	border-radius: 8px;
-}
 .miningOverview  {
 	margin:12px 12px 0px 12px;
 }
