@@ -1,5 +1,9 @@
 <template>
-	<div id="JSE-earningsChart"></div>
+	<div v-if="hasData">
+		<div class="hr"><hr /></div>
+		
+		<div id="JSE-earningsChart"></div>
+	</div>
 </template>
 
 <script>
@@ -15,6 +19,7 @@ export default {
 	},
 	data () {
 		return {
+			hasData: true,
 			$chart: null,
 			c3Data: {
 				columns: [
@@ -140,11 +145,31 @@ export default {
 		};
 		self.generateChart();
 	},
+	computed: mapState({
+		pendingSelfMining: state => state.user.pendingSelfMining,
+		pendingPublisherMining: state => state.user.pendingPublisherMining,
+		pendingReferrals: state => state.user.pendingReferrals,
+	}),
 	methods: {
 		generateChart() {
 			const self = this;
+			const rewards = [];
+			if (self.pendingSelfMining > 0) {
+				rewards.push(['Platform Mining', self.pendingSelfMining]);
+			}
+			if (self.pendingPublisherMining > 0) {
+				rewards.push(['Publisher Mining', self.pendingPublisherMining]);
+			}
+			if (self.pendingReferrals > 0) {
+				rewards.push(['Referral Rewards', self.pendingReferrals]);
+			}
+
+			if (rewards.length <= 2) {
+				self.hasData = false;
+				return;
+			}
 			self.$chart = c3.generate({
-				bindto: this.$el,
+				bindto: document.getElementById('JSE-earningsChart'),
 				transition: {
 					duration: 0,
 				},
@@ -159,11 +184,7 @@ export default {
 				data: {
 					type: 'bar',
 					//columns: [self.stats],
-					columns: [
-						['Platform Mining', 30],
-						['Publisher Mining', 120],
-						['Referral Rewards', 60],
-					],
+					columns: rewards,
 					colors: {
 						'Platform Mining': '#051b33',
 						'Publisher Mining': '#185084',
@@ -189,6 +210,7 @@ export default {
 					},
 					y: {
 						tick: {
+							values: [1, 2, 4, 8, 16, 32, 64],
 							//count: 10,
 							//format: d3.format('.2f'),
 						},
@@ -217,9 +239,13 @@ export default {
 </script>
 
 <style>
+.hr {
+	height:8px;
+	border-radius: 8px;
+}
 #JSE-earningsChart {
 	border-radius: 6px;
-	margin:10px 20px 0px 20px;
+	margin:12px 12px 0px 12px;
 }
 
 .night #JSE-earningsChart {
@@ -244,11 +270,20 @@ export default {
 	box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
 	font-weight: bold;
 }
+ .night #JSE-earningsChart.c3 .c3-tooltip {
+	border: solid 1px #000;
+ }
+.night #JSE-earningsChart.c3 .c3-tooltip td {
+	background:transparent;
+}
 #JSE-earningsChart .c3-tooltip tr {
 	border:0px;
 }
-#JSE-earningsChart .c3-tooltip td:first-child {
+.light #JSE-earningsChart .c3-tooltip td:first-child {
 	border-right:solid 4px #fafafa;
+}
+.night #JSE-earningsChart .c3-tooltip td:first-child {
+	border-right:solid 4px #101219;
 }
 #JSE-earningsChart .c3-tooltip td {
 	border:0px;
@@ -258,7 +293,7 @@ export default {
 .night #JSE-earningsChart.c3 .c3-axis-x line,
 .night #JSE-earningsChart.c3 .c3-axis-y path,
 .night #JSE-earningsChart.c3 .c3-axis-y line {
-    stroke: #afafaf;
+    stroke: #606060;
 }
 .night #JSE-earningsChart.c3 .c3-axis-x g,
 .night #JSE-earningsChart.c3 .c3-axis-y g,
@@ -270,12 +305,45 @@ export default {
 .light #JSE-earningsChart.c3 .c3-axis-x line,
 .light #JSE-earningsChart.c3 .c3-axis-y path,
 .light #JSE-earningsChart.c3 .c3-axis-y line {
-    stroke: #606060;
+    stroke: #afafaf;
 }
 .light #JSE-earningsChart.c3 .c3-axis-x g,
 .light #JSE-earningsChart.c3 .c3-axis-y g,
 .light #JSE-earningsChart.c3 .c3-legend-item,
 .light #JSE-earningsChart.c3 .c3-legend-item-data text {
     fill: #606060;
+}
+.night .c3-grid line {
+	stroke:#101219;
+}
+.light .c3-grid line {
+	stroke:#e5e5e5;
+}
+
+.night .c3-circle {
+	stroke: #20222e;
+	fill: #fafafa !important;
+	stroke-width: 1.7;
+	cursor: default !important;
+}
+.c3-event-rect{
+	cursor: default !important;
+}
+.light .c3-circle {
+	stroke: #88bbc8;
+	fill: #fff !important;
+	stroke-width: 1.5;
+}
+.night .c3-line-Hash-Rate {
+	stroke: #88bbc8 !important
+}
+.light .c3-line-Hash-Rate {
+	stroke: #88bbc8 !important
+}
+.light #JSE-earningsChart.c3 .c3-event-rects, 
+.night #JSE-earningsChart.c3 .c3-event-rects {
+	fill-opacity: 0 !important;
+	background:red;
+	fill:red;
 }
 </style>
