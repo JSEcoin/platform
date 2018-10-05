@@ -86,7 +86,7 @@ export default {
 	margin:0px 4px;
 }
 .miningOverview dl.hasFooter {
-	padding-bottom:16px;
+	padding-bottom:28px;
 }
 
 .miningOverview dt {
