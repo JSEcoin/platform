@@ -1,5 +1,5 @@
 <template>
-	<div id="JSEA-appBody" :class="{'vb':hasVirtualBar, 'noSubNav': noSubNav, 'noNav': noNav}">
+	<div id="JSEA-appBody" :class="{'vb':hasVirtualBar, 'no-vb':!hasVirtualBar, 'isChrome':isChrome, 'noSubNav': noSubNav, 'noNav': noNav}">
 		<div>
 			<!-- @slot Content to scroll -->
 			<slot/>
@@ -17,6 +17,7 @@ export default {
 	data() {
 		return {
 			hasVirtualBar: false,
+			isChrome: false,
 		};
 	},
 	props: {
@@ -38,9 +39,12 @@ export default {
 	mounted() {
 		const self = this;
 		const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-		if ((!isChrome) && ($store.getters.whichPlatform === 'web')) {
+		if ((!isChrome) && (self.$store.getters.whichPlatform === 'web')) {
+			self.isChrome = false;
 			self.hasVirtualBar = true;
 			self.$vuebar.initScrollbar(self.$el, {});
+		} else {
+			self.isChrome = true;
 		}
 	},
 };
@@ -120,30 +124,30 @@ export default {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
+.isChrome::-webkit-scrollbar {
 	width: 10px;
 	height: 10px;
 }
 
-::-webkit-scrollbar-track-piece {
+.isChrome::-webkit-scrollbar-track-piece {
 	background: transparent;
 }
-::-webkit-scrollbar-track:hover {
+.isChrome::-webkit-scrollbar-track:hover {
 	background: rgba(79,111,127,0.1);
 }
 
-::-webkit-scrollbar-thumb {
+.isChrome::-webkit-scrollbar-thumb {
 	background-color: #b4c7d0;
 	border: 3px solid transparent;
 	background-clip: padding-box;
 	border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb {
+.isChrome::-webkit-scrollbar-thumb {
 	background-color: #3a5169;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.isChrome::-webkit-scrollbar-thumb:hover {
 	background-color: #5b7f92;
 }
 
