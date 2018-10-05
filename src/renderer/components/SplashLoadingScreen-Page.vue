@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios';
-import SplashAnimation from '@/components/widgets/SplashV2.vue';
+import SplashAnimation from '@/components/widgets/SplashV3.vue';
 
 /**
  * @description
@@ -166,7 +166,7 @@ export default {
 
 				//set size
 				if (init) {
-					appWindow.setSize(216, 216);
+					appWindow.setSize(305, 222);
 				} else {
 					appWindow.setSize(510, 656);
 				}
