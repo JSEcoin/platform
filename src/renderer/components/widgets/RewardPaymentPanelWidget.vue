@@ -1,31 +1,33 @@
 <template>
-	<div class="miningOverview row" style="margin: 0px; padding: 0px;">
-		<!-- Next Pending Payment -->
-		<ContentWidget 
-			v-if="(pendingNextPayment >= 0)"
-			titleTxt="Next Pending Payment" 
-			class="mini">
-			<div class="row" style="">
-				<div v-if="pendingNextPayment >= 0" class="valueIconDisplay">
-					<Coin :coinClass="{gold: pendingNextPayment >= 1, silver:pendingNextPayment < 1}"/>
-					{{pendingNextPayment}}&nbsp;<span>JSE</span>
+	<div>
+		<div class="miningOverview row" style="margin: 0px; padding: 0px;">
+			<!-- Next Pending Payment -->
+			<ContentWidget 
+				v-if="(pendingNextPayment >= 0)"
+				titleTxt="Next Pending Payment" 
+				class="mini">
+				<div class="row" style="">
+					<div v-if="pendingNextPayment >= 0" class="valueIconDisplay">
+						<Coin :coinClass="{gold: pendingNextPayment >= 1, silver:pendingNextPayment < 1}"/>
+						{{pendingNextPayment}}&nbsp;<span>JSE</span>
+					</div>
 				</div>
-			</div>
-		</ContentWidget>
-		<!-- xNext Pending Payment -->
+			</ContentWidget>
+			<!-- xNext Pending Payment -->
 
-		<!-- Due 24hrs -->
-		<ContentWidget v-if="(pendingToday >= 0)"
-			titleTxt="Due within 24hrs"
-			class="mini">
-			<div class="row" style="">
-				<div class="valueIconDisplay">
-					<Coin :coinClass="{gold:pendingToday > 0, silver:pendingToday < 1}"/>
-					{{pendingToday}}&nbsp;<span>JSE</span>
+			<!-- Due 24hrs -->
+			<ContentWidget v-if="(pendingToday >= 0)"
+				titleTxt="Due within 24hrs"
+				class="mini">
+				<div class="row" style="">
+					<div class="valueIconDisplay">
+						<Coin :coinClass="{gold:pendingToday > 0, silver:pendingToday < 1}"/>
+						{{pendingToday}}&nbsp;<span>JSE</span>
+					</div>
 				</div>
-			</div>
-		</ContentWidget>
-		<!-- xDue 24hrs -->
+			</ContentWidget>
+			<!-- xDue 24hrs -->
+		</div>
 	</div>
 </template>
 
@@ -210,5 +212,33 @@ export default {
 .front .hash, 
 .back .hash {
 	margin:0px;
+}
+
+.night .c3-grid line {
+	stroke:#101219;
+}
+.light .c3-grid line {
+	stroke:#e5e5e5;
+}
+
+.night .c3-circle {
+	stroke: #20222e;
+	fill: #fafafa !important;
+	stroke-width: 1.7;
+	cursor: default !important;
+}
+.c3-event-rect{
+	cursor: default !important;
+}
+.light .c3-circle {
+	stroke: #88bbc8;
+	fill: #fff !important;
+	stroke-width: 1.5;
+}
+.night .c3-line-Hash-Rate {
+	stroke: #88bbc8 !important
+}
+.light .c3-line-Hash-Rate {
+	stroke: #88bbc8 !important
 }
 </style>
