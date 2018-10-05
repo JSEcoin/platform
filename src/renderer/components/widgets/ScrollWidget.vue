@@ -1,5 +1,5 @@
 <template>
-	<div id="JSEA-appBody" class="vb" v-bar :class="{'noSubNav': noSubNav, 'noNav': noNav}">
+	<div id="JSEA-appBody" :class="{'vb':hasVirtualBar, 'noSubNav': noSubNav, 'noNav': noNav}">
 		<div>
 			<!-- @slot Content to scroll -->
 			<slot/>
@@ -14,6 +14,11 @@
  */
 export default {
 	name: 'ScrollWidget',
+	data() {
+		return {
+			hasVirtualBar: false,
+		};
+	},
 	props: {
 		/**
 		 * Does page have a subnav - changes position of scroll bar
@@ -30,6 +35,14 @@ export default {
 			default: false,
 		},
 	},
+	mounted() {
+		const self = this;
+		const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+		if ((!isChrome) && ($store.getters.whichPlatform === 'web')) {
+			self.hasVirtualBar = true;
+			self.$vuebar.initScrollbar(self.$el, {});
+		}
+	},
 };
 </script>
 
@@ -44,9 +57,9 @@ export default {
 	bottom:0px;
 	left:0px;
 	right:0px;
-	overflow:hidden;
 	border-radius:0px 0px 4px 4px;
 	position: absolute !important;
+	overflow:auto;
 }
 #JSEA-appBody.noNav  {
 	top:0px;
@@ -54,6 +67,10 @@ export default {
 
 #JSEA-appBody.noSubNav  {
 	top:35px;
+}
+
+#JSEA-appBody.vb {
+	overflow:hidden;
 }
 
 #JSEA-appBody.vb .vb-dragger {
@@ -101,5 +118,34 @@ export default {
 #JSEA-appBody.vb.vb-dragging-phantom > .vb-dragger > .vb-dragger-styler {
     background-color: #1BB394;
 }
+
+/* Scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+
+::-webkit-scrollbar-track-piece {
+	background: transparent;
+}
+::-webkit-scrollbar-track:hover {
+	background: rgba(79,111,127,0.1);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #b4c7d0;
+	border: 3px solid transparent;
+	background-clip: padding-box;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #3a5169;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #5b7f92;
+}
+
 /* xApp ScrollBar */
 </style>
