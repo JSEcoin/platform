@@ -646,7 +646,7 @@ html, body {
 }
 
 body {
-	padding:4px;
+	padding:2px;
 	font-size: 16px;
 	font-family: 'Nunito', sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -813,7 +813,7 @@ header {
 	background-position:  center;
 	background-size: cover;
 	/*border-bottom: solid 10px #f5f7fb;*/
-	height:86px;
+	height:84px;
 	position: relative;
 	z-index:1000000;
 }
@@ -939,6 +939,9 @@ header {
 	overflow: hidden;
 	height:648px;
 }
+.platformWeb {
+	background: #000812;
+}
 .platformWeb.night {
 	background:#000;
 }
@@ -972,7 +975,7 @@ header {
 	bottom:0px;
 	margin:0px;
 	border-radius: 0px;
-	overflow: scroll;
+	overflow: auto;
 }
 
 #JSEA-offline dl {
@@ -1350,5 +1353,8 @@ header .fa-minus:hover {
 
 .platformWeb.mobile .infoBox {
 	word-wrap: break-word;
+}
+.sliderWrapper .vue-slider-component .vue-slider-dot {
+	box-shadow: none !important;
 }
 </style>
