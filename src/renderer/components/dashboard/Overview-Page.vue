@@ -3,16 +3,26 @@
 		<NavWidget activeNav="dashboard" activeSubNav="overview"></NavWidget>
 		<ScrollWidget>
 			
-			<div style="margin-top:10px;">
-				<div class="icoEnding" v-if="icoActive()">
-					<p>
-						<b>ICO ending soon!</b><br />
-						Help support the JSEcoin project by investing and buying JSE Tokens.
-					</p>
+			<!-- tmp ico -->
+			<div style="margin-top:10px;" v-if="icoActive()">
+				<div class="icoEnding">
+					<dl>
+						<dt>
+							<span>ICO ending soon!</span>
+							<span style="font-size:0.8em; display:inline;margin-left:0px;padding:2px 8px;">
+								{{days}} : {{hrs}} : {{mins}} : {{seconds}}
+							</span>
+						</dt>
+						<dd>
+							Help support the JSEcoin project by investing and buying JSE Tokens.
+						</dd>
+					</dl>
 				</div> 
-				<ButtonWidget v-if="icoActive()" class="small green" style="margin:-16px auto 10px auto; border-radius:20px;" buttonTxt="Buy JSE Tokens" v-on:click.native="goto('/wallet');"/>
+				<ButtonWidget v-if="icoActive()" class="small green" style="margin:-16px auto 10px auto; border-radius:20px;" buttonTxt="Buy JSE Tokens" v-on:click.native="openExternalWindow('https://jsecoin.com/ico/?utm_source=platformapp&utm_campaign=platformapppBtInAction&utm_content=platform');"/>
 			</div>
 			<div v-if="icoActive()" class="hr split"><hr /></div>
+			<!-- xtmp ico display -->
+
 			<!-- Balance -->
 			<ContentWidget 
 				titleTxt="Balance" 
@@ -23,7 +33,7 @@
 					:coinClass="{gold:balance >= 1, silver:balance < 1}"></OverviewCoinDispayWidget>
 				<template slot="footer">
 					<div class="row" style="justify-content:center;">
-						<ButtonWidget v-if="icoActive()" class="small" style="margin:10px 5px;" buttonTxt="Buy" v-on:click.native="goto('/wallet');"/>
+						<ButtonWidget v-if="icoActive()" class="small" style="margin:10px 5px;" buttonTxt="Buy" v-on:click.native="openExternalWindow('https://jsecoin.com/ico/?utm_source=platformapp&utm_campaign=platformapppBtInAction&utm_content=platform');"/>
 						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Transfer" v-on:click.native="goto('/wallet');"/>
 						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Export" v-on:click.native="goto('/wallet/export');"/>
 						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Import" v-on:click.native="goto('/wallet/import');"/>
@@ -138,6 +148,61 @@ export default {
 		fromNow: state => state.user.fromNow,
 		registrationDate: state => state.user.registrationDate,
 	}),
+	data() {
+		return {
+			endDate: '',
+			bonusDate: '1539259200',
+			days: 0,
+			hrs: 0,
+			mins: 0,
+			seconds: 0,
+		};
+	},
+	created() {
+		const self = this;
+		if (self.icoActive) {
+			self.endDate = moment.unix(self.bonusDate).format('MMMM Do YYYY');
+			setInterval(() => {
+				const endICO = moment.unix(self.bonusDate);
+				const currentTime = moment();
+
+				let days = endICO.diff(currentTime, 'days');
+				if (days < 10) {
+					days = `0${days}`;
+				}
+				self.days = days;
+				if (self.days < 0) {
+					self.hrs = 0;
+					self.mins = 0;
+					self.seconds = 0;
+				} else {
+					const EOD = moment().endOf('day');
+					const EOH = moment().endOf('hour');
+					const EOM = moment().endOf('minute');
+
+					let hrs = EOD.diff(moment(), 'hours');
+					if (days === '00') {
+						hrs = endICO.diff(moment(), 'hours');
+					}
+					if (hrs < 10) {
+						hrs = `0${hrs}`;
+					}
+					let mins = EOH.diff(moment(), 'minutes');
+					if (mins < 10) {
+						mins = `0${mins}`;
+					}
+					let seconds = EOM.diff(moment(), 'seconds');
+					if (seconds < 10) {
+						seconds = `0${seconds}`;
+					}
+
+					self.hrs = hrs;
+					self.mins = mins;
+					self.seconds = seconds;
+				}
+			}, 1000);
+		}
+	},
 	methods: {
 		goto(route) {
 			const self = this;
@@ -145,6 +210,23 @@ export default {
 		},
 		icoActive() {
 			return !moment().isAfter(moment.unix(1539259200));
+		},
+		/**
+		 * Opens an external browser window and takes the user to the official upgrade forum post
+		 * https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/
+		 *
+		 * @param {string} url Web address to open in a new browser window
+		 * @public
+		 */
+		openExternalWindow(url) {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
+			}
 		},
 	},
 };
@@ -165,26 +247,54 @@ export default {
 	background: #101219;
 	border-radius: 100px;
 	margin: 0px 20px;
-	padding:1px 30px;
+	padding:1px 20px;
 	height: 70px;
 }
+.platformWeb.mobile .icoEnding {
+	margin: 0px 10px;
+	padding:1px 14px;
+	height:65px;
+}
+.platformWeb.mobile .icoEnding dd {
+	padding-top:4px;
+}
+.icoEnding dl {
+	border-radius:4px;
+	margin:8px 0px;
+}
+.icoEnding dt {
+	font-size:0.8em;
+	border-radius:20px;
+	float: left;
+	clear: both;
+	padding:2px 8px;
+	display:block;
+}
 
-
+.icoEnding dd {
+	margin:0px;
+	padding:0px 8px;
+	font-size:0.8em;
+	clear: both;
+	color: #afafaf;
+}
 .night .icoEnding {
 	background: #101219;
 }
-.night .icoEnding b {
-	color:#afafaf;
+.night .icoEnding dt {
+	color:#fff; 
+	background:#000;
 }
 	
 .light .icoEnding {
 	background: #3598db;
 }
 	
-.light .icoEnding b {
+.light .icoEnding dt {
 	color:#fff;
+	background:rgba(255,255,255,0.4);
 }
-.light .icoEnding p {
+.light .icoEnding dd {
 	color: rgba(255,255,255,0.75);
 }
 
