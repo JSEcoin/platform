@@ -3,7 +3,8 @@
 		<NavWidget activeNav="dashboard" activeSubNav="account"></NavWidget>
 		<ScrollWidget>
 			<!-- Account Overview -->
-			<ContentWidget titleTxt="Account">
+			<ContentWidget titleTxt="Account"
+				:infoPanelTxt="`No: ${user.uid}`">
 				<div class="row">
 					<div class="col" style="padding:8px 20px 0px 0px">
 						<canvas ref="indenticon" width="600" height="600" style="border-radius:8px; width:100px; height:100px;"></canvas>
@@ -48,6 +49,10 @@
 							<div class="row">
 								<label>Country</label>
 								<span>{{loginRecord.geo}}</span>
+							</div>
+							<div class="row">
+								<label>Platform</label>
+								<span>{{loginRecord.app}}</span>
 							</div>
 							<div class="row">
 								<label>IP Address</label>

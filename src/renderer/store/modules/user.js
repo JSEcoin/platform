@@ -4,6 +4,9 @@ import moment from 'moment';
 
 const state = {
 	txLimit: 0, //user transaction limit
+	rewards: [], //object of rewards - key is date
+	pendingToday: 0, //Total to be paid within 24hrs
+	pendingNextPayment: 0, //Total to be paid
 	pendingTotal: 0, //total rewards pending to be paid out
 	pendingSelfMining: 0, //self mining rewards
 	pendingPublisherMining: 0, //publisher mining rewards
@@ -90,6 +93,9 @@ const mutations = {
 		//user transaction limit
 		state.txLimit = data.txLimit;
 		//update rewards
+		state.rewards = data.rewards;
+		state.pendingToday = data.pendingToday;
+		state.pendingNextPayment = data.pendingNextPayment;
 		state.pendingTotal = data.pendingTotal;
 		state.pendingSelfMining = data.pendingSelfMining;
 		state.pendingPublisherMining = data.pendingPublisherMining;

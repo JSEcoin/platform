@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios';
-import SplashAnimation from '@/components/widgets/SplashV2.vue';
+import SplashAnimation from '@/components/widgets/SplashV3.vue';
 
 /**
  * @description
@@ -26,7 +26,7 @@ export default {
 	data() {
 		return {
 			show: true, //show/hide splashanimation
-			route: '/login', //route to take - dash/login/register
+			endRoute: '/login', //route to take - dash/login/register
 			checkSizeInterval: false,
 			splashWidget: {
 				activeAppIco: false, //fadeIn Animation flag
@@ -44,7 +44,6 @@ export default {
 	 * on app init set default config
 	 */
 	created() {
-		//console.log('splash init');
 		const self = this;
 
 		//allow splash screen to be movable
@@ -63,7 +62,7 @@ export default {
 		if (self.$store.getters.whichPlatform === 'desktop') {
 			document.addEventListener('checkSizeInterval', function() {
 				if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-					self.routeDelay(self.route);
+					self.routeDelay(self.endRoute);
 				} else {
 					clearInterval(self.checkSizeInterval);
 					//detect resize and force correct size
@@ -75,11 +74,12 @@ export default {
 					//app loading complete
 					self.$store.commit('loading', false);
 					//redirect to [dashboard,login] page
-					self.$router.push(self.route);
+					self.$router.push(self.endRoute);
 					self.$electron.remote.getCurrentWindow().setMovable(true);
 				}
 			});
 		}
+
 		document.addEventListener('connectionInterval', function() {
 			self.splashWidget.splashTxt = `CONNECTION FAILED<br />RETRYING IN ${self.offline.connectionCounter} SEC`;
 			self.offline.connectionCounter--;
@@ -91,6 +91,17 @@ export default {
 			}
 		});
 
+		document.addEventListener('scriptLoadInterval', function() {
+			self.splashWidget.splashTxt = `CONNECTION FAILED<br />RETRYING IN ${self.offline.connectionCounter} SEC`;
+			self.offline.connectionCounter--;
+			if (self.offline.connectionCounter <= 0) {
+				clearInterval(self.offline.scriptLoadInterval);
+				self.offline.connectionCounter = 30;
+				self.splashWidget.splashTxt = 'LOADING INTERFACE';
+				self.addScripts();
+			}
+		});
+
 		//splash animation intro setup
 		setTimeout(function(){
 			self.splashWidget.activeAppIco = true;
@@ -99,30 +110,11 @@ export default {
 			},500);
 		},100);
 
+		self.addScripts();
+
 		//if not autologin clear usersession
 		if (!self.$store.state.app.autoLogin) {
 			localStorage.removeItem('userSession');
-		}
-		//console.log(self.$route);
-
-		//check if user session exists try to login
-		if (localStorage.getItem('userSession') !== null) {
-			//attempt to login
-			self.getLogin();
-		} else {
-			//mark user as not loggedIn
-			self.$store.commit('loggedIn', false);
-			//add scripts
-			self.addScripts();
-			//reset user obj
-			window.user = {};
-			//check route
-			if (self.$store.getters.whichLandingPage !== 'splash') {
-				self.route = self.$store.getters.whichLandingPage;
-			}
-			setTimeout(() => {
-				self.routeDelay(self.route);
-			}, 5000);
 		}
 	},
 	methods: {
@@ -136,7 +128,7 @@ export default {
 			const self = this;
 
 			if (self.$store.getters.whichPlatform === 'desktop') {
-				self.route = route;
+				self.endRoute = route;
 				//disable moving capability during route and screensize change
 				self.$electron.remote.getCurrentWindow().setMovable(false);
 				//hide animation transition to dash
@@ -174,7 +166,7 @@ export default {
 
 				//set size
 				if (init) {
-					appWindow.setSize(216, 216);
+					appWindow.setSize(305, 222);
 				} else {
 					appWindow.setSize(510, 656);
 				}
@@ -194,6 +186,19 @@ export default {
 			const self = this;
 			self.offline.connectionInterval = setInterval(() => {
 				const event = new Event('connectionInterval');
+				document.dispatchEvent(event);
+			},1000);
+		},
+		/**
+		 * Script Load Error - Countdown 30 seconds and try to access JSECoin again
+		 *
+		 * @returns nothing
+		 * @public
+		 */
+		scriptLoadInterval() {
+			const self = this;
+			self.offline.scriptLoadInterval = setInterval(() => {
+				const event = new Event('scriptLoadInterval');
 				document.dispatchEvent(event);
 			},1000);
 		},
@@ -230,21 +235,28 @@ export default {
 					self.$store.commit('loggedIn', true);
 
 					//add scripts
-					self.addScripts();
+					//self.addScripts();
+
+					//start mining if user has background mining enabled and user loggedin
+					if (self.$store.state.user.loggedIn) {
+						//initialise socket connection
+						window.startSocketIOConnection();
+					}
 
 					//add tray options
 					if (self.$store.getters.whichPlatform === 'desktop') {
 						self.$electron.ipcRenderer.send('login');
 					}
 
-					//redirect to dashboard if mouse up or delay until up
-					self.routeDelay('/dashboard');
-
 					//user session accepted update key app globals
 					const event = new Event('userDataRefresh');
 					document.dispatchEvent(event, window.user);
+
+					//redirect to dashboard if mouse up or delay until up
+					self.routeDelay('/dashboard');
 				}, 4000);
 			}).catch((err) => {
+				console.error(err);
 				//failed login attempt;
 				if ((err.response) && (typeof (err.response.data.fail) !== 'undefined')) {
 					//
@@ -252,7 +264,7 @@ export default {
 						//mark user as loggedIn
 						self.$store.commit('loggedIn', false);
 						//add scripts
-						self.addScripts();
+						//self.addScripts();
 						//reset user obj
 						window.user = {};
 						//redirect to login if mouse up or delay until up
@@ -287,12 +299,30 @@ export default {
 				t.crossorigin = 'anonymous';
 				t.id = 'JSEW-coincode';
 				//on script load start mining if mining enabled.
-				t.onload = function() {
-					//start mining if user has background mining enabled and user loggedin
-					if (self.$store.state.user.loggedIn) {
-						//initialise socket connection
-						window.startSocketIOConnection();
+				t.onload = () => {
+					//check if user session exists try to login
+					if (localStorage.getItem('userSession') !== null) {
+						//attempt to login
+						self.getLogin();
+					} else {
+						//mark user as not loggedIn
+						self.$store.commit('loggedIn', false);
+						//add scripts
+						//self.addScripts();
+						//reset user obj
+						window.user = {};
+						//check route
+						if (self.$store.getters.whichLandingPage !== 'splash') {
+							self.endRoute = self.$store.getters.whichLandingPage;
+						}
+						setTimeout(() => {
+							self.routeDelay(self.endRoute);
+						}, 5000);
 					}
+				};
+				//on script error reload.
+				t.onerror = () => {
+					self.retryScripts();
 				};
 				t.src = `https://platform.jsecoin.com/js/jsecoin.min.js?${n}`;
 				/* no longer used
@@ -314,6 +344,42 @@ export default {
 				//s.parentNode.insertBefore(t1, s);
 				s.parentNode.insertBefore(t2, s);
 			}
+		},
+		/**
+		 * Retry Scripts
+		 * Retry loading in external scripts
+		 *
+		 * @returns nothing
+		 * @public
+		 */
+		retryScripts() {
+			const self = this;
+			//remove tag
+			const scriptTag = document.getElementById('JSEW-coincode');
+			scriptTag.parentNode.removeChild(scriptTag);
+
+			//prevent cached request
+			const headers = new Headers();
+			headers.append('pragma', 'no-cache');
+			headers.append('cache-control', 'no-cache');
+
+			const myInit = {
+				method: 'HEAD',
+				mode: 'no-cors',
+				headers,
+			};
+
+			const myRequest = new Request('https://platform.jsecoin.com/js/jsecoin.min.js', myInit);
+
+			fetch(myRequest).then(function(response) {
+				return response;
+			}).then((response) => {
+				//connection fine try to add scripts
+				self.addScripts();
+			}).catch((e) => {
+				//set 30sec delay before retrying.
+				self.scriptLoadInterval();
+			});
 		},
 	},
 };

@@ -1,36 +1,39 @@
 <template>
-	<div class="miningOverview row" style="margin:0px; padding:0px;">
-		<!-- Platform Mining -->
-		<ContentWidget 
-			v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
-			class="mini hasFooter">
-			<div class="row" style="">
-				<div v-if="todaysEarnings >= 1" class="valueIconDisplay">
-					<Coin :coinClass="{gold: todaysEarnings >= 1, silver:minedLifetime < 1}"/>
-					{{todaysEarnings}}&nbsp;<span>JSE</span>
+	<div class="miningOverview" style="margin:0px; padding:0px;">
+		<div class="row">
+			<!-- Platform Mining -->
+			<ContentWidget 
+				v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
+				class="mini hasFooter">
+				<div class="row" style="">
+					<div v-if="todaysEarnings >= 1" class="valueIconDisplay">
+						<Coin :coinClass="{gold: todaysEarnings >= 1, silver:minedLifetime < 1}"/>
+						{{todaysEarnings}}&nbsp;<span>JSE</span>
+					</div>
 				</div>
-			</div>
-			<template slot="footer">
-				<p class="footerTxt">Reset {{statsReset}} Hrs Ago</p>
-			</template>
-		</ContentWidget>
-		<!-- xPlatform Mining -->
+				<template slot="footer">
+					<p class="footerTxt">Reset {{statsReset}} Hrs Ago</p>
+				</template>
+			</ContentWidget>
+			<!-- xPlatform Mining -->
 
-		<!-- Publisher Mining -->
-		<ContentWidget
-			v-if="(minedLifetime > 0)" titleTxt="Mined Lifetime"
-			class="mini hasFooter">
-			<div class="row" style="">
-				<div class="valueIconDisplay">
-					<Coin :coinClass="{gold:minedLifetime > 0, silver:minedLifetime < 1}"/>
-					{{minedLifetime}}&nbsp;<span>JSE</span>
+			<!-- Publisher Mining -->
+			<ContentWidget
+				v-if="(minedLifetime > 0)" titleTxt="Mined Lifetime"
+				class="mini hasFooter">
+				<div class="row" style="">
+					<div class="valueIconDisplay">
+						<Coin :coinClass="{gold:minedLifetime > 0, silver:minedLifetime < 1}"/>
+						{{minedLifetime}}&nbsp;<span>JSE</span>
+					</div>
 				</div>
-			</div>
-			<template slot="footer">
-				<p class="footerTxt">Registered {{registrationDate}}</p>
-			</template>
-		</ContentWidget>
-		<!-- xPublisher Mining -->
+				<template slot="footer">
+					<p class="footerTxt">Registered {{registrationDate}}</p>
+				</template>
+			</ContentWidget>
+			<!-- xPublisher Mining -->
+		</div>
+		<MinedOverviewChartWidgetC3 />
 	</div>
 </template>
 
@@ -40,6 +43,7 @@ import moment from 'moment';
 import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import Coin from '@/components/widgets/Coin.vue';
 import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWidget.vue';
+import MinedOverviewChartWidgetC3 from '@/components/widgets/MinedOverviewChartWidgetC3.vue';
 
 /**
  * @description
@@ -56,6 +60,7 @@ export default {
 		ContentWidget,
 		Coin,
 		OptionsListWrapperWidget,
+		MinedOverviewChartWidgetC3,
 	},
 	computed: mapState({
 		todaysEarnings: state => state.user.todaysEarnings,
@@ -81,7 +86,7 @@ export default {
 	margin:0px 4px;
 }
 .miningOverview dl.hasFooter {
-	padding-bottom:16px;
+	padding-bottom:28px;
 }
 
 .miningOverview dt {
