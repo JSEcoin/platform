@@ -2,6 +2,17 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="dashboard" activeSubNav="overview"></NavWidget>
 		<ScrollWidget>
+			
+			<div style="margin-top:10px;">
+				<div class="icoEnding" v-if="icoActive()">
+					<p>
+						<b>ICO ending soon!</b><br />
+						Help support the JSEcoin project by investing and buying JSE Tokens.
+					</p>
+				</div> 
+				<ButtonWidget v-if="icoActive()" class="small green" style="margin:-16px auto 10px auto; border-radius:20px;" buttonTxt="Buy JSE Tokens" v-on:click.native="goto('/wallet');"/>
+			</div>
+			<div v-if="icoActive()" class="hr split"><hr /></div>
 			<!-- Balance -->
 			<ContentWidget 
 				titleTxt="Balance" 
@@ -12,6 +23,7 @@
 					:coinClass="{gold:balance >= 1, silver:balance < 1}"></OverviewCoinDispayWidget>
 				<template slot="footer">
 					<div class="row" style="justify-content:center;">
+						<ButtonWidget v-if="icoActive()" class="small" style="margin:10px 5px;" buttonTxt="Buy" v-on:click.native="goto('/wallet');"/>
 						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Transfer" v-on:click.native="goto('/wallet');"/>
 						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Export" v-on:click.native="goto('/wallet/export');"/>
 						<ButtonWidget class="small" style="margin:10px 5px;" buttonTxt="Import" v-on:click.native="goto('/wallet/import');"/>
@@ -41,6 +53,7 @@
 			</ContentWidget>
 			 xMined Lifetime -->
 
+
 			<div class="hr split"><hr /></div>
 
 			<!-- Mining Overview -->
@@ -65,7 +78,7 @@
 			<!-- xRewards Pending -->
 
 			<div class="hr split"><hr /></div>
-			
+
 			<!-- Payment Overview -->
 			<ContentWidget 
 				v-if="(pendingTotal > 0)" 
@@ -81,6 +94,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import moment from 'moment';
+
 import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
 import NavWidget from '@/components/widgets/NavWidget.vue';
 import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
@@ -128,6 +143,9 @@ export default {
 			const self = this;
 			self.$router.push(route);
 		},
+		icoActive() {
+			return !moment().isAfter(moment.unix(1539259200));
+		},
 	},
 };
 </script>
@@ -142,6 +160,34 @@ export default {
 .hr-divider hr {
 	display: none;
 }
+
+.icoEnding {
+	background: #101219;
+	border-radius: 100px;
+	margin: 0px 20px;
+	padding:1px 30px;
+	height: 70px;
+}
+
+
+.night .icoEnding {
+	background: #101219;
+}
+.night .icoEnding b {
+	color:#afafaf;
+}
+	
+.light .icoEnding {
+	background: #3598db;
+}
+	
+.light .icoEnding b {
+	color:#fff;
+}
+.light .icoEnding p {
+	color: rgba(255,255,255,0.75);
+}
+
 .hr.split {
 	height:8px;
 	border-radius: 8px;
