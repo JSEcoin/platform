@@ -41,7 +41,7 @@
 			<!-- Hash Rate Percentage Chart -->
 			<ContentWidget 
 				v-if="(!$store.getters.isAppGoogle)"
-				titleTxt="Hash Rate Percentage Chart" 
+				titleTxt="Hash Rate" 
 				contentPadding="10px 10px 0px 10px"
 				:infoPanelTxt="`${hps} H/s`" 
 				:infoPanelIcoClassName="{hash: true}">
