@@ -114,13 +114,14 @@ export default {
 <style scoped>
 
 .miningOverview dd {
-	overflow-x:scroll;
+	overflow-x:auto;
 	white-space: nowrap;
 	font-size:0.5em;
 	padding:8px;
 	/*display: flex;*/
 	/*width:140px;*/
 }
+
 .night .miningOverview dd::-webkit-scrollbar-track {
 }
 .miningOverview dd::-webkit-scrollbar-thumb {
@@ -171,7 +172,6 @@ dl.mini dt {
 .platformWeb.mobile dl.mini dt {
 	height:24px;
 	padding: 0px;
-    line-height: 24px;
 }
 
 dl.console.mini dt {
@@ -429,7 +429,7 @@ dl.console dt {
 	display:block;
 }
 .platformWeb.mobile dl.console dt {
-	padding: 0px 8px 0px 12px;
+	padding: 5px 8px 5px 12px;
 	justify-content: inherit;
 	display:block;
 }
