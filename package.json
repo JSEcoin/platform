@@ -83,10 +83,10 @@
 			]
 		},
 		"mac": {
-			"icon": "build/icons/icon.icns"
+			"icon": "src/main/mac/icon.icns"
 		},
 		"win": {
-			"icon": "build/icons/icon.ico",
+			"icon": "src/main/win/icon.ico",
 			"target": [
 				{
 					"target": "nsis",
@@ -98,7 +98,7 @@
 			]
 		},
 		"linux": {
-			"icon": "build/icons"
+			"icon": "src/main/linux"
 		}
 	},
 	"dependencies": {
