@@ -3,7 +3,7 @@ import { join, normalize } from 'path';
 import { autoUpdater } from 'electron-updater';
 
 //version
-const appVersion = '0.5.7';
+const appVersion = '0.5.8';
 
 //test
 app.disableHardwareAcceleration();
