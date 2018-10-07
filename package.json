@@ -83,7 +83,8 @@
 			]
 		},
 		"mac": {
-			"icon": "src/main/mac/icon.icns"
+			"icon": "src/main/mac/icon.icns",
+			"background": "src/main/mac/background.png"
 		},
 		"win": {
 			"icon": "src/main/win/icon.ico",
