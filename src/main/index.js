@@ -50,7 +50,8 @@ function createWindow() {
 			iconTrayPath = join(__static, 'app/freebsd-trayIco.png');
 		break;
 		case 'darwin':
-			iconPath = join(__static, 'app/mac-icon.png');
+			//iconPath = join(__static, 'app/mac-icon.png');
+			iconPath = join(__static, 'app/mac-trayIco.png');
 			iconTrayPath = join(__static, 'app/mac-trayIco.png');
 			// Don't show the app in the doc
 			app.dock.hide();
@@ -91,7 +92,13 @@ function createWindow() {
 
 	//add tray icon support
 	const trayIcon = nativeImage.createFromPath(iconPath);
-	const tray = new Tray(iconPath);
+	let tray = '';
+	if (process.platform === 'darwin') {
+		tray = new Tray(iconTrayPath);
+		tray.setPressedImage(iconTrayPath);
+	} else {
+		tray = new Tray(iconPath);
+	}
 
 	mainWindow.on('show', () => {
 		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
