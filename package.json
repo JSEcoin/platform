@@ -71,13 +71,13 @@
 			"contents": [
 				{
 					"x": 375,
-					"y": 175,
+					"y": 60,
 					"type": "link",
 					"path": "/Applications"
 				},
 				{
 					"x": 125,
-					"y": 175,
+					"y": 60,
 					"type": "file"
 				}
 			],
@@ -85,10 +85,9 @@
 				"x": 200,
 				"y": 120,
 				"width": 500,
-				"height" 320
+				"height": 300
 			},
 			"background": "src/main/mac/background.png",
-			"backgroundColor": "#0b1423",
 			"internetEnabled": true
 		},
 		"mac": {
