@@ -70,18 +70,26 @@
 		"dmg": {
 			"contents": [
 				{
-					"x": 410,
-					"y": 150,
+					"x": 375,
+					"y": 175,
 					"type": "link",
 					"path": "/Applications"
 				},
 				{
-					"x": 130,
-					"y": 150,
+					"x": 125,
+					"y": 175,
 					"type": "file"
 				}
 			],
-			"background": "src/main/mac/background.png"
+			"window": {
+				"x": 200,
+				"y": 120,
+				"width": 500,
+				"height" 320
+			},
+			"background": "src/main/mac/background.png",
+			"backgroundColor": "#0b1423",
+			"internetEnabled": true
 		},
 		"mac": {
 			"icon": "src/main/mac/icon.icns"
