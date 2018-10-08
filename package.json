@@ -83,8 +83,7 @@
 			]
 		},
 		"mac": {
-			"icon": "src/main/mac/icon.icns",
-			"background": "src/main/mac/background.png"
+			"icon": "src/main/mac/icon.icns"
 		},
 		"win": {
 			"icon": "src/main/win/icon.ico",
@@ -159,7 +158,7 @@
 		"css-loader": "^0.28.4",
 		"del": "^3.0.0",
 		"devtron": "^1.4.0",
-		"electron": "^1.7.5",
+		"electron": "^1.8.8",
 		"electron-builder": "^19.56.2",
 		"electron-debug": "^1.4.0",
 		"electron-devtools-installer": "^2.2.0",
