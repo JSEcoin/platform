@@ -80,7 +80,8 @@
 					"y": 150,
 					"type": "file"
 				}
-			]
+			],
+			"background": "src/main/mac/background.png"
 		},
 		"mac": {
 			"icon": "src/main/mac/icon.icns"
