@@ -196,6 +196,7 @@ const actions = {
 	 * @param {*} data
 	 */
 	stopPlatformMining({ commit, state }, data) {
+		console.log('stopPlatformMining');
 		commit('stopMining');
 	},
 	/**
