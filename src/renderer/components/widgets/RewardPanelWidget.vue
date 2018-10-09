@@ -93,6 +93,10 @@ export default {
 	padding-bottom:28px;
 }
 
+.mobile .miningOverview dl.hasFooter {
+	padding-bottom:38px;
+}
+
 .miningOverview dt {
 	text-align: center;
 	padding: 6px 12px;
