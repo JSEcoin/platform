@@ -37,6 +37,8 @@
 			</ContentWidget>
 			<!-- xReferral Rewards -->
 		</div>
+
+		<EarningsChartWidgetC3 />
 	</OptionsListWrapperWidget>
 </template>
 
@@ -46,6 +48,7 @@ import moment from 'moment';
 import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import Coin from '@/components/widgets/Coin.vue';
 import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWidget.vue';
+import EarningsChartWidgetC3 from '@/components/widgets/EarningsChartWidgetC3.vue';
 
 /**
  * @description
@@ -62,6 +65,7 @@ export default {
 		ContentWidget,
 		Coin,
 		OptionsListWrapperWidget,
+		EarningsChartWidgetC3,
 	},
 	computed: mapState({
 		pendingSelfMining: state => state.user.pendingSelfMining,
@@ -87,6 +91,10 @@ export default {
 }
 .miningOverview dl.hasFooter {
 	padding-bottom:28px;
+}
+
+.mobile .miningOverview dl.hasFooter {
+	padding-bottom:38px;
 }
 
 .miningOverview dt {

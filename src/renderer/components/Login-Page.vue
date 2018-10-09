@@ -1,7 +1,7 @@
 <template>
 	<AppWrapperWidget>
 		<!-- login -->
-		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=1"></iframe>
+		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" :src="captchaUrl"></iframe>
 		<ScrollWidget v-bind="{noNav:true}">
 			<!-- Login Page -->
 			<div id="JSEA-loginPage">
@@ -156,6 +156,7 @@ export default {
 	data() {
 		return {
 			showCaptcha: false, 		//show iframe captcha
+			captchaUrl: 'https://jsecoin.com/iCaptcha/iCaptcha.html', //captcha url
 			showPass: false,			//password input set eye icon
 			passDisplay: 'password',	//password input type ['password','text']
 			TwoFaInterval: false,		//2FA 60 second countdown : setInterval ();
@@ -403,7 +404,33 @@ export default {
 					self.onVerify();
 				//run recaptcha.
 				} else {
-					self.showCaptcha = true; //shows jsecoin.com captcha screen
+					//prevent cached request
+					const headers = new Headers();
+					headers.append('pragma', 'no-cache');
+					headers.append('cache-control', 'no-cache');
+
+					const myInit = {
+						method: 'HEAD',
+						mode: 'no-cors',
+						headers,
+					};
+
+					const myRequest = new Request(self.captchaUrl, myInit);
+
+					fetch(myRequest).then((response) => {
+						//
+						console.log('');
+						return response;
+					}).then((response) => {
+						//console.log(response);
+						self.showCaptcha = true; //shows jsecoin.com captcha screen
+					}).catch((e) => {
+						//console.log(e);
+						self.showCaptcha = false;
+						self.form.error.display = true;
+						self.form.error.msg = 'Unable to connect to server please check your connection.';
+						self.loading = false;
+					});
 					//self.$refs.invisibleRecaptcha.execute();
 				}
 			} else {

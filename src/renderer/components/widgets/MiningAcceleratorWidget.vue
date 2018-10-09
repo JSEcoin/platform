@@ -113,9 +113,7 @@ export default {
     padding: 0px 0px 10px 0px;
 }
 .platformWeb.mobile .sliderWrapper {
-	padding: 20px 0px 4px 0px;
-}
-.night .accText {
+	padding: 0px 0px 14px 0px;
 }
 .light .accText {
 	color:#999;

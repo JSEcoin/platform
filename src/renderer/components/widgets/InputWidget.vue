@@ -8,7 +8,7 @@
 			
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
-				<div class="interactiveIco" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
+				<div class="interactiveIco":class="{'showPointer': ($store.getters.whichPlatform === 'mobile')}"" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
 				<input autocapitalize="off" :type="inputType" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" autocomplete="false" />
 			</div>
 			<!-- xInput plus Ico -->
@@ -527,6 +527,8 @@ input {
     bottom: 8px;
     width: 30px;
     height: 30px;
+}
+.interactiveIco.showPointer {
 	cursor: pointer;
 }
 

@@ -321,7 +321,7 @@ export default {
 			}
 			//set theme if desktop
 			if (self.$store.getters.whichPlatform === 'desktop') {
-				const bodyClass = `platformWeb desktop ${self.$store.state.app.theme}`;
+				const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
 		},

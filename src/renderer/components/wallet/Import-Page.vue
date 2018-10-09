@@ -522,12 +522,6 @@ export default {
 				session: self.$store.state.user.session,
 				coinCode: self.form.coinCode.val,
 			};
-			//clear form
-			self.form.coinCode = {
-				val: '',
-				displayLabel: false,
-				flag: false,
-			};
 			//post import coin code request
 			axios.post(
 				`${self.$store.state.app.jseCoinServer}/push/import/`,
@@ -538,11 +532,21 @@ export default {
 					//init waiting time display
 					self.$store.commit('delay', transactionTimeSeconds);
 
+					//clear form
+					self.form.coinCode = {
+						val: '',
+						displayLabel: false,
+						flag: false,
+					};
+
+					//
 					self.exportCoinHistory.forEach(function(coin, i) {
 						if (coin.coinCode === importReq.coinCode) {
 							self.exportCoinHistory.splice(i, 1);
 						}
 					});
+
+					//
 					window.refreshUser(function() {});
 					self.getExportHistory();
 				}

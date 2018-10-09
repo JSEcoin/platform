@@ -255,19 +255,19 @@ export default {
 		}
 
 		//
-		window.addEventListener('online',  function() {
+		window.addEventListener('online', () => {
 			console.log('online');
 			self.offline = false;
 		});
-		window.addEventListener('offline', function() {
+		window.addEventListener('offline', () => {
 			console.log('offline');
 			self.offline = true;
 		});
 		//help prevent mem leak on chart..
-		document.addEventListener('addHashInterval', function() {
+		document.addEventListener('addHashInterval', () => {
 			self.$store.commit('updateHashInterval');
 		});
-		document.addEventListener('miningLogUpdate', function(e) {
+		document.addEventListener('miningLogUpdate', (e) => {
 			//update overlay graph message
 			if ((e.detail.indexOf('Data Received') >= 0) || (e.detail.indexOf('Connected!') >= 0)) {
 				self.$store.dispatch({
@@ -283,21 +283,24 @@ export default {
 		//on app initialise when socket connection is made start mining
 		//clear event only needed on init connection
 		if (self.$store.state.app.autoMine) {
-			const socketConnectionMade = () => {
-				console.log('#######Socket connection init!');
-				self.$store.dispatch({
-					type: 'startPlatformMining',
-				});
-				document.removeEventListener('socketConnectionMade', socketConnectionMade, false);
-			};
-			document.addEventListener('socketConnectionMade', socketConnectionMade, false);
+			//check if cordova
+			if (typeof (cordova) !== 'undefined') {
+				//start mining if automine enabled and minewhenpluggedin is disabled
+				//else allow events to to start mining when device plugged in.
+				if ((!self.$store.state.app.mineWhenpluggedIn) && (!process.env.ISGOOGLE)) {
+					self.initSocketConnection();
+				}
+			//desktop / browser make connection
+			} else {
+				self.initSocketConnection();
+			}
 		}
 
 		//set timer to refresh updates from when user obj last updated
 		self.$store.commit('updateFromNow');
 
 		//401 err
-		document.addEventListener('ajaxCredentialsError', function(e) {
+		document.addEventListener('ajaxCredentialsError', (e) => {
 			//update global msg
 			self.$store.commit('updateUserStateValue', {
 				val: 'Credential Error: Duplicate active sessions!',
@@ -312,7 +315,7 @@ export default {
 		});
 
 		//Update key app globals when user data object is refreshed
-		document.addEventListener('userDataRefresh', function(e) {
+		document.addEventListener('userDataRefresh', (e) => {
 			//if newer release then redirect to force user too upgrade app
 			if (window.user) {
 				if (window.user.appReleaseSupport > self.$store.state.app.major) {
@@ -334,6 +337,9 @@ export default {
 				self.$store.dispatch({
 					type: 'updateUserState',
 					txLimit: (window.user.txLimit)?window.user.txLimit:0,
+					rewards: (window.user.rewards)?window.user.rewards:{},
+					pendingToday: (window.user.pendingToday)?window.user.pendingToday:0,
+					pendingNextPayment: (window.user.pendingNextPayment)?window.user.pendingNextPayment:0,
 					pendingTotal: (window.user.pendingTotal)?window.user.pendingTotal:0,
 					pendingSelfMining: (window.user.pendingSelfMining)?window.user.pendingSelfMining:0,
 					pendingPublisherMining: (window.user.pendingPublisherMining)?window.user.pendingPublisherMining:0,
@@ -363,6 +369,17 @@ export default {
 	 * Global App Functions
 	 */
 	methods: {
+		initSocketConnection() {
+			const self = this;
+			const socketConnectionMade = () => {
+				console.log('#######Socket connection init!');
+				self.$store.dispatch({
+					type: 'startPlatformMining',
+				});
+				document.removeEventListener('socketConnectionMade', socketConnectionMade, false);
+			};
+			document.addEventListener('socketConnectionMade', socketConnectionMade, false);
+		},
 		getWindowWidth(e) {
 			const self = this;
 
@@ -391,14 +408,22 @@ export default {
 		onDeviceReady() {
 			const self = this;
 			window.addEventListener('batterystatus', (status) => {
-				if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
-					self.$store.dispatch({
-						type: 'startPlatformMining',
-					});
-				} else {
-					self.$store.dispatch({
-						type: 'stopPlatformMining',
-					});
+				//confirm user is logged in
+				if (self.$store.state.user.loggedIn) {
+					//if automine enabled & only mine when plugged in is enabled
+					if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
+						//check if device is plugged in and start mining
+						if (status.isPlugged) {
+							self.$store.dispatch({
+								type: 'startPlatformMining',
+							});
+						//else stop
+						} else {
+							self.$store.dispatch({
+								type: 'stopPlatformMining',
+							});
+						}
+					}
 				}
 			}, false);
 			// Handle the device ready event.
@@ -605,6 +630,8 @@ export default {
   src: local('Nunito Black'), local('Nunito-Black'), url(./assets/fonts/nunito/XRXW3I6Li01BKofAtsGUYevI.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+.c3 svg{font:10px sans-serif;-webkit-tap-highlight-color:transparent}.c3 line,.c3 path{fill:none;stroke:#000}.c3 text{-webkit-user-select:none;-moz-user-select:none;user-select:none}.c3-bars path,.c3-event-rect,.c3-legend-item-tile,.c3-xgrid-focus,.c3-ygrid{shape-rendering:crispEdges}.c3-chart-arc path{stroke:#fff}.c3-chart-arc rect{stroke:#fff;stroke-width:1}.c3-chart-arc text{fill:#fff;font-size:13px}.c3-grid line{stroke:#aaa}.c3-grid text{fill:#aaa}.c3-xgrid,.c3-ygrid{stroke-dasharray:3 3}.c3-text.c3-empty{fill:grey;font-size:2em}.c3-line{stroke-width:1px}.c3-circle._expanded_{stroke-width:1px;stroke:#fff}.c3-selected-circle{fill:#fff;stroke-width:2px}.c3-bar{stroke-width:0}.c3-bar._expanded_{fill-opacity:1;fill-opacity:.75}.c3-target.c3-focused{opacity:1}.c3-target.c3-focused path.c3-line,.c3-target.c3-focused path.c3-step{stroke-width:2px}.c3-target.c3-defocused{opacity:.3!important}.c3-region{fill:#4682b4;fill-opacity:.1}.c3-brush .extent{fill-opacity:.1}.c3-legend-item{font-size:12px}.c3-legend-item-hidden{opacity:.15}.c3-legend-background{opacity:.75;fill:#fff;stroke:#d3d3d3;stroke-width:1}.c3-title{font:14px sans-serif}.c3-tooltip-container{z-index:10}.c3-tooltip{border-collapse:collapse;border-spacing:0;background-color:#fff;empty-cells:show;-webkit-box-shadow:7px 7px 12px -9px #777;-moz-box-shadow:7px 7px 12px -9px #777;box-shadow:7px 7px 12px -9px #777;opacity:.9}.c3-tooltip tr{border:1px solid #ccc}.c3-tooltip th{background-color:#aaa;font-size:14px;padding:2px 5px;text-align:left;color:#fff}.c3-tooltip td{font-size:13px;padding:3px 6px;background-color:#fff;border-left:1px dotted #999}.c3-tooltip td>span{display:inline-block;width:10px;height:10px;margin-right:6px}.c3-tooltip td.value{text-align:right}.c3-area{stroke-width:0;opacity:.2}.c3-chart-arcs-title{dominant-baseline:middle;font-size:1.3em}.c3-chart-arcs .c3-chart-arcs-background{fill:#e0e0e0;stroke:#fff}.c3-chart-arcs .c3-chart-arcs-gauge-unit{fill:#000;font-size:16px}.c3-chart-arcs .c3-chart-arcs-gauge-max{fill:#777}.c3-chart-arcs .c3-chart-arcs-gauge-min{fill:#777}.c3-chart-arc .c3-gauge-value{fill:#000}.c3-chart-arc.c3-target g path{opacity:1}.c3-chart-arc.c3-target.c3-focused g path{opacity:1}
+
 /* Globals */
 * {
 	outline:none;
@@ -641,7 +668,7 @@ html, body {
 }
 
 body {
-	padding:4px;
+	padding:2px;
 	font-size: 16px;
 	font-family: 'Nunito', sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -808,7 +835,7 @@ header {
 	background-position:  center;
 	background-size: cover;
 	/*border-bottom: solid 10px #f5f7fb;*/
-	height:86px;
+	height:84px;
 	position: relative;
 	z-index:1000000;
 }
@@ -934,6 +961,9 @@ header {
 	overflow: hidden;
 	height:648px;
 }
+.platformWeb {
+	background: #000812;
+}
 .platformWeb.night {
 	background:#000;
 }
@@ -967,7 +997,7 @@ header {
 	bottom:0px;
 	margin:0px;
 	border-radius: 0px;
-	overflow: scroll;
+	overflow: auto;
 }
 
 #JSEA-offline dl {
@@ -1345,5 +1375,8 @@ header .fa-minus:hover {
 
 .platformWeb.mobile .infoBox {
 	word-wrap: break-word;
+}
+.sliderWrapper .vue-slider-component .vue-slider-dot {
+	box-shadow: none !important;
 }
 </style>
