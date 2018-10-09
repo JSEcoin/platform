@@ -255,19 +255,19 @@ export default {
 		}
 
 		//
-		window.addEventListener('online',  function() {
+		window.addEventListener('online', () => {
 			console.log('online');
 			self.offline = false;
 		});
-		window.addEventListener('offline', function() {
+		window.addEventListener('offline', () => {
 			console.log('offline');
 			self.offline = true;
 		});
 		//help prevent mem leak on chart..
-		document.addEventListener('addHashInterval', function() {
+		document.addEventListener('addHashInterval', () => {
 			self.$store.commit('updateHashInterval');
 		});
-		document.addEventListener('miningLogUpdate', function(e) {
+		document.addEventListener('miningLogUpdate', (e) => {
 			//update overlay graph message
 			if ((e.detail.indexOf('Data Received') >= 0) || (e.detail.indexOf('Connected!') >= 0)) {
 				self.$store.dispatch({
@@ -283,21 +283,24 @@ export default {
 		//on app initialise when socket connection is made start mining
 		//clear event only needed on init connection
 		if (self.$store.state.app.autoMine) {
-			const socketConnectionMade = () => {
-				console.log('#######Socket connection init!');
-				self.$store.dispatch({
-					type: 'startPlatformMining',
-				});
-				document.removeEventListener('socketConnectionMade', socketConnectionMade, false);
-			};
-			document.addEventListener('socketConnectionMade', socketConnectionMade, false);
+			//check if cordova
+			if (typeof (cordova) !== 'undefined') {
+				//start mining if automine enabled and minewhenpluggedin is disabled
+				//else allow events to to start mining when device plugged in.
+				if ((!self.$store.state.app.mineWhenpluggedIn) && (!process.env.ISGOOGLE)) {
+					self.initSocketConnection();
+				}
+			//desktop / browser make connection
+			} else {
+				self.initSocketConnection();
+			}
 		}
 
 		//set timer to refresh updates from when user obj last updated
 		self.$store.commit('updateFromNow');
 
 		//401 err
-		document.addEventListener('ajaxCredentialsError', function(e) {
+		document.addEventListener('ajaxCredentialsError', (e) => {
 			//update global msg
 			self.$store.commit('updateUserStateValue', {
 				val: 'Credential Error: Duplicate active sessions!',
@@ -312,7 +315,7 @@ export default {
 		});
 
 		//Update key app globals when user data object is refreshed
-		document.addEventListener('userDataRefresh', function(e) {
+		document.addEventListener('userDataRefresh', (e) => {
 			//if newer release then redirect to force user too upgrade app
 			if (window.user) {
 				if (window.user.appReleaseSupport > self.$store.state.app.major) {
@@ -366,6 +369,17 @@ export default {
 	 * Global App Functions
 	 */
 	methods: {
+		initSocketConnection() {
+			const self = this;
+			const socketConnectionMade = () => {
+				console.log('#######Socket connection init!');
+				self.$store.dispatch({
+					type: 'startPlatformMining',
+				});
+				document.removeEventListener('socketConnectionMade', socketConnectionMade, false);
+			};
+			document.addEventListener('socketConnectionMade', socketConnectionMade, false);
+		},
 		getWindowWidth(e) {
 			const self = this;
 
@@ -394,14 +408,22 @@ export default {
 		onDeviceReady() {
 			const self = this;
 			window.addEventListener('batterystatus', (status) => {
-				if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
-					self.$store.dispatch({
-						type: 'startPlatformMining',
-					});
-				} else {
-					self.$store.dispatch({
-						type: 'stopPlatformMining',
-					});
+				//confirm user is logged in
+				if (self.$store.state.user.loggedIn) {
+					//if automine enabled & only mine when plugged in is enabled
+					if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
+						//check if device is plugged in and start mining
+						if (status.isPlugged) {
+							self.$store.dispatch({
+								type: 'startPlatformMining',
+							});
+						//else stop
+						} else {
+							self.$store.dispatch({
+								type: 'stopPlatformMining',
+							});
+						}
+					}
 				}
 			}, false);
 			// Handle the device ready event.
