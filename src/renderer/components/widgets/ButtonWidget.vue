@@ -57,7 +57,7 @@ button * {
 }
 .button {
 	border:0px;
-	border-radius:6px;
+	border-radius:4px;
 	color:#fff;
 	text-align:center;
 	height: 40px;
@@ -74,7 +74,7 @@ button * {
 	justify-content: center;
 }
 
-.platformWeb.mobile button {
+.platformWeb.min button {
 	padding:0px 8px;
 	height: 36px;
 	line-height: 36px;
@@ -112,7 +112,7 @@ button.small {
 	width:auto;
 	margin:0px 2px;
 }
-.platformWeb.mobile button.small {
+.platformWeb.min button.small {
 	height:24px;
 	line-height:24px;
 }
@@ -186,7 +186,7 @@ button.red:hover {
 	-webkit-mask-size: cover;
 	mask-size: cover;
 }
-.platformWeb.mobile .miningIco {
+.platformWeb.min .miningIco {
 	height: 36px;
 }
 </style>

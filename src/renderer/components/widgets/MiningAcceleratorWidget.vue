@@ -112,7 +112,7 @@ export default {
     right: 0px;
     padding: 0px 0px 10px 0px;
 }
-.platformWeb.mobile .sliderWrapper {
+.platformWeb.min .sliderWrapper {
 	padding: 0px 0px 14px 0px;
 }
 .light .accText {

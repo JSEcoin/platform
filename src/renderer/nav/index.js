@@ -18,6 +18,7 @@ import upgradeApp from '@/components/UpgradeApp-Page';
 
 //dashboard
 import overview from '@/components/dashboard/Overview-Page';
+import desktopOverview from '@/components/desktop/dashboard/Overview-Page';
 import account from '@/components/dashboard/Account-Page';
 
 //wallet
@@ -151,6 +152,79 @@ const router = new Router({
 			path: '/ico',
 			name: 'ICO',
 			component: ICO,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		//desktop
+		{
+			path: '/desktop/dashboard',
+			name: 'Desktop Overview',
+			component: desktopOverview,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/dashboard/account',
+			name: 'Desktop account',
+			component: account,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/wallet',
+			name: 'Desktop transfer',
+			component: transfer,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/wallet/transactions',
+			name: 'Desktop walletTransactions',
+			component: walletTransactions,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/wallet/export',
+			name: 'Desktop export',
+			component: exportJSE,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/wallet/import',
+			name: 'Desktop import',
+			component: importJSE,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/mine',
+			name: 'Desktop platformMiner',
+			component: platformMiner,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/mine/earnings',
+			name: 'Desktop earnings',
+			component: earnings,
+			meta: {
+				requiresAuth: true,
+			},
+		},
+		{
+			path: '/desktop/settings',
+			name: 'Desktop settings',
+			component: settings,
 			meta: {
 				requiresAuth: true,
 			},

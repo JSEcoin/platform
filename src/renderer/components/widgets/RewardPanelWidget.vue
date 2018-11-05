@@ -7,8 +7,8 @@
 				titleTxt="Platform Mining" 
 				class="mini">
 				<div class="row" style="">
-					<div v-if="pendingSelfMining >= 1" class="valueIconDisplay">
-						<Coin :coinClass="{gold: pendingSelfMining >= 1}"/>
+					<div class="valueIconDisplay">
+						<Coin :coinClass="{gold: pendingSelfMining >= 1, silver:pendingSelfMining < 1}"/>
 						{{pendingSelfMining}}&nbsp;<span>JSE</span>
 					</div>
 				</div>
@@ -78,7 +78,7 @@ export default {
 .miningOverview  {
 	margin:12px 12px 0px 12px;
 }
-.platformWeb.mobile .miningOverview {
+.platformWeb.min .miningOverview {
 	margin:12px 6px 0px 6px;
 }
 .miningOverview dl {
@@ -86,14 +86,14 @@ export default {
 	flex-grow: 1;
 	width:33%;
 }
-.platformWeb.mobile .miningOverview dl {
+.platformWeb.min .miningOverview dl {
 	margin:0px 4px;
 }
 .miningOverview dl.hasFooter {
 	padding-bottom:28px;
 }
 
-.mobile .miningOverview dl.hasFooter {
+.min .miningOverview dl.hasFooter {
 	padding-bottom:38px;
 }
 

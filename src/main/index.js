@@ -3,13 +3,16 @@ import { join, normalize } from 'path';
 import { autoUpdater } from 'electron-updater';
 
 //version
-const appVersion = '0.5.8';
+const appVersion = '0.5.9';
 
 //test
 app.disableHardwareAcceleration();
 
 //enable background mining when app is minimised
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
+
+//set app id to enable notifications to work.
+app.setAppUserModelId('com.jsecoin.desktop');
 
 /**
  * Set `__static` path to static files in production
@@ -387,7 +390,9 @@ app.on('ready', () => {
 	}, (error) => {
 		if (error) console.error('Failed to register protocol');
 	});
-	createWindow();
+
+	//fix splash white bg
+	setTimeout(createWindow, 100);
 	//autoUpdater.checkForUpdatesAndNotify();
 });
 

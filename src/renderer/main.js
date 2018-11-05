@@ -9,6 +9,7 @@ import VueSwal from 'vue-swal';
 import VueQriously from 'vue-qriously';
 import VueHead from 'vue-head';
 import VueMultianalytics from 'vue-multianalytics';
+import SocialSharing from 'vue-social-sharing';
 
 //App, Router and Vuex Store
 import App from './App';
@@ -75,6 +76,9 @@ Vue.use(VueSwal);
 
 //header template injection
 Vue.use(VueHead);
+
+//Social sharing
+Vue.use(SocialSharing);
 
 //
 const AppData = Object.freeze({

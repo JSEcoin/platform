@@ -1,5 +1,5 @@
 <template>
-	<dl>
+	<dl class="card">
 		<!-- Title Header -->
 		<dt v-if="titleTxt">
 			<!-- Title -->
@@ -141,10 +141,10 @@ export default {
     height: 10px;
     padding: 10px;
 }
-.platformWeb.mobile dl {
+.platformWeb.min dl {
 	margin: 10px;
 }
-.platformWeb.mobile dl.mini {
+.platformWeb.min dl.mini {
 	margin:0px;
 }
 dl {
@@ -169,7 +169,7 @@ dl.mini dt {
 	justify-content:center;
     font-size: 0.6em;
 }
-.platformWeb.mobile dl.mini dt {
+.platformWeb.min dl.mini dt {
 	height:24px;
 	padding: 0px;
 }
@@ -183,15 +183,15 @@ dl.console.mini dd {
     padding: 0px 0px 6px 0px;
 }
 
-.platformWeb.mobile dl.mini.buttonFooter dd {
+.platformWeb.min dl.mini.buttonFooter dd {
 	padding-bottom:60px;
 }
 
-.platformWeb.mobile dl dt {
+.platformWeb.min dl dt {
 	/*font-size:0.6em;*/
 	height: 34px;
 }
-.platformWeb.mobile .titleInfo {
+.platformWeb.min .titleInfo {
 	height:34px;
     min-width: 188px;
 }
@@ -211,7 +211,7 @@ dl dd {
 	margin:0px;
 	/*position: relative;*/
 }
-.platformWeb.mobile dl dd {
+.platformWeb.min dl dd {
 	padding:10px;
 }
 
@@ -228,7 +228,7 @@ dl dd {
 	padding: 0px 0px 4px 0px;
     margin: 4px 8px 0px 8px;
 }
-.platformWeb.mobile .mini dd {
+.platformWeb.min .mini dd {
 	padding: 0px 0px 4px 0px;
     margin: 4px 8px 0px 8px;
 }
@@ -315,7 +315,7 @@ dt button {
     width: initial;
 	text-transform: none;
 }
-.platformWeb.mobile dt button {
+.platformWeb.min dt button {
 	top:4px;
 	right:2px;
 }
@@ -394,7 +394,7 @@ dt button {
 	color:#3598db; 
 	letter-spacing:1px;
 }
-.platformWeb.mobile .footerTxt {
+.platformWeb.min .footerTxt {
 	font-size: 0.6em;
 }
 .night dl.console {
@@ -410,7 +410,7 @@ dl.console {
 	padding:0px;
 }
 
-.platformWeb.mobile dl.console {
+.platformWeb.min dl.console {
 	margin:10px 0px;
 }
 
@@ -428,7 +428,7 @@ dl.console dt {
 	font-family:Courier New, Courier, monospace;
 	display:block;
 }
-.platformWeb.mobile dl.console dt {
+.platformWeb.min dl.console dt {
 	padding: 5px 8px 5px 12px;
 	justify-content: inherit;
 	display:block;
@@ -462,7 +462,7 @@ dd dt {
 dd dd dl {
 	margin:0px;
 }
-.platformWeb.mobile dd dd dl {
+.platformWeb.min dd dd dl {
 	margin:0px;
 }
 
@@ -471,7 +471,7 @@ dd dd dt {
 	padding:0px;
 	height:20px;
 }
-.platformWeb.mobile dd dd dt {
+.platformWeb.min dd dd dt {
 	margin:0px;
 	padding:0px;
 	height:20px;
@@ -481,7 +481,7 @@ dd dd dd {
 	margin:0px 0px 10px 0px;
 	padding:0px;
 }
-.platformWeb.mobile dd dd dd {
+.platformWeb.min dd dd dd {
 	margin:0px 0px 10px 0px;
 	padding:8px;
 }

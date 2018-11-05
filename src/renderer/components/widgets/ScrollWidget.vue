@@ -52,7 +52,7 @@ export default {
 
 <!-- scoped not working with hypenated cssnames -->
 <style>
-.platformWeb.mobile #JSEA-desktop #JSEA-appBody {
+.platformWeb.min #JSEA-desktop #JSEA-appBody {
 	position:relative !important;
 	top:0px;
 }

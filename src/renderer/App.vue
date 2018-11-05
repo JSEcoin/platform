@@ -4,13 +4,6 @@
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
 		<!-- xHashrate acc need to remove -->
-		<!-- App Header -->	
-		<header class="draggable-area">
-			<i class="fa fa-close" v-on:click="closeWindow()"></i>
-			<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
-			<div id="JSEA-loadingDisplay" :style="{width: waitTimer + '%'}"></div>
-		</header>
-		<!-- xApp Header -->
 		<!-- Offline Detection -->
 		<div  id="JSEA-offline" v-if="((offline) && (!$store.state.app.loading))">
 			<ContentWidget titleTxt="Disconnected from Internet">
@@ -18,9 +11,127 @@
 			</ContentWidget>
 		</div>
 		<!-- xOffline Detection -->
-		<!-- App Page Content -->
-		<router-view></router-view>
-		<!-- xApp Page Content -->
+		<div id="JSEA-appWrapper">
+			<div id="JSEA-sideBar" :class="{'showSideBar':sideBarActive}">
+				<div id="JSEA-toggleSideBar" v-on:click="toggleSideBar">
+					<nav>
+						<ul>
+							<li></li>
+							<li></li>
+							<li></li>
+						</ul>
+					</nav>
+				</div>
+				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="a" id="JSEA-sideLogo"></router-link>
+				<nav id="JSE-sideNav">
+					<ScrollWidget style="top:55px;">
+						<ul>
+							<li><router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
+								<ul>
+									<li :class="{'showMenu':nav.wallet}"><span v-on:click="toggleMenu('wallet')">Wallet</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li"><i class="fa fa-paper-plane"></i> Transfer</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/export`" tag="li"><i class="fa fa-upload"></i> Export</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/import`" tag="li"><i class="fa fa-download"></i> Import</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/transactions`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
+										</ul>
+									</li>
+									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>
+										</ul>
+									</li>
+									<li :class="{'showMenu':nav.mining}"><span v-on:click="toggleMenu('mining')">Mining</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-laptop"></i> Publisher</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li"><i class="fa fa-keyboard-o"></i> Platform</router-link>
+										</ul>
+									</li>
+									<li :class="{'showMenu':nav.system}"><span v-on:click="toggleMenu('system')">System</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-bell"></i> Server Status</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-globe"></i> JSE Global Stats</router-link>
+										</ul>
+									</li>
+									<li :class="{'showMenu':nav.support}"><span v-on:click="toggleMenu('support')">Support</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-magic"></i> Site Wizard</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<div id="JSEA-version">v{{$store.state.app.version}}</div>
+					</ScrollWidget>
+				</nav>
+			</div>
+			
+			<div id="JSEA-contentWrapper">
+				<div id="JSEA-content">
+				<!-- App Header -->	
+				<header v-if="($store.state.platformURL === '')" class="draggable-area">
+					<i class="fa fa-close" v-on:click="closeWindow()"></i>
+					<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
+					<div id="JSEA-loadingDisplay" :style="{width: waitTimer + '%'}"></div>
+				</header>
+				<!-- xApp Header -->
+				<!-- Web Header -->	
+				<header v-else>
+					<router-link v-if="(!sideBarActive)" v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
+					<ul id="JSEA-headerItems">
+						<li><i class="button fa fa-magic"></i></li>
+						<li><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
+						<li :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
+							<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
+								<div>
+									<network network="facebook">
+										<i class="fa fa-fw fa-facebook"></i>
+									</network>
+									<network network="googleplus">
+										<i class="fa fa-fw fa-google-plus"></i>
+									</network>
+									<network network="linkedin">
+										<i class="fa fa-fw fa-linkedin"></i>
+									</network>
+									<network network="reddit">
+										<i class="fa fa-fw fa-reddit"></i>
+									</network>
+									<network network="twitter">
+										<i class="fa fa-fw fa-twitter"></i>
+									</network>
+									<network network="vk">
+										<i class="fa fa-vk"></i>
+									</network>
+									<network network="weibo">
+										<i class="fa fa-weibo"></i>
+									</network>
+								</div>
+							</social-sharing>
+						</li>
+						<li id="JSEA-profileMenu">
+							<div id="JSEA-profileWrap">
+								<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
+							</div>
+							<div>
+								<div id="JSEA-profileUserName">{{user.name}}</div>
+								<div id="JSEA-profilePublicKey">{{user.publicKey}}</div>
+							</div>
+							<i class="fa fa-angle-down"></i>
+						</li>
+					</ul>
+				</header>
+				<!-- xWeb Header -->
+
+				<!-- App Page Content -->
+				<router-view></router-view>
+				<!-- xApp Page Content -->
+				</div>
+			</div>
+		</div>
 		<!-- QR scanner -->
 		<footer v-if="($store.getters.whichPlatform === 'mobile')">
 			<ButtonWidget buttonTxt="Cancel"  v-on:click.native="closeQR()" />
@@ -33,16 +144,44 @@
 import { mapState } from 'vuex';
 import ContentWidget from './components/widgets/ContentWidget.vue';
 import ButtonWidget from './components/widgets/ButtonWidget.vue';
+import ScrollWidget from './components/widgets/ScrollWidget.vue';
 
 export default {
 	name: 'Application-Page',
 	components: {
 		ContentWidget,
 		ButtonWidget,
+		ScrollWidget,
 	},
 	data() {
 		return {
 			offline: false,
+			nav: {
+				wallet: false,
+				blockchain: false,
+				mining: false,
+				system: false,
+				support: false,
+			},
+			identiconImg: [],
+			identiconParts: {
+				//background: 9,
+				//legs: 6,
+				//arms: 8,
+				neck: 3,
+				hat: 9,
+				//body: 7,
+				head: 8,
+				eyes: 9,
+				//logo: 8,
+			},
+			identiconTotal: 0,
+			user: {
+				name: '',
+				publicKey: '',
+			},
+			socialActive: false,//social links active
+			sideBarActive: true, //sidebar display
 		};
 	},
 	/**
@@ -96,6 +235,10 @@ export default {
 				state: 'platform',
 			});
 			self.$store.commit('updateAppState', {
+				val: 'platformDesktop',
+				state: 'base',
+			});
+			self.$store.commit('updateAppState', {
 				val: process.env.NODE_ENV,
 				state: 'isDev',
 			});
@@ -114,18 +257,23 @@ export default {
 				val: displayType,
 				state: 'platform',
 			});
-			//check if window resize on mobile/web app and browser
-			window.addEventListener('resize', self.getWindowWidth);
+			self.$store.commit('updateAppState', {
+				val: 'platformWeb',
+				state: 'base',
+			});
 		}
+		self.getWindowWidth();
+		//check if window resize on mobile/web app and browser
+		window.addEventListener('resize', self.getWindowWidth);
 
 		//console.log('set splash landing route ', self.$route, self.$route.name);
 		//store initial landing page to redirect - after splash screen loaded.
 		self.$store.commit('updateAppState', {
-			val: self.$route.name || '/login',
+			val: (self.$route.name)?`${self.$route.name}` : `${self.$store.state.app.platformURL}/login`,
 			state: 'initLander',
 		});
 		//on app load redirect to splash screen to regenerate and redirect to login or dashboard
-		self.$router.push('/');
+		self.$router.push(`/`);
 
 		//should app auto launch
 		if (localStorage.getItem('autoLaunch') !== null) {
@@ -140,6 +288,14 @@ export default {
 					start: self.$store.state.app.autoLaunch,
 				});
 			}
+		}
+
+		//notifications
+		if (localStorage.getItem('notifications') !== null) {
+			self.$store.commit('updateAppState', {
+				val: (String(localStorage.getItem('notifications')) === 'true'),
+				state: 'notifications',
+			});
 		}
 
 		//mobile background mining support - silent mode
@@ -333,12 +489,17 @@ export default {
 					window.calculatePendingTotal();
 				}
 
+				//generate public key
+				self.generateIdenticon(window.user.publicKey);
+				self.user.name = window.user.name;
+				self.user.publicKey = window.user.publicKey;
 				//set update user globals
 				self.$store.dispatch({
 					type: 'updateUserState',
 					txLimit: (window.user.txLimit)?window.user.txLimit:0,
 					rewards: (window.user.rewards)?window.user.rewards:{},
 					pendingToday: (window.user.pendingToday)?window.user.pendingToday:0,
+					publicKey: (window.user.publicKey)?window.user.publicKey:'',
 					pendingNextPayment: (window.user.pendingNextPayment)?window.user.pendingNextPayment:0,
 					pendingTotal: (window.user.pendingTotal)?window.user.pendingTotal:0,
 					pendingSelfMining: (window.user.pendingSelfMining)?window.user.pendingSelfMining:0,
@@ -383,20 +544,30 @@ export default {
 		getWindowWidth(e) {
 			const self = this;
 
-			let displayType = 'web';
+			let screenType = 'med';
+			let platformURL = ''
 			if (window.innerWidth < 520) {
-				displayType = 'mobile';
+				screenType = 'min';
+				window.process = {
+					type: 'mobile', //['mobile','web','tablet','desktop']
+				};
+			} else if (window.innerWidth < 1000) {
+				screenType = 'med';
+			} else {
+				screenType = 'max';
+				platformURL = '/desktop';
 			}
 
-			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
+			const bodyClass = `${screenType} ${self.$store.state.app.base} ${self.$store.state.app.platform} ${self.$store.state.app.theme}`;
 			document.body.className = bodyClass;
-			window.process = {
-				type: displayType, //['mobile','web']
-			};
 			window.jseTestNet = true;
 			self.$store.commit('updateAppState', {
-				val: displayType,
-				state: 'platform',
+				val: screenType,
+				state: 'screen',
+			});
+			self.$store.commit('updateAppState', {
+				val: platformURL,
+				state: 'platformURL',
 			});
 		},
 		closeQR() {
@@ -510,6 +681,101 @@ export default {
 				self.$electron.remote.BrowserWindow.getFocusedWindow().minimize();
 			}
 		},
+		/**
+		 * toggle Menu
+		 * toggles display of ub menu items.
+		 */
+		toggleMenu(item) {
+			const self = this;
+			self.nav[item] = !self.nav[item];
+		},
+		/**
+		 * Toggle theme (light,night) modes
+		 *
+		 * @returns nothing
+		 * @public
+		 */
+		toggleTheme() {
+			const self = this;
+			const updateThemeTo = (self.$store.state.app.theme === 'night')? 'light' : 'night';
+			this.$store.commit('updateAppState', {
+				val: updateThemeTo,
+				state: 'theme',
+			});
+			localStorage.setItem('theme', updateThemeTo);
+
+			//set theme if web
+			if (self.$store.getters.whichPlatform === 'web') {
+				const bodyClass = `platformWeb web ${self.$store.state.app.theme} ${self.$store.state.app.screen}`;
+				document.body.className = bodyClass;
+			}
+			//set theme if mobile
+			if (self.$store.getters.whichPlatform === 'mobile') {
+				const bodyClass = `platformWeb mobile ${self.$store.state.app.theme} ${self.$store.state.app.screen}`;
+				document.body.className = bodyClass;
+			}
+			//set theme if desktop
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme} ${self.$store.state.app.screen}`;
+				document.body.className = bodyClass;
+			}
+		},
+		generateIdenticon(publicKey) {
+			const self = this;
+			const identiconFiles = [];
+			let identCode = 1;
+			let tmpCode = 0;
+
+			let charCount = 4; // skip the first few
+			Object.entries(self.identiconParts).forEach(([key, value]) => {
+				//if (!identiconParts.hasOwnProperty(key)) continue;
+				const charCode = window.user.publicKey.charCodeAt(charCount);
+				identCode = 1;
+				tmpCode = 0;
+
+				// limit identCode to max number of parts via a basic math loop
+				while (tmpCode <= charCode) {
+					identCode++;
+					tmpCode++;
+					if (identCode > self.identiconParts[key]) {
+						identCode = 1;
+					}
+				}
+				identiconFiles[key] = 'https://jsecoin.com/img/identicons/'+key+identCode+'.png';
+				self.identiconImg.push(self.loadImage(identiconFiles[key]));
+				charCount++;
+			});
+			//console.log(identiconFiles);
+		},
+		loadImage(src) {
+			const self = this;
+			const img = new Image();
+			img.onload = self.updateCanvas;
+			img.src = src;
+			return img;
+		},
+		updateCanvas() {
+			const self = this;
+			self.identiconTotal++;
+			if (Object.values(self.identiconParts).length === self.identiconTotal) {
+				const canvas = self.$refs.indenticon;
+				const ctx = canvas.getContext('2d');
+				//console.log('x',self.identiconImg);
+				self.identiconImg.forEach((i, k) => {
+					//console.log(i);
+					ctx.imageSmoothingQuality = 'high';
+					ctx.drawImage(i, 0, 0);
+				});
+			}
+		},
+		toggleSocial() {
+			const self = this;
+			self.socialActive = !self.socialActive;
+		},
+		toggleSideBar() {
+			const self = this;
+			self.sideBarActive = !self.sideBarActive;
+		}
 	},
 };
 </script>
@@ -674,7 +940,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
-body.platformWeb.mobile {
+body.platformWeb.min {
 	font-size:12px;
 }
 
@@ -714,7 +980,7 @@ body.QRScanner footer {
     border-bottom: solid 1px #000;
 }
 
-body.QRScanner.mobile footer {
+body.QRScanner.min footer {
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -793,7 +1059,7 @@ tbody td {
 	line-height: 40px;
 	font-size:0.8em;
 }
-.platformWeb.mobile tbody td {
+.platformWeb.min tbody td {
 	padding:0px 6px;
 }
 
@@ -840,7 +1106,21 @@ header {
 	z-index:1000000;
 }
 
-.platformWeb.mobile header {
+.max header {
+	height: 55px;
+    /*border-bottom: solid 1px #ddd;*/
+}
+
+.max.light header {
+	background:#fff;
+	box-shadow:0px 0.5px 0px 0px #ddd !important;
+}
+.max.night header {
+	background:#20222e;
+	box-shadow:0px 0.5px 0px 0px #171820 !important;
+}
+
+.platformWeb.min header {
      background-position: 0px -4px;
 	height: 56px;
 }
@@ -956,10 +1236,12 @@ header {
 #JSEA-desktop {
 	display:none;
 	background:#fff;
-	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);
-	border-radius: 4px;
+	/*box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);*/
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+	border-radius: 8px;
 	overflow: hidden;
 	height:648px;
+	transition: all 0.2s;
 }
 .platformWeb {
 	background: #000812;
@@ -988,7 +1270,7 @@ header {
 	margin-top:-324px;
 }
 
-.platformWeb.mobile #JSEA-desktop {
+.platformWeb.min #JSEA-desktop {
 	width: auto;
 	height: auto;
 	top:0px;
@@ -998,6 +1280,18 @@ header {
 	margin:0px;
 	border-radius: 0px;
 	overflow: auto;
+}
+.platformWeb.max #JSEA-desktop {
+	width: auto;
+	height: auto;
+	top:0px;
+	left: 0px;
+	right: 0px;
+	bottom:0px;
+	margin:0px;
+	border-radius: 0px;
+	/*overflow: auto;*/
+	background: #fafbfd;
 }
 
 #JSEA-offline dl {
@@ -1151,6 +1445,7 @@ header .fa-minus:hover {
 #JSEA-wrapper {
 	position: relative;
 	height:562px;
+	flex:1;
 }
 
 /* Night Theme */
@@ -1166,7 +1461,8 @@ header .fa-minus:hover {
 	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);
 }
 #JSEA-desktop.active.light {
-	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);
+	/*box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);*/
+	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
 /* xNight Theme */
@@ -1205,7 +1501,7 @@ header .fa-minus:hover {
     justify-content: center;
 }
 
-.platformWeb.mobile .popupHeader {
+.platformWeb.min .popupHeader {
 	height:30px;
 	margin-bottom:0px;
 }
@@ -1223,7 +1519,7 @@ header .fa-minus:hover {
 .popupContent {
 	margin:10px;
 }
-.platformWeb.mobile .popupContent {
+.platformWeb.min .popupContent {
 	margin:6px;
 }
 #JSEA-QRBGImage {
@@ -1270,7 +1566,7 @@ header .fa-minus:hover {
     font-family: courier;
     font-weight: bold;
 }
-.platformWeb.mobile #JSEA-coinCode {
+.platformWeb.min #JSEA-coinCode {
     font-size: 0.6em;
 }
 
@@ -1308,7 +1604,7 @@ header .fa-minus:hover {
 	background:#fff;
 	border-radius:4px;
 }
-.platformWeb.mobile #JSEA-QRMask > div {
+.platformWeb.min #JSEA-QRMask > div {
 	width:340px;
 	margin-left:-170px;
 }
@@ -1359,24 +1655,482 @@ header .fa-minus:hover {
 .swal-modal {
 	width:458px;
 }
-.platformWeb.mobile .swal-modal {
+.platformWeb.min .swal-modal {
 	width:338px;
 }
-.platformWeb.mobile .swal-icon:first-child {
+.platformWeb.min .swal-icon:first-child {
 	margin:22px auto 0px auto;
 }
-.platformWeb.mobile .swal-title {
+.platformWeb.min .swal-title {
 	font-size:20px;
 }
 
-.platformWeb.mobile .popupMessage {
+.platformWeb.min .popupMessage {
 	font-size:0.9em;
 }
 
-.platformWeb.mobile .infoBox {
+.platformWeb.min .infoBox {
 	word-wrap: break-word;
 }
 .sliderWrapper .vue-slider-component .vue-slider-dot {
 	box-shadow: none !important;
 }
+
+#JSEA-appWrapper {
+	display: flex;
+	height:100%;
+}
+#JSEA-sideBar {
+	display:none;
+	position:relative;
+}
+
+.max #JSEA-sideBar {
+	display:block;
+	min-width:0px;
+	/*border-right: solid 1px #ddd;*/
+}
+.max #JSEA-sideBar.showSideBar {
+	min-width:200px;
+	/*border-right: solid 1px #ddd;*/
+}
+.max.light #JSEA-sideBar {
+	background:#fff;
+	box-shadow: inset -0.5px 0px 0px 0px #ebecec; 
+}
+.max.night #JSEA-sideBar {
+	background:#20222e;
+	box-shadow: inset -0.5px 0px 0px 0px #171820; 
+}
+
+#JSEA-contentWrapper {
+	flex:1;
+}
+#JSEA-content {
+	display:flex;
+	flex-direction: column;
+	height:100%;
+}
+
+.max .card {
+	width:420px;
+}
+.max .card .card {
+	width: 100%;
+}
+.max .hr.split {
+	display: none;
+}
+#JSEA-sideLogoHeader {
+	height:55px;
+	background-repeat: no-repeat;
+	background-size:70%;
+	background-position: 20px center;
+	display: block;
+	cursor: pointer;
+	width:200px;
+    float: left;
+    margin-left: 14px;
+}
+.max.light #JSEA-sideLogoHeader {
+	background-image: url("assets/jseLogo.svg");
+}
+
+.max.night #JSEA-sideLogoHeader {
+	background-image: url("assets/jseLogo_night.svg");
+}
+#JSEA-sideLogo {
+	height:55px;
+	background-repeat: no-repeat;
+	background-size:70%;
+	background-position: 20px center;
+	display: block;
+	cursor: pointer;
+}
+.max.light #JSEA-sideLogo {
+	background-image: url("assets/jseLogo.svg");
+	box-shadow: inset 0px -0.5px 0px 0px #ddd, inset -0.5px 0px 0px 0px #ddd;
+}
+
+.max.night #JSEA-sideLogo {
+	background-image: url("assets/jseLogo_night.svg");
+	box-shadow: inset 0px -0.5px 0px 0px #171820, inset -0.5px 0px 0px 0px #171820;
+}
+
+#JSE-sideNav {
+	font-size: 12.5px;
+}
+#JSE-sideNav ul {
+	margin:0px;
+	padding:0px;
+	padding-right:0.5px;
+}
+
+.light #JSE-sideNav ul {
+	box-shadow: inset 0px -0.5px 0px 0px #ddd;
+}
+.night #JSE-sideNav ul {
+	box-shadow: inset 0px -0.5px 0px 0px #171820;
+}
+#JSE-sideNav ul ul {
+	border:0px;
+}
+#JSE-sideNav li {
+	list-style:none;
+}
+
+.light #JSE-sideNav li {
+	background:#fff;
+	color:#929292;
+}
+.night #JSE-sideNav li {
+	background:#20222e;
+	color:#929292;
+
+}
+
+.light #JSE-sideNav li.showMenu,
+.light #JSE-sideNav li.showMenu li {
+	background: #fbfcfd;
+}
+
+.night #JSE-sideNav li.showMenu,
+.night #JSE-sideNav li.showMenu li {
+	background: #1c1e28;
+}
+
+.light #JSE-sideNav li.showMenu span {
+	color:#666;
+}
+.night #JSE-sideNav li.showMenu span {
+	color:#fff;
+}
+#JSE-sideNav li.showMenu li {
+	display: flex;
+}
+
+#JSE-sideNav li span {
+	padding:10px 8px;
+	display: block;
+	position: relative;
+	display: flex;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+
+.light #JSE-sideNav li #JSE-overviewButton {
+	box-shadow: inset 0px -0.5px 0px 0px #ddd;
+}
+.night #JSE-sideNav li #JSE-overviewButton {
+	box-shadow: inset 0px -0.5px 0px 0px #171820;
+}
+
+.light #JSE-sideNav li span:hover {
+	background:#fbfcfd;
+}
+.night #JSE-sideNav li span:hover {
+	background:#1c1e28;
+}
+#JSE-sideNav .fa {
+	font-size:1.4em;
+	margin-right:6px;
+}
+
+
+#JSE-sideNav li li .fa {
+	font-size:1em;
+	align-self: center;
+}
+
+#JSE-sideNav .fa.fa-cog {
+	position: absolute;
+	right:10px;
+	font-size:1.3em;
+    padding-left: 10px;
+	cursor:pointer;
+	transition:color 0.2s;
+}
+
+.light #JSE-sideNav .fa.fa-cog {
+    border-left: solid 1px #eee;
+}	
+.night #JSE-sideNav .fa.fa-cog {
+    border-left: solid 1px #171820;
+}
+.light #JSE-sideNav .fa-cog:hover {
+	color:#000e35;
+}
+.night #JSE-sideNav .fa-cog:hover {
+	color:#fff;
+}
+
+.light #JSE-sideNav li li {
+	/*background:#fbfcfd;*/
+}
+
+.night #JSE-sideNav li li {
+	background:#20222e;
+}
+
+	
+
+#JSE-sideNav li li span {
+	font-size:1.1em;
+	font-weight:bold;
+	background:transparent;
+	border:0px;
+	box-shadow: unset;
+	padding-left:18px;
+}
+#JSE-sideNav li li {
+	padding-bottom:10px;
+}
+.light #JSE-sideNav li li {
+	box-shadow: inset 0px -0.5px 0px 0px #ddd;
+	/*border-bottom:solid 1px #ddd;*/
+	background:#fff;
+}
+.night #JSE-sideNav li li {
+	box-shadow: inset 0px -0.5px 0px 0px #171820;
+	/*border-bottom:solid 1px #ddd;*/
+	/*background:#1c1e28;*/
+}
+#JSE-sideNav li li li {
+	border:0px;
+	padding:6px 6px 6px 20px;
+	cursor: pointer;
+	transition: background 0.4s;
+	display:none;
+}
+
+.light #JSE-sideNav li li li,
+.night #JSE-sideNav li li li {
+	box-shadow: unset;
+}
+
+
+.light #JSE-sideNav li li li:hover {
+	background:#e4f5f2;
+	color:#666;
+}
+.night #JSE-sideNav li li li:hover {
+	background:#181a23;
+	color:#666;
+}
+
+.light #JSE-sideNav li li li.active {
+	background:#1bb394;
+	color:#fff;
+}
+
+.night #JSE-sideNav li li li.active {
+	background:#101219;
+	color:#fff;
+}
+
+#JSEA-headerItems {
+	margin:0px;
+	padding:0px;
+	height:55px;
+	float:right;
+	display: none;
+}
+.platformWeb.max #JSEA-headerItems {
+	display: flex;
+} 
+
+
+#JSEA-headerItems li {
+	list-style: none;
+	height:100%;
+	min-width:55px;
+	/*border-left:solid 1px #ddd;*/
+	display: flex;
+	align-items: center;
+}
+
+
+.light #JSEA-headerItems li {
+	box-shadow:inset -0.5px 0px 0px 0px #ddd;
+}
+.night #JSEA-headerItems li {
+	box-shadow:inset -0.5px 0px 0px 0px #171820;
+}
+
+#JSEA-headerItems li i {
+	height:35px;
+	width:35px;
+	margin:0px auto;
+	border-radius: 4px;
+	color:#fff;
+	display: block;
+	cursor:pointer;
+	line-height: 35px;
+    font-size: 1.2em;
+	text-align: center;
+}
+
+.light #JSEA-headerItems li i {
+	background: #2ba7fe;
+}
+
+.night #JSEA-headerItems li i {
+	background: #13151c;
+}
+
+#JSEA-headerItems li i:hover {
+	background:#1970c7;
+}
+#JSEA-version {
+	padding:10px 20px;
+}
+.light #JSEA-version {
+	color:#ddd;
+}
+.night #JSEA-version {
+	color:#666;
+}
+
+#JSEA-profileWrap {
+	background-size: 40px;
+	min-width:40px;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0px 10px;
+	overflow:hidden;
+}
+.light #JSEA-profileWrap {
+	background-image: url("assets/profile_wrap.svg");
+}
+.night #JSEA-profileWrap {
+	background-image: url("assets/profile_wrap_night.svg");
+}
+
+#JSEA-profileMenu {
+	display:flex;
+	max-width:300px;
+	padding-right:10px;
+	overflow: hidden;
+	color:#afafaf;
+	box-shadow: unset !important;
+	cursor: pointer;
+}
+#JSEA-profileMenu * {
+	cursor: pointer;
+}
+
+.light #JSEA-profileMenu:hover {
+	background:#fbfcfd;
+}
+.night #JSEA-profileMenu:hover {
+	background:#1c1e28;
+}
+#JSEA-profileUserName {
+	font-weight:bold;
+}
+#JSEA-profilePublicKey {
+	font-size:0.7em;
+	overflow: hidden;
+	white-space: nowrap;
+  	text-overflow: ellipsis;
+	max-width: 200px;
+	opacity:0.7;
+}
+#JSEA-profileMenu .fa {
+    margin: 0px;
+    height: 20px;
+    line-height: 20px;
+	min-width:35px;
+}
+
+#JSEA-socialLinks {
+	position: absolute;
+    top: 55px;
+    left: 0px;
+    right: 0px;
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.3);
+	padding-bottom:10px;
+	display:none;
+}
+.light #JSEA-socialLinks {
+    background: #fff;
+}
+.night #JSEA-socialLinks {
+    background: #20222e;
+}
+
+.activeMenu #JSEA-socialLinks {
+	display:block;
+}
+
+.activeMenu .fa-angle-down {
+	background:#1970c7 !important;
+}
+#JSEA-socialLinks i {
+	margin-top:10px !important;
+}
+#JSEA-toggleSideBar {
+    position: absolute;
+    right: -22px;
+    z-index: 1000001;
+    top: 0px;
+    width: 22px;
+	transition: height 0.4s;
+	height:56px;
+}
+
+#JSEA-toggleSideBar * {
+	cursor: pointer;
+}
+
+#JSEA-toggleSideBar nav {
+	width:4px;
+    height: 100%;
+    display: flex;
+    /*align-items: center;*/
+}
+.light #JSEA-toggleSideBar nav {
+    background: #2ba7fe;
+}
+.night #JSEA-toggleSideBar nav {
+    background: #13151c;
+}
+#JSEA-toggleSideBar ul {
+	margin:0px;
+    /* width: 14px; */
+    /* margin-right: 5px; */
+    padding: 8px 8px 8px 10px;
+    border-radius: 0px 4px 4px 0px;
+    height: 36px;
+    margin-top: 10px;
+}
+
+.light #JSEA-toggleSideBar ul {
+	background: #2ba7fe;
+}
+.night #JSEA-toggleSideBar ul {
+	background: #13151c;
+}
+#JSEA-toggleSideBar li {
+	background: #fff;
+	border-radius:10px;
+	width:4px;
+	height:4px;
+	list-style: none;
+    margin: 2px 0px;
+}
+.light #JSEA-toggleSideBar:hover nav,
+.light #JSEA-toggleSideBar:hover ul {
+	background: #1970c7;
+}
+.night #JSEA-toggleSideBar:hover nav,
+.night #JSEA-toggleSideBar:hover ul {
+	background: #1970c7;
+}
+#JSEA-toggleSideBar:hover {
+	bottom:0px;
+	height:100%;
+} 
 </style>

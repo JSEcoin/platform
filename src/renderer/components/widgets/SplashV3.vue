@@ -51,6 +51,7 @@ export default {
 	left:0px;
 	bottom:0px;
 	right:0px;
+	z-index:10000000000;
 }
 .platformWeb  #JSEA-splashWrapper {
 	background: #000812;

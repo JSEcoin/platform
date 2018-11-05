@@ -86,7 +86,7 @@ export default {
     line-height: 1.2;
     font-size: 14px;
 }
-.platformWeb.mobile .checkbox-switch {
+.platformWeb.min .checkbox-switch {
     height: 24px;
     border-radius: 24px;
     font-size: 10px;
@@ -104,7 +104,7 @@ export default {
 	z-index: 2;
 	cursor: pointer;
 }
-.platformWeb.mobile input.input-checkbox {
+.platformWeb.min input.input-checkbox {
 	height: 24px;
 }
 
@@ -117,7 +117,7 @@ export default {
     transition: background 0.25s ease-out 0s;	
 	border-radius: 30px;
 }
-.platformWeb.mobile .checkbox-switch .checkbox-animate {
+.platformWeb.min .checkbox-switch .checkbox-animate {
     height: 24px;
     border-radius: 24px;
 }
@@ -137,7 +137,7 @@ export default {
     transition: left 0.3s ease-out 0s;
     z-index: 10;
 }
-.platformWeb.mobile .checkbox-switch .checkbox-animate:before {
+.platformWeb.min .checkbox-switch .checkbox-animate:before {
 	top: 2px;
 	left: 5px;
 }

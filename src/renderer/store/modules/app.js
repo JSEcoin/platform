@@ -1,7 +1,10 @@
 const state = {
-	version: '0.5.8', //app version no
-	major: 58, //support only this server release
-	platform: 'web', //platform type [desktop, mobile web]
+	version: '0.5.9', //app version no
+	major: 59, //support only this server release
+	base: 'platformWeb', //[platformWeb, platformDesktop]
+	platform: 'web', //platform type [desktop, mobile, web] // [electron, cordova, web]
+	platformURL: '/desktop', // for router
+	screen: 'med', //screen size [min, med, max]
 	isDev: true, //is in development mode
 	loading: true, //app loading indicator
 	theme: 'light', //app theme ['light','night]
@@ -13,8 +16,9 @@ const state = {
 	storeUsername: true, //on login store username for quick login
 	jseCoinServer: 'https://server.jsecoin.com', //app server connection address
 	isGoogle: false, //is app hosted on google then disable miner
-	initLander: 'login', //set initial landing page for splash screen
+	initLander: '/login', //set initial landing page for splash screen
 	mineWhenpluggedIn: false, //for mobile - mine only when device plugged into power
+	notifications: false, //enable desktop notifications
 };
 
 const mutations = {
@@ -44,6 +48,7 @@ const getters = {
 	whichPlatform: state => state.platform,
 	isAppGoogle: state => state.isGoogle,
 	whichLandingPage: state => state.initLander,
+	notificationsEnabled: state => state.notifications,
 };
 
 

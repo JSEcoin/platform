@@ -181,7 +181,7 @@ export default {
 		},
 		mobileBackgroundMode: {
 			get() {
-				return this.$store.state.app.mobileBackgroundMode;
+				return this.$store.state.app.minBackgroundMode;
 			},
 			set(val) {
 				this.$store.commit('updateAppState', {

@@ -1,6 +1,6 @@
 {
 	"name": "jse-desktop",
-	"version": "0.5.8",
+	"version": "0.5.9",
 	"author": {
 		"name": "JSEcoin Ltd",
 		"email": "support@jsecoin.com"
@@ -136,6 +136,7 @@
 		"vue-recaptcha": "^1.1.0",
 		"vue-router": "^2.5.3",
 		"vue-slider-component": "^2.6.2",
+		"vue-social-sharing": "^2.3.3",
 		"vue-swal": "^0.1.0",
 		"vuebar": "0.0.18",
 		"vuex": "^2.3.1",

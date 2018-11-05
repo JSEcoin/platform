@@ -118,7 +118,7 @@ dl.containedTransferItem {
 	padding:0px;
 	margin:0px 0px 10px 0px;
 }
-.platformWeb.mobile dl.containedTransferItem {
+.platformWeb.min dl.containedTransferItem {
 	margin:0px 0px 10px 0px;
 }
 

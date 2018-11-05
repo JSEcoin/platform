@@ -506,10 +506,10 @@ export default {
 
 				//check if new user display PIN requirements form
 				if (self.user.requirePin) {
-					self.$router.push('enterSecurityPin');
+					self.$router.push(`${self.$store.state.app.platformURL}/enterSecurityPin`);
 				//else redirect to dashboard
 				} else {
-					self.$router.push('dashboard');
+					self.$router.push(`${self.$store.state.app.platformURL}/dashboard`);
 				}
 				return true;
 			}).catch((err) => {
@@ -553,7 +553,7 @@ export default {
 		},
 		cancelRegister() {
 			const self = this;
-			self.$router.push('login');
+			self.$router.push(`${self.$store.state.app.platformURL}/login`);
 		},
 		/**
 		 * onKeyUp set field display and check field value is correct (email etc)
@@ -640,7 +640,7 @@ export default {
     width: 100%;
 }
 
-.platformWeb.mobile #JSEA-registerWrapper {
+.platformWeb.min #JSEA-registerWrapper {
     align-self: inherit;
 	margin-top: 20px;
 }
@@ -674,7 +674,7 @@ export default {
 	margin:0px 8px;
 }
 
-.platformWeb.mobile #JSEA-registerForm {
+.platformWeb.min #JSEA-registerForm {
 	width:90%;
 }
 

@@ -3,26 +3,6 @@
 		<NavWidget activeNav="dashboard" activeSubNav="overview"></NavWidget>
 		<ScrollWidget>
 			<div id="FB-dynamicContentRegion">
-				<!-- tmp ico -->
-				<div style="margin-top:10px;" v-if="icoActive()">
-					<div class="icoEnding">
-						<dl>
-							<dt>
-								<span>ICO ending soon!</span>
-								<span style="font-size:0.8em; display:inline;margin-left:0px;padding:2px 8px;">
-									{{days}} : {{hrs}} : {{mins}} : {{seconds}}
-								</span>
-							</dt>
-							<dd>
-								Help support the JSEcoin project by investing and buying JSE Tokens.
-							</dd>
-						</dl>
-					</div> 
-					<ButtonWidget v-if="icoActive()" class="small green" style="margin:-16px auto 10px auto; border-radius:20px;" buttonTxt="Buy JSE Tokens" v-on:click.native="openExternalWindow('https://jsecoin.com/ico/?utm_source=platformapp&utm_campaign=platformapppBtInAction&utm_content=platform');"/>
-				</div>
-				<div v-if="icoActive()" class="hr split"><hr /></div>
-				<!-- xtmp ico display -->
-
 				<!-- Balance -->
 				<ContentWidget 
 					titleTxt="Balance" 
@@ -42,44 +22,8 @@
 				</ContentWidget>
 				<!-- xBalance -->
 
-				<!-- Earnings Today
-				<ContentWidget 
-					v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
-					:infoPanelTxt="`Reset ${statsReset} Hrs Ago`">
-					<OverviewCoinDispayWidget 
-						:coinTotal="`${todaysEarnings}`"
-						:coinClass="{gold:todaysEarnings >= 1, silver:todaysEarnings < 1}"></OverviewCoinDispayWidget>
-				</ContentWidget>
-				xEarnings Today -->
-				
-				<!-- Mined Lifetime
-				<ContentWidget 
-					v-if="(minedLifetime > 0)" 
-					titleTxt="Mined Lifetime" 
-					:infoPanelTxt="`Registered ${registrationDate}`">
-					<OverviewCoinDispayWidget 
-						:coinTotal="`${minedLifetime}`"
-						:coinClass="{gold:minedLifetime >= 1, silver:minedLifetime < 1}"></OverviewCoinDispayWidget>
-				</ContentWidget>
-				xMined Lifetime -->
-
-
-				<div v-if="(minedLifetime > 0)"  class="hr split"><hr /></div>
-
-				<!-- Mining Overview -->
-				<ContentWidget 
-					v-if="(minedLifetime > 0)" 
-					titleTxt="Mining Overview"
-					:infoPanelTxt="`Registered ${registrationDate}`">
-					<MinerPanelWidget />
-				</ContentWidget>
-				<!-- Mining Overview -->
-
-				<div v-if="(pendingTotal > 0)" class="hr split"><hr /></div>
-
 				<!-- Rewards Pending -->
 				<ContentWidget 
-					v-if="(pendingTotal > 0)" 
 					titleTxt="Rewards Pending"
 					:infoPanelTxt="`${pendingTotal}`"
 					:infoPanelIcoClassName="{gold:pendingTotal >= 1, silver:pendingTotal < 1}">
@@ -87,17 +31,24 @@
 				</ContentWidget>
 				<!-- xRewards Pending -->
 
-				<div v-if="(pendingTotal > 0)" class="hr split"><hr /></div>
-
-				<!-- Payment Overview -->
+				<!-- Mining Overview -->
 				<ContentWidget 
-					v-if="(pendingNextPayment > 0)" 
-					titleTxt="Payment Overview"
-					:infoPanelTxt="`${pendingNextPayment}`"
-					:infoPanelIcoClassName="{gold:pendingNextPayment >= 1, silver:pendingNextPayment < 1}">
-					<RewardPaymentPanelWidget />
+					titleTxt="Mining Overview"
+					:infoPanelTxt="`Registered ${registrationDate}`">
+					<MinerPanelWidget />
 				</ContentWidget>
-				<!-- xPayment Overview -->
+				<!-- Mining Overview -->
+
+				<div>
+					<!-- Payment Overview -->
+					<ContentWidget 
+						titleTxt="Payment Overview"
+						:infoPanelTxt="`${pendingNextPayment}`"
+						:infoPanelIcoClassName="{gold:pendingNextPayment >= 1, silver:pendingNextPayment < 1}">
+						<RewardPaymentPanelWidget />
+					</ContentWidget>
+					<!-- xPayment Overview -->
+				</div>
 			</div>
 		</ScrollWidget>
 	</AppWrapperWidget>
@@ -327,5 +278,9 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
 	padding-top:40px;
+}
+
+.max dl {
+	margin: 16px 10px;
 }
 </style>

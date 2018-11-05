@@ -11,6 +11,16 @@
 						<i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i>
 					</SettingsItemRowWidget>
 					<!-- xToggle Theme -->
+
+					<!-- Notifications -->
+					<SettingsItemRowWidget settingName="Notifications">
+						<ToggleSwitchWidget
+							v-model="notifications"
+							v-bind="{
+								name: 'notifications',
+							}" />
+					</SettingsItemRowWidget>
+					<!-- xNotifications -->
 				</OptionsListWrapperWidget>
 				<!-- xVisuals -->
 
@@ -181,6 +191,39 @@ export default {
 				}
 			},
 		},
+		notifications: {
+			get() {
+				return this.$store.state.app.notifications;
+			},
+			set(val) {
+				const setNotification = () => {
+					this.$store.commit('updateAppState', {
+						val,
+						state: 'notifications',
+					});
+					localStorage.setItem('notifications', val);
+				};
+				if (!('Notification' in window)) {
+					console.log('Support disabled for notification');
+					return;
+				}
+				if (Notification.permission !== 'granted') {
+					Notification.requestPermission().then((permission) => {
+						if (permission === 'denied') {
+							console.log('Permission wasn\'t granted. Allow a retry.');
+							return;
+						}
+						if (permission === 'default') {
+							console.log('The permission request was dismissed.');
+							return;
+						}
+						setNotification();
+					});
+				} else {
+					setNotification();
+				}
+			},
+		},
 		autoMine: {
 			get() {
 				return this.$store.state.app.autoMine;
@@ -207,7 +250,7 @@ export default {
 		},
 		mobileBackgroundMode: {
 			get() {
-				return this.$store.state.app.mobileBackgroundMode;
+				return this.$store.state.app.minBackgroundMode;
 			},
 			set(val) {
 				this.$store.commit('updateAppState', {
@@ -358,7 +401,7 @@ export default {
 	transition: background 0.2s;
 }
 
-.platformWeb.mobile #JSEA-themeSelector {
+.platformWeb.min #JSEA-themeSelector {
 	width: 34px;
 	height: 34px;
 	line-height:34px;

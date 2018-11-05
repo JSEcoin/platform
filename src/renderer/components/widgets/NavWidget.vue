@@ -8,16 +8,16 @@
 				<li>Test 4</li>
 			</ul>
 			<ul v-else>
-				<router-link v-bind:to="`/dashboard`" tag="li" :class="{'active': activeNav === 'dashboard'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li" :class="{'active': activeNav === 'dashboard'}">
 					Dashboard
 				</router-link>
-				<router-link v-bind:to="`/wallet`" tag="li" :class="{'active': activeNav === 'wallet'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li" :class="{'active': activeNav === 'wallet'}">
 					Wallet
 				</router-link>
-				<router-link v-bind:to="`/mine`" tag="li" :class="{'active': activeNav === 'mine'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li" :class="{'active': activeNav === 'mine'}">
 					Mine
 				</router-link>
-				<router-link v-bind:to="`/settings`" tag="li" :class="{'active': activeNav === 'settings'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/settings`" tag="li" :class="{'active': activeNav === 'settings'}">
 					Settings
 				</router-link>
 			</ul>
@@ -31,34 +31,34 @@
 			</ul>
 
 			<ul v-if="activeNav === 'dashboard'">
-				<router-link v-bind:to="`/dashboard`" tag="li" :class="{'active': activeSubNav === 'overview'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li" :class="{'active': activeSubNav === 'overview'}">
 					Overview
 				</router-link>
-				<router-link v-bind:to="`/dashboard/account`" tag="li"  :class="{'active': activeSubNav === 'account'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"  :class="{'active': activeSubNav === 'account'}">
 					Account
 				</router-link>
 			</ul>
 
 			<ul v-if="activeNav === 'wallet'">
-				<router-link v-bind:to="`/wallet`" tag="li" :class="{'active': activeSubNav === 'transfer'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li" :class="{'active': activeSubNav === 'transfer'}">
 					Transfer
 				</router-link>
-				<router-link v-bind:to="`/wallet/export`" tag="li" :class="{'active': activeSubNav === 'export'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/export`" tag="li" :class="{'active': activeSubNav === 'export'}">
 					Export
 				</router-link>
-				<router-link v-bind:to="`/wallet/import`" tag="li" :class="{'active': activeSubNav === 'import'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/import`" tag="li" :class="{'active': activeSubNav === 'import'}">
 					Import
 				</router-link>
-				<router-link v-bind:to="`/wallet/transactions`" tag="li" :class="{'active': activeSubNav === 'transactions'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/transactions`" tag="li" :class="{'active': activeSubNav === 'transactions'}">
 					Transactions
 				</router-link>
 			</ul>
 			
 			<ul v-if="activeNav === 'mine'">
-				<router-link v-bind:to="`/mine`" tag="li" :class="{'active': activeSubNav === 'mine'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li" :class="{'active': activeSubNav === 'mine'}">
 					Platform Miner
 				</router-link>
-				<router-link v-bind:to="`/mine/earnings`" tag="li" :class="{'active': activeSubNav === 'earnings'}">
+				<router-link v-bind:to="`${$store.state.app.platformURL}/mine/earnings`" tag="li" :class="{'active': activeSubNav === 'earnings'}">
 					Earnings History
 				</router-link>
 			</ul>
@@ -98,14 +98,24 @@ export default {
 	position: relative;
 	z-index: 10;
 }
-.platformWeb.mobile #JSEA-topLvlNav li {
+.platformWeb.min #JSEA-topLvlNav li {
 	/*font-size:0.6em;*/
 	padding: 8px 0px;
 }
-.platformWeb.mobile .light #JSEA-topSubLvlNav li {
+.platformWeb.min .light #JSEA-topSubLvlNav li {
 	/*font-size:0.5em;*/
 	padding: 8px 0px;
 }
+
+.platformWeb.max #JSEA-topSubLvlNav li {
+	padding: 6px 12px;
+	flex-grow: unset;		
+}
+
+.platformWeb.max #JSEA-topLvlNav li {
+	flex-grow: unset;
+}
+
 .night #JSEA-topLvlNav li:hover,
 .night #JSEA-topLvlNav li.active {
 	background:#101219;
@@ -193,11 +203,24 @@ export default {
 	letter-spacing: 1px;
 	text-align:center;
 	transition: background 0.2s, color 0.2s;
+	display: block;
 }
 
-#JSEA-topLvlNav li:hover,
+.max #JSEA-topLvlNav li {
+	display: none;
+}
+
+.max #JSEA-topLvlNav li.active {
+	display: block;
+}
+
+#JSEA-topLvlNav li:hover {
+	background:#eaf4fb;
+}
+
 #JSEA-topLvlNav li.active {
 	background:#3598db;
 	color:#fff;
 }
+
 </style>

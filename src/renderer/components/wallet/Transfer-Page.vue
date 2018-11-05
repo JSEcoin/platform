@@ -432,6 +432,7 @@ export default {
 	color:#1bb394;
 	font-size:0.6em;
 }
+/*
 #JSEA-topLvlNav {
 	background:#fff;
 	border-bottom:solid 2px #3598db;
@@ -455,7 +456,7 @@ export default {
 #JSEA-topLvlNav li.active {
 	background:#3598db;
 	color:#fff;
-}
+}*/
 
 .coin {
 	background-repeat:no-repeat;

@@ -31,6 +31,7 @@ const state = {
 	miningHistory: [], //users mining reward history
 	globalErrMsg: '', //global error message notifacation - used on redirect to login
 	registered: false, //has user gone through registration process
+	publicKey: '', //users publicKey
 };
 
 const mutations = {
@@ -90,6 +91,7 @@ const mutations = {
 	 * @param {*} data
 	 */
 	updateState(state, data) {
+		const self = this;
 		//user transaction limit
 		state.txLimit = data.txLimit;
 		//update rewards
@@ -100,8 +102,19 @@ const mutations = {
 		state.pendingSelfMining = data.pendingSelfMining;
 		state.pendingPublisherMining = data.pendingPublisherMining;
 		state.pendingReferrals = data.pendingReferrals;
+		state.publicKey = data.publicKey;
 		//update any other user required state items
 		state.confirmed = data.confirmed;
+		//if notifications enable show earnings
+		if (self.getters.notificationsEnabled) {
+			if ((state.todaysEarnings < data.todaysEarnings) && (state.todaysEarnings !== 0)) {
+				const n = new Notification('Coin Generated', {
+					icon: 'static/coin.png',
+					body: `Todays Earnings: ${data.todaysEarnings}JSE`,
+				});
+			}
+		}
+
 		state.todaysEarnings = data.todaysEarnings;
 		state.minedLifetime = data.minedLifetime;
 		//state.registrationDate = data.registrationDate;

@@ -63,7 +63,7 @@ export default {
 .miningOverview  {
 	margin:12px 12px 0px 12px;
 }
-.platformWeb.mobile .miningOverview {
+.platformWeb.min .miningOverview {
 	margin:12px 6px 0px 6px;
 }
 .miningOverview dl {
@@ -71,14 +71,14 @@ export default {
 	flex-grow: 1;
 	width:33%;
 }
-.platformWeb.mobile .miningOverview dl {
+.platformWeb.min .miningOverview dl {
 	margin:0px 4px;
 }
 .miningOverview dl.hasFooter {
 	padding-bottom:28px;
 }
 
-.mobile .miningOverview dl.hasFooter {
+.min .miningOverview dl.hasFooter {
 	padding-bottom:38px;
 }
 

@@ -259,7 +259,7 @@ export default {
 		 */
 		registerUser() {
 			const self = this;
-			self.$router.push('register');
+			self.$router.push(`${self.$store.state.app.platformURL}/register`);
 		},
 		/**
 		 * Processes captcha iframe response success/fail from the server
@@ -539,10 +539,10 @@ export default {
 
 				//check if new user display PIN requirements form
 				if (self.user.requirePin) {
-					self.$router.push('enterSecurityPin');
+					self.$router.push(`${self.$store.state.app.platformURL}/enterSecurityPin`);
 				//else redirect to dashboard
 				} else {
-					self.$router.push('dashboard');
+					self.$router.push(`${self.$store.state.app.platformURL}/dashboard`);
 				}
 				return true;
 			}).catch((err) => {
@@ -612,7 +612,7 @@ export default {
     align-self: center;
     width: 100%;
 }
-.platformWeb.mobile #JSEA-loginWrapper {
+.platformWeb.min #JSEA-loginWrapper {
     align-self: inherit;
 	margin-top: 20px;
 }
@@ -642,7 +642,7 @@ export default {
 }
 
 
-.platformWeb.mobile #JSEA-loginForm {
+.platformWeb.min #JSEA-loginForm {
 	width:90%;
 }
 

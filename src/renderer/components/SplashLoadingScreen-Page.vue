@@ -74,7 +74,7 @@ export default {
 					//app loading complete
 					self.$store.commit('loading', false);
 					//redirect to [dashboard,login] page
-					self.$router.push(self.endRoute);
+					self.$router.push(`${self.$store.state.app.platformURL}${self.endRoute}`);
 					self.$electron.remote.getCurrentWindow().setMovable(true);
 				}
 			});
@@ -148,7 +148,7 @@ export default {
 				self.$store.commit('loading', false);
 				//console.log('splash to', route);
 				//redirect to [dashboard,login] page
-				self.$router.push(route);
+				self.$router.push(`${self.$store.state.app.platformURL}${route}`);
 			}
 		},
 		/**

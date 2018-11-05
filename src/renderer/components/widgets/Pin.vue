@@ -405,7 +405,7 @@ input[name="password"] {
 .pin.show {
 	display:block;
 }
-.platformWeb.mobile .pin {
+.platformWeb.min .pin {
 	width:20px;
 	margin:26px 2px 8px;
 	text-align:center;
