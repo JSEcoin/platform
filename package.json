@@ -129,6 +129,7 @@
 		"vue-directive-tooltip": "^1.4.5",
 		"vue-electron": "^1.0.6",
 		"vue-head": "^2.0.12",
+		"vue-json-tree-view": "^2.1.4",
 		"vue-moment": "^3.2.0",
 		"vue-multianalytics": "^1.9.4",
 		"vue-qart": "^2.1.1",
