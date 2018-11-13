@@ -17,8 +17,20 @@
 				<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li" :class="{'active': activeNav === 'mine'}">
 					Mine
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/settings`" tag="li" :class="{'active': activeNav === 'settings'}">
+				<router-link class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/settings`" tag="li" :class="{'active': activeNav === 'settings'}">
 					Settings
+				</router-link>
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'blockchainLatest'}">
+					Blockchain Latest
+				</router-link>
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'allBlocks'}">
+					All Blocks
+				</router-link>
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'activeBlock'}">
+					Active Block
+				</router-link>
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'transactionInfo'}">
+					Transaction Info
 				</router-link>
 			</ul>
 		</nav>
@@ -36,6 +48,9 @@
 				</router-link>
 				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"  :class="{'active': activeSubNav === 'account'}">
 					Account
+				</router-link>
+				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/exchange`" tag="li"  :class="{'active': activeSubNav === 'exchange'}">
+					Exchange
 				</router-link>
 			</ul>
 
@@ -67,6 +82,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 /**
  * @description
@@ -90,6 +106,9 @@ export default {
 			default: '',
 		},
 	},
+	computed: mapState({
+		screen: state => state.app.screen,
+	}),
 };
 </script>
 
@@ -130,6 +149,16 @@ export default {
 	background:#3598db;
     border-bottom: solid 2px #1970c7;
     position: relative;
+}
+.max.light #JSEA-topSubLvlNav {
+	background:#fff;
+}
+.max.night #JSEA-topSubLvlNav {
+	background: #20222e;
+}
+.max.light #JSEA-topSubLvlNav li,
+.max.night #JSEA-topSubLvlNav li {
+	color: #3598db;
 }
 
 .light #JSEA-topSubLvlNav li.active,
@@ -185,6 +214,10 @@ export default {
 	border-bottom:solid 2px #3598db;
 }
 
+.max #JSEA-topLvlNav {
+	border-bottom:0px;
+}
+
 #JSEA-topLvlNav ul {
 	margin:0px;
 	padding:0px;
@@ -208,10 +241,17 @@ export default {
 
 .max #JSEA-topLvlNav li {
 	display: none;
+    padding: 10px 10px 9px 10px;
+}
+.max.light #JSEA-topLvlNav li {
+	color:#606060;
 }
 
 .max #JSEA-topLvlNav li.active {
 	display: block;
+	background: transparent;
+    width: 100%;
+    text-align: left;
 }
 
 #JSEA-topLvlNav li:hover {
@@ -222,5 +262,10 @@ export default {
 	background:#3598db;
 	color:#fff;
 }
-
+.max.light .hasNoNav {
+    box-shadow: inset 0px -0.5px 0px 0px #ddd;
+}
+.max.night .hasNoNav {
+    box-shadow: inset 0px -0.5px 0px 0px #171820;
+}
 </style>
