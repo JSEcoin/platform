@@ -10,6 +10,7 @@ import VueQriously from 'vue-qriously';
 import VueHead from 'vue-head';
 import VueMultianalytics from 'vue-multianalytics';
 import SocialSharing from 'vue-social-sharing';
+import TreeView from "vue-json-tree-view"
 
 //App, Router and Vuex Store
 import App from './App';
@@ -79,6 +80,9 @@ Vue.use(VueHead);
 
 //Social sharing
 Vue.use(SocialSharing);
+
+//Tree view json
+Vue.use(TreeView);
 
 //
 const AppData = Object.freeze({
