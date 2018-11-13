@@ -99,10 +99,10 @@
 							
 							<div class="row">
 								<ButtonWidget type="submit"
-									buttonTxt="Login" :class="{'singleButton':!show2FA_interface}" />
+									buttonTxt="Login" style="flex:1;" :class="{'singleButton':!show2FA_interface}" />
 
 								<ButtonWidget v-if="!show2FA_interface" type="button"
-									buttonTxt="Register" style="margin-left:5px;" v-on:click.native="registerUser"/>
+									buttonTxt="Register" style="flex:1;margin-left:5px;" v-on:click.native="registerUser"/>
 							</div>
 						</div>
 					</form>				
