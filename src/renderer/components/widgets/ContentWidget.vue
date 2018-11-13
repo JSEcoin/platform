@@ -112,7 +112,6 @@ export default {
 </script>
 
 <style scoped>
-
 .miningOverview dd {
 	overflow-x:auto;
 	white-space: nowrap;
@@ -203,7 +202,8 @@ dl dt {
 	letter-spacing: 1px;
 	height: 44px;
 	align-items: center;
-	display:flex
+	display:flex;
+    text-transform: capitalize;
 }
 
 dl dd {
