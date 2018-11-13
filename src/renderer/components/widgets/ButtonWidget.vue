@@ -63,7 +63,7 @@ button * {
 	height: 40px;
 	line-height: 40px;
     display: flex;
-    width: 280px;
+    width: auto;/*280px;*/
     margin: 0px auto;
 	text-transform: uppercase;
 	letter-spacing: 0.2px;
