@@ -205,10 +205,10 @@ export default {
 				barchartData.push(platformMined);
 			}
 			if (showPublisherMined) {
-				barchartData.push(publisherMinedVal);
+				barchartData.push(publisherMined);
 			}
 			if (showReferralReward) {
-				barchartData.push(referralRewardVal);
+				barchartData.push(referralRewards);
 			}
 			self.$chart = c3.generate({
 				bindto: document.getElementById('JSE-minedOverview'),
