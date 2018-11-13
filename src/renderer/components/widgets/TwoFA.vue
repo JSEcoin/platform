@@ -2,12 +2,12 @@
 	<div class="col">
 		<label style="margin-bottom:10px;">
 			<div class="inputLabel" style="opacity:1">6 Digit Auth Code *</div>
-			<input :type="form.inputType" :placeholder="'0'" @keyup.enter="onSubmit" ref="authCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.authCode.val1" style="width:30px; margin:26px 4px 8px; text-align:center" />
-			<input :type="form.inputType" :placeholder="'0'" @keyup.enter="onSubmit" ref="authCode2" @touchend="focusInput('val2', 2, $event)" @keyup="focusInput('val2', 2, $event)" v-model="form.authCode.val2" style="width:30px; margin:26px 4px 8px; text-align:center" />
-			<input :type="form.inputType" :placeholder="'0'" @keyup.enter="onSubmit" ref="authCode3" @touchend="focusInput('val3', 3, $event)" @keyup="focusInput('val3', 3, $event)" v-model="form.authCode.val3" style="width:30px; margin:26px 4px 8px; text-align:center" />
-			<input :type="form.inputType" :placeholder="'0'" @keyup.enter="onSubmit" ref="authCode4" @touchend="focusInput('val4', 4, $event)" @keyup="focusInput('val4', 4, $event)" v-model="form.authCode.val4" style="width:30px; margin:26px 4px 8px; text-align:center" />
-			<input :type="form.inputType" :placeholder="'0'" @keyup.enter="onSubmit" ref="authCode5" @touchend="focusInput('val5', 5, $event)" @keyup="focusInput('val5', 5, $event)" v-model="form.authCode.val5" style="width:30px; margin:26px 4px 8px; text-align:center" />
-			<input :type="form.inputType" :placeholder="'0'" @keyup.enter="onSubmit" ref="authCode6" @touchend="focusInput('val6', 6, $event)" @keyup="focusInput('val6', 6, $event)" v-model="form.authCode.val6" style="width:30px; margin:26px 4px 8px; text-align:center" />
+			<input :type="form.inputType" :placeholder="'0'" ref="authCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.authCode.val1" style="width:30px; margin:26px 4px 8px; text-align:center" />
+			<input :type="form.inputType" :placeholder="'0'" ref="authCode2" @touchend="focusInput('val2', 2, $event)" @keyup="focusInput('val2', 2, $event)" v-model="form.authCode.val2" style="width:30px; margin:26px 4px 8px; text-align:center" />
+			<input :type="form.inputType" :placeholder="'0'" ref="authCode3" @touchend="focusInput('val3', 3, $event)" @keyup="focusInput('val3', 3, $event)" v-model="form.authCode.val3" style="width:30px; margin:26px 4px 8px; text-align:center" />
+			<input :type="form.inputType" :placeholder="'0'" ref="authCode4" @touchend="focusInput('val4', 4, $event)" @keyup="focusInput('val4', 4, $event)" v-model="form.authCode.val4" style="width:30px; margin:26px 4px 8px; text-align:center" />
+			<input :type="form.inputType" :placeholder="'0'" ref="authCode5" @touchend="focusInput('val5', 5, $event)" @keyup="focusInput('val5', 5, $event)" v-model="form.authCode.val5" style="width:30px; margin:26px 4px 8px; text-align:center" />
+			<input :type="form.inputType" :placeholder="'0'" ref="authCode6" @touchend="focusInput('val6', 6, $event)" @keyup="focusInput('val6', 6, $event)" v-model="form.authCode.val6" style="width:30px; margin:26px 4px 8px; text-align:center" />
 		</label>
 	</div>
 </template>
