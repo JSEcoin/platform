@@ -26,9 +26,16 @@
 				<nav id="JSE-sideNav">
 					<ScrollWidget style="top:55px;">
 						<ul>
-							<li><router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
+							<li><router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
 								<ul>
-									<li :class="{'showMenu':nav.wallet}"><span v-on:click="toggleMenu('wallet')">Wallet</span>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.dashboard}"><span v-on:click="toggleMenu('dashboard')">Dashboard</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-paper-plane"></i> Overview</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"><i class="fa fa-upload"></i> Account</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/exchange`" tag="li"><i class="fa fa-upload"></i> Exchange</router-link>
+										</ul>
+									</li>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.wallet}"><span v-on:click="toggleMenu('wallet')">Wallet</span>
 										<ul>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li"><i class="fa fa-paper-plane"></i> Transfer</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/export`" tag="li"><i class="fa fa-upload"></i> Export</router-link>
@@ -38,12 +45,12 @@
 									</li>
 									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
+											<!--<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>-->
 										</ul>
 									</li>
-									<li :class="{'showMenu':nav.mining}"><span v-on:click="toggleMenu('mining')">Mining</span>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.mining}"><span v-on:click="toggleMenu('mining')">Mining</span>
 										<ul>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-laptop"></i> Publisher</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li"><i class="fa fa-keyboard-o"></i> Platform</router-link>
@@ -55,13 +62,39 @@
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-globe"></i> JSE Global Stats</router-link>
 										</ul>
 									</li>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.adTech}"><span v-on:click="toggleMenu('adTech')">AdTech</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+										</ul>
+									</li>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.merchants}"><span v-on:click="toggleMenu('merchants')">Merchants</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+										</ul>
+									</li>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.affiliates}"><span v-on:click="toggleMenu('affiliates')">Affiliates</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates/resources`" tag="li"><i class="fa fa-exchange"></i> Resources</router-link>
+										</ul>
+									</li>
+									<li :class="{'showMenu':nav.developers}"><span v-on:click="toggleMenu('developers')">Developers</span>
+										<ul>
+											<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<li><a href="https://github.com/jsecoin" target="_blank"><i class="fa fa-github"></i> Github</a></li>
+											<li><i class="fa fa-globe"></i> API Documentation</li>
+										</ul>
+									</li>
 									<li :class="{'showMenu':nav.support}"><span v-on:click="toggleMenu('support')">Support</span>
 										<ul>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-magic"></i> Site Wizard</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> FAQ</router-link>
 										</ul>
 									</li>
+									<li v-if="($store.state.user.loggedIn)"><span>Log Out</span></li>
+									<router-link v-if="(!$store.state.user.loggedIn)" v-bind:to="`/login`" tag="li"><span>Log In</span></router-link>
 								</ul>
 							</li>
 						</ul>
@@ -112,7 +145,7 @@
 								</div>
 							</social-sharing>
 						</li>
-						<li id="JSEA-profileMenu">
+						<li id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
 							<div id="JSEA-profileWrap">
 								<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
 							</div>
@@ -157,10 +190,15 @@ export default {
 		return {
 			offline: false,
 			nav: {
+				dashboard: false,
 				wallet: false,
 				blockchain: false,
 				mining: false,
 				system: false,
+				adTech: false,
+				merchants: false,
+				affiliates: false,
+				developers: false,
 				support: false,
 			},
 			identiconImg: [],
@@ -496,6 +534,9 @@ export default {
 				//set update user globals
 				self.$store.dispatch({
 					type: 'updateUserState',
+					twoFactorAuth: (window.user.twoFactorAuth)?window.user.twoFactorAuth:false,
+					noNewsletter: (window.user.noNewsletter)?window.user.noNewsletter:false,
+					noEmailTransaction: (window.user.noEmailTransaction)?window.user.noEmailTransaction:false,
 					txLimit: (window.user.txLimit)?window.user.txLimit:0,
 					rewards: (window.user.rewards)?window.user.rewards:{},
 					pendingToday: (window.user.pendingToday)?window.user.pendingToday:0,
@@ -1038,7 +1079,7 @@ table {
 }
 
 .light thead {
-	background:#fff;
+	background:#eaebed;
 	color:#606060;
 }
 
@@ -1056,8 +1097,15 @@ thead th {
 tbody td {
 	padding:0px 12px;
 	height:40px;
-	line-height: 40px;
+	/*line-height: 40px;*/
 	font-size:0.8em;
+}
+.dataset td {
+	text-align:center;
+}
+.dataset th:first-child,
+.dataset td:first-child {
+	text-align:left;
 }
 .platformWeb.min tbody td {
 	padding:0px 6px;
@@ -1069,6 +1117,16 @@ tbody td {
 .light tbody tr:nth-child(even) td {
 	background:#fff;
 }
+.night tbody tr:hover td {
+	background:#0d0d12;
+}
+.light tbody tr:hover td {
+	background:#f7f9fb;
+}
+.clickableRow td {
+	cursor: pointer;
+}
+
 /* xGlobal Table Format */
 
 /* HR */
@@ -1918,12 +1976,14 @@ header .fa-minus:hover {
 	color:#666;
 }
 
-.light #JSE-sideNav li li li.active {
+.light #JSE-sideNav li li li.active,
+.light #JSE-sideNav li li li.router-link-exact-active {
 	background:#1bb394;
 	color:#fff;
 }
 
-.night #JSE-sideNav li li li.active {
+.night #JSE-sideNav li li li.active,
+.night #JSE-sideNav li li li.router-link-exact-active {
 	background:#101219;
 	color:#fff;
 }
@@ -2133,4 +2193,134 @@ header .fa-minus:hover {
 	bottom:0px;
 	height:100%;
 } 
+.filterTabs li.active,
+.filterTabs li:hover {
+	color:#fff;
+}
+.light .filterTabs li.active,
+.light .filterTabs li:hover {
+	box-shadow: inset 0px -4px 0px 0px #1970c7;
+	background:#1970c7;
+	color:#fff;
+}
+.night .filterTabs li.active,
+.night .filterTabs li:hover {
+	box-shadow: inset 0px -4px 0px 0px #000;
+	background:#000;
+	color:#fff;
+}
+
+.filterTabs li {
+	cursor: pointer;
+	list-style:none;
+	padding:4px 8px;
+	text-align:center;
+	min-height:30px;
+	line-height:30px;
+}
+.light .filterTabs li {
+	box-shadow: inset 0px -2px 0px 0px #1970c7;
+	color: #3598db;
+}
+.night .filterTabs li {
+	box-shadow: inset 0px -2px 0px 0px #000;
+	color: #3598db;
+}
+
+.filterTabs li:last-child {
+	border-right:0px;
+}
+#FB-block {
+    width: 880px;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.filterTabs {
+	margin:0px;
+	padding:0px;
+	display: flex;
+}
+.filterTabs li {
+	flex:1;
+    text-transform: uppercase;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+
+.summaryPanel div {
+	padding:8px 20px;
+	display: flex;
+	color:#8e8e8e;
+}
+
+.summaryPanel label {
+	min-width:100px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: hidden;
+	font-weight: bold;
+}
+
+.light .summaryPanel div:nth-child(odd) {
+	background: #fbfcfd;
+}
+.night .summaryPanel div:nth-child(odd) {
+	background: #171820;
+}
+
+.tree-view-wrapper {
+	padding:10px 20px;
+}
+
+.tree-view-item-root {
+	background:#282b2e;
+	border-radius: 6px;
+	padding:16px;
+	overflow:auto;
+}
+
+.tree-view-item-node {
+	color:#cc7832;
+}
+.tree-view-item-key {
+	color:#6A8759;
+}
+.tree-view-item-value-string {
+	color:#a9b7c6;
+}
+
+.tree-view-item-value-number {
+	color:#6897BB;
+}
+
+.tree-view-item-key-with-chevron:before {
+	color:#ffa !important;
+}
+.tree-view-item {
+	margin-left:36px !important;
+}
+
+.hasConnectedFilter {
+	border-radius: 0px 0px 6px 6px;
+}
+
+.hasConnectedFilter thead {
+	border-radius: 0px;
+}
+
+.infoPanel {
+	border-radius: 6px;
+    margin: 20px;
+    padding: 20px;
+    text-align: center;
+}
+.light .infoPanel {
+	background:#fbfcfd;
+}
+.night .infoPanel {
+	background:#171820;
+}
 </style>
