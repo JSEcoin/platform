@@ -5,6 +5,9 @@ import moment from 'moment';
 const state = {
 	txLimit: 0, //user transaction limit
 	rewards: [], //object of rewards - key is date
+	twoFactorAuth: false, //2FA settings
+	noNewsletter: false, //newsletter notifications
+	noEmailTransaction: false, //email noifications
 	pendingToday: 0, //Total to be paid within 24hrs
 	pendingNextPayment: 0, //Total to be paid
 	pendingTotal: 0, //total rewards pending to be paid out
@@ -96,6 +99,9 @@ const mutations = {
 		state.txLimit = data.txLimit;
 		//update rewards
 		state.rewards = data.rewards;
+		state.twoFactorAuth = data.twoFactorAuth;
+		state.noNewsletter = data.noNewsletter;
+		state.noEmailTransaction = data.noEmailTransaction;
 		state.pendingToday = data.pendingToday;
 		state.pendingNextPayment = data.pendingNextPayment;
 		state.pendingTotal = data.pendingTotal;
