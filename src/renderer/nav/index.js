@@ -37,6 +37,19 @@ import settings from '@/components/settings/Settings-Page';
 //ICO
 import ICO from '@/components/ICO/ICO-Page';
 
+//Block Explorer
+import Blocks from '@/components/blockchain/Blocks';
+//import Charts from '@/components/blockchain/Charts';
+import Ledger from '@/components/blockchain/Ledger';
+import APIs from '@/components/blockchain/APIs';
+import Block from '@/components/blockchain/Block';
+import Transaction from '@/components/blockchain/Transaction';
+import AllBlocks from '@/components/blockchain/AllBlocks';
+import AllTransactions from '@/components/blockchain/AllTransactions';
+import Search from '@/components/blockchain/Search';
+import Stats from '@/components/blockchain/Stats';
+
+
 //store
 import store from '../store';
 
@@ -228,6 +241,56 @@ const router = new Router({
 			meta: {
 				requiresAuth: true,
 			},
+		},
+		{
+		  path: '/desktop/blockchain/',
+		  name: 'Blocks',
+		  component: Blocks,
+		},/*
+		{
+		  path: '/desktop/blockchain/Charts',
+		  name: 'Charts',
+		  component: Charts,
+		},*/
+		{
+		  path: '/desktop/blockchain/Ledger',
+		  name: 'Ledger',
+		  component: Ledger,
+		},
+		{
+		  path: '/desktop/blockchain/APIs',
+		  name: 'APIs',
+		  component: APIs,
+		},
+		{
+		  path: '/desktop/blockchain/Block/:id',
+		  name: 'Block',
+		  component: Block,
+		},
+		{
+		  path: '/desktop/blockchain/Transaction/:blockLvl/:blockVal/:key',
+		  name: 'Transaction',
+		  component: Transaction,
+		},
+		{
+		  path: '/desktop/blockchain/AllBlocks/:blockLvl/:blockVal',
+		  name: 'AllBlocks',
+		  component: AllBlocks,
+		},
+		{
+		  path: '/desktop/blockchain/AllTransactions',
+		  name: 'AllTransactions',
+		  component: AllTransactions,
+		},
+		{
+		  path: '/desktop/blockchain/Search/:val',
+		  name: 'Search',
+		  component: Search,
+		},
+		{
+		  path: '/desktop/blockchain/Stats',
+		  name: 'Stats',
+		  component: Stats,
 		},
 	],
 });
