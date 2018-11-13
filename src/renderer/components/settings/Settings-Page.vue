@@ -2,6 +2,12 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="settings"></NavWidget>
 		<ScrollWidget v-bind="{noSubNav:true}">
+			<Setup2FA v-bind="{twoFACode, secretKey}"
+				:class="{'active': showSetup2FA}"
+				v-on:exit2FA="exit2FA" />
+			<Remove2FA v-bind="{showDisableSetup2FA}"
+				:class="{'active': showDisableSetup2FA}"
+				v-on:exit2FA="exitDisable2FA" />
 			<!-- Settings -->
 			<ContentWidget id="JSEA-settingsPanel" titleTxt="Settings" :infoPanelTxt="`Alpha Release: ${$store.state.app.version}`">
 				<!-- Visuals -->
@@ -71,7 +77,7 @@
 				<!-- xMobile Settings -->
 
 				<!-- Login -->
-				<OptionsListWrapperWidget titleTxt="Login" v-if="(($store.getters.whichPlatform === 'desktop') || ($store.getters.whichPlatform === 'mobile'))">
+				<OptionsListWrapperWidget titleTxt="Login" v-if="(($store.getters.whichPlatform === 'desktop') || ($store.getters.whichPlatform === 'mobile') || ($store.getters.whichPlatform === 'web'))">
 					<!-- Auto Login -->
 					<SettingsItemRowWidget settingName="Auto Login">
 						<ToggleSwitchWidget
@@ -104,6 +110,37 @@
 				</OptionsListWrapperWidget>
 				<!-- xLogin -->
 				
+				<!-- 2FA -->
+				<OptionsListWrapperWidget titleTxt="Security">
+					<SettingsItemRowWidget settingName="Two Factor Authentication">
+						<ToggleSwitchWidget
+							v-model="twoFactorAuth"
+							v-bind="{
+								name: 'twoFactorAuth',
+							}" />
+					</SettingsItemRowWidget>
+				</OptionsListWrapperWidget>
+				<!-- x2FA -->
+				
+				<!-- Notifications -->
+				<OptionsListWrapperWidget titleTxt="Email Notifications">
+					<SettingsItemRowWidget settingName="Transactions">
+						<ToggleSwitchWidget
+							v-model="noEmailTransaction"
+							v-bind="{
+								name: 'noEmailTransaction',
+							}" />
+					</SettingsItemRowWidget>
+					<SettingsItemRowWidget settingName="Newsletter">
+						<ToggleSwitchWidget
+							v-model="noNewsletter"
+							v-bind="{
+								name: 'noNewsletter',
+							}" />
+					</SettingsItemRowWidget>
+				</OptionsListWrapperWidget>
+				<!-- xNotifications -->
+
 				<!-- Logout -->
 				<ButtonWidget v-on:click.native="logout()" buttonTxt="Logout"/>
 				<!-- xLogout -->
@@ -116,6 +153,7 @@
 <script>
 import Vue from 'vue';
 import { mapState } from 'vuex';
+import axios from 'axios';
 import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
 import NavWidget from '@/components/widgets/NavWidget.vue';
 import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
@@ -124,6 +162,8 @@ import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWid
 import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 import ToggleSwitchWidget from '@/components/widgets/ToggleSwitchWidget.vue';
 import SettingsItemRowWidget from '@/components/widgets/SettingsItemRowWidget.vue';
+import Setup2FA from '@/components/widgets/Setup2FA.vue';
+import Remove2FA from '@/components/widgets/Remove2FA.vue';
 
 /**
  * @description
@@ -163,6 +203,17 @@ export default {
 		ButtonWidget,
 		ToggleSwitchWidget,
 		SettingsItemRowWidget,
+		Setup2FA,
+		Remove2FA,
+	},
+	//data
+	data() {
+		return {
+			showSetup2FA: false,
+			showDisableSetup2FA: false,
+			twoFACode: '',
+			secretKey: '',
+		};
 	},
 	/**
 	 * Computed
@@ -321,6 +372,95 @@ export default {
 				localStorage.setItem('storeUsername', val);
 			},
 		},
+		twoFactorAuth: {
+			get() {
+				return this.$store.state.user.twoFactorAuth;
+			},
+			set(val) {
+				const self = this;
+				/*self.$store.commit('updateAppState', {
+					val,
+					state: 'twoFactorAuth',
+				});*/
+
+				if (val) {
+					//toggle newsletter
+					const enable2FA = {
+						session: self.$store.state.user.session,
+					};
+
+					//toggle newsletter notification
+					axios.post(
+						`${self.$store.state.app.jseCoinServer}/twofa/setup2fa/`,
+						enable2FA,
+					).then((res) => {
+						//
+						console.log(res.data.authuri);
+						self.twoFACode = res.data.authuri;
+						self.secretKey = self.twoFACode.split('secret=')[1].split('&')[0];
+						self.showSetup2FA = true;
+					}).catch((err) => {
+						self.$store.commit('ajaxError', err.response);
+					});
+				} else {
+					self.showDisableSetup2FA = true;
+				}
+			},
+		},
+		noNewsletter: {
+			get() {
+				return !this.$store.state.user.noNewsletter;
+			},
+			set(val) {
+				const self = this;
+				self.$store.commit('updateAppState', {
+					val,
+					state: 'noNewsletter',
+				});
+				
+				//toggle newsletter
+				const toggleNewsletter = {
+					session: self.$store.state.user.session,
+				};
+
+				//toggle newsletter notification
+				axios.post(
+					`${self.$store.state.app.jseCoinServer}/toggleemail/newsletter/`,
+					toggleNewsletter,
+				).then((res) => {
+					//
+				}).catch((err) => {
+					self.$store.commit('ajaxError', err.response);
+				});
+			},
+		},
+		noEmailTransaction: {
+			get() {
+				return !this.$store.state.user.noEmailTransaction;
+			},
+			set(val) {
+				const self = this;
+				self.$store.commit('updateAppState', {
+					val,
+					state: 'noEmailTransaction',
+				});
+
+				//toggle newsletter
+				const toggleTransactionNotification = {
+					session: self.$store.state.user.session,
+				};		
+
+				//toggle email transaction notification
+				axios.post(
+					`${self.$store.state.app.jseCoinServer}/toggleemail/transaction/`,
+					toggleTransactionNotification,
+				).then((res) => {
+					//
+				}).catch((err) => {
+					self.$store.commit('ajaxError', err.response);
+				});
+			},
+		},
 	},
 	methods: {
 		/**
@@ -367,6 +507,16 @@ export default {
 				const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme}`;
 				document.body.className = bodyClass;
 			}
+		},
+		exit2FA() {
+			const self = this;
+			self.showSetup2FA = false;
+			self.twoFACode = '';
+			self.secretKey = '';
+		},
+		exitDisable2FA() {
+			const self = this;
+			self.showDisableSetup2FA = false;
 		},
 	},
 };
