@@ -432,31 +432,6 @@ export default {
 	color:#1bb394;
 	font-size:0.6em;
 }
-/*
-#JSEA-topLvlNav {
-	background:#fff;
-	border-bottom:solid 2px #3598db;
-}
-#JSEA-topLvlNav ul {
-	margin:0px;
-	padding:0px;
-}
-#JSEA-topLvlNav li {
-	list-style: none;
-	color:#3598db;
-	text-transform: uppercase;
-	float: left;
-	padding:8px 18px;
-	cursor: pointer;
-	font-weight: bold;
-	font-size:0.8em;
-	letter-spacing: 1px;
-}
-#JSEA-topLvlNav li:hover,
-#JSEA-topLvlNav li.active {
-	background:#3598db;
-	color:#fff;
-}*/
 
 .coin {
 	background-repeat:no-repeat;
