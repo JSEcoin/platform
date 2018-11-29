@@ -25,6 +25,10 @@ module.exports = merge(baseWebpackConfig, {
 	// cheap-module-eval-source-map is faster for development
 	devtool: '#cheap-module-eval-source-map',
 	plugins: [
+        new webpack.ProvidePlugin({
+            // other modules
+            introJs: ['intro.js', 'introJs'],
+        }),
 		new webpack.DefinePlugin({
 			'process.env': env,
 			'process.platform': '"web"',
