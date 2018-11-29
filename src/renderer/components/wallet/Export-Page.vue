@@ -39,7 +39,7 @@
 				</div>
 				<div v-else>
 					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
-						<Pin v-on:submit-pin="signData">
+						<Pin inputType="password" v-on:submit-pin="signData">
 							<p>
 								Your pin is 4-12 characters long<br />
 								<i>Please make sure you have set it within the web platform interface.</i>
