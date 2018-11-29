@@ -49,6 +49,9 @@ import AllTransactions from '@/components/blockchain/AllTransactions';
 import Search from '@/components/blockchain/Search';
 import Stats from '@/components/blockchain/Stats';
 
+import Wall from '@/components/crypto/Wall';
+import JSEStats from '@/components/crypto/Stats';
+
 
 //store
 import store from '../store';
@@ -291,6 +294,16 @@ const router = new Router({
 		  path: '/desktop/blockchain/Stats',
 		  name: 'Stats',
 		  component: Stats,
+		},
+		{
+		  path: '/desktop/crypto/Wall',
+		  name: 'Wall',
+		  component: Wall,
+		},
+		{
+		  path: '/desktop/crypto/tats',
+		  name: 'JSEStats',
+		  component: JSEStats,
 		},
 	],
 });
