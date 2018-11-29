@@ -104,6 +104,11 @@
 								<ButtonWidget v-if="!show2FA_interface" type="button"
 									buttonTxt="Register" style="flex:1;margin-left:5px;" v-on:click.native="registerUser"/>
 							</div>
+							<div style="margin:10px auto; text-align:center; width:270px;">
+								<router-link style="text-align:right;" v-bind:to="`${$store.state.app.platformURL}/resetPassword`" tag="a">Reset Password</router-link>
+								|
+								<router-link style="text-align:left;" v-bind:to="`${$store.state.app.platformURL}/restore2FA`" tag="a">Restore 2FA</router-link>
+							</div>
 						</div>
 					</form>				
 					<!-- xLogin Form -->
@@ -720,4 +725,38 @@ footer {
 	color:#042a7a;
 }
 
+.max #JSEA-loginPage {
+    width: 450px;
+    margin: 80px auto;
+    border-radius: 10px;
+    height: 440px;
+}
+
+.max.light #JSEA-loginPage {
+    background: #fff;
+    box-shadow: rgba(210, 214, 217,1) 0px 1px 3px 0px;
+}	
+.max.night #JSEA-loginPage {
+    background: #20222e;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);
+}
+
+.max.night #JSEA-loginPage .loginFormContainer {
+   background: #1c1e28;
+}
+.max #JSEA-loginForm {
+	width:90%;
+}
+.max #JSEA-loginPage dl {
+	width:auto;
+}
+
+
+.max #JSEA-loginPage a {
+    color: #666;
+    font-size: 0.9em;
+    display: inline-block;
+    margin: 0px 4px;
+    width: 110px;
+}
 </style>
