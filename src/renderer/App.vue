@@ -13,7 +13,7 @@
 		<!-- xOffline Detection -->
 		<div id="JSEA-appWrapper">
 			<div id="JSEA-sideBar" :class="{'showSideBar':sideBarActive}">
-				<div id="JSEA-toggleSideBar" v-on:click="toggleSideBar">
+				<div id="JSEA-toggleSideBar" v-intro="'Expand or collapse the side bar'" v-on:click="toggleSideBar">
 					<nav>
 						<ul>
 							<li></li>
@@ -25,14 +25,14 @@
 				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="a" id="JSEA-sideLogo"></router-link>
 				<nav id="JSE-sideNav">
 					<ScrollWidget style="top:55px;">
-						<ul>
+						<ul v-intro="'Your side bar navigation elements'">
 							<li><router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
 								<ul>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.dashboard}"><span v-on:click="toggleMenu('dashboard')">Dashboard</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-paper-plane"></i> Overview</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"><i class="fa fa-upload"></i> Account</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/exchange`" tag="li"><i class="fa fa-upload"></i> Exchange</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-columns"></i> Overview</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"><i class="fa fa-user-circle-o"></i> Account</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/exchange`" tag="li"><i class="fa fa-exchange"></i> Exchange</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.wallet}"><span v-on:click="toggleMenu('wallet')">Wallet</span>
@@ -43,54 +43,65 @@
 											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/transactions`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
 										</ul>
 									</li>
-									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain</span>
+									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain Explorer</span>
 										<ul>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
 											<!--<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>-->
 										</ul>
 									</li>
-									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.mining}"><span v-on:click="toggleMenu('mining')">Mining</span>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.mining}"><span v-on:click="toggleMenu('mining')">Platform Mining</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-laptop"></i> Publisher</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li"><i class="fa fa-keyboard-o"></i> Platform</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li"><i class="fa fa-keyboard-o"></i> Interface</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/mine/earnings`" tag="li"><i class="fa fa-bank"></i> Earnings</router-link>
 										</ul>
 									</li>
 									<li :class="{'showMenu':nav.system}"><span v-on:click="toggleMenu('system')">System</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-bell"></i> Server Status</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-globe"></i> JSE Global Stats</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/system`" tag="li"><i class="fa fa-bell"></i> Server Status</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/system/stats`" tag="li"><i class="fa fa-globe"></i> JSE Global Stats</router-link>
+										</ul>
+									</li>
+									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.publishers}"><span v-on:click="toggleMenu('publishers')">Publishers</span>
+										<ul>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/publishers`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/publishers/setup`" tag="li"><i class="fa fa-globe"></i> Setup New Site</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.adTech}"><span v-on:click="toggleMenu('adTech')">AdTech</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/adTech`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.merchants}"><span v-on:click="toggleMenu('merchants')">Merchants</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/merchants`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.affiliates}"><span v-on:click="toggleMenu('affiliates')">Affiliates</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates/resources`" tag="li"><i class="fa fa-exchange"></i> Resources</router-link>
 										</ul>
 									</li>
 									<li :class="{'showMenu':nav.developers}"><span v-on:click="toggleMenu('developers')">Developers</span>
 										<ul>
-											<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
-											<li><a href="https://github.com/jsecoin" target="_blank"><i class="fa fa-github"></i> Github</a></li>
-											<li><i class="fa fa-globe"></i> API Documentation</li>
+											<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/developers`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<li v-on:click="openExternalWindow('https://github.com/jsecoin/')"><i class="fa fa-github"></i> Github</li>
+											<li v-on:click="openExternalWindow('https://developer.jsecoin.com/')"><i class="fa fa-globe"></i> API Documentation</li>
+											<li v-on:click="openExternalWindow('https://jsecoin.com/styleguide/')"><i class="fa fa-paint-brush"></i> Platform UI</li>
 										</ul>
 									</li>
 									<li :class="{'showMenu':nav.support}"><span v-on:click="toggleMenu('support')">Support</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-magic"></i> Site Wizard</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> FAQ</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/crypto/tats`" tag="li"><i class="fa fa-magic"></i> stats</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/crypto/Wall`" tag="li"><i class="fa fa-magic"></i> cryptowall</router-link>
+											<li v-on:click="siteWizard"><i class="fa fa-magic"></i> Site Wizard</li>
+											<!--<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
+											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>-->
+											<li v-on:click="openExternalWindow('https://jsecoin.com/en/support/FAQ')"><i class="fa fa-info-circle"></i> FAQ</li>
+											<li v-on:click="openExternalWindow('https://t.me/jsetelegram')"><i class="fa fa-telegram"></i> Telegram</li>
+											<li><i class="fa fa-user-circle"></i> Virtual Assistant</li>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)"><span>Log Out</span></li>
@@ -98,7 +109,7 @@
 								</ul>
 							</li>
 						</ul>
-						<div id="JSEA-version">v{{$store.state.app.version}}</div>
+						<div v-intro="'JSEcoin Active Platform release'" id="JSEA-version">v{{$store.state.app.version}}</div>
 					</ScrollWidget>
 				</nav>
 			</div>
@@ -116,9 +127,9 @@
 				<header v-else>
 					<router-link v-if="(!sideBarActive)" v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
 					<ul id="JSEA-headerItems">
-						<li><i class="button fa fa-magic"></i></li>
-						<li><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
-						<li :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
+						<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
+						<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
+						<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
 							<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
 								<div>
 									<network network="facebook">
@@ -145,7 +156,7 @@
 								</div>
 							</social-sharing>
 						</li>
-						<li id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
+						<li v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
 							<div id="JSEA-profileWrap">
 								<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
 							</div>
@@ -175,6 +186,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import 'intro.js/introjs.css';
 import ContentWidget from './components/widgets/ContentWidget.vue';
 import ButtonWidget from './components/widgets/ButtonWidget.vue';
 import ScrollWidget from './components/widgets/ScrollWidget.vue';
@@ -195,6 +207,7 @@ export default {
 				blockchain: false,
 				mining: false,
 				system: false,
+				publishers: false,
 				adTech: false,
 				merchants: false,
 				affiliates: false,
@@ -816,7 +829,29 @@ export default {
 		toggleSideBar() {
 			const self = this;
 			self.sideBarActive = !self.sideBarActive;
-		}
+		},
+		siteWizard() {
+			const self = this;
+			console.log(self);
+			self.$intro().start();
+		},
+		/**
+		 * Opens an external browser window and takes the user to the official upgrade forum post
+		 * https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/
+		 *
+		 * @param {string} url Web address to open in a new browser window
+		 * @public
+		 */
+		openExternalWindow(url) {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
+			}
+		},
 	},
 };
 </script>
@@ -950,7 +985,10 @@ export default {
 	user-select: none;
 	cursor: default;
 }
-
+a,
+a * {
+	cursor: pointer;
+}
 .draggable-area {
     -webkit-app-region: drag;
 }
