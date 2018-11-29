@@ -8,18 +8,18 @@
 		</p>-->
 		<label style="margin-bottom:10px;">
 			<div class="inputLabel" style="opacity:1">User Pin *</div>
-			<input class="pin" :class="{'show':form.showPin.val1}" maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.pinCode.val1" />
-			<input class="pin" :class="{'show':form.showPin.val2}" maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode2" @touchend="focusInput('val2', 2, $event)" @keyup="focusInput('val2', 2, $event)" v-model="form.pinCode.val2" />
-			<input class="pin" :class="{'show':form.showPin.val3}" maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode3" @touchend="focusInput('val3', 3, $event)" @keyup="focusInput('val3', 3, $event)" v-model="form.pinCode.val3" />
-			<input class="pin" :class="{'show':form.showPin.val4}" maxlength="1" :type="form.inputType" placeholder="0" ref="pinCode4" @touchend="focusInput('val4', 4, $event)" @keyup="focusInput('val4', 4, $event)" v-model="form.pinCode.val4" />
-			<input class="pin" :class="{'show':form.showPin.val5}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode5" @touchend="focusInput('val5', 5, $event)" @keyup="focusInput('val5', 5, $event)" v-model="form.pinCode.val5" />
-			<input class="pin" :class="{'show':form.showPin.val6}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode6" @touchend="focusInput('val6', 6, $event)" @keyup="focusInput('val6', 6, $event)" v-model="form.pinCode.val6" />
-			<input class="pin" :class="{'show':form.showPin.val7}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode7" @touchend="focusInput('val7', 7, $event)" @keyup="focusInput('val7', 7, $event)" v-model="form.pinCode.val7" />
-			<input class="pin" :class="{'show':form.showPin.val8}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode8" @touchend="focusInput('val8', 8, $event)" @keyup="focusInput('val8', 8, $event)" v-model="form.pinCode.val8" />
-			<input class="pin" :class="{'show':form.showPin.val9}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode9" @touchend="focusInput('val9', 9, $event)" @keyup="focusInput('val9', 9, $event)" v-model="form.pinCode.val9" />
-			<input class="pin" :class="{'show':form.showPin.val10}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode10" @touchend="focusInput('val10', 10, $event)" @keyup="focusInput('val10', 10, $event)" v-model="form.pinCode.val10" />
-			<input class="pin" :class="{'show':form.showPin.val11}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode11" @touchend="focusInput('val11', 11, $event)" @keyup="focusInput('val11', 11, $event)" v-model="form.pinCode.val11" />
-			<input class="pin" :class="{'show':form.showPin.val12}" maxlength="1" :type="form.inputType" placeholder="" ref="pinCode12" @touchend="focusInput('val12', 12, $event)" @keyup="focusInput('val12', 12, $event)" v-model="form.pinCode.val12" />
+			<input class="pin" :class="{'show':form.showPin.val1}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.pinCode.val1" />
+			<input class="pin" :class="{'show':form.showPin.val2}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode2" @touchend="focusInput('val2', 2, $event)" @keyup="focusInput('val2', 2, $event)" v-model="form.pinCode.val2" />
+			<input class="pin" :class="{'show':form.showPin.val3}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode3" @touchend="focusInput('val3', 3, $event)" @keyup="focusInput('val3', 3, $event)" v-model="form.pinCode.val3" />
+			<input class="pin" :class="{'show':form.showPin.val4}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode4" @touchend="focusInput('val4', 4, $event)" @keyup="focusInput('val4', 4, $event)" v-model="form.pinCode.val4" />
+			<input class="pin" :class="{'show':form.showPin.val5}" maxlength="1" :type="inputType" placeholder="" ref="pinCode5" @touchend="focusInput('val5', 5, $event)" @keyup="focusInput('val5', 5, $event)" v-model="form.pinCode.val5" />
+			<input class="pin" :class="{'show':form.showPin.val6}" maxlength="1" :type="inputType" placeholder="" ref="pinCode6" @touchend="focusInput('val6', 6, $event)" @keyup="focusInput('val6', 6, $event)" v-model="form.pinCode.val6" />
+			<input class="pin" :class="{'show':form.showPin.val7}" maxlength="1" :type="inputType" placeholder="" ref="pinCode7" @touchend="focusInput('val7', 7, $event)" @keyup="focusInput('val7', 7, $event)" v-model="form.pinCode.val7" />
+			<input class="pin" :class="{'show':form.showPin.val8}" maxlength="1" :type="inputType" placeholder="" ref="pinCode8" @touchend="focusInput('val8', 8, $event)" @keyup="focusInput('val8', 8, $event)" v-model="form.pinCode.val8" />
+			<input class="pin" :class="{'show':form.showPin.val9}" maxlength="1" :type="inputType" placeholder="" ref="pinCode9" @touchend="focusInput('val9', 9, $event)" @keyup="focusInput('val9', 9, $event)" v-model="form.pinCode.val9" />
+			<input class="pin" :class="{'show':form.showPin.val10}" maxlength="1" :type="inputType" placeholder="" ref="pinCode10" @touchend="focusInput('val10', 10, $event)" @keyup="focusInput('val10', 10, $event)" v-model="form.pinCode.val10" />
+			<input class="pin" :class="{'show':form.showPin.val11}" maxlength="1" :type="inputType" placeholder="" ref="pinCode11" @touchend="focusInput('val11', 11, $event)" @keyup="focusInput('val11', 11, $event)" v-model="form.pinCode.val11" />
+			<input class="pin" :class="{'show':form.showPin.val12}" maxlength="1" :type="inputType" placeholder="" ref="pinCode12" @touchend="focusInput('val12', 12, $event)" @keyup="focusInput('val12', 12, $event)" v-model="form.pinCode.val12" />
 		</label>
 		
 		<!-- Transfer Funds Button -->
@@ -75,7 +75,6 @@ export default {
 					val11: false,
 					val12: false,
 				},
-				inputType: 'text',
 			},
 		};
 	},
@@ -114,12 +113,25 @@ export default {
 			type: Boolean,
 			default: true,
 		},
+		/**
+		 * Set Pin Type [text, password]
+		 */
+		inputType: {
+			type: String,
+			default: 'text',
+		},
 	},
 	created() {
 		const self = this;
 		//update type to number for easy mobile keypad display
 		if (self.$store.getters.whichPlatform === 'mobile') {
 			self.form.inputType = 'number';
+		}
+		if (self.inputType === 'password') {
+			self.form.pinCode.val1 = '';
+			self.form.pinCode.val2 = '';
+			self.form.pinCode.val3 = '';
+			self.form.pinCode.val4 = '';
 		}
 	},
 	mounted() {
@@ -181,6 +193,9 @@ export default {
 			//backspace
 			if (e.which === 8) {
 				self.form.pinCode[val] = (refNext <= 4) ? 0 : '';
+				if (self.inputType === 'password') {
+					self.form.pinCode[val] = '';
+				}
 				refNext = (refNext === 1)?12:refNext-1;
 				if (refNextItem >= 4) {
 					if (refPrevItem >= 3) {
