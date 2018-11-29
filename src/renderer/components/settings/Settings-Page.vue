@@ -9,7 +9,7 @@
 				:class="{'active': showDisableSetup2FA}"
 				v-on:exit2FA="exitDisable2FA" />
 			<!-- Settings -->
-			<ContentWidget id="JSEA-settingsPanel" titleTxt="Settings" :infoPanelTxt="`Alpha Release: ${$store.state.app.version}`">
+			<ContentWidget class="settingsPanel" titleTxt="Settings" :infoPanelTxt="`Alpha Release: ${$store.state.app.version}`">
 				<!-- Visuals -->
 				<OptionsListWrapperWidget titleTxt="Visuals">
 					<!-- Toggle Theme -->
@@ -492,20 +492,23 @@ export default {
 			});
 			localStorage.setItem('theme', updateThemeTo);
 
+			document.body.classList.remove('night');
+			document.body.classList.remove('light');
+			document.body.classList.add(self.$store.state.app.theme);
 			//set theme if web
 			if (self.$store.getters.whichPlatform === 'web') {
-				const bodyClass = `platformWeb web ${self.$store.state.app.theme}`;
-				document.body.className = bodyClass;
+				//const bodyClass = `platformWeb web ${self.$store.state.app.theme}`;
+				//document.body.className = bodyClass;
 			}
 			//set theme if mobile
 			if (self.$store.getters.whichPlatform === 'mobile') {
-				const bodyClass = `platformWeb mobile ${self.$store.state.app.theme}`;
-				document.body.className = bodyClass;
+				//const bodyClass = `platformWeb mobile ${self.$store.state.app.theme}`;
+				//document.body.className = bodyClass;
 			}
 			//set theme if desktop
 			if (self.$store.getters.whichPlatform === 'desktop') {
-				const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme}`;
-				document.body.className = bodyClass;
+				//const bodyClass = `platformDesktop desktop ${self.$store.state.app.theme}`;
+				//document.body.className = bodyClass;
 			}
 		},
 		exit2FA() {
@@ -555,5 +558,20 @@ export default {
 	width: 34px;
 	height: 34px;
 	line-height:34px;
+}
+
+.max .settingsPanel {
+	width:760px;
+	margin:40px auto 16px;
+}
+</style>
+<style>
+
+.max .settingsPanel dd {
+	display: flex;
+	flex-wrap: wrap;
+}
+.max .settingsPanel fieldset {
+	min-width: 360px;
 }
 </style>
