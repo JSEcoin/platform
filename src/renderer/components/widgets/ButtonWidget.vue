@@ -178,7 +178,7 @@ button.red:hover {
 .miningIco {
 	width: 48px;
 	height: 40px;
-    margin-left: -40px;
+    margin-left: -20px;
 	display: inline-block;
 
 	-webkit-mask: url('../../assets/pickaxe.svg') no-repeat 50% 50%;
