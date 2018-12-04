@@ -19,7 +19,7 @@
 					<!-- xToggle Theme -->
 
 					<!-- Notifications -->
-					<SettingsItemRowWidget settingName="Notifications">
+					<SettingsItemRowWidget settingName="Notifications" infoDesc="Displays a notification each time a JSE Token is successfully mined.">
 						<ToggleSwitchWidget
 							v-model="notifications"
 							v-bind="{
@@ -33,7 +33,7 @@
 				<!-- On Boot-->
 				<OptionsListWrapperWidget titleTxt="On Boot" v-if="$store.getters.whichPlatform === 'desktop'">
 					<!-- Auto Launch -->
-					<SettingsItemRowWidget settingName="Auto Launch">
+					<SettingsItemRowWidget settingName="Auto Launch" infoDesc="On device reboot the app will autolaunch.">
 						<ToggleSwitchWidget
 							v-model="autoLaunch"
 							v-bind="{
@@ -47,7 +47,7 @@
 				<!-- Mobile Settings-->
 				<OptionsListWrapperWidget titleTxt="Mobile" v-if="(($store.getters.whichPlatform === 'mobile') && (!$store.getters.isAppGoogle))">
 					<!-- Background Mode -->
-					<SettingsItemRowWidget settingName="Background Support">
+					<SettingsItemRowWidget settingName="Background Support" infoDesc="Adds mobile background mining support - if this is disabled mining you will not earn any JSE when you are within another app.">
 						<ToggleSwitchWidget
 							v-model="mobileBackgroundMode"
 							v-bind="{
@@ -56,7 +56,7 @@
 					</SettingsItemRowWidget>
 					<!-- xBackground Mode -->
 					<!-- Silent -->
-					<SettingsItemRowWidget settingName="Silent Mode">
+					<SettingsItemRowWidget settingName="Silent Mode" infoDesc="Hides Androids background running application notification - depending on device can also limit amount of CPU the app has access to mine with.">
 						<ToggleSwitchWidget
 							v-model="silentMode"
 							v-bind="{
@@ -65,7 +65,7 @@
 					</SettingsItemRowWidget>
 					<!-- xSilent -->
 					<!-- Silent -->
-					<SettingsItemRowWidget v-if="autoMine" settingName="Only Auto Mine When Power Plugged In">
+					<SettingsItemRowWidget v-if="autoMine" settingName="Only Auto Mine When Power Plugged In" infoDesc="Will only allow device to mine when the power is plugged in.">
 						<ToggleSwitchWidget
 							v-model="mineWhenpluggedIn"
 							v-bind="{
@@ -79,7 +79,7 @@
 				<!-- Login -->
 				<OptionsListWrapperWidget titleTxt="Login" v-if="(($store.getters.whichPlatform === 'desktop') || ($store.getters.whichPlatform === 'mobile') || ($store.getters.whichPlatform === 'web'))">
 					<!-- Auto Login -->
-					<SettingsItemRowWidget settingName="Auto Login">
+					<SettingsItemRowWidget settingName="Auto Login" infoDesc="Enables the app to autologin to your dashboard when it starts up.">
 						<ToggleSwitchWidget
 							v-model="autoLogin"
 							v-bind="{
@@ -89,7 +89,7 @@
 					<!-- xAuto Login -->
 					
 					<!-- Auto Mine -->
-					<SettingsItemRowWidget settingName="Auto Mine" v-if="((!$store.getters.isAppGoogle) && (confirmed))">
+					<SettingsItemRowWidget settingName="Auto Mine" v-if="((!$store.getters.isAppGoogle) && (confirmed))" infoDesc="Starts the mining process as soon as you login to the platform.">
 						<ToggleSwitchWidget
 							v-model="autoMine"
 							v-bind="{
@@ -99,7 +99,7 @@
 					<!-- xAuto Mine -->
 
 					<!-- Remember Username -->
-					<SettingsItemRowWidget settingName="Remember Username">
+					<SettingsItemRowWidget settingName="Remember Username" infoDesc="Stores and displays your username on the login screen.">
 						<ToggleSwitchWidget
 							v-model="storeUsername"
 							v-bind="{
@@ -112,7 +112,7 @@
 				
 				<!-- 2FA -->
 				<OptionsListWrapperWidget titleTxt="Security">
-					<SettingsItemRowWidget settingName="Two Factor Authentication">
+					<SettingsItemRowWidget settingName="Two Factor Authentication" infoDesc="Enhances Security and enables Two Factor Authentication">
 						<ToggleSwitchWidget
 							v-model="twoFactorAuth"
 							v-bind="{
@@ -123,7 +123,7 @@
 				<!-- x2FA -->
 				
 				<!-- Notifications -->
-				<OptionsListWrapperWidget titleTxt="Email Notifications">
+				<OptionsListWrapperWidget titleTxt="Email Notifications" infoDesc="Enables or disable email notifications">
 					<SettingsItemRowWidget settingName="Transactions">
 						<ToggleSwitchWidget
 							v-model="noEmailTransaction"
@@ -131,7 +131,7 @@
 								name: 'noEmailTransaction',
 							}" />
 					</SettingsItemRowWidget>
-					<SettingsItemRowWidget settingName="Newsletter">
+					<SettingsItemRowWidget settingName="Newsletter" infoDesc="Enable of disable newsletter subscription">
 						<ToggleSwitchWidget
 							v-model="noNewsletter"
 							v-bind="{
@@ -375,6 +375,7 @@ export default {
 		twoFactorAuth: {
 			get() {
 				return this.$store.state.user.twoFactorAuth;
+				console.log('get', this.$store.state.user.twoFactorAuth);
 			},
 			set(val) {
 				const self = this;
@@ -382,6 +383,11 @@ export default {
 					val,
 					state: 'twoFactorAuth',
 				});*/
+				console.log('set', val)
+				self.$store.commit('updateUserStateValue', {
+					val,
+					state: 'twoFactorAuth',
+				});
 
 				if (val) {
 					//toggle newsletter
@@ -520,6 +526,8 @@ export default {
 		exitDisable2FA() {
 			const self = this;
 			self.showDisableSetup2FA = false;
+			self.twoFACode = '';
+			self.secretKey = '';
 		},
 	},
 };
@@ -544,12 +552,11 @@ export default {
 	background: #000;
 }
 #JSEA-themeSelector {
-	width: 40px;
-	height: 40px;
+	width: 34px;
+	height: 34px;
 	text-align:center;
-	line-height:40px;
-	border-radius: 10px;
-	margin-right:20px;
+	line-height:34px;
+	border-radius: 76px;
 	cursor: pointer;
 	transition: background 0.2s;
 }
