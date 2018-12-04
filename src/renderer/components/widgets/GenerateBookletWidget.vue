@@ -52,7 +52,7 @@ export default {
 			imgPath = 'file:///android_asset/www/';
 		}
 		// load logo to stick on qr code
-		self.logo.src = imgPath+'static/QR_logo2.png';
+		self.logo.src = imgPath+'static/QR_logo3.png';
 		// load logocard to stick on qr code
 		self.logoCard.src = imgPath+'static/jseLogo_card2.png';
 		// folding Instructions
