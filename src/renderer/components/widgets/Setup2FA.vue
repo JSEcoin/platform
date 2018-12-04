@@ -3,7 +3,7 @@
 		<div>
 			<div class="popupHeader">
 				Setup Two Factor Authentication
-				<i class="fa fa-close" v-on:click="exit2FA"></i>
+				<i class="fa fa-close" v-on:click="exit2FA(true)"></i>
 			</div>
 			<div class="popupContent">
 				<div style="position:relative;">
@@ -16,10 +16,17 @@
 					<a href="https://authy.com/download/" target="_Blank">Authy</a> 
 					App
 				</p>
-				<p>
-					Please make a note of your back up key:<br />
-					<b id="JSEA-secretKey">{{secretKey}}</b>
-				</p>
+				<div class="warningInfo">
+					<div class="warningInfoIcon">
+						<i class="fa fa-warning"></i>
+					</div>
+					<div>
+						<p>
+							Please make a note of your back up key:<br />
+							<b id="JSEA-secretKey">{{secretKey}}</b>
+						</p>
+					</div>
+				</div>
 				<div>
 					<!-- error display -->
 					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px 20px;" />
@@ -127,7 +134,7 @@ export default {
 				TwoFA,
 			).then((res) => {
 				//
-				self.$store.commit('updateAppState', {
+				self.$store.commit('updateUserStateValue', {
 					val: true,
 					state: 'twoFactorAuth',
 				});
@@ -164,8 +171,14 @@ export default {
 				self.form.authCode[ref] = val;
 			}
 		},
-		exit2FA() {
+		exit2FA(keep2FA_Disabled) {
 			const self = this;
+			if (keep2FA_Disabled) {
+				self.$store.commit('updateUserStateValue', {
+					val: false,
+					state: 'twoFactorAuth',
+				});
+			}
 			self.$emit('exit2FA');
 		},
 	},
@@ -186,5 +199,22 @@ export default {
 }
 a {
 	cursor:pointer;
+}
+
+.warningInfo {
+    box-shadow: 0 0 0 1px #a9d5de inset, 0 0 0 0 transparent;
+    background-color: #f8ffff;
+    color: #276f86;
+    border-radius: 6px;
+    position: relative;
+    padding: 0px 10px;
+    margin: 10px 20px;
+    text-align: left;	
+    display: flex;
+}
+.warningInfoIcon {
+    align-self: center;
+    font-size: 2.6em;
+    padding: 0px 10px;
 }
 </style>

@@ -3,7 +3,7 @@
 		<div>
 			<div class="popupHeader">
 				Disable Two Factor Authentication
-				<i class="fa fa-close" v-on:click="exit2FA"></i>
+				<i class="fa fa-close" v-on:click="exit2FA(true)"></i>
 			</div>
 			<div class="popupContent">
 				<p>
@@ -108,7 +108,7 @@ export default {
 				TwoFA,
 			).then((res) => {
 				//
-				self.$store.commit('updateAppState', {
+				self.$store.commit('updateUserStateValue', {
 					val: false,
 					state: 'twoFactorAuth',
 				});
@@ -145,8 +145,14 @@ export default {
 				self.form.authCode[ref] = val;
 			}
 		},
-		exit2FA() {
+		exit2FA(keep2FA_Enabled) {
 			const self = this;
+			if (keep2FA_Enabled) {
+				self.$store.commit('updateUserStateValue', {
+					val: true,
+					state: 'twoFactorAuth',
+				});
+			}
 			self.$emit('exit2FA');
 		},
 	},
