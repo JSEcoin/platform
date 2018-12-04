@@ -99,7 +99,7 @@
 											<li v-on:click="siteWizard"><i class="fa fa-magic"></i> Site Wizard</li>
 											<!--<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
 											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>-->
-											<li v-on:click="openExternalWindow('https://jsecoin.com/en/support/FAQ')"><i class="fa fa-info-circle"></i> FAQ</li>
+											<li v-on:click="openExternalWindow('https://jsecoin.com/support')"><i class="fa fa-info-circle"></i> Support Center</li>
 											<li v-on:click="openExternalWindow('https://t.me/jsetelegram')"><i class="fa fa-telegram"></i> Telegram</li>
 											<li><i class="fa fa-user-circle"></i> Virtual Assistant</li>
 										</ul>
@@ -201,6 +201,7 @@ export default {
 	data() {
 		return {
 			offline: false,
+			resizeTimer: null,
 			nav: {
 				dashboard: false,
 				wallet: false,
@@ -295,9 +296,9 @@ export default {
 			});
 		} else {
 			//if small display revert to mobile
-			if (window.innerWidth < 520) {
-				displayType = 'mobile';
-			}
+			//if (window.innerWidth < 520) {
+			//	displayType = 'mobile';
+			//}
 			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
 			document.body.className = bodyClass;
 			window.process = {
@@ -597,32 +598,35 @@ export default {
 		},
 		getWindowWidth(e) {
 			const self = this;
+			//
+			clearTimeout(self.resizeTimer);
+			self.resizeTimer = setTimeout(() => {
+				let screenType = 'med';
+				let platformURL = ''
+				if (window.innerWidth < 520) {
+					screenType = 'min';
+					window.process = {
+						type: 'mobile', //['mobile','web','tablet','desktop']
+					};
+				} else if (window.innerWidth < 1000) {
+					screenType = 'med';
+				} else {
+					screenType = 'max';
+					platformURL = '/desktop';
+				}
 
-			let screenType = 'med';
-			let platformURL = ''
-			if (window.innerWidth < 520) {
-				screenType = 'min';
-				window.process = {
-					type: 'mobile', //['mobile','web','tablet','desktop']
-				};
-			} else if (window.innerWidth < 1000) {
-				screenType = 'med';
-			} else {
-				screenType = 'max';
-				platformURL = '/desktop';
-			}
-
-			const bodyClass = `${screenType} ${self.$store.state.app.base} ${self.$store.state.app.platform} ${self.$store.state.app.theme}`;
-			document.body.className = bodyClass;
-			window.jseTestNet = true;
-			self.$store.commit('updateAppState', {
-				val: screenType,
-				state: 'screen',
-			});
-			self.$store.commit('updateAppState', {
-				val: platformURL,
-				state: 'platformURL',
-			});
+				const bodyClass = `${screenType} ${self.$store.state.app.base} ${self.$store.state.app.platform} ${self.$store.state.app.theme}`;
+				document.body.className = bodyClass;
+				window.jseTestNet = true;
+				self.$store.commit('updateAppState', {
+					val: screenType,
+					state: 'screen',
+				});
+				self.$store.commit('updateAppState', {
+					val: platformURL,
+					state: 'platformURL',
+				});
+			}, 250);
 		},
 		closeQR() {
 			document.body.classList.remove('QRScanner');
@@ -833,7 +837,14 @@ export default {
 		siteWizard() {
 			const self = this;
 			console.log(self);
-			self.$intro().start();
+			//self.$intro().start();
+			self.$intro().setOptions({
+				helperElementPadding: 0,
+				showStepNumbers: false,
+				tooltipClass: 'jseaTooltipInfo',
+				highlightClass: 'jseaTooltipHelper',
+				disableInteraction: true,
+			}).start();
 		},
 		/**
 		 * Opens an external browser window and takes the user to the official upgrade forum post
@@ -1199,7 +1210,7 @@ header {
 	/*border-bottom: solid 10px #f5f7fb;*/
 	height:84px;
 	position: relative;
-	z-index:1000000;
+	z-index:100000;
 }
 
 .max header {
@@ -1619,7 +1630,7 @@ header .fa-minus:hover {
 	margin:6px;
 }
 #JSEA-QRBGImage {
-	background-image: url('./assets/images/QR_logo2.png');
+	background-image: url('./assets/images/QR_logo3.png');
 	background-repeat:no-repeat;
 	background-size:12%;
 	background-position: center;
@@ -1701,8 +1712,16 @@ header .fa-minus:hover {
 	border-radius:4px;
 }
 .platformWeb.min #JSEA-QRMask > div {
-	width:340px;
-	margin-left:-170px;
+	/*width:340px;
+	margin-left:-170px;*/
+	
+    top: 0px;
+    bottom: 0px;
+    margin: 0px !important;
+    left: 0px;
+    right: 0px;
+    width: auto;
+    border-radius: 0px;
 }
 
 .popupContent .fa-angle-right,
@@ -2045,6 +2064,8 @@ header .fa-minus:hover {
 	/*border-left:solid 1px #ddd;*/
 	display: flex;
 	align-items: center;
+	position: relative;
+    z-index: 100000;
 }
 
 
@@ -2172,7 +2193,7 @@ header .fa-minus:hover {
 #JSEA-toggleSideBar {
     position: absolute;
     right: -22px;
-    z-index: 1000001;
+    z-index: 100001;
     top: 0px;
     width: 22px;
 	transition: height 0.4s;
@@ -2360,5 +2381,13 @@ header .fa-minus:hover {
 }
 .night .infoPanel {
 	background:#171820;
+}
+
+.jseaTooltipInfo {
+	border-radius: 0px;
+}
+.jseaTooltipHelper {
+	border-radius: 0px;
+	border:0px;
 }
 </style>
