@@ -158,7 +158,7 @@ export default {
 	methods: {
 		goto(route) {
 			const self = this;
-			self.$router.push(`${self.$store.state.app.platformURL}${route}`);
+			self.$router.push(`${route}`);
 		},
 		icoActive() {
 			return !moment().isAfter(moment.unix(1539259200));

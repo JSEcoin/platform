@@ -86,7 +86,7 @@ export default {
 					setupPinReq,
 				).then((res) => {
 					self.loading = false;
-					self.$router.push(`${self.$store.state.app.platformURL}/dashboard`);
+					self.$router.push('/dashboard');
 				}).catch((err) => {
 					self.loading = false;
 					self.form.error.msg = err.response.data.notification;

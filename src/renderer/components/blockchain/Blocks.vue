@@ -219,7 +219,7 @@ export default {
 
 
 		window.window.global = {
-			currentChain: {}
+			currentChain: {},
 		}; // store blockChain
 		window.socketClient.on('newBlock', function(myBlockRef,myBlockID,myBlock) {
 			console.log('newBlock Received: '+myBlockRef+' / '+myBlockID);
@@ -544,7 +544,7 @@ export default {
 		},
 		goto(route) {
 			const self = this;
-			self.$router.push(`${self.$store.state.app.platformURL}${route}`);
+			self.$router.push(`${route}`);
 		},
 	},
 };

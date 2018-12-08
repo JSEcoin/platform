@@ -26,7 +26,7 @@
 							<ContentWidget class="registerFormContainer">
 								<h4 class="title">Account Details</h4>
 								<!-- User Pass register interface -->
-								<div>
+								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
 										<InputWidget 
@@ -88,8 +88,9 @@
 							</ContentWidget>
 									
 							<ContentWidget class="registerFormContainer">
-								<div>
-									<h4 class="title">Address Information</h4>
+								<h4 class="title">Address Information</h4>
+								
+								<div class="formWrapper">
 									<!-- Postal Address Line 1 Input -->
 									<div class="row">
 										<InputWidget 
@@ -177,7 +178,7 @@
 
 							<ContentWidget class="registerFormContainer">
 								<h4 class="title">Terms of use</h4>	
-								<SettingsItemRowWidget style="margin:0px 8px;" settingName="I agree by the terms and policy outlined on the JSEcoin Official Website.">
+								<SettingsItemRowWidget style="border-radius:8px;" settingName="I agree by the terms and policy outlined on the JSEcoin Official Website.">
 									<ToggleSwitchWidget
 										v-model="acceptTerms"
 										v-bind="{
@@ -194,7 +195,7 @@
 									buttonTxt="View Terms and Policy" v-on:click.native="openExternalWindow('https://jsecoin.com/en/legal/privacyPolicy')" />
 							</ContentWidget>			
 							
-							<div class="row" style="min-height:60px;">
+							<div class="row buttonRow" style="min-height:60px;">
 								<ButtonWidget :class="{'disable':!acceptTerms}" :disabled="!acceptTerms" type="submit"
 									buttonTxt="Register Account" style="margin-right:5px; margin-left:15px;" />
 
@@ -506,10 +507,10 @@ export default {
 
 				//check if new user display PIN requirements form
 				if (self.user.requirePin) {
-					self.$router.push(`${self.$store.state.app.platformURL}/enterSecurityPin`);
+					self.$router.push('/enterSecurityPin');
 				//else redirect to dashboard
 				} else {
-					self.$router.push(`${self.$store.state.app.platformURL}/dashboard`);
+					self.$router.push('/dashboard');
 				}
 				return true;
 			}).catch((err) => {
@@ -553,7 +554,7 @@ export default {
 		},
 		cancelRegister() {
 			const self = this;
-			self.$router.push(`${self.$store.state.app.platformURL}/login`);
+			self.$router.push('/login');
 		},
 		/**
 		 * onKeyUp set field display and check field value is correct (email etc)
@@ -658,6 +659,10 @@ export default {
 	padding-bottom:0px;
 	font-size:1.1em;
 }
+.max #JSEA-registerHeader {
+	margin-top: 40px;
+}
+
 
 #JSEA-registerSubHeader {
 	margin:0px 0px 20px 0px;
@@ -684,6 +689,21 @@ export default {
 
 .light .registerFormContainer {
 	background: #f8fafb;
+}
+
+
+.max.light .registerFormContainer {
+    background: #fff;
+    box-shadow: rgba(210, 214, 217,1) 0px 1px 3px 0px !important;
+    border-radius: 10px !important;
+}	
+.max.night .registerFormContainer {
+    background: #20222e;
+    box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6) !important;
+    border-radius: 10px !important;
+}
+.max .registerFormContainer {
+    margin: 10px auto !important;
 }
 
 .registerFormContainer {
@@ -742,5 +762,23 @@ select {
 .night select {
 	background: #101219;
     border-bottom: solid 1px #444;
+}
+.max #JSEA-registerFormWrapper .buttonRow {
+	justify-content: center;
+	align-items: center;
+}
+
+.max .formWrapper {
+	border-radius: 8px;
+    margin: 10px 0px;
+    padding: 16px;
+}
+
+.max.light .formWrapper {
+	background: #f8fafb;
+}
+
+.max.night .formWrapper {
+	background: #1c1e28;
 }
 </style>

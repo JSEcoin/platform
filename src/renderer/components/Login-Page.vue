@@ -105,9 +105,9 @@
 									buttonTxt="Register" style="flex:1;margin-left:5px;" v-on:click.native="registerUser"/>
 							</div>
 							<div style="margin:10px auto; text-align:center; width:270px;">
-								<router-link style="text-align:right;" v-bind:to="`${$store.state.app.platformURL}/resetPassword`" tag="a">Reset Password</router-link>
+								<router-link style="text-align:right;" v-bind:to="`/resetPassword`" tag="a">Reset Password</router-link>
 								|
-								<router-link style="text-align:left;" v-bind:to="`${$store.state.app.platformURL}/restore2FA`" tag="a">Restore 2FA</router-link>
+								<router-link style="text-align:left;" v-bind:to="`/restore2FA`" tag="a">Restore 2FA</router-link>
 							</div>
 						</div>
 					</form>				
@@ -264,7 +264,7 @@ export default {
 		 */
 		registerUser() {
 			const self = this;
-			self.$router.push(`${self.$store.state.app.platformURL}/register`);
+			self.$router.push('/register');
 		},
 		/**
 		 * Processes captcha iframe response success/fail from the server
@@ -544,10 +544,10 @@ export default {
 
 				//check if new user display PIN requirements form
 				if (self.user.requirePin) {
-					self.$router.push(`${self.$store.state.app.platformURL}/enterSecurityPin`);
+					self.$router.push('/enterSecurityPin');
 				//else redirect to dashboard
 				} else {
-					self.$router.push(`${self.$store.state.app.platformURL}/dashboard`);
+					self.$router.push('/dashboard');
 				}
 				return true;
 			}).catch((err) => {
