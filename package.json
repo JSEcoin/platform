@@ -70,6 +70,7 @@
   "eslint": "^5.8.0",
   "eslint-plugin-vue": "^5.0.0-0",
   "prerender-spa-plugin": "^3.4.0",
+  "rollup": "^0.67.4",
   "vue-cli-plugin-electron-builder": "^1.0.0-rc.9",
   "vue-template-compiler": "^2.5.17"
  },
