@@ -7,7 +7,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "author": "JSEcoin Ltd",
+    "author": {
+        "name": "JSEcoin Ltd",
+        "email": "support@jsecoin.com"
+    },
     "license": "Apache-2.0",
     "dependencies": {
         "cordova-android": "^7.1.4",
