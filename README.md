@@ -56,7 +56,7 @@ _Linux support will be coming soon._
 
 ### Development
 
-If you are interested in developing and enhancing contributing to the JSEcoin Project you can start up the developer environments with the following commands:
+If you are interested in contributing to the JSEcoin Project you can start up the developer environments with the following commands:
 
 ```bash
 ######
