@@ -1,0 +1,32 @@
+The following are a list of reusable vuejs component widgets that are used within the component pages.
+
+
+List of widgets:
+
+* [AppWrapperWidget](#appwrapperwidget)
+* [ButtonWidget](#buttonwidget)
+* [Coin](#coin)
+* [CoinCodeWidget](#coincodewidget)
+* [CoinStatusWidget](#coinstatuswidget)
+* [ConsoleWidget](#consolewidget)
+* [ContentWidget](#contentwidget)
+* [DashboardSubNavWidget](#dashboardSubNavwidget)
+* [FormErrorDisplayWidget](#formerrordisplaywidget)
+* [GenerateBookletWidget](#generatebookletwidget)
+* [InputWidget](#inputwidget)
+* [LoadingDelayMaskWidget](#loadingdelaymaskwidget)
+* [MineSubNavWidget](#minesubnavwidget)
+* [MiningAcceleratorWidget](#miningacceleratorwidget)
+* [MiningChartWidget](#miningchartwidget)
+* [MiningOverviewPanelWidget](#miningoverviewpanelwidget)
+* [NavWidget](#navwidget)
+* [OptionsListWrapperWidget](#optionslistwrapperwidget)
+* [Label](#label)
+* [OverviewCoinDispayWidget](#overviewcoindispaywidget)
+* [QRCoinCodeWidget](#qrcoincodewidget)
+* [ScrollWidget](#scrollwidget)
+* [SettingsItemRowWidget](#settingsitemrowwidget)
+* [SpinnerWidget](#spinnerwidget)
+* [Splash](#splash)
+* [ToggleSwitchWidget](#toggleswitchwidget)
+* [TwoFA](#twofa)
