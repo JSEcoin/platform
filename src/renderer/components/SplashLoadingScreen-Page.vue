@@ -74,7 +74,8 @@ export default {
 					//app loading complete
 					self.$store.commit('loading', false);
 					//redirect to [dashboard,login] page
-					self.$router.push(`${self.$store.state.app.platformURL}${self.endRoute}`);
+					//self.$router.push(`${self.endRoute}`);
+					self.$router.push(`${self.endRoute}`);
 					self.$electron.remote.getCurrentWindow().setMovable(true);
 				}
 			});
@@ -148,7 +149,8 @@ export default {
 				self.$store.commit('loading', false);
 				//console.log('splash to', route);
 				//redirect to [dashboard,login] page
-				self.$router.push(`${self.$store.state.app.platformURL}${route}`);
+				//self.$router.push(`${route}`);
+				self.$router.push(`${route}`);
 			}
 		},
 		/**
@@ -254,7 +256,8 @@ export default {
 
 					//redirect to dashboard if mouse up or delay until up
 					self.routeDelay('/dashboard');
-				}, 4000);
+				}, 100);
+				//}, 4000);
 			}).catch((err) => {
 				console.error(err);
 				//failed login attempt;
