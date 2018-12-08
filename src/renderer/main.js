@@ -31,6 +31,14 @@ Vue.http = Vue.prototype.$http = axios;
 //Vue.config.productionTip = false;
 Vue.config.productionTip = process.env.NODE_ENV === 'production';
 
+/*if (typeof (process) === 'undefined') {
+	window.process = {
+		env: {
+			NODE_ENV: process.env.NODE_ENV,
+		},
+	};
+}*/
+
 //platformName analytics display
 const platformName = `JSEapp_${(typeof (process.platform) !== 'undefined')? process.platform : 'unknown'}`;
 
