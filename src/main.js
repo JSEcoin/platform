@@ -21,7 +21,7 @@ import './registerServiceWorker';
 
 //if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
 //if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
-if (__static)  {
+if (typeof (__static) !== 'undefined')  {
 	Vue.use(require('vue-electron'));
 	//log async errors
 	process.on('unhandledRejection', (error) => {
