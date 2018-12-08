@@ -12,7 +12,7 @@
 					<div id="JSEA-QRBGImage"></div>
 					<qriously v-if="activeCode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="activeCode" foreground="#0d152c" :size="250" />
 				</div>
-				
+
 				<!-- Download Coin Code PDF Page -->
 				<GenerateCoinPageWidget
 					:buttonTxt="($store.getters.whichPlatform !== 'mobile')?'Paper Download':'Share Code'"

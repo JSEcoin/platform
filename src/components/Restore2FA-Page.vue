@@ -13,7 +13,7 @@
                             Generate 2FA QR Setup Code.
                         </h4>
 					</div>
-					
+
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
 					<!-- xAnimation to display during server requests -->
@@ -23,7 +23,7 @@
 						<div v-if="status.displayForm" class="row" id="JSEA-restore2FAPasswordWrapper">
 							<ContentWidget class="restore2FAFormContainer">
 								<h4 class="title">To restore your 2FA</h4>
-                                
+
 								<!-- Error display -->
 								<FormErrorDisplayWidget v-on:click.native="closeError('error1')" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
 								<!-- xError display -->
@@ -34,7 +34,7 @@
 								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.accountEmail.val"
 											placeholder="Account Email *"
 											name="accountEmail"
@@ -47,7 +47,7 @@
 									<!-- xFull Name Input -->
 									<!-- Full Name Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.backupKey.val"
 											placeholder="2FA Backup Key *"
 											name="backupKey"
@@ -59,7 +59,7 @@
 									</div>
 									<!-- xFull Name Input -->
 								</div>
-								
+
 								<div class="row buttonRow" style="min-height:60px;">
 									<ButtonWidget type="submit" v-on:click.native="emailCode"
 										buttonTxt="Generate QR Code" style="margin-right:5px; margin-left:15px;" />

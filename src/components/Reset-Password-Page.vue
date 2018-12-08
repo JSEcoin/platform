@@ -11,7 +11,7 @@
 						<h2 id="JSEA-resetHeader" class="center">Reset Your Password</h2>
 						<h4 id="JSEA-resetSubHeader" class="center">Request a security code to create a new password.</h4>
 					</div>
-					
+
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
 					<!-- xAnimation to display during server requests -->
@@ -32,7 +32,7 @@
 								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.accountEmail.val"
 											placeholder="Account Email *"
 											name="accountEmail"
@@ -44,7 +44,7 @@
 									</div>
 									<!-- xFull Name Input -->
 								</div>
-								
+
 								<div class="row buttonRow" style="min-height:60px;">
 									<ButtonWidget type="submit" v-on:click.native="emailCode"
 										buttonTxt="Email Security Code" style="margin-right:5px; margin-left:15px;" />
@@ -53,13 +53,13 @@
 										buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancel" />
 								</div>
 							</ContentWidget>
-									
+
 							<ContentWidget class="resetFormContainer">
 								<h4 class="title">(Step 2) Create a new password.</h4>
                                 <p>
                                     When you have received your security code you will be able to change your password from here:<br />
                                 </p>
-								
+
 								<!-- Error display -->
 								<FormErrorDisplayWidget v-on:click.native="closeError('error2')" v-if="form.error2.display" :errorMsg="form.error2.msg"  style="width: 60%; margin: 10px auto;" />
 								<!-- xError display -->
@@ -67,7 +67,7 @@
 								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
-                                        <InputWidget 
+                                        <InputWidget
                                             inputType="password"
                                             newpassword="new-password"
                                             v-bind="{hideShow: true, passwordStrength:true}"
@@ -83,7 +83,7 @@
 									<!-- xFull Name Input -->
 									<!-- Full Name Input -->
 									<div class="row">
-                                        <InputWidget 
+                                        <InputWidget
                                             inputType="password"
                                             v-bind="{hideShow: true}"
                                             v-model="form.passwordMatch.val"
@@ -101,7 +101,7 @@
 								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.securityCode.val"
 											placeholder="Enter Security Code Received *"
 											name="securityCode"
@@ -113,7 +113,7 @@
 									</div>
 									<!-- xFull Name Input -->
 								</div>
-                                    
+
                                 <ButtonWidget type="submit" v-on:click.native="updatePassword" buttonTxt="Change Password" />
 							</ContentWidget>
 						</div>

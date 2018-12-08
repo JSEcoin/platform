@@ -36,7 +36,7 @@
 				</div>
 			</ContentWidget>
 			<!-- xAccount Overview -->
-	
+
 			<!-- Animation to display during server requests -->
 			<SpinnerWidget :class="{active:loading}"/>
 			<!-- xAnimation to display during server requests -->
@@ -68,10 +68,8 @@
 							</div> -->
 						</li>
 					</ul>
-					
-					
-					
-					
+
+
 				</OptionsListWrapperWidget>
 			</ContentWidget>
 			<!-- xAccount Overview -->

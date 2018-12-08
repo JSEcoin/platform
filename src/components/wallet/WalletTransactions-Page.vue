@@ -12,41 +12,41 @@
 
 			<!-- Sent -->
 			<ContentWidget titleTxt="Sent JSE To" v-if="(userHistory.length > 0)">
-				<ContentWidget 
-					class="containedTransferItem" 
-					:titleTxt="coinDate(transaction.ts)" 
-					:infoPanelTxt="`${transaction.value}`" 
-					:infoPanelIcoClassName="{gold:((transaction.value >= 1) || (transaction.value <= -1)), silver:((transaction.value < 1) && (transaction.value > -1))}" 
-					:key="`id${i}`" 
-					v-if="((transaction.command === 'transfer') && (transaction.value < 0))" 
+				<ContentWidget
+					class="containedTransferItem"
+					:titleTxt="coinDate(transaction.ts)"
+					:infoPanelTxt="`${transaction.value}`"
+					:infoPanelIcoClassName="{gold:((transaction.value >= 1) || (transaction.value <= -1)), silver:((transaction.value < 1) && (transaction.value > -1))}"
+					:key="`id${i}`"
+					v-if="((transaction.command === 'transfer') && (transaction.value < 0))"
 					v-for="(transaction, i) in userHistory">
 
 					<dl class="transactionRef">
 						<dt style="font-weight:bold;">SENT: </dt>
 						<dd>{{transaction.user2email}}</dd>
-						
+
 						<dt v-if="transaction.reference" style="font-weight:bold;">REFERENCE: </dt>
 						<dd class="ref" v-if="transaction.reference">"{{transaction.reference}}"</dd>
 					</dl>
 				</ContentWidget>
 			</ContentWidget>
 			<!-- xSent -->
-			
+
 			<!-- Received -->
 			<ContentWidget titleTxt="Received JSE From" v-if="(userHistory.length > 0)">
 				<ContentWidget
-					class="containedTransferItem" 
-					:titleTxt="coinDate(transaction.ts)" 
-					:infoPanelTxt="`${transaction.value}`" 
+					class="containedTransferItem"
+					:titleTxt="coinDate(transaction.ts)"
+					:infoPanelTxt="`${transaction.value}`"
 					:infoPanelIcoClassName="{gold:transaction.value >= 1, silver:transaction.value < 1}"
-					:key="`id${i}`" 
-					v-if="((transaction.command === 'transfer') && (transaction.value > 0))" 
+					:key="`id${i}`"
+					v-if="((transaction.command === 'transfer') && (transaction.value > 0))"
 					v-for="(transaction, i) in userHistory">
-				
+
 					<dl class="transactionRef">
 						<dt style="font-weight:bold;">RECEIVED: </dt>
 						<dd>{{transaction.user1email}}</dd>
-						
+
 						<dt v-if="transaction.reference" style="font-weight:bold;">REFERENCE: </dt>
 						<dd class="ref" v-if="transaction.reference">"{{transaction.reference}}"</dd>
 					</dl>
@@ -184,7 +184,7 @@ dl.containedTransferItem {
     right: -18px;
     top: inherit;
 }
-.item1:before, 
+.item1:before,
 .item2:before {
     content: "";
     position: absolute;
@@ -208,7 +208,7 @@ dl.containedTransferItem {
     text-align: center;
 	left:20px;
 }
-.transactionRef { 
+.transactionRef {
 	margin-top:0px !important;
 	background:transparent !important;
 	border-radius:6px;
@@ -224,7 +224,7 @@ dl.containedTransferItem {
 	padding:0px 8px;
 	border-radius: 0px;
 	background:transparent !important;
-} 
+}
 .transactionRef dd {
 	padding:0px 8px;
 }

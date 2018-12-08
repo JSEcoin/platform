@@ -62,7 +62,7 @@
 							}" />
 					</SettingsItemRowWidget>
 					<!-- xAuto Login -->
-					
+
 					<!-- Auto Mine -->
 					<SettingsItemRowWidget settingName="Auto Mine">
 						<ToggleSwitchWidget
@@ -84,7 +84,7 @@
 					<!-- Remember Username -->
 				</OptionsListWrapperWidget>
 				<!-- xLogin -->
-				
+
 				<!-- Logout -->
 				<ButtonWidget v-on:click.native="logout()" buttonTxt="Logout"/>
 				<!-- xLogout -->

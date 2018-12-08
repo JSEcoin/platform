@@ -114,7 +114,7 @@ export default {
     height: 30px;
     background-color: #95a5a6;
     -webkit-transition: background 0.25s ease-out 0s;
-    transition: background 0.25s ease-out 0s;	
+    transition: background 0.25s ease-out 0s;
 	border-radius: 30px;
 }
 .platformWeb.min .checkbox-switch .checkbox-animate {

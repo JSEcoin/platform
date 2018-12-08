@@ -69,17 +69,17 @@ export default {
 	background-repeat: no-repeat;
 	background-size: 90px;
 	/*background-position: 52px 55px;*/
-	
+
     background-position: 52px 32px;
 	/*animation:spin 1s linear infinite;*/
 	margin-top:-10px;
 	color: white;
 	fill: white;
 }
-@keyframes spin { 
-	100% { 
-		-webkit-transform: rotate(360deg); 
-		transform:rotate(360deg); 
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform:rotate(360deg);
 	}
 }
 #JSEA-loadingText {
@@ -98,7 +98,7 @@ export default {
     padding-top: 15px;
 	text-transform: uppercase;
 	text-shadow:
-   -1px -1px 0 rgba(0,0,0,0.5),  
+   -1px -1px 0 rgba(0,0,0,0.5),
     1px -1px 0 rgba(0,0,0,0.5),
     -1px 1px 0 rgba(0,0,0,0.5),
      1px 1px 0 rgba(0,0,0,0.5);

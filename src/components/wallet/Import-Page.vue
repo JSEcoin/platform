@@ -3,11 +3,11 @@
 		<NavWidget activeNav="wallet" activeSubNav="import"></NavWidget>
 		<ScrollWidget>
 			<!-- Import Coins -->
-			<ContentWidget 
-				titleTxt="Import Coins" 
-				:infoPanelTxt="balance" 
+			<ContentWidget
+				titleTxt="Import Coins"
+				:infoPanelTxt="balance"
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
-				
+
 				<!-- Confirm Account -->
 				<ConfirmAccountMaskWidget v-if="!confirmed" />
 				<!-- xConfirm Account -->
@@ -19,10 +19,10 @@
 				<!-- Form Error Msg -->
 				<FormErrorDisplayWidget :errorMsg="form.error.msg" v-on:click.native="clearErrorDisplay" />
 				<!-- xForm Error Msg -->
-			
+
 				<p><b>Import Coins with code:</b></p>
 				<div class="row" style="display:flex;">
-					<InputWidget 
+					<InputWidget
 						v-model="form.coinCode.val"
 						placeholder="Coin Code *"
 						name="coinCode"
@@ -40,13 +40,13 @@
 				</div>
 			</ContentWidget>
 			<!-- xImport Coins -->
-			
+
 			<div v-if="confirmed">
 				<!-- Animation to display during server requests -->
 				<SpinnerWidget :class="{active:loading}"/>
 
 				<!-- QR Display Coin Code-->
-				<QRCoinCodeWidget 
+				<QRCoinCodeWidget
 					v-on:click.native="hideQRCode()"
 					v-bind="{
 						initActiveCode,
@@ -59,13 +59,13 @@
 					:class="{active: showQR}" />
 
 				<!-- Available Coin Codes -->
-				<ContentWidget 
-					v-if="exportCoinHistory.length > 0" 
+				<ContentWidget
+					v-if="exportCoinHistory.length > 0"
 					v-bind="{
 						infoPanelTypeButton: true,
 						bookletData: initAvailableCoins,
 					}"
-					titleTxt="Available Coin Codes" 
+					titleTxt="Available Coin Codes"
 					:infoPanelTxt="($store.getters.whichPlatform !== 'mobile')?'Generate Booklet':'Share Booklet'"
 					:infoPanelIcoClassName="{booklet: true}">
 
@@ -77,7 +77,7 @@
 							}"/>
 					</template>
 					<!-- xHeader Button -->
-				
+
 					<table>
 					<thead>
 						<tr>
@@ -89,7 +89,7 @@
 					<tbody>
 						<tr v-if="coin.used === false" v-for="(coin, i) in exportCoinHistory">
 							<td>
-								<CoinCodeWidget 
+								<CoinCodeWidget
 									v-on:click.native="showQRCode(coin, i)"
 									v-bind="{
 										coin,
@@ -97,28 +97,28 @@
 									}" />
 							</td>
 							<td>{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
-							<td>										
+							<td>
 								<div class="row buttonActions">
 									<!-- Copy Coin Code -->
-									<ButtonWidget 
-										iconClassName="fa fa-copy" 
+									<ButtonWidget
+										iconClassName="fa fa-copy"
 										v-on:click.native="copyCoinCode(coin.coinCode)"
 										title="Copy Coin Code"
 										class="small"/>
 									<!-- xCopy Coin Code -->
-									
+
 									<!-- Import Coin Code -->
 									<ButtonWidget
-										iconClassName="fa fa-download" 
+										iconClassName="fa fa-download"
 										v-on:click.native="importCoins(coin.coinCode)"
 										title="Import Coin Code"
 										:class="{disable: (initTransaction)}"
 										class="small"/>
 									<!-- xImport Coin Code -->
-									
+
 									<!-- Remove Coin Code -->
-									<ButtonWidget 
-										iconClassName="fa fa-close" 
+									<ButtonWidget
+										iconClassName="fa fa-close"
 										v-on:click.native="removeCoin(coin)"
 										title="Remove Coin Code"
 										class="small"/>
@@ -130,10 +130,10 @@
 					</table>
 				</ContentWidget>
 				<!-- xAvailable Coin Codes -->
-				
+
 				<!-- Imported Coin History -->
-				<ContentWidget 
-					v-if="importHistory.length > 0" 
+				<ContentWidget
+					v-if="importHistory.length > 0"
 					titleTxt="Imported Coin History">
 					<table>
 					<thead>
@@ -154,7 +154,7 @@
 							<td style="text-align:center;">{{ new Date(coin.ts) | moment("DD/MM/YY HH:mm:ss")}}</td>
 						</tr>
 					</tbody>
-					</table>	
+					</table>
 				</ContentWidget>
 				<!-- xImported Coin History -->
 
@@ -582,7 +582,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 #JSEA-importHistory .coin,
-#JSEA-availableCoinCodes .coin { 
+#JSEA-availableCoinCodes .coin {
 	width:20px;
 	height:20px;
 	margin-right: 6px;

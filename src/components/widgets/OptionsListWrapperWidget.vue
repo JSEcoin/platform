@@ -2,7 +2,7 @@
 	<fieldset>
 		<legend>{{titleTxt}}</legend>
 		<!-- @slot Options Body Content -->
-		<slot/>		
+		<slot/>
 	</fieldset>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 <style scoped>
 .night fieldset {
 	border:solid 1px #171820;
-}	
+}
 .light fieldset {
 	border:solid 1px #eee;
 }

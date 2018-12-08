@@ -2,9 +2,9 @@
 	<OptionsListWrapperWidget titleTxt="Rewards Breakdown" style="margin: 0px; padding: 0px 0px 20px 0px;">
 		<div class="miningOverview row">
 			<!-- Platform Mining -->
-			<ContentWidget 
+			<ContentWidget
 				v-if="((pendingSelfMining >= 0) || (pendingSelfMining >= 1))"
-				titleTxt="Platform Mining" 
+				titleTxt="Platform Mining"
 				class="mini">
 				<div class="row" style="">
 					<div class="valueIconDisplay">
@@ -228,7 +228,7 @@ export default {
 	transform: rotateY(180deg);
 }
 
-.front .hash, 
+.front .hash,
 .back .hash {
 	margin:0px;
 }

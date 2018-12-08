@@ -17,18 +17,18 @@
 								Help support the JSEcoin project by investing and buying JSE Tokens.
 							</dd>
 						</dl>
-					</div> 
+					</div>
 					<ButtonWidget v-if="icoActive()" class="small green" style="margin:-16px auto 10px auto; border-radius:20px;" buttonTxt="Buy JSE Tokens" v-on:click.native="openExternalWindow('https://jsecoin.com/ico/?utm_source=platformapp&utm_campaign=platformapppBtInAction&utm_content=platform');"/>
 				</div>
 				<div v-if="icoActive()" class="hr split"><hr /></div>
 				<!-- xtmp ico display -->
 
 				<!-- Balance -->
-				<ContentWidget 
-					titleTxt="Balance" 
+				<ContentWidget
+					titleTxt="Balance"
 					:infoPanelTxt="`Updated ${fromNow}`"
 					style="padding-bottom:50px;">
-					<OverviewCoinDispayWidget class="dashCoinTotalDisplay" style="font-size:0.8em;" 
+					<OverviewCoinDispayWidget class="dashCoinTotalDisplay" style="font-size:0.8em;"
 						:coinTotal="`${balance}`"
 						:coinClass="{gold:balance >= 1, silver:balance < 1}"></OverviewCoinDispayWidget>
 					<template slot="footer">
@@ -43,21 +43,21 @@
 				<!-- xBalance -->
 
 				<!-- Earnings Today
-				<ContentWidget 
-					v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
+				<ContentWidget
+					v-if="(todaysEarnings > 0)" titleTxt="Mined Today"
 					:infoPanelTxt="`Reset ${statsReset} Hrs Ago`">
-					<OverviewCoinDispayWidget 
+					<OverviewCoinDispayWidget
 						:coinTotal="`${todaysEarnings}`"
 						:coinClass="{gold:todaysEarnings >= 1, silver:todaysEarnings < 1}"></OverviewCoinDispayWidget>
 				</ContentWidget>
 				xEarnings Today -->
-				
+
 				<!-- Mined Lifetime
-				<ContentWidget 
-					v-if="(minedLifetime > 0)" 
-					titleTxt="Mined Lifetime" 
+				<ContentWidget
+					v-if="(minedLifetime > 0)"
+					titleTxt="Mined Lifetime"
 					:infoPanelTxt="`Registered ${registrationDate}`">
-					<OverviewCoinDispayWidget 
+					<OverviewCoinDispayWidget
 						:coinTotal="`${minedLifetime}`"
 						:coinClass="{gold:minedLifetime >= 1, silver:minedLifetime < 1}"></OverviewCoinDispayWidget>
 				</ContentWidget>
@@ -67,8 +67,8 @@
 				<div v-if="(minedLifetime > 0)"  class="hr split"><hr /></div>
 
 				<!-- Mining Overview -->
-				<ContentWidget 
-					v-if="(minedLifetime > 0)" 
+				<ContentWidget
+					v-if="(minedLifetime > 0)"
 					titleTxt="Mining Overview"
 					:infoPanelTxt="`Registered ${registrationDate}`">
 					<MinerPanelWidget />
@@ -78,8 +78,8 @@
 				<div v-if="(pendingTotal > 0)" class="hr split"><hr /></div>
 
 				<!-- Rewards Pending -->
-				<ContentWidget 
-					v-if="(pendingTotal > 0)" 
+				<ContentWidget
+					v-if="(pendingTotal > 0)"
 					titleTxt="Rewards Pending"
 					:infoPanelTxt="`${pendingTotal}`"
 					:infoPanelIcoClassName="{gold:pendingTotal >= 1, silver:pendingTotal < 1}">
@@ -90,8 +90,8 @@
 				<div v-if="(pendingTotal > 0)" class="hr split"><hr /></div>
 
 				<!-- Payment Overview -->
-				<ContentWidget 
-					v-if="(pendingNextPayment > 0)" 
+				<ContentWidget
+					v-if="(pendingNextPayment > 0)"
 					titleTxt="Payment Overview"
 					:infoPanelTxt="`${pendingNextPayment}`"
 					:infoPanelIcoClassName="{gold:pendingNextPayment >= 1, silver:pendingNextPayment < 1}">
@@ -283,14 +283,14 @@ export default {
 	background: #101219;
 }
 .night .icoEnding dt {
-	color:#fff; 
+	color:#fff;
 	background:#000;
 }
-	
+
 .light .icoEnding {
 	background: #3598db;
 }
-	
+
 .light .icoEnding dt {
 	color:#fff;
 	background:rgba(255,255,255,0.4);
@@ -315,7 +315,7 @@ export default {
 .night .dashCoinTotalDisplay {
 	background: #1c1e28;
 }
-	
+
 .light .dashCoinTotalDisplay {
 	background: #fafafa;
 }

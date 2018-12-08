@@ -3,11 +3,11 @@
 
 		<!-- Confirm account -->
 		<div class="confirmDisplay" v-if="!confirmationSent">
-	
+
 			<!-- Error display -->
 			<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px auto;" />
 			<!-- xError display -->
-			
+
 			<h4>Confirm Email:</h4>
 			<p>
 				You will need to confirm your email address using the link provided within your registration email.
@@ -27,7 +27,7 @@
 		<!-- Account confirm email sent -->
 		<div class="confirmDisplay" v-else>
 			<h4>Email has been resent:</h4>
-			
+
 			<p>
 				Please check the junk folder in case it has been marked by your mail provider as spam.
 			</p>

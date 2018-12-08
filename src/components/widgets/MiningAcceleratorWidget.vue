@@ -1,8 +1,8 @@
 <template>
 	<div class="sliderWrapper">
 		<div class="accText">Mining Accelerator</div>
-		<VueSlider 
-			ref="slider" 
+		<VueSlider
+			ref="slider"
 			v-bind="{
 				'tooltip-dir': 'bottom',
 				'formatter': updateSlider(slider.value),
@@ -11,8 +11,8 @@
 				max: slider.maxVal,
 				tooltipStyle: slider.tooltipStyle,
 				piecewise: true
-			}" 
-			v-model="slider.value" 
+			}"
+			v-model="slider.value"
 			:processStyle="slider.processStyle">
 		</VueSlider>
 	</div>

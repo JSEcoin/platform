@@ -3,19 +3,19 @@
 		<NavWidget activeNav="mine" activeSubNav="mine"></NavWidget>
 		<ScrollWidget>
 			<!-- Google enforced Policy Display -->
-			<ContentWidget 
+			<ContentWidget
 				v-if="($store.getters.isAppGoogle)"
-				titleTxt="Mining functionality: [Disabled]" 
+				titleTxt="Mining functionality: [Disabled]"
 				class="mini buttonFooter"
 				style="text-align:center; margin:10px;">
 				<p>
 					This to comply with Googles Restricted Content policy.
 				</p>
-					
+
 				<p>
 					If you would like to enable the mining feature on your mobile please download and install our "Alpha Mobile App" available from gitHub.
 				</p>
-				
+
 				<template slot="footer">
 					<div style="font-size: 12px; display: flex; justify-content: space-around; padding: 10px;">
 						<ButtonWidget
@@ -39,11 +39,11 @@
 			<!-- xMining Overview -->
 
 			<!-- Hash Rate Percentage Chart -->
-			<ContentWidget 
+			<ContentWidget
 				v-if="(!$store.getters.isAppGoogle)"
-				titleTxt="Hash Rate" 
+				titleTxt="Hash Rate"
 				contentPadding="10px 10px 0px 10px"
-				:infoPanelTxt="`${hps} H/s`" 
+				:infoPanelTxt="`${hps} H/s`"
 				:infoPanelIcoClassName="{hash: true}">
 				<!-- Confirm Account -->
 				<ConfirmAccountMaskWidget v-if="!confirmed" />
@@ -55,16 +55,16 @@
 					<!-- xMining Accelerator -->
 					<!-- Toggle Mining Button -->
 					<ButtonWidget :disabled="!confirmed"
-						iconClassName="miningIco" 
-						v-on:click.native="toggleMining" 
-						:buttonTxt="miningButton" 
+						iconClassName="miningIco"
+						v-on:click.native="toggleMining"
+						:buttonTxt="miningButton"
 						:class="{'green':!startedMining, 'red':startedMining, 'disable':!confirmed}"/>
 					<!-- xToggle Mining Button -->
-					
+
 					<!-- Mining HashRate Chart -->
 					<MiningChartWidget/>
 					<!-- xMining HashRate Chart -->
-					
+
 				</div>
 				<!-- Console -->
 				<ConsoleWidget/>

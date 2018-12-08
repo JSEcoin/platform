@@ -2,8 +2,8 @@
 	<div class="miningOverview" style="margin:0px; padding:0px;">
 		<div class="row">
 			<!-- Platform Mining -->
-			<ContentWidget 
-				v-if="(todaysEarnings > 0)" titleTxt="Mined Today" 
+			<ContentWidget
+				v-if="(todaysEarnings > 0)" titleTxt="Mined Today"
 				class="mini hasFooter">
 				<div class="row" style="">
 					<div v-if="todaysEarnings >= 1" class="valueIconDisplay">
@@ -224,7 +224,7 @@ export default {
 	transform: rotateY(180deg);
 }
 
-.front .hash, 
+.front .hash,
 .back .hash {
 	margin:0px;
 }

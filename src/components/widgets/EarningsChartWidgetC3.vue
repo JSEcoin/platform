@@ -1,7 +1,7 @@
 <template>
 	<div v-if="hasData">
 		<div class="hr"><hr /></div>
-		
+
 		<div id="JSE-earningsChart"></div>
 	</div>
 </template>
@@ -75,46 +75,46 @@ export default {
 					//if(points[0][1] < points[1][1] || points[0][0] > points[1][0] ) {
 					//	barRadius = barRadius*-1;
 					//}
-					if (((points[0][1] === points[1][1]) && (points[1][1]=== points[2][1]) && (points[2][1] === points[3][1])) ||
-						((points[0][0] === points[1][0]) && (points[1][0]=== points[2][0]) && (points[2][0] === points[3][0]))) {
-						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-						'L' + points[1][indexX] + ',' + (points[1][indexY]) + ' ' +
-						'L' + (points[2][indexX]) + ',' + points[2][indexY] + ' ' +
-						'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-						'z';
+					if (((points[0][1] === points[1][1]) && (points[1][1]=== points[2][1]) && (points[2][1] === points[3][1]))
+						|| ((points[0][0] === points[1][0]) && (points[1][0]=== points[2][0]) && (points[2][0] === points[3][0]))) {
+						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+						+ 'L' + points[1][indexX] + ',' + (points[1][indexY]) + ' '
+						+ 'L' + (points[2][indexX]) + ',' + points[2][indexY] + ' '
+						+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+						+ 'z';
 						return path;
 					}
 					if (lastGrps.indexOf(d.id) > -1 && (config.data_order === null)) {
-						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-						'L' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' ' +
-						'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + (points[1][indexX]+barRadius) + ',' + points[1][indexY] + ' ' +
-						'L' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' ' +
-						'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + points[2][indexX] + ',' + (points[2][indexY]+barRadius) + ' ' +
-						'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-						'z';
+						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+						+ 'L' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' '
+						+ 'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + (points[1][indexX]+barRadius) + ',' + points[1][indexY] + ' '
+						+ 'L' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' '
+						+ 'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + points[2][indexX] + ',' + (points[2][indexY]+barRadius) + ' '
+						+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+						+ 'z';
 						if (config.axis_rotated) {
-							path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-							'L' + (points[1][indexX]-barRadius) + ',' + points[1][indexY] + ' ' +
-							'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' ' +
-							'L' + points[2][indexX] + ',' + (points[2][indexY]-barRadius) + ' ' +
-							'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' ' +
-							'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-							'z';
+							path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+							+ 'L' + (points[1][indexX]-barRadius) + ',' + points[1][indexY] + ' '
+							+ 'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' '
+							+ 'L' + points[2][indexX] + ',' + (points[2][indexY]-barRadius) + ' '
+							+ 'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' '
+							+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+							+ 'z';
 						}
 					} else {
-						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-						'L' + points[1][indexX] + ',' + (points[1][indexY]) + ' ' +
-						'L' + (points[2][indexX]) + ',' + points[2][indexY] + ' ' +
-						'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-						'z';
+						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+						+ 'L' + points[1][indexX] + ',' + (points[1][indexY]) + ' '
+						+ 'L' + (points[2][indexX]) + ',' + points[2][indexY] + ' '
+						+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+						+ 'z';
 						if (barRadiusAll) {
-							path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-							'L' + (points[1][indexX]+barRadius) + ',' + (points[1][indexY]) + ' ' +
-							'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + (points[1][indexX]) + ',' + (points[1][indexY]+barRadius) + ' ' +
-							'L' + (points[2][indexX]) + ',' + (points[2][indexY]-barRadius) + ' ' +
-							'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + (points[2][indexX]+barRadius) + ',' + (points[2][indexY]) + ' ' +
-							'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-							'z';
+							path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+							+ 'L' + (points[1][indexX]+barRadius) + ',' + (points[1][indexY]) + ' '
+							+ 'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + (points[1][indexX]) + ',' + (points[1][indexY]+barRadius) + ' '
+							+ 'L' + (points[2][indexX]) + ',' + (points[2][indexY]-barRadius) + ' '
+							+ 'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + (points[2][indexX]+barRadius) + ',' + (points[2][indexY]) + ' '
+							+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+							+ 'z';
 						}
 					}
 				} else {
@@ -123,21 +123,21 @@ export default {
 					'L' + (points[2][indexX]) + ',' + points[2][indexY] + ' ' +
 					'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
 					'z';*/
-					path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-					'L' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' ' +
-					'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + (points[1][indexX]+barRadius) + ',' + points[1][indexY] + ' ' +
-					'L' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' ' +
-					'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + points[2][indexX] + ',' + (points[2][indexY]+barRadius) + ' ' +
-					'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-					'z';
+					path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+					+ 'L' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' '
+					+ 'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + (points[1][indexX]+barRadius) + ',' + points[1][indexY] + ' '
+					+ 'L' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' '
+					+ 'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + points[2][indexX] + ',' + (points[2][indexY]+barRadius) + ' '
+					+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+					+ 'z';
 					if (config.axis_rotated) {
-						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' ' +
-						'L' + (points[1][indexX]-barRadius) + ',' + points[1][indexY] + ' ' +
-						'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' ' +
-						'L' + points[2][indexX] + ',' + (points[2][indexY]-barRadius) + ' ' +
-						'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' ' +
-						'L' + points[3][indexX] + ',' + points[3][indexY] + ' ' +
-						'z';
+						path = 'M ' + points[0][indexX] + ',' + points[0][indexY] + ' '
+						+ 'L' + (points[1][indexX]-barRadius) + ',' + points[1][indexY] + ' '
+						+ 'Q' + points[1][indexX] + ',' + points[1][indexY] + ' ' + points[1][indexX] + ',' + (points[1][indexY]+barRadius) + ' '
+						+ 'L' + points[2][indexX] + ',' + (points[2][indexY]-barRadius) + ' '
+						+ 'Q' + points[2][indexX] + ',' + points[2][indexY] + ' ' + (points[2][indexX]-barRadius) + ',' + points[2][indexY] + ' '
+						+ 'L' + points[3][indexX] + ',' + points[3][indexY] + ' '
+						+ 'z';
 					}
 				}
 				return path;
@@ -340,7 +340,7 @@ export default {
 .light .c3-line-Hash-Rate {
 	stroke: #88bbc8 !important
 }
-.light #JSE-earningsChart.c3 .c3-event-rects, 
+.light #JSE-earningsChart.c3 .c3-event-rects,
 .night #JSE-earningsChart.c3 .c3-event-rects {
 	fill-opacity: 0 !important;
 	background:red;

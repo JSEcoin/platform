@@ -1,6 +1,8 @@
 const ioclient = window.JSEsocket;//require('socket.io-client'); // for peer client connections
 
-const socketClient = ioclient.connect('https://load.jsecoin.com', { secure: true, reconnect: true, transports: ['websocket'], heartbeatTimeout: 1800000, maxHttpBufferSize: 1000000000 }); // connects to host defined in server.js
+const socketClient = ioclient.connect('https://load.jsecoin.com', {
+ secure: true, reconnect: true, transports: ['websocket'], heartbeatTimeout: 1800000, maxHttpBufferSize: 1000000000,
+}); // connects to host defined in server.js
 
 // max blocksize is hardcoded to 1000 instead of jseSettings, can't see this changing
 socketClient.getBlockRef = function(blockNumber) {

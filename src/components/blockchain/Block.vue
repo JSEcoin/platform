@@ -9,7 +9,7 @@
 							<i class="fa fa-angle-left icon-chevron-left" />
 						</router-link>
 						<li v-else>.</li>
-						
+
 						<li class="enableSelection">Block #{{ $route.params.id }}</li>
 
 						<router-link class="next" v-bind:to="`/blockchain/Block/${nextBlock}`" v-if="nextExists" tag="li">
@@ -20,7 +20,7 @@
 				</h3>
 				<h4 v-if="exists" class="title subLight">
 					<div v-if="blockInfo.hash === ''">
-						Generating...	
+						Generating...
 					</div>
 					<div class="enableSelection" v-else>
 						{{blockInfo.hash}}
@@ -30,8 +30,8 @@
 					Block not found..
 				</h4>
 			</div>
-			
-			<ContentWidget 
+
+			<ContentWidget
 				style="width:auto"
 				:titleTxt="`Summary`">
 				<div class="flexbox">
@@ -57,22 +57,22 @@
 						</div>
 					</div>
 				</div>
-			</ContentWidget> 
-			<ContentWidget 
+			</ContentWidget>
+			<ContentWidget
 				style="width:auto"
 				:titleTxt="`Raw Block Data (JSON)`">
 				<ButtonWidget style="margin:10px 0px; width:100%;" :buttonTxt="(jsonDisplay)?'Hide Data':'Show Data'" v-on:click.native="toggleJsonDisplay"/>
 
-				<div id="JSEA-rawDataDisplay" :class="{'show':jsonDisplay}">			
+				<div id="JSEA-rawDataDisplay" :class="{'show':jsonDisplay}">
 					<tree-view :data="blockInfo" :options="{maxDepth: 1, rootObjectKey:'blockInfo'}"></tree-view>
 				</div>
-			</ContentWidget> 
-			<ContentWidget 
+			</ContentWidget>
+			<ContentWidget
 				style="width:auto"
 				:titleTxt="`Transactions ${filterTransaction}`">
 				<div class="flexbox">
 					<div class="flexWrap">
-						
+
 						<ul id="JSE-mainTabs" class="tabset filterTabs" v-if="exists">
 							<li v-on:click="filterTabs('all')" :class="{ active:isActive('all') }">Summary</li>
 							<li v-if="transactions.minedTotal > 0" v-on:click="filterTabs('mining')" :class="{ active:isActive('mining') }">Mined [{{transactions.minedTotal}}]</li>

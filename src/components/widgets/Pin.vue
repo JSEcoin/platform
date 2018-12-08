@@ -21,7 +21,7 @@
 			<input class="pin" :class="{'show':form.showPin.val11}" maxlength="1" :type="inputType" placeholder="" ref="pinCode11" @touchend="focusInput('val11', 11, $event)" @keyup="focusInput('val11', 11, $event)" v-model="form.pinCode.val11" />
 			<input class="pin" :class="{'show':form.showPin.val12}" maxlength="1" :type="inputType" placeholder="" ref="pinCode12" @touchend="focusInput('val12', 12, $event)" @keyup="focusInput('val12', 12, $event)" v-model="form.pinCode.val12" />
 		</label>
-		
+
 		<!-- Transfer Funds Button -->
 		<div class="row" :class="{'justifyCenter':!enableCancelButton}">
 			<ButtonWidget style="margin:10px;" v-on:click.native="transfer()" :buttonTxt="submitButtonTxt"/>

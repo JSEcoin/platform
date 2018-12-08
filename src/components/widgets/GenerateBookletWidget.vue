@@ -1,5 +1,5 @@
 <template>
-	<ButtonWidget 
+	<ButtonWidget
 		v-on:click.native="generatePDFCoinBook"
 		buttonTxt="Generate Booklet"
 		v-bind="{

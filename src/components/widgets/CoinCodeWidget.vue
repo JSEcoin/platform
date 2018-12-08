@@ -65,7 +65,7 @@ export default {
 .coinArea {
 	padding: 4px 8px;
 	border-radius: 3px;
-	display:flex; 
+	display:flex;
 	/*line-height:initial;*/
 	line-height: 22px;
 	flex-grow: 1;

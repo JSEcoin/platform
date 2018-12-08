@@ -1,11 +1,11 @@
 <template>
 	<AppWrapperWidget>
 		<ScrollWidget v-bind="{noNav:true}">
-			
+
 			<!-- Animation to display during server requests -->
 			<SpinnerWidget :class="{active:loading}"/>
 			<!-- xAnimation to display during server requests -->
-			
+
 			<ContentWidget :class="{hide:loading}"
 				titleTxt="Setup Security Pin Code">
 				<div>
@@ -13,13 +13,13 @@
 
 						<!-- pin widget display -->
 						<Pin v-on:submit-pin="setupPIN" v-bind="{enableCancelButton:false, submitButtonTxt:'Set Pin'}" @keypress="closeError">
-							
+
 							<!-- register error display -->
 							<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px auto;" />
 							<!-- xregister error display -->
 							<p class="info">
-								Please note that pin numbers can not be recovered so please write it down and keep it somewhere safe 
-								in case you forget. If you lose your pin number you will not be able to withdraw or transfer funds 
+								Please note that pin numbers can not be recovered so please write it down and keep it somewhere safe
+								in case you forget. If you lose your pin number you will not be able to withdraw or transfer funds
 								from your account.
 							</p>
 							<p>

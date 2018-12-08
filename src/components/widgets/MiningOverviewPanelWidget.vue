@@ -1,9 +1,9 @@
 <template>
 	<div class="miningOverview row">
 		<!-- Current Balance -->
-		<ContentWidget 
+		<ContentWidget
 			v-if="((balanceMinor > 0) || (balanceMajor >= 1))"
-			titleTxt="Current Balance" 
+			titleTxt="Current Balance"
 			class="mini hasFooter">
 			<div class="row" style="">
 				<div v-if="balanceMajor >= 1" class="valueIconDisplay">
@@ -289,7 +289,7 @@ export default {
 	transform: rotateY(180deg);
 }
 
-.front .hash, 
+.front .hash,
 .back .hash {
 	margin:0px;
 }

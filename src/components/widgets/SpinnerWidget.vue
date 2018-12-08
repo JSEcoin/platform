@@ -1,7 +1,7 @@
 <template>
 	<div class="Spinners">
 		<span class="Spinner Spinner--pulse"></span>
-	</div>	
+	</div>
 </template>
 
 <script>
@@ -37,8 +37,6 @@ export default {
 .Spinners .Spinner {
   margin: 2.75rem;
 }
-
-
 
 
 /* spinner globals */

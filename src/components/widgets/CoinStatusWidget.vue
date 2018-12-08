@@ -29,7 +29,7 @@ export default {
 	color:#606060;
 }
 .night .availableCoin {
-	background:#101219; 
+	background:#101219;
 	color:#00a6c4
 }
 
@@ -42,17 +42,17 @@ export default {
 	color:#00a6c4
 }
 .usedCoin {
-	padding:4px 8px; 
-	font-size:0.75em; 
+	padding:4px 8px;
+	font-size:0.75em;
 	font-weight:bold;
-	line-height:initial; 
+	line-height:initial;
 	border-radius:3px;
 }
 .availableCoin {
-	padding:4px 8px; 
-	font-size:0.75em; 
+	padding:4px 8px;
+	font-size:0.75em;
 	font-weight:bold;
-	line-height:initial; 
-	border-radius:3px; 
+	line-height:initial;
+	border-radius:3px;
 }
 </style>

@@ -3,7 +3,7 @@
 		<LoadingDots v-if="loading" />
 		<i v-if="((iconClassName) && (!loading))" :class="iconClassName"></i>
 		<span v-if="!loading">{{buttonTxt}}</span>
-	</button>	
+	</button>
 </template>
 
 <script>
@@ -165,14 +165,14 @@ button.red:hover {
 
 .night .green .miningIco,
 .night .miningIco {
-	background-color: #000; 
+	background-color: #000;
 }
 
 .night .red .miningIco,
 .night .green:hover .miningIco,
 .night .red:hover  .miningIco,
 .light .miningIco {
-	background-color: #fff; 
+	background-color: #fff;
 }
 
 .miningIco {

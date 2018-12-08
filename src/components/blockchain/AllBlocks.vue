@@ -2,9 +2,9 @@
 	<AppWrapperWidget>
 		<NavWidget activeNav="allBlocks"></NavWidget>
 		<ScrollWidget v-bind="{noSubNav:true}">
-			<ContentWidget 
+			<ContentWidget
 				style="width:auto; padding-bottom:50px;">
-				<div class="box hasFooterButton">					
+				<div class="box hasFooterButton">
 					<div class="dataset">
 						<table>
 						<thead>

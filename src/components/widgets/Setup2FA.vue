@@ -12,8 +12,8 @@
 				</div>
 				<p style="margin-top:0px;">
 					Scan with <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en" target="_Blank">Google Authenticator</a>
-					or 
-					<a href="https://authy.com/download/" target="_Blank">Authy</a> 
+					or
+					<a href="https://authy.com/download/" target="_Blank">Authy</a>
 					App
 				</p>
 				<div class="warningInfo">
@@ -30,11 +30,11 @@
 				<div>
 					<!-- error display -->
 					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px 20px;" />
-					
+
 					<TwoFA id="JSEA-2FA"
-						v-on:key-up="updateKey" 
+						v-on:key-up="updateKey"
 						v-on:submit-code="submitCode" />
-					
+
 					<ButtonWidget style="width:auto" buttonTxt="Setup Two Factor Authentication" v-on:click.native="onSubmit" />
 				</div>
 			</div>
@@ -209,7 +209,7 @@ a {
     position: relative;
     padding: 0px 10px;
     margin: 10px 20px;
-    text-align: left;	
+    text-align: left;
     display: flex;
 }
 .warningInfoIcon {

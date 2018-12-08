@@ -109,10 +109,10 @@ export default {
 	color:#5d7892;
 	font-size:0.45em;
 }
-@keyframes spin { 
-	100% { 
-		-webkit-transform: rotate(360deg); 
-		transform:rotate(360deg); 
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform:rotate(360deg);
 	}
 }
 #JSEA-loadingText {

@@ -4,11 +4,11 @@
 		<ScrollWidget>
 			<div id="FB-dynamicContentRegion">
 				<!-- Balance -->
-				<ContentWidget 
-					titleTxt="Balance" 
+				<ContentWidget
+					titleTxt="Balance"
 					:infoPanelTxt="`Updated ${fromNow}`"
 					style="padding-bottom:50px;">
-					<OverviewCoinDispayWidget class="dashCoinTotalDisplay" style="font-size:0.8em;" 
+					<OverviewCoinDispayWidget class="dashCoinTotalDisplay" style="font-size:0.8em;"
 						:coinTotal="`${balance}`"
 						:coinClass="{gold:balance >= 1, silver:balance < 1}"></OverviewCoinDispayWidget>
 					<template slot="footer">
@@ -23,7 +23,7 @@
 				<!-- xBalance -->
 
 				<!-- Rewards Pending -->
-				<ContentWidget 
+				<ContentWidget
 					titleTxt="Rewards Pending"
 					:infoPanelTxt="`${pendingTotal}`"
 					:infoPanelIcoClassName="{gold:pendingTotal >= 1, silver:pendingTotal < 1}">
@@ -32,7 +32,7 @@
 				<!-- xRewards Pending -->
 
 				<!-- Mining Overview -->
-				<ContentWidget 
+				<ContentWidget
 					titleTxt="Mining Overview"
 					:infoPanelTxt="`Registered ${registrationDate}`">
 					<MinerPanelWidget />
@@ -41,7 +41,7 @@
 
 				<div>
 					<!-- Payment Overview -->
-					<ContentWidget 
+					<ContentWidget
 						titleTxt="Payment Overview"
 						:infoPanelTxt="`${pendingNextPayment}`"
 						:infoPanelIcoClassName="{gold:pendingNextPayment >= 1, silver:pendingNextPayment < 1}">
@@ -234,14 +234,14 @@ export default {
 	background: #101219;
 }
 .night .icoEnding dt {
-	color:#fff; 
+	color:#fff;
 	background:#000;
 }
-	
+
 .light .icoEnding {
 	background: #3598db;
 }
-	
+
 .light .icoEnding dt {
 	color:#fff;
 	background:rgba(255,255,255,0.4);
@@ -266,7 +266,7 @@ export default {
 .night .dashCoinTotalDisplay {
 	background: #1c1e28;
 }
-	
+
 .light .dashCoinTotalDisplay {
 	background: #fafafa;
 }

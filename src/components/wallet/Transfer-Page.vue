@@ -3,10 +3,10 @@
 		<NavWidget activeNav="wallet" activeSubNav="transfer"></NavWidget>
 		<ScrollWidget>
 			<!-- Transfer JSE -->
-			<ContentWidget 
-				titleTxt="Transfer JSE" 
-				contentPadding="16px 10px 90px 10px" 
-				:infoPanelTxt="balance" 
+			<ContentWidget
+				titleTxt="Transfer JSE"
+				contentPadding="16px 10px 90px 10px"
+				:infoPanelTxt="balance"
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
 
 				<!-- Confirm Account -->
@@ -16,16 +16,16 @@
 				<!-- Transaction delay display -->
 				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
-				
+
 				<!-- Form Error Msg -->
 				<FormErrorDisplayWidget :errorMsg="form.error.msg" v-on:click.native="clearErrorDisplay" />
 				<!-- xForm Error Msg -->
-				
+
 				<div v-if="!showPin">
 					<p><b>Send funds to:</b></p>
 					<div class="row" style="display:flex;">
 						<!-- Email Input -->
-						<InputWidget 
+						<InputWidget
 							v-model="form.email.val"
 							placeholder="Email *"
 							name="email"
@@ -34,9 +34,9 @@
 							:flag="!form.email.valid || form.email.flag"
 							@keyup="keyWatch('email')" />
 						<!-- xEmail Input -->
-						
+
 						<!-- Amount Input -->
-						<InputWidget 
+						<InputWidget
 							v-model="form.amount.val"
 							placeholder="Amount *"
 							name="amount"
@@ -49,7 +49,7 @@
 					</div>
 					<div class="row">
 						<!-- Reference Input -->
-						<InputWidget 
+						<InputWidget
 							v-model="form.reference.val"
 							placeholder="Reference (optional)"
 							name="reference"
@@ -67,7 +67,7 @@
 				<div v-else>
 					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
 						<Pin inputType="password" v-on:submit-pin="signData">
-							
+
 							<p>
 								Your pin is 4-12 characters long<br />
 								<i>Please make sure you have set it within the web platform interface.</i>
@@ -78,8 +78,8 @@
 				<!-- Footer Info Txt -->
 				<template slot="footer" v-if="!showPin">
 					<p>
-						If you would like to test the transfer you can send a small amount to 
-						<span class="highlightTxt" v-on:click="updateEmail('charity@jsecoin.com')">charity@jsecoin.com</span> 
+						If you would like to test the transfer you can send a small amount to
+						<span class="highlightTxt" v-on:click="updateEmail('charity@jsecoin.com')">charity@jsecoin.com</span>
 						and we will do something good with it after the ICO.
 					</p>
 				</template>

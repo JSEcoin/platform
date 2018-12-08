@@ -72,10 +72,10 @@ export default {
 	animation:spin 1s linear infinite;
 	margin-top:-10px;
 }
-@keyframes spin { 
-	100% { 
-		-webkit-transform: rotate(360deg); 
-		transform:rotate(360deg); 
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform:rotate(360deg);
 	}
 }
 #JSEA-loadingText {

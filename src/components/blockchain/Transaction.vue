@@ -1,20 +1,20 @@
 <template>
 	<AppWrapperWidget>
 		<NavWidget activeNav="transactionInfo"></NavWidget>
-		<ScrollWidget v-bind="{noSubNav:true}">			
-			<ContentWidget 
+		<ScrollWidget v-bind="{noSubNav:true}">
+			<ContentWidget
 				style="width:auto"
 				:titleTxt="`${transaction.command} Transaction`"
 				:infoPanelTxt="`Block ${$route.params.blockVal}`">
 				<div class="flexbox">
 					<div class="flexWrap">
-						<div class="box">						
+						<div class="box">
 							<div class="summaryPanel" v-if="(transaction.command === 'mining')">
 								<div><label>Type</label><span>{{ transaction.command }}</span></div>
 								<div><label>User</label><span>{{ transaction.user1 }}</span></div>
 								<div><label>Mined</label><span>{{ transaction.value }}</span></div>
 							</div>
-						
+
 							<div class="summaryPanel" v-if="(transaction.command === 'export')">
 								<div><label>Type</label><span>{{ transaction.command }}</span></div>
 								<div><label>Public Key</label><span class="enableSelection"><i class="fa fa-copy icon-copy" v-clipboard:copy="transaction.coinCodePublicKey"></i> {{ transaction.coinCodePublicKey }}</span></div>
@@ -26,7 +26,7 @@
 								<div><label>Exported By</label><span>{{ transaction.user1 }}</span></div>
 								<div><label>JSE</label><span>{{ transaction.value }}</span></div>
 							</div>
-						
+
 							<div class="summaryPanel" v-if="(transaction.command === 'import')">
 								<div><label>Type</label><span>{{ transaction.command }}</span></div>
 								<div><label>Coin Code</label><span class="enableSelection"><i class="fa fa-copy icon-copy" v-clipboard:copy="transaction.coinCode"></i> {{ transaction.coinCode }}</span></div>
@@ -35,7 +35,7 @@
 								<div><label>Imported By</label><span>{{ transaction.user1 }}</span></div>
 								<div><label>JSE</label><span>{{ transaction.value }}</span></div>
 							</div>
-						
+
 							<div class="summaryPanel" v-if="(transaction.command === 'transfer')">
 								<div><label>Type</label><span>{{ transaction.command }}</span></div>
 								<!--<div><label>Data</label><span>{{ transaction.data }}</span></div>-->
@@ -48,7 +48,7 @@
 								<div><label>To</label><span>{{ transaction.user2 }}</span></div>
 								<div><label>Value</label><span>{{ transaction.value }} JSE</span></div>
 							</div>
-						
+
 							<div v-if="(transaction.command === 'summary')">
 								<div class="summaryPanel">
 									<div><label>Type</label><span>{{ transaction.command }}</span></div>
@@ -58,9 +58,9 @@
 								<ul class="pageData">
 									<li v-on:click="prev()" v-if="prevExists()"><i class="fa fa-angle-left icon-chevron-left" /></li>
 									<li v-else>.</li>
-									
+
 									<li>{{page*pageBy}}-{{(page*pageBy)+pageBy}} of <span>{{transaction.data.length-1}}</span></li>
-									
+
 									<li v-on:click="next()" v-if="nextExists()"><i class="fa fa-angle-right icon-chevron-right" /></li>
 									<li v-else>.</li>
 								</ul>
@@ -70,9 +70,9 @@
 								<ul class="pageData">
 									<li v-on:click="prev()" v-if="prevExists()"><i class="fa fa-angle-left icon-chevron-left" /></li>
 									<li v-else>.</li>
-									
+
 									<li>{{page*pageBy}}-{{(page*pageBy)+pageBy}} of <span>{{transaction.data.length-1}}</span></li>
-									
+
 									<li v-on:click="next()" v-if="nextExists()"><i class="fa fa-angle-right icon-chevron-right" /></li>
 									<li v-else>.</li>
 								</ul>
@@ -90,7 +90,7 @@
 				style="width:auto"
 				:titleTxt="`Data`">
 				<div class="flexWrap">
-					<div class="box">						
+					<div class="box">
 						<tree-view :data="transaction" :options="{maxDepth: 0, rootObjectKey:'data'}"></tree-view>
 					</div>
 				</div>
@@ -262,13 +262,13 @@ export default {
 	border-radius: 3px;
 }
 
-.fa-angle-right, 
+.fa-angle-right,
 .fa-angle-left {
     cursor: pointer !important;
     color: #8ca8d7;
 }
 
-.fa-angle-right:hover, 
+.fa-angle-right:hover,
 .fa-angle-left:hover {
 	background: #1a6bb0;
     color: #fff;

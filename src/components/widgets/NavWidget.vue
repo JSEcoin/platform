@@ -34,8 +34,8 @@
 				</router-link>
 			</ul>
 		</nav>
-		
-		<nav v-if="activeSubNav" id="JSEA-topSubLvlNav" class="cf">			
+
+		<nav v-if="activeSubNav" id="JSEA-topSubLvlNav" class="cf">
 			<ul v-if="activeNav === 'test'">
 				<li>Sub Test 1</li>
 				<li class="active">Sub Test 2</li>
@@ -68,7 +68,7 @@
 					Transactions
 				</router-link>
 			</ul>
-			
+
 			<ul v-if="activeNav === 'mine'">
 				<router-link v-bind:to="`/mine`" tag="li" :class="{'active': activeSubNav === 'mine'}">
 					Platform Miner
@@ -128,7 +128,7 @@ export default {
 
 .platformWeb.max #JSEA-topSubLvlNav li {
 	padding: 6px 12px;
-	flex-grow: unset;		
+	flex-grow: unset;
 }
 
 .platformWeb.max #JSEA-topLvlNav li {

@@ -11,11 +11,11 @@
 						<h2 id="JSEA-registerHeader" class="center">Registration</h2>
 						<h4 id="JSEA-registerSubHeader" class="center">Setup your account</h4>
 					</div>
-					
+
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
 					<!-- xAnimation to display during server requests -->
-					
+
 					<!-- register error display -->
 					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
 					<!-- xregister error display -->
@@ -29,7 +29,7 @@
 								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.fullName.val"
 											placeholder="Full Name *"
 											name="fullName"
@@ -43,7 +43,7 @@
 									<!-- email Input -->
 									<div class="row" style="flex-wrap: wrap;">
 										<div class="col">
-											<InputWidget 
+											<InputWidget
 												v-model="form.email.val"
 												placeholder="Email *"
 												name="email"
@@ -54,7 +54,7 @@
 												@keyup="keyWatch('email')" />
 										</div>
 										<div class="col">
-											<InputWidget 
+											<InputWidget
 												v-model="form.confirmEmail.val"
 												placeholder="Confirm Email *"
 												name="confirmEmail"
@@ -69,7 +69,7 @@
 									<!-- Password Input -->
 									<div class="row">
 										<div class="col">
-											<InputWidget 
+											<InputWidget
 												inputType="password"
 												newpassword="new-password"
 												v-bind="{hideShow: true, passwordStrength:true}"
@@ -86,14 +86,14 @@
 									<!-- xPassword Input -->
 								</div>
 							</ContentWidget>
-									
+
 							<ContentWidget class="registerFormContainer">
 								<h4 class="title">Address Information</h4>
-								
+
 								<div class="formWrapper">
 									<!-- Postal Address Line 1 Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.addressLine1.val"
 											placeholder="Address Line 1"
 											name="Address Line 1"
@@ -106,7 +106,7 @@
 									<!-- xPostal Address Line 1 Input -->
 									<!-- Postal Address Line 2 Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.addressLine2.val"
 											placeholder="Address Line 2"
 											name="addressLine2"
@@ -119,7 +119,7 @@
 									<!-- xPostal Address Line 2 Input -->
 									<!-- Postal City Town Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.cityTown.val"
 											placeholder="City / Town"
 											name="cityTown"
@@ -133,7 +133,7 @@
 									<div class="row" style="flex-wrap: wrap;">
 										<div class="col">
 											<!-- Postal State Province Region Input -->
-											<InputWidget 
+											<InputWidget
 												v-model="form.stateProvinceRegion.val"
 												placeholder="State / Province / Region"
 												name="stateProvinceRegion"
@@ -146,7 +146,7 @@
 										</div>
 										<div class="col">
 											<!-- Postal Zip Postal Code Input -->
-											<InputWidget 
+											<InputWidget
 												v-model="form.zipPostalCode.val"
 												placeholder="Zip / Postal Code"
 												name="zipPostalCode"
@@ -160,7 +160,7 @@
 									</div>
 									<!-- Country Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											inputFieldType="select"
 											v-model="form.country.val"
 											placeholder="Country"
@@ -174,10 +174,10 @@
 									<!-- xCountry Input -->
 								</div>
 								<!-- xUser Pass register interface -->
-							</ContentWidget>	
+							</ContentWidget>
 
 							<ContentWidget class="registerFormContainer">
-								<h4 class="title">Terms of use</h4>	
+								<h4 class="title">Terms of use</h4>
 								<SettingsItemRowWidget style="border-radius:8px;" settingName="I agree by the terms and policy outlined on the JSEcoin Official Website.">
 									<ToggleSwitchWidget
 										v-model="acceptTerms"
@@ -187,14 +187,14 @@
 										}" />
 								</SettingsItemRowWidget>
 								<div class="hr" style="margin:10px;"></div>
-								<ButtonWidget 
+								<ButtonWidget
 									type="button"
 									v-bind="{isSmall:true}"
 									style="width:100%"
 									class="cancel"
 									buttonTxt="View Terms and Policy" v-on:click.native="openExternalWindow('https://jsecoin.com/en/legal/privacyPolicy')" />
-							</ContentWidget>			
-							
+							</ContentWidget>
+
 							<div class="row buttonRow" style="min-height:60px;">
 								<ButtonWidget :class="{'disable':!acceptTerms}" :disabled="!acceptTerms" type="submit"
 									buttonTxt="Register Account" style="margin-right:5px; margin-left:15px;" />
@@ -696,7 +696,7 @@ export default {
     background: #fff;
     box-shadow: rgba(210, 214, 217,1) 0px 1px 3px 0px !important;
     border-radius: 10px !important;
-}	
+}
 .max.night .registerFormContainer {
     background: #20222e;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6) !important;

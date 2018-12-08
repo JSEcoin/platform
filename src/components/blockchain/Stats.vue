@@ -5,7 +5,7 @@
 				JSE Statistics<br />
 				<span class="sub">Updated {{timestamp}}</span>
 			</h3>
-			
+
 			<div class="summaryPanel">
 				<div><label>Users Registered</label><span>{{users}}</span></div>
 				<div><label>Token Price</label><span>${{USDJSE}} USD</span></div>
@@ -23,7 +23,7 @@
 				<div><label>Days Since Launch</label><span>{{days}} days ago</span></div>
 			</div>
 		</div>
-		
+
 		<!--<button class="activeButton" onclick="location.href='https://platform.jsecoin.com/'">Buy JSE Coins</button>-->
 	</div>
 </template>

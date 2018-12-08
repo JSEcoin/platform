@@ -108,20 +108,16 @@ Vue.filter('toFixed', (num, asset) => {
   if (typeof asset === 'number') return Number(num).toFixed(asset);
   return Number(num).toFixed(asset === 'USDT' ? 3 : 8);
 });
-Vue.filter('toMoney', num => {
-  return Number(num)
+Vue.filter('toMoney', num => Number(num)
     .toFixed(0)
-    .replace(/./g, (c, i, a) => {
-      return i && c !== '.' && (a.length - i) % 3 === 0 ? ',' + c : c;
-    });
-});
+    .replace(/./g, (c, i, a) => (i && c !== '.' && (a.length - i) % 3 === 0 ? ',' + c : c)));
 
 // component for creating line chart
 Vue.component('linechart', {
   props: {
     width: { type: Number, default: 400, required: true },
     height: { type: Number, default: 40, required: true },
-    values: { type: Array, default: [], required: true }
+    values: { type: Array, default: [], required: true },
   },
   data() {
     return { cx: 0, cy: 0 };
@@ -131,47 +127,47 @@ Vue.component('linechart', {
       return '0 0 ' + this.width + ' ' + this.height;
     },
     chartPoints() {
-      let data = this.getPoints();
-      let last = data.length ? data[data.length - 1] : { x: 0, y: 0 };
-      let list = data.map(d => d.x - 10 + ',' + d.y);
+      const data = this.getPoints();
+      const last = data.length ? data[data.length - 1] : { x: 0, y: 0 };
+      const list = data.map(d => d.x - 10 + ',' + d.y);
       this.cx = last.x - 5;
       this.cy = last.y;
       return list.join(' ');
-    }
+    },
   },
   methods: {
     getPoints() {
       this.width = parseFloat(this.width) || 0;
       this.height = parseFloat(this.height) || 0;
-      let min = this.values.reduce(
+      const min = this.values.reduce(
         (min, val) => (val < min ? val : min),
-        this.values[0]
+        this.values[0],
       );
-      let max = this.values.reduce(
+      const max = this.values.reduce(
         (max, val) => (val > max ? val : max),
-        this.values[0]
+        this.values[0],
       );
-      let len = this.values.length;
-      let half = this.height / 2;
-      let range = max > min ? max - min : this.height;
-      let gap = len > 1 ? this.width / (len - 1) : 1;
-      let points = [];
+      const len = this.values.length;
+      const half = this.height / 2;
+      const range = max > min ? max - min : this.height;
+      const gap = len > 1 ? this.width / (len - 1) : 1;
+      const points = [];
 
       for (let i = 0; i < len; ++i) {
-        let d = this.values[i];
-        let val = 2 * ((d - min) / range - 0.5);
-        let x = i * gap;
-        let y = -val * half * 0.8 + half;
+        const d = this.values[i];
+        const val = 2 * ((d - min) / range - 0.5);
+        const x = i * gap;
+        const y = -val * half * 0.8 + half;
         points.push({ x, y });
       }
       return points;
-    }
+    },
   },
   template: `
   <svg :viewBox="viewBox" xmlns="http://www.w3.org/2000/svg">
     <polyline class="color" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" :points="chartPoints" />
     <circle class="color" :cx="cx" :cy="cy" r="4" fill="#fff" stroke="none" />
-  </svg>`
+  </svg>`,
 });
 
 /**
@@ -211,7 +207,7 @@ export default {
     // process coins list
     coinsList() {
       let list = this.coins.slice();
-      let search = this.search
+      const search = this.search
         .replace(/[^\s\w\-\.]+/g, '')
         .replace(/[\r\s\t\n]+/g, ' ')
         .trim();
@@ -220,7 +216,7 @@ export default {
         list = list.filter(i => i.asset === this.asset);
       }
       if (search && search.length > 1) {
-        let reg = new RegExp('^(' + search + ')', 'i');
+        const reg = new RegExp('^(' + search + ')', 'i');
         list = list.filter(i => reg.test(i.token));
       }
       if (this.sort) {
@@ -234,7 +230,7 @@ export default {
 
     // show socket connection loader
     loaderVisible() {
-      return this.status === 2 ? false : true;
+      return this.status !== 2;
     },
 
     // sort-by label for buttons, etc
@@ -257,7 +253,7 @@ export default {
         default:
           return 'Default';
       }
-    }
+    },
   },
 
   // custom methods
@@ -287,7 +283,7 @@ export default {
       this.status = 1; // open
       console.info(
         'WebSocketInfo:',
-        'Connection open (' + this.endpoint + ').'
+        'Connection open (' + this.endpoint + ').',
       );
     },
 
@@ -296,7 +292,7 @@ export default {
       this.status = 0; // closed
       console.info(
         'WebSocketInfo:',
-        'Connection closed (' + this.endpoint + ').'
+        'Connection closed (' + this.endpoint + ').',
       );
       setTimeout(this.sockInit, 10000); // try again
     },
@@ -310,17 +306,16 @@ export default {
 
     // process data from socket
     onSockData(e) {
-      let list = JSON.parse(e.data) || [];
+      const list = JSON.parse(e.data) || [];
 
-      for (let item of list) {
+      for (const item of list) {
         // cleanup data for each coin
-        let c = this.getCoinData(item);
+        const c = this.getCoinData(item);
         // keep to up 100 previous close prices in hostiry for each coin
         c.history = this.cache.hasOwnProperty(c.symbol)
           ? this.cache[c.symbol].history
           : this.fakeHistory(c.close);
-        if (c.history.length > 100)
-          c.history = c.history.slice(c.history.length - 100);
+        if (c.history.length > 100) c.history = c.history.slice(c.history.length - 100);
         c.history.push(c.close);
         // add coin data to cache
         this.cache[c.symbol] = c;
@@ -356,13 +351,13 @@ export default {
 
     // come up with some fake history prices to fill in the initial line chart
     fakeHistory(close) {
-      let num = close * 0.0001; // faction of current price
-      let min = -Math.abs(num);
-      let max = Math.abs(num);
-      let out = [];
+      const num = close * 0.0001; // faction of current price
+      const min = -Math.abs(num);
+      const max = Math.abs(num);
+      const out = [];
 
       for (let i = 0; i < 50; ++i) {
-        let rand = Math.random() * (max - min) + min;
+        const rand = Math.random() * (max - min) + min;
         out.push(close + rand);
       }
       return out;
@@ -370,27 +365,27 @@ export default {
 
     // finalize data for each coin from socket
     getCoinData(item) {
-      let reg = /^([A-Z]+)(BTC|ETH|BNB|USDT|TUSD)$/;
-      let symbol = String(item.s)
+      const reg = /^([A-Z]+)(BTC|ETH|BNB|USDT|TUSD)$/;
+      const symbol = String(item.s)
         .replace(/[^\w\-]+/g, '')
         .toUpperCase();
-      let token = symbol.replace(reg, '$1');
-      let asset = symbol.replace(reg, '$2');
-      let name = token;
-      let pair = token + '/' + asset;
-      let icon = this.iconbase + token.toLowerCase() + '_.png';
-      let open = parseFloat(item.o);
-      let high = parseFloat(item.h);
-      let low = parseFloat(item.l);
-      let close = parseFloat(item.c);
-      let change = parseFloat(item.p);
-      let percent = parseFloat(item.P);
-      let trades = parseInt(item.n);
-      let tokenVolume = Math.round(item.v);
-      let assetVolume = Math.round(item.q);
-      let sign = percent >= 0 ? '+' : '';
-      let arrow = percent >= 0 ? '▲' : '▼';
-      let info = [
+      const token = symbol.replace(reg, '$1');
+      const asset = symbol.replace(reg, '$2');
+      const name = token;
+      const pair = token + '/' + asset;
+      const icon = this.iconbase + token.toLowerCase() + '_.png';
+      const open = parseFloat(item.o);
+      const high = parseFloat(item.h);
+      const low = parseFloat(item.l);
+      const close = parseFloat(item.c);
+      const change = parseFloat(item.p);
+      const percent = parseFloat(item.P);
+      const trades = parseInt(item.n);
+      const tokenVolume = Math.round(item.v);
+      const assetVolume = Math.round(item.q);
+      const sign = percent >= 0 ? '+' : '';
+      const arrow = percent >= 0 ? '▲' : '▼';
+      const info = [
         pair,
         close.toFixed(8),
         '(',
@@ -398,7 +393,7 @@ export default {
         sign + percent.toFixed(2) + '%',
         '|',
         sign + change.toFixed(8),
-        ')'
+        ')',
       ].join(' ');
       let style = '';
 
@@ -424,7 +419,7 @@ export default {
         sign,
         arrow,
         style,
-        info
+        info,
       };
     },
 
@@ -449,7 +444,7 @@ export default {
         }
         return 0;
       });
-    }
+    },
   },
 
   // app mounted
@@ -460,7 +455,7 @@ export default {
   // app destroyed
   destroyed() {
     this.sockClose();
-  }
+  },
 };
 </script>
 
@@ -1005,4 +1000,3 @@ input, button, select, option, textarea {
 }
 
 </style>
-

@@ -87,7 +87,7 @@
 							}" />
 					</SettingsItemRowWidget>
 					<!-- xAuto Login -->
-					
+
 					<!-- Auto Mine -->
 					<SettingsItemRowWidget settingName="Auto Mine" v-if="((!$store.getters.isAppGoogle) && (confirmed))" infoDesc="Starts the mining process as soon as you login to the platform.">
 						<ToggleSwitchWidget
@@ -109,7 +109,7 @@
 					<!-- Remember Username -->
 				</OptionsListWrapperWidget>
 				<!-- xLogin -->
-				
+
 				<!-- 2FA -->
 				<OptionsListWrapperWidget titleTxt="Security">
 					<SettingsItemRowWidget settingName="Two Factor Authentication" infoDesc="Enhances Security and enables Two Factor Authentication">
@@ -121,7 +121,7 @@
 					</SettingsItemRowWidget>
 				</OptionsListWrapperWidget>
 				<!-- x2FA -->
-				
+
 				<!-- Notifications -->
 				<OptionsListWrapperWidget titleTxt="Email Notifications" infoDesc="Enables or disable email notifications">
 					<SettingsItemRowWidget settingName="Transactions">

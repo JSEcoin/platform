@@ -12,11 +12,11 @@
 				<div>
 					<!-- error display -->
 					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px 20px;" />
-					
+
 					<TwoFA id="JSEA-2FA"
-						v-on:key-up="updateKey" 
+						v-on:key-up="updateKey"
 						v-on:submit-code="submitCode" />
-					
+
 					<ButtonWidget style="width:auto" buttonTxt="Disable Two Factor Authentication" v-on:click.native="onSubmit2FA" />
 				</div>
 			</div>

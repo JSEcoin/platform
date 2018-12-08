@@ -3,9 +3,9 @@
 		<NavWidget activeNav="wallet" activeSubNav="export"></NavWidget>
 		<ScrollWidget>
 			<!-- Export Coins -->
-			<ContentWidget 
-				titleTxt="Export Coins" 
-				:infoPanelTxt="balance" 
+			<ContentWidget
+				titleTxt="Export Coins"
+				:infoPanelTxt="balance"
 				:infoPanelIcoClassName="{gold:balance >= 1, silver:balance < 1}">
 
 				<!-- Confirm Account -->
@@ -15,15 +15,15 @@
 				<!-- Transaction delay display -->
 				<LoadingDelayMaskWidget :msg="notificationMsg" />
 				<!-- xTransaction delay display -->
-				
+
 				<!-- Form Error Msg -->
 				<FormErrorDisplayWidget :errorMsg="form.error.msg" v-on:click.native="clearErrorDisplay" />
 				<!-- xForm Error Msg -->
-				
+
 				<div v-if="!showPin">
 					<p><b>Generate Export Coin Code:</b></p>
 					<div class="row" style="display:flex;">
-						<InputWidget 
+						<InputWidget
 							v-model="form.amount.val"
 							placeholder="Amount *"
 							name="amount"
@@ -49,14 +49,14 @@
 				</div>
 			</ContentWidget>
 			<!-- xExport Coins -->
-			
+
 			<div v-if="confirmed">
 				<!-- Animation to display during server requests -->
 				<SpinnerWidget :class="{active:loading}"/>
 				<!-- xAnimation to display during server requests -->
 
 				<!-- QR Display Coin Code-->
-				<QRCoinCodeWidget 
+				<QRCoinCodeWidget
 					v-on:click.native="hideQRCode()"
 					v-bind="{
 						initActiveCode,
@@ -70,19 +70,19 @@
 				<!-- xQR Display Coin Code-->
 
 				<!-- Export History -->
-				<ContentWidget 
-					v-if="exportCoinHistory.length > 0" 
+				<ContentWidget
+					v-if="exportCoinHistory.length > 0"
 					v-bind="{
 						infoPanelTypeButton:true,
 						bookletData: initAvailableCoins,
 					}"
-					titleTxt="Export History" 
-					infoPanelTxt="Generate Booklet" 
+					titleTxt="Export History"
+					infoPanelTxt="Generate Booklet"
 					:infoPanelIcoClassName="{booklet: true}">
 
 					<!-- Header Button -->
 					<template slot="headerButton">
-						<GenerateBookletWidget 
+						<GenerateBookletWidget
 							v-bind="{
 								bookletData: initAvailableCoins,
 							}"/>
@@ -101,7 +101,7 @@
 					<tbody>
 						<tr :key="i" v-for="(coin, i) in exportCoinHistory">
 							<td>
-								<CoinCodeWidget 
+								<CoinCodeWidget
 									v-on:click.native="showQRCode(coin, i)"
 									v-bind="{
 										coin,

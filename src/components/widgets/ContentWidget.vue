@@ -5,11 +5,11 @@
 			<!-- Title -->
 			{{titleTxt}}
 			<!-- xTitle -->
-			
+
 			<!-- Info Panel Text -->
 			<div v-if="infoPanelTxt && !infoPanelTypeButton" class="titleInfo">
 				<Coin v-if="Object.keys(infoPanelIcoClassName).length > 0" :class="infoPanelIcoClassName"/>
-				{{infoPanelTxt}}				
+				{{infoPanelTxt}}
 			</div>
 			<!-- xInfo Panel Text -->
 
@@ -19,9 +19,9 @@
 			<!-- xHeader Button Slot -->
 
 			<!-- Console Header Buttons -->
-			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fe6963; border-radius:20px; margin-left:6px;"></div>	
-			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fcbc3c; border-radius:20px; margin-left:6px;"></div>	
-			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#34c748; border-radius:20px; margin-left:6px;"></div>	
+			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fe6963; border-radius:20px; margin-left:6px;"></div>
+			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#fcbc3c; border-radius:20px; margin-left:6px;"></div>
+			<div v-if="consoleEnabled" style="float:right; height:10px; width:10px; background:#34c748; border-radius:20px; margin-left:6px;"></div>
 			<!-- xConsole Header Buttons -->
 		</dt>
 		<!-- xTitle Header -->
@@ -351,30 +351,30 @@ dt button {
 
 .light .footerRegion  {
 	border-radius: 0px 0px 6px 6px;
-	text-align:center; 
-	position:absolute; 
-	bottom:0px; 
-	left:0px; 
-	right:0px; 
-	background:#fafafa; 
+	text-align:center;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	background:#fafafa;
 	padding:0px 20px;
 }
 .night .footerRegion  {
 	border-radius: 0px 0px 6px 6px;
-	text-align:center; 
-	position:absolute; 
-	bottom:0px; 
-	left:0px; 
-	right:0px; 
-	background:#1c1e28; 
+	text-align:center;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	background:#1c1e28;
 	padding:0px 20px;
-} 
+}
 .footerRegion  {
 	border-radius: 0px 0px 6px 6px;
-	text-align:center; 
-	position:absolute; 
-	bottom:0px; 
-	left:0px; 
+	text-align:center;
+	position:absolute;
+	bottom:0px;
+	left:0px;
 	right:0px;
 	padding:0px 20px;
 }
@@ -383,15 +383,15 @@ dt button {
 	padding:0px;
 }
 .light .footerTxt {
-	color:#163457; 
+	color:#163457;
 }
 .night .footerTxt {
-	color:#3598db; 
+	color:#3598db;
 }
 .footerTxt {
 	font-size: 0.7em;
-	font-weight:bold; 
-	color:#3598db; 
+	font-weight:bold;
+	color:#3598db;
 	letter-spacing:1px;
 }
 .platformWeb.min .footerTxt {

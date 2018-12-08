@@ -5,7 +5,7 @@
 			<!-- Label -->
 			<div class="inputLabel">{{placeholder}}</div>
 			<!-- xLabel -->
-			
+
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
 				<div class="interactiveIco":class="{'showPointer': ($store.getters.whichPlatform === 'mobile')}"" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
@@ -632,9 +632,9 @@ input[name="password"] {
     margin: 0px 6px;
 }
 .passwordStrengthDisplay li {
-	flex:1; 
-	height:4px; 
-	border-radius:4px; 
+	flex:1;
+	height:4px;
+	border-radius:4px;
 	background:#ccc;
 	list-style:none;
 	margin:0px 6px;

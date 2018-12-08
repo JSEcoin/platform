@@ -2,9 +2,9 @@
 	<div>
 		<div class="miningOverview row" style="margin: 0px; padding: 0px;">
 			<!-- Next Pending Payment -->
-			<ContentWidget 
+			<ContentWidget
 				v-if="(pendingNextPayment >= 0)"
-				titleTxt="Next Pending Payment" 
+				titleTxt="Next Pending Payment"
 				class="mini">
 				<div class="row" style="">
 					<div v-if="pendingNextPayment >= 0" class="valueIconDisplay">
@@ -213,7 +213,7 @@ export default {
 	transform: rotateY(180deg);
 }
 
-.front .hash, 
+.front .hash,
 .back .hash {
 	margin:0px;
 }

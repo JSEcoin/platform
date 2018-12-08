@@ -113,17 +113,17 @@
 					</ScrollWidget>
 				</nav>
 			</div>
-			
+
 			<div id="JSEA-contentWrapper">
 				<div id="JSEA-content">
-				<!-- App Header -->	
+				<!-- App Header -->
 				<header v-if="($store.state.app.platformURL === '')" class="draggable-area">
 					<i class="fa fa-close" v-on:click="closeWindow()"></i>
 					<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
 					<div id="JSEA-loadingDisplay" :style="{width: waitTimer + '%'}"></div>
 				</header>
 				<!-- xApp Header -->
-				<!-- Web Header -->	
+				<!-- Web Header -->
 				<header v-else>
 					<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
 					<ul id="JSEA-headerItems">
@@ -239,7 +239,7 @@ export default {
 		};
 	},
 	mounted() {
-		const self = this;	
+		const self = this;
 		//self.$electron.getCurrentWindow().removeAllListeners();
 	},
 	/**
@@ -1528,7 +1528,6 @@ header .fa-minus:hover {
 }
 
 
-
 .tableListDisplay {
 	margin:0px;
 	padding:0px;
@@ -1593,7 +1592,6 @@ header .fa-minus:hover {
 /* xNight Theme */
 
 
-
 /* display container */
 
 #JSEA-loadingDisplay {
@@ -1606,7 +1604,6 @@ header .fa-minus:hover {
 	opacity:0.8;
     transition: width 0.2s;
 }
-
 
 
 .clickable,
@@ -1732,7 +1729,7 @@ header .fa-minus:hover {
 .platformWeb.min #JSEA-QRMask > div {
 	/*width:340px;
 	margin-left:-170px;*/
-	
+
     top: 0px;
     bottom: 0px;
     margin: 0px !important;
@@ -1829,11 +1826,11 @@ header .fa-minus:hover {
 }
 .max.light #JSEA-sideBar {
 	background:#fff;
-	box-shadow: inset -0.5px 0px 0px 0px #ebecec; 
+	box-shadow: inset -0.5px 0px 0px 0px #ebecec;
 }
 .max.night #JSEA-sideBar {
 	background:#20222e;
-	box-shadow: inset -0.5px 0px 0px 0px #171820; 
+	box-shadow: inset -0.5px 0px 0px 0px #171820;
 }
 
 #JSEA-contentWrapper {
@@ -1986,7 +1983,7 @@ header .fa-minus:hover {
 
 .light #JSE-sideNav .fa.fa-cog {
     border-left: solid 1px #eee;
-}	
+}
 .night #JSE-sideNav .fa.fa-cog {
     border-left: solid 1px #171820;
 }
@@ -2005,7 +2002,6 @@ header .fa-minus:hover {
 	background:#20222e;
 }
 
-	
 
 #JSE-sideNav li li span {
 	font-size:1.1em;
@@ -2072,7 +2068,7 @@ header .fa-minus:hover {
 }
 .platformWeb.max #JSEA-headerItems {
 	display: flex;
-} 
+}
 
 
 #JSEA-headerItems li {
@@ -2269,7 +2265,7 @@ header .fa-minus:hover {
 #JSEA-toggleSideBar:hover {
 	bottom:0px;
 	height:100%;
-} 
+}
 .filterTabs li.active,
 .filterTabs li:hover {
 	color:#fff;

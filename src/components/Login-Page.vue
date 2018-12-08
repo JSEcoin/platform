@@ -7,7 +7,7 @@
 			<div id="JSEA-loginPage">
 				<div id="JSEA-loginWrapper">
 					<!-- Login Headers -->
-					
+
 					<div v-if="loading">
 						<h2 id="JSEA-loginHeader" class="center">Checking Credentials</h2>
 						<h4 id="JSEA-loginSubHeader" class="center">Attempting to log in...</h4>
@@ -27,7 +27,7 @@
 						<!-- x2FA Form -->
 					</div>
 					<!-- xLogin Headers -->
-				
+
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
 					<!-- xAnimation to display during server requests -->
@@ -46,7 +46,7 @@
 								<div :class="{hidden:show2FA_interface}">
 									<!-- User Input -->
 									<div class="row">
-										<InputWidget 
+										<InputWidget
 											v-model="form.email.val"
 											placeholder="Email *"
 											name="email"
@@ -57,11 +57,11 @@
 											@keyup="keyWatch('email')" />
 									</div>
 									<!-- xUser Input -->
-									
+
 									<!-- Password Input -->
 									<div class="row">
 										<div class="col">
-											<InputWidget 
+											<InputWidget
 												inputType="password"
 												v-bind="{hideShow: true}"
 												v-model="form.password.val"
@@ -86,7 +86,7 @@
 									<div class="row">
 										<!-- 2FA -->
 										<TwoFA v-if="show2FA_interface"
-											v-on:key-up="updateKey" 
+											v-on:key-up="updateKey"
 											v-on:submit-code="submitCode" />
 										<!-- X2FA -->
 									</div>
@@ -96,7 +96,7 @@
 								</div>
 								<!-- x2FA interface -->
 							</ContentWidget>
-							
+
 							<div class="row">
 								<ButtonWidget type="submit"
 									buttonTxt="Login" style="flex:1;" :class="{'singleButton':!show2FA_interface}" />
@@ -110,7 +110,7 @@
 								<router-link style="text-align:left;" v-bind:to="`/restore2FA`" tag="a">Restore 2FA</router-link>
 							</div>
 						</div>
-					</form>				
+					</form>
 					<!-- xLogin Form -->
 				</div>
 			</div>
@@ -735,7 +735,7 @@ footer {
 .max.light #JSEA-loginPage {
     background: #fff;
     box-shadow: rgba(210, 214, 217,1) 0px 1px 3px 0px;
-}	
+}
 .max.night #JSEA-loginPage {
     background: #20222e;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);

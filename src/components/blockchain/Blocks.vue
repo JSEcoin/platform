@@ -45,12 +45,12 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<template slot="footer">
 						<ButtonWidget class="small" style="margin:10px 0px; width:100%;" buttonTxt="See All Blocks" v-on:click.native="goto(`/blockchain/AllBlocks/${latestBlockLvl}/${latestBlockVal}`);"/>
 					</template>
 				</ContentWidget>
-				<ContentWidget 
+				<ContentWidget
 					:titleTxt="`Latest ${transactions[filterTransaction].length} Transactions`">
 					<div class="flexbox">
 						<div class="flexWrap">
@@ -208,7 +208,9 @@ export default {
 	},
 	created() {
 		const ioclient = window.JSEsocket;//require('socket.io-client'); // for peer client connections
-		window.socketClient = ioclient.connect('https://load.jsecoin.com', { secure: true, reconnect: true, transports: ['websocket'], heartbeatTimeout: 1800000, maxHttpBufferSize: 1000000000 }); // connects to host defined in server.js
+		window.socketClient = ioclient.connect('https://load.jsecoin.com', {
+ secure: true, reconnect: true, transports: ['websocket'], heartbeatTimeout: 1800000, maxHttpBufferSize: 1000000000,
+}); // connects to host defined in server.js
 
 		// max blocksize is hardcoded to 1000 instead of jseSettings, can't see this changing
 		window.socketClient.getBlockRef = function(blockNumber) {
