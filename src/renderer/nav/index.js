@@ -6,6 +6,8 @@ import splashLoadingScreen from '@/components/SplashLoadingScreen-Page';
 
 //login
 import login from '@/components/Login-Page';
+import resetPassword from '@/components/Reset-Password-Page';
+import restore2FA from '@/components/Restore2FA-Page';
 
 //Register
 import register from '@/components/Register-Page';
@@ -49,7 +51,7 @@ import AllTransactions from '@/components/blockchain/AllTransactions';
 import Search from '@/components/blockchain/Search';
 import Stats from '@/components/blockchain/Stats';
 
-import Wall from '@/components/crypto/Wall';
+//import Wall from '@/components/crypto/Wall';
 import JSEStats from '@/components/crypto/Stats';
 
 
@@ -80,6 +82,16 @@ const router = new Router({
 			component: login,
 		},
 		{
+			path: '/resetPassword',
+			name: 'resetPassword',
+			component: resetPassword,
+		},
+		{
+			path: '/restore2FA',
+			name: 'restore2FA',
+			component: restore2FA,
+		},
+		{
 			path: '/enterSecurityPin',
 			name: 'enterSecurityPin',
 			component: enterSecurityPin,
@@ -98,6 +110,7 @@ const router = new Router({
 			component: overview,
 			meta: {
 				requiresAuth: true,
+				hasDesktopInterface: true,
 			},
 		},
 		{
@@ -295,11 +308,11 @@ const router = new Router({
 		  name: 'Stats',
 		  component: Stats,
 		},
-		{
+		/*{
 		  path: '/desktop/crypto/Wall',
 		  name: 'Wall',
 		  component: Wall,
-		},
+		},*/
 		{
 		  path: '/desktop/crypto/tats',
 		  name: 'JSEStats',
@@ -313,9 +326,11 @@ const router = new Router({
  */
 router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-
+	const hasDesktopInterface = to.matched.some(record => record.meta.hasDesktopInterface);
 	if ((requiresAuth) && (!store.state.user.loggedIn)) {
 		next('login');
+	} else if ((hasDesktopInterface) && (store.state.app.platformURL === '/desktop')) {
+		next(`${store.state.app.platformURL}${to.path}`);
 	} else {
 		next();
 	}
