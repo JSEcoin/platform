@@ -43,8 +43,16 @@ Our Linux, release will be coming out shortly..
 _You can launch vue ui and import this project or run the npm commands listed below_
 
 ## Available App Builds
-The app currently supports Windows (ia32/x64), Mac OS, PWA, Web, Android, IOS
-Linux support will be coming soon.
+
+The app currently supports:
+
+- Windows (ia32/x64)
+- Mac OS
+- Web (PWA)
+- Android
+- IOS
+
+_Linux support will be coming soon._
 
 ### Development
 
@@ -73,19 +81,23 @@ _beware only the master branch contains the latest stable binary builds!_
 
 ```bash
 ######
-# Initialise Developer Environments
+# Build
 ######
-# WEB
+# WEB - ./dist_web
 npm run web:build
-# DESKTOP
+# DESKTOP - ./dist_desktop
 npm run desktop:build
 # ANDROID
 npm run android:build
 # IOS
 npm run ios:build
-# STYLEGUIDE DOCS
+# STYLEGUIDE DOCS - ./dist_styleguide
 npm run styleguide:build
 ```
+
+---
+---
+
 
 ## Bug Bounty
 This is an initial push alot of cleanup is still required if you spot an issue please report it and if we consider it a major issue we will credit your account as part of our bug bounty offering.
