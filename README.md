@@ -24,11 +24,10 @@ Check out our live [Platform](https://platform.jsecoin.com).
 
 Our next release that uses this code base can be accessed from - 
 [Alpha Release Platform](https://alpha.jsecoin.com).
-- Currently this is just a snaphot of the desktop environment but will become responsive to match the design above.
 
 ## Prebuilt binaries
 See our [Releases Page](https://github.com/JSEcoin/platform/releases) for Windows binaries.  
-Our Mac, Linux, IOS and Android release will be coming out shortly
+Our Linux, IOS release will be coming out shortly..
 
 ## Quickstart
 
@@ -38,96 +37,25 @@ Our Mac, Linux, IOS and Android release will be coming out shortly
 
 ## Working with the Desktop App
 The app currently supports ia32/x64.  
-Mac and Linux support will be coming soon.
+Linux support will be coming soon.
 
 ### Development
 
-1. Initialise developer environment `npm run desktop:dev`
+1. Initialise developer environment `npm run web:dev`
 
 ### Build & Package Binaries
 
-1. Executing `npm run desktop` compiles the app within `./dist/desktop` and then builds the binaries within `./build`
-
-#### WARNING
-There is a known bug when building Desktop NSIS Binaries with x64 and ia32 bit support.
-This will cause the app to freeze.  
-If you do generate a build please edit the `./package.json` file.  
-And remove the target that you don't need.  
-
-```json
-{
-  "win": {
-    "icon": "build/icons/icon.ico",
-    "target": [
-      {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      },
-      {
-        "target": "nsis",
-        "arch": [
-          "ia32"
-        ]
-      }
-    ]
-  }
-}
-```
-
+1. Executing `npm run desktop:build` compiles the app within `./dist_electron` and then builds the binaries within `./build`
 
 ## Generating the Web Platform
-Currently this is a snapshot of the desktop app - you can access it [here](https://alpha.jsecoin.com). 
-We will be updating this project and making the app responsive to support our plans for the advanced platform layout.
 
-1. Executing `npm run web` generates the compiled platform within `./dist/web`.
+1. Executing `npm run web:build` generates the compiled platform within `./dist`.
 
 ## Generating the Mobile App
-We are actively working on this...  
-If you try this out - Expect there to be sea krakens and unknown objects lurking in the deep ;).. 
 
 ### Build
 
-1. Executing `npm run mobile` will compile the platform into `./build/mobile/www/` and will not build the apk.
-2. Executing `npm run mobile:android` will compile the platform app into `./build/mobile/www/` - build the apk and deploy to android vm or device if attached.
-
 #### Packaging and deploying Android binaries
-To build an android apk you will need to first setup cordova.  
-First make sure you have the following required components setup - [Cordova Guide](https://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html#requirements-and-support)
-
-- Now setup and install cordova
-
-```bash
-npm install -g cordova
-cd ./build/mobile/
-npm install
-cordova add android
-```
-
-
-<!--
-### Development
-
-1. Initialise developer environment `npm run mobile:dev`
-
-### Package - Cordova
-
-1. Executing `npm run mobile:cordova` will compile the mobile app into `./dist/mobile` and create mobile binaries.
-*Currently just for Android*
-
-### Package - Cordova:Browser
-
-1. Executing `npm run mobile:browser` will compile the mobile app into `./dist/mobile` and create mobile browser edition
-
-### Package - Cordova:android
-
-1. Executing `npm run mobile:android` will compile the mobile app into `./dist/mobile` and will build and deploy to a connected android device.
-
-### Package - Cordova:android-VM
-
-1. Executing `npm run mobile:android-vm` will compile the mobile app into `./dist/mobile` and launch deploy to an android Virtual Machine if this has been setup.
--->
 
 ## Generating the style guide
 We've started documenting the platform and breaking it down into reusable components.

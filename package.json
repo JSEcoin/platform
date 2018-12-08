@@ -25,11 +25,11 @@
  },
  "homepage": "https://github.com/jsecoin/platform#readme",
  "scripts": {
-  "serve": "vue-cli-service serve --https --open --mode development --host localhost",
-  "build": "vue-cli-service build",
+  "web:dev": "vue-cli-service serve --https --open --mode development --host localhost",
+  "web:build": "vue-cli-service build",
+  "desktop:build": "vue-cli-service electron:build",
+  "desktop:dev": "vue-cli-service electron:serve",
   "lint": "vue-cli-service lint",
-  "electron:build": "vue-cli-service electron:build",
-  "electron:serve": "vue-cli-service electron:serve",
   "postinstall": "electron-builder install-app-deps"
  },
  "dependencies": {
