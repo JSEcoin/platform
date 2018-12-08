@@ -22,71 +22,71 @@
 						</ul>
 					</nav>
 				</div>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="a" id="JSEA-sideLogo"></router-link>
+				<router-link v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogo"></router-link>
 				<nav id="JSE-sideNav">
 					<ScrollWidget style="top:55px;">
 						<ul v-intro="'Your side bar navigation elements'">
-							<li><router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
+							<li><router-link v-if="($store.state.user.loggedIn)" v-bind:to="`/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
 								<ul>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.dashboard}"><span v-on:click="toggleMenu('dashboard')">Dashboard</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-columns"></i> Overview</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"><i class="fa fa-user-circle-o"></i> Account</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/exchange`" tag="li"><i class="fa fa-exchange"></i> Exchange</router-link>
+											<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-columns"></i> Overview</router-link>
+											<router-link v-bind:to="`/dashboard/account`" tag="li"><i class="fa fa-user-circle-o"></i> Account</router-link>
+											<router-link v-bind:to="`/dashboard/exchange`" tag="li"><i class="fa fa-exchange"></i> Exchange</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.wallet}"><span v-on:click="toggleMenu('wallet')">Wallet</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li"><i class="fa fa-paper-plane"></i> Transfer</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/export`" tag="li"><i class="fa fa-upload"></i> Export</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/import`" tag="li"><i class="fa fa-download"></i> Import</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/transactions`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
+											<router-link v-bind:to="`/wallet`" tag="li"><i class="fa fa-paper-plane"></i> Transfer</router-link>
+											<router-link v-bind:to="`/wallet/export`" tag="li"><i class="fa fa-upload"></i> Export</router-link>
+											<router-link v-bind:to="`/wallet/import`" tag="li"><i class="fa fa-download"></i> Import</router-link>
+											<router-link v-bind:to="`/wallet/transactions`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
 										</ul>
 									</li>
 									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain Explorer</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
-											<!--<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>-->
+											<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>
+											<router-link v-bind:to="`/blockchain`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
+											<!--<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>-->
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.mining}"><span v-on:click="toggleMenu('mining')">Platform Mining</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li"><i class="fa fa-keyboard-o"></i> Interface</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/mine/earnings`" tag="li"><i class="fa fa-bank"></i> Earnings</router-link>
+											<router-link v-bind:to="`/mine`" tag="li"><i class="fa fa-keyboard-o"></i> Interface</router-link>
+											<router-link v-bind:to="`/mine/earnings`" tag="li"><i class="fa fa-bank"></i> Earnings</router-link>
 										</ul>
 									</li>
 									<li :class="{'showMenu':nav.system}"><span v-on:click="toggleMenu('system')">System</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/system`" tag="li"><i class="fa fa-bell"></i> Server Status</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/system/stats`" tag="li"><i class="fa fa-globe"></i> JSE Global Stats</router-link>
+											<router-link v-bind:to="`/system`" tag="li"><i class="fa fa-bell"></i> Server Status</router-link>
+											<router-link v-bind:to="`/system/stats`" tag="li"><i class="fa fa-globe"></i> JSE Global Stats</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.publishers}"><span v-on:click="toggleMenu('publishers')">Publishers</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/publishers`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/publishers/setup`" tag="li"><i class="fa fa-globe"></i> Setup New Site</router-link>
+											<router-link v-bind:to="`/publishers`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
+											<router-link v-bind:to="`/publishers/setup`" tag="li"><i class="fa fa-globe"></i> Setup New Site</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.adTech}"><span v-on:click="toggleMenu('adTech')">AdTech</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/adTech`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
+											<router-link v-bind:to="`/adTech`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.merchants}"><span v-on:click="toggleMenu('merchants')">Merchants</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/merchants`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
+											<router-link v-bind:to="`/merchants`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.affiliates}"><span v-on:click="toggleMenu('affiliates')">Affiliates</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/affiliates/resources`" tag="li"><i class="fa fa-exchange"></i> Resources</router-link>
+											<router-link v-bind:to="`/affiliates`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
+											<router-link v-bind:to="`/affiliates/resources`" tag="li"><i class="fa fa-exchange"></i> Resources</router-link>
 										</ul>
 									</li>
 									<li :class="{'showMenu':nav.developers}"><span v-on:click="toggleMenu('developers')">Developers</span>
 										<ul>
-											<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`${$store.state.app.platformURL}/developers`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`/developers`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
 											<li v-on:click="openExternalWindow('https://github.com/jsecoin/')"><i class="fa fa-github"></i> Github</li>
 											<li v-on:click="openExternalWindow('https://developer.jsecoin.com/')"><i class="fa fa-globe"></i> API Documentation</li>
 											<li v-on:click="openExternalWindow('https://jsecoin.com/styleguide/')"><i class="fa fa-paint-brush"></i> Platform UI</li>
@@ -94,11 +94,11 @@
 									</li>
 									<li :class="{'showMenu':nav.support}"><span v-on:click="toggleMenu('support')">Support</span>
 										<ul>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/crypto/tats`" tag="li"><i class="fa fa-magic"></i> stats</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/crypto/Wall`" tag="li"><i class="fa fa-magic"></i> cryptowall</router-link>
+											<!--<router-link v-bind:to="`/crypto/tats`" tag="li"><i class="fa fa-magic"></i> stats</router-link>-->
+											<!--<router-link v-bind:to="`/crypto/Wall`" tag="li"><i class="fa fa-magic"></i> cryptowall</router-link>-->
 											<li v-on:click="siteWizard"><i class="fa fa-magic"></i> Site Wizard</li>
-											<!--<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
-											<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>-->
+											<!--<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-exchange"></i> Transactions</router-link>
+											<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>-->
 											<li v-on:click="openExternalWindow('https://jsecoin.com/support')"><i class="fa fa-info-circle"></i> Support Center</li>
 											<li v-on:click="openExternalWindow('https://t.me/jsetelegram')"><i class="fa fa-telegram"></i> Telegram</li>
 											<li><i class="fa fa-user-circle"></i> Virtual Assistant</li>
@@ -125,8 +125,9 @@
 				<!-- xApp Header -->
 				<!-- Web Header -->	
 				<header v-else>
-					<router-link v-if="(!sideBarActive)" v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
+					<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
 					<ul id="JSEA-headerItems">
+						<li id="JSEA-googleTranslate"><i class="button"></i></li>
 						<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
 						<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
 						<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
@@ -290,6 +291,7 @@ export default {
 				val: 'platformDesktop',
 				state: 'base',
 			});
+			//console.log('proc', process.env.NODE_ENV);
 			self.$store.commit('updateAppState', {
 				val: process.env.NODE_ENV,
 				state: 'isDev',
@@ -301,9 +303,13 @@ export default {
 			//}
 			const bodyClass = `platformWeb ${displayType} ${self.$store.state.app.theme}`;
 			document.body.className = bodyClass;
-			window.process = {
-				type: displayType, //['mobile','web']
-			};
+			//if (typeof (window.process) === 'undefined') {
+				window.process = {
+					type: displayType, //['mobile','web']
+				};
+			//} else {
+		//		window.process.type = displayType;
+			//}
 			window.jseTestNet = window.jseTestNet || false;
 			self.$store.commit('updateAppState', {
 				val: displayType,
@@ -321,11 +327,11 @@ export default {
 		//console.log('set splash landing route ', self.$route, self.$route.name);
 		//store initial landing page to redirect - after splash screen loaded.
 		self.$store.commit('updateAppState', {
-			val: (self.$route.name)?`${self.$route.name}` : `${self.$store.state.app.platformURL}/login`,
+			val: (self.$route.name)?`${self.$route.name}` : '/login',
 			state: 'initLander',
 		});
 		//on app load redirect to splash screen to regenerate and redirect to login or dashboard
-		self.$router.push(`/`);
+		self.$router.push('/');
 
 		//should app auto launch
 		if (localStorage.getItem('autoLaunch') !== null) {
@@ -602,7 +608,7 @@ export default {
 			clearTimeout(self.resizeTimer);
 			self.resizeTimer = setTimeout(() => {
 				let screenType = 'med';
-				let platformURL = ''
+				let platformURL = '';
 				if (window.innerWidth < 520) {
 					screenType = 'min';
 					window.process = {
@@ -2090,15 +2096,15 @@ header .fa-minus:hover {
 }
 
 .light #JSEA-headerItems li i {
-	background: #2ba7fe;
+	background-color: #2ba7fe;
 }
 
 .night #JSEA-headerItems li i {
-	background: #13151c;
+	background-color: #13151c;
 }
 
 #JSEA-headerItems li i:hover {
-	background:#1970c7;
+	background-color:#1970c7;
 }
 #JSEA-version {
 	padding:10px 20px;
@@ -2389,5 +2395,11 @@ header .fa-minus:hover {
 .jseaTooltipHelper {
 	border-radius: 0px;
 	border:0px;
+}
+#JSEA-googleTranslate i {
+	background-image: url("assets/google_translate_logo.svg");
+	background-repeat:no-repeat;
+	background-size:60%;
+	background-position:center;
 }
 </style>
