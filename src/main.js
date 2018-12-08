@@ -22,6 +22,10 @@ import './registerServiceWorker';
 if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
 //if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
 	Vue.use(require('vue-electron'));
+	//log async errors
+	process.on('unhandledRejection', (error) => {
+		console.error(error);
+	});
 }
 
 //quick axios access
@@ -88,10 +92,7 @@ Vue.use(TreeView);
 //sitewizard
 Vue.use(VueIntro);
 
-//log async errors
-process.on('unhandledRejection', (error) => {
-	console.error(error);
-});
+console.log('process', process.env);
 
 new Vue({
   router,
