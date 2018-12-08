@@ -19,8 +19,9 @@ import router from './nav';
 import store from './store';
 import './registerServiceWorker';
 
-if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
+//if ((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) {
 //if (!process.env.IS_WEB) Vue.use(require('vue-electron'));
+if (process.env.IS_ELECTRON)  {
 	Vue.use(require('vue-electron'));
 	//log async errors
 	process.on('unhandledRejection', (error) => {
@@ -42,7 +43,7 @@ Vue.use(VueMultianalytics, {
 	modules: {
 		ga: {
 			appName: platformName, // Mandatory
-			appVersion: store.state.app.version, // Mandatory
+			appVersion: process.env.VUE_APP_VERSION, // Mandatory
 			trackingId: 'UA-48537439-16', // Mandatory
 			//debug: true, // Whether or not display console logs debugs (optional)
 		},
