@@ -57,7 +57,7 @@ const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/components/cry
 Vue.use(Router);
 
 const router = new Router({
-	mode: 'history', //((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) ? 'hash' : 'history',
+	mode: (process.env.CORDOVA_PLATFORM) ? 'hash' : 'history', //((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) ? 'hash' : 'history',
 	base: process.env.BASE_URL,
 	routes: [
 		{
