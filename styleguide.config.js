@@ -1,5 +1,4 @@
 const path = require('path');
-//const webpack = require('webpack');
 
 module.exports = {
 	title: 'JSECoin Platform Guide',
@@ -89,69 +88,4 @@ module.exports = {
 			],
 		},
 	],
-	/*
-	webpackConfig: {
-		plugins: [
-			new webpack.IgnorePlugin(/electron/), //only used for desktop app
-			new webpack.IgnorePlugin(/nav/), //not needed for documentation
-		],
-		resolve: {
-			alias: {
-				'@': path.join(__dirname, './src'),
-			},
-		},
-		module: {
-			rules: [
-				{
-					test: /\.vue$/,
-					loader: 'vue-loader',
-				},
-				{
-					test: /\.js?$/,
-					loader: 'shebang-loader',
-				},
-				{
-					test: /\.js?$/,
-					exclude: /node_modules/,
-					loader: 'babel-loader',
-				},
-				{
-					test: /\.css$/,
-					use: ['style-loader', 'css-loader'],
-				},
-				{
-					test: /\.scss$/,
-					use: ['style-loader', 'css-loader', 'sass-loader'],
-				},
-				{
-					test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-					use: {
-						loader: 'url-loader',
-						query: {
-							limit: 10000,
-							name: 'imgs/[name]--[folder].[ext]',
-						},
-					},
-				},
-				{
-					test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-					loader: 'url-loader',
-					options: {
-						limit: 10000,
-						name: 'media/[name]--[folder].[ext]',
-					},
-				},
-				{
-					test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-					use: {
-						loader: 'url-loader',
-						query: {
-							limit: 10000,
-							name: 'fonts/[name]--[folder].[ext]',
-						},
-					},
-				},
-			],
-		},
-	},*/
 };
