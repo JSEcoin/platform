@@ -145,9 +145,9 @@ export default {
 				self.form.authCode[ref] = val;
 			}
 		},
-		exit2FA(keep2FA_Enabled) {
+		exit2FA(keep2FAEnabled) {
 			const self = this;
-			if (keep2FA_Enabled) {
+			if (keep2FAEnabled) {
 				self.$store.commit('updateUserStateValue', {
 					val: true,
 					state: 'twoFactorAuth',
