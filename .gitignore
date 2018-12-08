@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+/dist_web
 
 # local env files
 .env.local
@@ -22,6 +23,7 @@ yarn-error.log*
 
 #Electron-builder output
 /dist_electron
+/dist_desktop
 # Cordova
 /mobile/www
 /mobile/platforms
