@@ -20,59 +20,72 @@
 - [API Documentation](https://developer.jsecoin.com/API): API Reference and Sample code.
 
 ## Demo
-Check out our live [Platform](https://platform.jsecoin.com).
+- Check out our live [Platform](https://platform.jsecoin.com).
 
-Our next release that uses this code base can be accessed from - 
+- Our next release that uses this code base can be accessed from - 
 [Alpha Release Platform](https://alpha.jsecoin.com).
 
 ## Prebuilt binaries
-See our [Releases Page](https://github.com/JSEcoin/platform/releases) for Windows binaries.  
-Our Linux, IOS release will be coming out shortly..
+See our [Releases Page](https://github.com/JSEcoin/platform/releases) for our app binaries.  
+Our Linux, release will be coming out shortly..
+
+
+---
+---
+
 
 ## Quickstart
 
-1. Install [Node.js](https://nodejs.org) v8.0.0 or higher.
+1. Install [Node.js](https://nodejs.org) v10.6.0 or higher.
 2. Clone this repository: `git clone https://github.com/JSEcoin/platform`
 3. Install dependencies `npm install`
 
-## Working with the Desktop App
-The app currently supports ia32/x64.  
+_You can launch vue ui and import this project or run the npm commands listed below_
+
+## Available App Builds
+The app currently supports Windows (ia32/x64), Mac OS, PWA, Web, Android, IOS
 Linux support will be coming soon.
 
 ### Development
 
-1. Initialise developer environment `npm run web:dev`
+If you are interested in developing and enhancing contributing to the JSEcoin Project you can start up the developer environments with the following commands:
+
+```bash
+######
+# Initialise Developer Environments
+######
+# WEB
+npm run web:dev
+# DESKTOP
+npm run desktop:dev
+# ANDROID
+npm run android:dev
+# IOS
+npm run ios:dev
+# STYLEGUIDE DOCS
+npm run styleguide:dev
+```
 
 ### Build & Package Binaries
 
-1. Executing `npm run desktop:build` compiles the app within `./dist_electron` and then builds the binaries within `./build`
+If you would like to build out and test the latest edition of the platform you can use the following commands - 
+_beware only the master branch contains the latest stable binary builds!_
 
-## Generating the Web Platform
-
-1. Executing `npm run web:build` generates the compiled platform within `./dist`.
-
-## Generating the Mobile App
-
-### Build
-
-#### Packaging and deploying Android binaries
-
-## Generating the style guide
-We've started documenting the platform and breaking it down into reusable components.
-Head over to the [Platfom StyleGuide](https://jsecoin.com/styleguide) and take a look.
-
-To generate your own styleguide from the source -
-
-### Development
-
-1. Executing `npm run styleguide` Initialises the developer environment
-
-### Build
-
-1. or executing `npm run styleguide:build` will generate the documentation within `./styleguide`
-
-#### Style guide assets
-Additional assets are pulled from the `./docs` directory images css etc.
+```bash
+######
+# Initialise Developer Environments
+######
+# WEB
+npm run web:build
+# DESKTOP
+npm run desktop:build
+# ANDROID
+npm run android:build
+# IOS
+npm run ios:build
+# STYLEGUIDE DOCS
+npm run styleguide:build
+```
 
 ## Bug Bounty
 This is an initial push alot of cleanup is still required if you spot an issue please report it and if we consider it a major issue we will credit your account as part of our bug bounty offering.
