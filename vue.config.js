@@ -32,6 +32,25 @@ const langSupport = [
 const coreRoutes = [
 	//redirects
 	'/login',
+	'/resetPassword',
+	'/restore2FA',
+	'/enterSecurityPin',
+	'/register',
+	'/settings',
+	'/dashboard',
+	'/dashboard/account',
+	'/desktop/dashboard',
+	'/wallet',
+	'/wallet/transactions',
+	'/wallet/export',
+	'/wallet/import',
+	'/mine',
+	'/mine/earnings',
+	'/blockchain',
+	'/blockchain/Ledger',
+	'/blockchain/APIs',
+	'/blockchain/AllTransactions',
+	'/blockchain/Stats',
 ];
 
 const siteRoutes = ['/'];
@@ -45,7 +64,7 @@ const allSiteRoutes = siteRoutes;//.concat(extraRoutes);
 
 const productionPlugins = [
 	new PrerenderSpaPlugin({
-		staticDir: path.join(__dirname, 'dist'),
+		staticDir: path.join(__dirname, 'dist_web'),
 		routes: allSiteRoutes,
 		minify: {
 			collapseBooleanAttributes: true,
@@ -79,9 +98,15 @@ const productionPlugins = [
 	}),
 ];
 
+//App version
+process.env.VUE_APP_VERSION = require('./package.json').version;
+process.env.VUE_APP_MJRVERSION = parseInt(process.env.VUE_APP_VERSION.replace(/\./g,''), 10);
+
 module.exports = {
+	outputDir: path.resolve(__dirname, 'dist_web'),
 	pluginOptions: {
 		electronBuilder: {
+			outputDir: 'dist_desktop',
 			noAppProtocol: true,
 			builderOptions: {
 				files: [
@@ -161,60 +186,12 @@ module.exports = {
 		},
 	},
 	configureWebpack: (config) => {
-		/*config.resolve = {
-			alias: {
-				'@': path.resolve(__dirname, 'src/'),
-			},
-		};*/
-		if (process.env.NODE_ENV === 'production') {
+		//if production and not electron desktop app then prerender pages
+		if ((process.env.NODE_ENV === 'production') && (!process.env.IS_ELECTRON)) {
 			config.plugins.push(...productionPlugins);
 		}
-	},/*
-	chainWebpack: (config) => {
-		config.plugin('preload').include = ['header'];
-	},*/
-    /*
-	chainWebpack: (config) => {
-		if (process.env.NODE_ENV === 'production') {
-			config
-				.plugin('prerender-spa-plugin')
-				.use(PrerenderSPAPlugin, [{
-					staticDir: path.join(__dirname, 'dist'),
-					routes: [
-						'/',
-						'/about',
-					],
-				}]);
-		}
-	},*/
-    /*
-	configureWebpack: {
-		plugins: [
-			new PrerenderSPAPlugin({
-				staticDir: path.join(__dirname, 'dist'),
-				//define renderer to use
-				renderer: new Renderer({
-					//headless: false // Display the browser window when rendering. Useful for debugging.
-					maxConcurrentRoutes: 4,
-					timeout: 0,
-				}),
-				// Optional minification.
-				//https://github.com/kangax/html-minifier
-				minify: {
-					collapseBooleanAttributes: true,
-					collapseWhitespace: true,
-					decodeEntities: true,
-					keepClosingSlash: true,
-					sortAttributes: true,
-					removeComments: true,
-				},
-				routes: allSiteRoutes,
-			}),
-		],
-	},*/
-
+	},
 	baseUrl: '',
-	outputDir: undefined,
 	assetsDir: 'assets',
 	runtimeCompiler: undefined,
 	productionSourceMap: false,
