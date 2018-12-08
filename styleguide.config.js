@@ -11,7 +11,7 @@ module.exports = {
 	styleguideDir: './dist_styleguide',
 	//navigation: true,
 	//vuex: './src/store/index',
-	renderRootJsx: path.join(__dirname, 'docs/styleguide.root.js'),
+	renderRootJsx: path.join(__dirname, 'public/docs/styleguide.root.js'),
 	ribbon: {
 		url: 'https://github.com/jsecoin',
 		text: 'JSECoin on GitHub',
@@ -21,8 +21,8 @@ module.exports = {
 	},
 	//load in additional required images
 	require: [
-		path.join(__dirname, './docs/global.requires.js'),
-		path.join(__dirname, './docs/css/styles.css'),
+		path.join(__dirname, 'public/docs/global.requires.js'),
+		path.join(__dirname, 'public/docs/css/styles.css'),
 		path.join(__dirname, 'public/static/styleguide/dashboard-overview.png'),
 		path.join(__dirname, 'public/static/styleguide/dashboard-account.png'),
 		path.join(__dirname, 'public/static/styleguide/mine-earnings.png'),
@@ -37,7 +37,7 @@ module.exports = {
 	sections: [
 		{
 			name: 'Project Overview',
-			content: './docs/Getting-Started.md',
+			content: './public/docs/Getting-Started.md',
 		},
 		{
 			name: 'Pages',
@@ -59,7 +59,7 @@ module.exports = {
 		},
 		{
 			name: 'Widgets',
-			content: './docs/Widgets.md',
+			content: './public/docs/Widgets.md',
 			components: () => [
 				'./src/components/widgets/AppWrapperWidget.vue',
 				'./src/components/widgets/ButtonWidget.vue',
