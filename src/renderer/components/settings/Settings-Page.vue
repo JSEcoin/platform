@@ -375,7 +375,7 @@ export default {
 		twoFactorAuth: {
 			get() {
 				return this.$store.state.user.twoFactorAuth;
-				console.log('get', this.$store.state.user.twoFactorAuth);
+				//console.log('get', this.$store.state.user.twoFactorAuth);
 			},
 			set(val) {
 				const self = this;
@@ -383,7 +383,7 @@ export default {
 					val,
 					state: 'twoFactorAuth',
 				});*/
-				console.log('set', val)
+
 				self.$store.commit('updateUserStateValue', {
 					val,
 					state: 'twoFactorAuth',
@@ -423,7 +423,7 @@ export default {
 					val,
 					state: 'noNewsletter',
 				});
-				
+
 				//toggle newsletter
 				const toggleNewsletter = {
 					session: self.$store.state.user.session,
@@ -454,7 +454,7 @@ export default {
 				//toggle newsletter
 				const toggleTransactionNotification = {
 					session: self.$store.state.user.session,
-				};		
+				};
 
 				//toggle email transaction notification
 				axios.post(
