@@ -9,7 +9,7 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib';
 
 //version
-const appVersion = '0.5.9';
+const appVersion = process.env.VUE_APP_VERSION;
 
 //test
 app.disableHardwareAcceleration();
@@ -29,11 +29,6 @@ if (!isDevelopment) {
 
 
 let mainWindow;
-
-const winURL = (process.env.NODE_ENV === 'development')
-  ? 'http://localhost:9080'
-  : 'jsecoin://index.html';
-
 
 //https://github.com/electron/electron/blob/master/docs/api/protocol.md
 //change file protocal to enables recaptcha capabilities
@@ -109,6 +104,7 @@ function createWindow() {
 			mainWindow.webContents.openDevTools();
 		}
 	} else {
+		//protocol.registerServiceWorkerSchemes(['jsecoin']);
 		createProtocol('jsecoin');
 		// Load the index.html when not in development
 		mainWindow.loadURL('jsecoin://./index.html');

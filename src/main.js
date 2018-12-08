@@ -93,7 +93,7 @@ Vue.use(TreeView);
 //sitewizard
 Vue.use(VueIntro);
 
-console.log('process', process.env);
+//console.log('process', process.env);
 
 new Vue({
   router,
