@@ -186,8 +186,8 @@ module.exports = {
 		},
 	},
 	configureWebpack: (config) => {
-		//if production and not electron desktop app then prerender pages
-		if ((process.env.NODE_ENV === 'production') && (!process.env.IS_ELECTRON)) {
+		//if production and not electron desktop app or cordova mobile app then prerender pages
+		if ((process.env.NODE_ENV === 'production') && (!process.env.IS_ELECTRON) && (!process.env.CORDOVA_PLATFORM)) {
 			config.plugins.push(...productionPlugins);
 		}
 	},
