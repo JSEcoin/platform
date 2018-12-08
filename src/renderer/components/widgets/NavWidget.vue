@@ -8,28 +8,28 @@
 				<li>Test 4</li>
 			</ul>
 			<ul v-else>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li" :class="{'active': activeNav === 'dashboard'}">
+				<router-link v-bind:to="`/dashboard`" tag="li" :class="{'active': activeNav === 'dashboard'}">
 					Dashboard
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li" :class="{'active': activeNav === 'wallet'}">
+				<router-link v-bind:to="`/wallet`" tag="li" :class="{'active': activeNav === 'wallet'}">
 					Wallet
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li" :class="{'active': activeNav === 'mine'}">
+				<router-link v-bind:to="`/mine`" tag="li" :class="{'active': activeNav === 'mine'}">
 					Mine
 				</router-link>
-				<router-link class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/settings`" tag="li" :class="{'active': activeNav === 'settings'}">
+				<router-link class="hasNoNav" v-bind:to="`/settings`" tag="li" :class="{'active': activeNav === 'settings'}">
 					Settings
 				</router-link>
-				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'blockchainLatest'}">
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`/blockchain`" tag="li" :class="{'active': activeNav === 'blockchainLatest'}">
 					Blockchain Latest
 				</router-link>
-				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'allBlocks'}">
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`/blockchain`" tag="li" :class="{'active': activeNav === 'allBlocks'}">
 					All Blocks
 				</router-link>
-				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'activeBlock'}">
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`/blockchain`" tag="li" :class="{'active': activeNav === 'activeBlock'}">
 					Active Block
 				</router-link>
-				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`${$store.state.app.platformURL}/blockchain`" tag="li" :class="{'active': activeNav === 'transactionInfo'}">
+				<router-link v-if="(screen === 'max')" class="hasNoNav" v-bind:to="`/blockchain`" tag="li" :class="{'active': activeNav === 'transactionInfo'}">
 					Transaction Info
 				</router-link>
 			</ul>
@@ -43,37 +43,37 @@
 			</ul>
 
 			<ul v-if="activeNav === 'dashboard'">
-				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard`" tag="li" :class="{'active': activeSubNav === 'overview'}">
+				<router-link v-bind:to="`/dashboard`" tag="li" :class="{'active': activeSubNav === 'overview'}">
 					Overview
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/account`" tag="li"  :class="{'active': activeSubNav === 'account'}">
+				<router-link v-bind:to="`/dashboard/account`" tag="li"  :class="{'active': activeSubNav === 'account'}">
 					Account
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/dashboard/exchange`" tag="li"  :class="{'active': activeSubNav === 'exchange'}">
+				<router-link v-bind:to="`/dashboard/exchange`" tag="li"  :class="{'active': activeSubNav === 'exchange'}">
 					Exchange
 				</router-link>
 			</ul>
 
 			<ul v-if="activeNav === 'wallet'">
-				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet`" tag="li" :class="{'active': activeSubNav === 'transfer'}">
+				<router-link v-bind:to="`/wallet`" tag="li" :class="{'active': activeSubNav === 'transfer'}">
 					Transfer
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/export`" tag="li" :class="{'active': activeSubNav === 'export'}">
+				<router-link v-bind:to="`/wallet/export`" tag="li" :class="{'active': activeSubNav === 'export'}">
 					Export
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/import`" tag="li" :class="{'active': activeSubNav === 'import'}">
+				<router-link v-bind:to="`/wallet/import`" tag="li" :class="{'active': activeSubNav === 'import'}">
 					Import
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/wallet/transactions`" tag="li" :class="{'active': activeSubNav === 'transactions'}">
+				<router-link v-bind:to="`/wallet/transactions`" tag="li" :class="{'active': activeSubNav === 'transactions'}">
 					Transactions
 				</router-link>
 			</ul>
 			
 			<ul v-if="activeNav === 'mine'">
-				<router-link v-bind:to="`${$store.state.app.platformURL}/mine`" tag="li" :class="{'active': activeSubNav === 'mine'}">
+				<router-link v-bind:to="`/mine`" tag="li" :class="{'active': activeSubNav === 'mine'}">
 					Platform Miner
 				</router-link>
-				<router-link v-bind:to="`${$store.state.app.platformURL}/mine/earnings`" tag="li" :class="{'active': activeSubNav === 'earnings'}">
+				<router-link v-bind:to="`/mine/earnings`" tag="li" :class="{'active': activeSubNav === 'earnings'}">
 					Earnings History
 				</router-link>
 			</ul>
