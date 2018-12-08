@@ -81,77 +81,68 @@ const productionPlugins = [
 
 module.exports = {
 	pluginOptions: {
-		electronBuilder: {
-			noAppProtocol: true,
-			builderOptions: {
-				files: [
-					'!node_modules',
-				],
-				productName: 'JSECoin',
-				appId: 'com.jsecoin.desktop',
-				//asarUnpack: [
-				//	'**/static/**/*',
-				//],
-				//directories: {
-				//	'output': 'build',
-				//},
-				//files: [
-				//	'dist/desktop/**/*',
-				//],
-				dmg: {
-					contents: [
-						{
-							x: 375,
-							y: 60,
-							type: 'link',
-							path: '/Applications',
-						},
-						{
-							x: 125,
-							y: 60,
-							type: 'file',
-						},
-					],
-					window: {
-						x: 200,
-						y: 120,
-						width: 500,
-						height: 300,
-					},
-					background: 'src/main/mac/background.png',
-					internetEnabled: true,
-				},
-				mac: {
-					icon: 'src/main/mac/icon.icns',
-				},
-				win: {
-					icon: 'src/main/win/icon.ico',
-					target: [
-						{
-							target: 'nsis',
-							arch: [
-								'ia32',
-								'x64',
-							],
-						},
-					],
-				},
-				linux: {
-					icon: 'src/main/linux',
-				},
-			},
-			removeElectronJunk: true, // True by default
-			//outputDir: 'electron-builder-output-dir',
-			chainWebpackRendererProcess: (config) => {
-				// Chain webpack config for electron renderer process only
-				// The following will set IS_ELECTRON to true within the app
-				config.plugin('define').tap((args) => {
-					args[0].IS_ELECTRON = true;
-					return args;
-				});
-			},
-		},
-	},
+      electronBuilder: {
+        noAppProtocol: true,
+        builderOptions: {
+          files: [
+            '!node_modules'
+          ],
+          productName: 'JSECoin',
+          appId: 'com.jsecoin.desktop',
+          dmg: {
+            contents: [
+              {
+                x: 375,
+                y: 60,
+                type: 'link',
+                path: '/Applications'
+              },
+              {
+                x: 125,
+                y: 60,
+                type: 'file'
+              }
+            ],
+            window: {
+              x: 200,
+              y: 120,
+              width: 500,
+              height: 300
+            },
+            background: 'src/main/mac/background.png',
+            internetEnabled: true
+          },
+          mac: {
+            icon: 'src/main/mac/icon.icns'
+          },
+          win: {
+            icon: 'src/main/win/icon.ico',
+            target: [
+              {
+                target: 'nsis',
+                arch: [
+                  'ia32',
+                  'x64'
+                ]
+              }
+            ]
+          },
+          linux: {
+            icon: 'src/main/linux'
+          }
+        },
+        removeElectronJunk: true,
+        chainWebpackRendererProcess: (config) => {
+                      // Chain webpack config for electron renderer process only
+                      // The following will set IS_ELECTRON to true within the app
+                      config.plugin('define').tap((args) => {
+                          args[0].IS_ELECTRON = true;
+                          return args;
+                      });
+                  }
+      },
+      cordovaPath: 'mobile'
+    },
 	pwa: {
 		cacheId: 'JSEPlatform',
 		name: 'JSECoin Ltd Official Platform',
@@ -222,7 +213,7 @@ module.exports = {
 		],
 	},*/
 
-	baseUrl: undefined,
+	baseUrl: '',
 	outputDir: undefined,
 	assetsDir: 'assets',
 	runtimeCompiler: undefined,

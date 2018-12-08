@@ -22,3 +22,8 @@ yarn-error.log*
 
 #Electron-builder output
 /dist_electron
+# Cordova
+/mobile/www
+/mobile/platforms
+/mobile/plugins
+/public/cordova.js
