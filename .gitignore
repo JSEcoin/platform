@@ -2,6 +2,7 @@
 node_modules
 /dist
 /dist_web
+/dist_styleguide
 
 # local env files
 .env.local
