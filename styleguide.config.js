@@ -40,7 +40,7 @@ module.exports = {
 		},
 		{
 			name: 'Pages',
-			content: './docs/Pages.md',
+			content: './public/docs/Pages.md',
 			components: () => [
 				'./src/components/SplashLoadingScreen-Page.vue',
 				'./src/components/UpgradeApp-Page.vue',
