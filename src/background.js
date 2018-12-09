@@ -33,7 +33,7 @@ let mainWindow;
 
 //https://github.com/electron/electron/blob/master/docs/api/protocol.md
 //change file protocal to enables recaptcha capabilities
-protocol.registerStandardSchemes(['jsecoin'], { secure: true });
+protocol.registerStandardSchemes(['app'], { secure: true });
 
 /**
  * Initialise and create application Window
@@ -105,10 +105,10 @@ function createWindow() {
 			mainWindow.webContents.openDevTools();
 		}
 	} else {
-		protocol.registerServiceWorkerSchemes(['jsecoin']);
-		createProtocol('jsecoin');
+		protocol.registerServiceWorkerSchemes(['app']);
+		createProtocol('app');
 		// Load the index.html when not in development
-		mainWindow.loadURL('jsecoin://./index.html');
+		mainWindow.loadURL('app://./index.html');
 	}
 
 	//add tray icon support

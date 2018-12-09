@@ -110,7 +110,7 @@ module.exports = {
 	pluginOptions: {
 		electronBuilder: {
 			outputDir: 'dist_desktop',
-			noAppProtocol: true,
+			//noAppProtocol: true,
 			builderOptions: {
 				files: [
 					'!node_modules',
