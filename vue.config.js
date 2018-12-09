@@ -99,8 +99,11 @@ const productionPlugins = [
 ];
 
 //App version
-process.env.VUE_APP_VERSION = require('./package.json').version;
-process.env.VUE_APP_MJRVERSION = parseInt(process.env.VUE_APP_VERSION.replace(/\./g,''), 10);
+const ver = require('./package.json').version;
+const maxVer = parseInt(ver.replace(/\./g,''), 10);
+process.env.VUE_APP_VERSION = ver;
+process.env.VUE_APP_MJRVERSION = maxVer;
+console.log('------------------------', ver);
 
 module.exports = {
 	outputDir: path.resolve(__dirname, 'dist_web'),
