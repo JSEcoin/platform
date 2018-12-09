@@ -423,15 +423,18 @@ export default {
 			self.$electron.ipcRenderer.send('getAppVersion');
 			//Set app version
 			self.$electron.ipcRenderer.on('updateAppVersion', (event, appVersion) => {
-				self.$store.commit('updateAppState', {
-					val: appVersion,
-					state: 'version',
-				});
-				const majorVer = parseInt(appVersion.replace(/\./g,''), 10);
-				self.$store.commit('updateAppState', {
-					val: majorVer,
-					state: 'major',
-				});
+				if (typeof (appVersion) !== 'undefined') {
+					//console.log('xx', appVersion);
+					self.$store.commit('updateAppState', {
+						val: appVersion,
+						state: 'version',
+					});
+					const majorVer = parseInt(appVersion.replace(/\./g,''), 10);
+					self.$store.commit('updateAppState', {
+						val: majorVer,
+						state: 'major',
+					});
+				}
 			});
 
 			//tray menu can pass dynamic paths
