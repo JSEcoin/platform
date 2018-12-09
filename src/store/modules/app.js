@@ -1,6 +1,6 @@
 const state = {
-	version: '0.5.9', //app version no
-	major: 59, //support only this server release
+	version: process.env.VUE_APP_VERSION, //app version no
+	major: process.env.VUE_APP_MJRVERSION, //support only this server release
 	base: 'platformWeb', //[platformWeb, platformDesktop]
 	platform: 'web', //platform type [desktop, mobile, web] // [electron, cordova, web]
 	platformURL: '/desktop', // for router
