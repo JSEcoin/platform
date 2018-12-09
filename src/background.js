@@ -9,7 +9,8 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib';
 
 //version
-const appVersion = process.env.VUE_APP_VERSION;
+const appVersion = '0.5.9';//process.env.VUE_APP_VERSION;
+console.log(process.env.VUE_APP_VERSION);
 
 //test
 app.disableHardwareAcceleration();
@@ -104,7 +105,7 @@ function createWindow() {
 			mainWindow.webContents.openDevTools();
 		}
 	} else {
-		//protocol.registerServiceWorkerSchemes(['jsecoin']);
+		protocol.registerServiceWorkerSchemes(['jsecoin']);
 		createProtocol('jsecoin');
 		// Load the index.html when not in development
 		mainWindow.loadURL('jsecoin://./index.html');
@@ -293,7 +294,6 @@ function createWindow() {
 	});
 	//Retrieve app version and send
 	ipcMain.on('getAppVersion', (event, arg) => {
-		//event.sender.send('updateAppVersion', app.getVersion()); //returns electron ver not package.json ver???
 		event.sender.send('updateAppVersion', appVersion);
 	});
 	//update progress bar display
