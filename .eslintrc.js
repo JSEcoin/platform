@@ -33,6 +33,7 @@ module.exports = {
 		'no-unused-vars': 0,
 		'no-multi-spaces': 0,
 		'prefer-template': 0,
+		'prefer-destructuring': 0,
 		'no-tabs': 0,
 		'spaced-comment': 0,
 		'max-len': 0,
