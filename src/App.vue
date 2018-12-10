@@ -12,6 +12,58 @@
 		</div>
 		<!-- xOffline Detection -->
 		<div id="JSEA-appWrapper">
+			<!-- Web Header -->
+			<header v-if="($store.state.app.platformURL !== '')">
+				<div v-if="($store.state.app.platform === 'desktop')" id="JSEA-headerBar" class="draggable-area">
+					<i class="fa fa-close" v-on:click="closeWindow()"></i>
+					<i class="fa fa-square-o" v-on:click="ExpandWindow()"></i>
+					<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
+				</div>
+				<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
+				<ul id="JSEA-headerItems">
+					<li id="JSEA-googleTranslate"><i class="button"></i></li>
+					<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
+					<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
+					<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
+						<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
+							<div>
+								<network network="facebook">
+									<i class="fa fa-fw fa-facebook"></i>
+								</network>
+								<network network="googleplus">
+									<i class="fa fa-fw fa-google-plus"></i>
+								</network>
+								<network network="linkedin">
+									<i class="fa fa-fw fa-linkedin"></i>
+								</network>
+								<network network="reddit">
+									<i class="fa fa-fw fa-reddit"></i>
+								</network>
+								<network network="twitter">
+									<i class="fa fa-fw fa-twitter"></i>
+								</network>
+								<network network="vk">
+									<i class="fa fa-vk"></i>
+								</network>
+								<network network="weibo">
+									<i class="fa fa-weibo"></i>
+								</network>
+							</div>
+						</social-sharing>
+					</li>
+					<li v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
+						<div id="JSEA-profileWrap">
+							<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
+						</div>
+						<div>
+							<div id="JSEA-profileUserName">{{user.name}}</div>
+							<div id="JSEA-profilePublicKey">{{user.publicKey}}</div>
+						</div>
+						<i class="fa fa-angle-down"></i>
+					</li>
+				</ul>
+			</header>
+			<!-- xWeb Header -->
 			<div id="JSEA-sideBar" :class="{'showSideBar':sideBarActive}">
 				<div id="JSEA-toggleSideBar" v-intro="'Expand or collapse the side bar'" v-on:click="toggleSideBar">
 					<nav>
@@ -117,59 +169,17 @@
 			<div id="JSEA-contentWrapper">
 				<div id="JSEA-content">
 				<!-- App Header -->
-				<header v-if="($store.state.app.platformURL === '')" class="draggable-area">
-					<i class="fa fa-close" v-on:click="closeWindow()"></i>
-					<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
+				<header v-if="($store.state.app.platformURL === '')">
+					<div v-if="($store.state.app.platform === 'desktop')" id="JSEA-headerBar" class="draggable-area">
+						<i class="fa fa-close" v-on:click="closeWindow()"></i>
+						<i class="fa fa-square-o" v-on:click="ExpandWindow()"></i>
+						<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
+					</div>
+					<div id="JSEA-desktopLogo"></div>
 					<div id="JSEA-loadingDisplay" :style="{width: waitTimer + '%'}"></div>
 				</header>
 				<!-- xApp Header -->
-				<!-- Web Header -->
-				<header v-else>
-					<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
-					<ul id="JSEA-headerItems">
-						<li id="JSEA-googleTranslate"><i class="button"></i></li>
-						<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
-						<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
-						<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
-							<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
-								<div>
-									<network network="facebook">
-										<i class="fa fa-fw fa-facebook"></i>
-									</network>
-									<network network="googleplus">
-										<i class="fa fa-fw fa-google-plus"></i>
-									</network>
-									<network network="linkedin">
-										<i class="fa fa-fw fa-linkedin"></i>
-									</network>
-									<network network="reddit">
-										<i class="fa fa-fw fa-reddit"></i>
-									</network>
-									<network network="twitter">
-										<i class="fa fa-fw fa-twitter"></i>
-									</network>
-									<network network="vk">
-										<i class="fa fa-vk"></i>
-									</network>
-									<network network="weibo">
-										<i class="fa fa-weibo"></i>
-									</network>
-								</div>
-							</social-sharing>
-						</li>
-						<li v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
-							<div id="JSEA-profileWrap">
-								<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
-							</div>
-							<div>
-								<div id="JSEA-profileUserName">{{user.name}}</div>
-								<div id="JSEA-profilePublicKey">{{user.publicKey}}</div>
-							</div>
-							<i class="fa fa-angle-down"></i>
-						</li>
-					</ul>
-				</header>
-				<!-- xWeb Header -->
+				
 
 				<!-- App Page Content -->
 				<router-view></router-view>
@@ -759,6 +769,22 @@ export default {
 			}
 		},
 		/**
+		 * Expands Window
+		 * expands app to fullscreen
+		 */
+		ExpandWindow() {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				console.log('d', self.$electron.remote.BrowserWindow.getFocusedWindow().isMaximized());
+				if (self.$electron.remote.BrowserWindow.getFocusedWindow().isMaximized()) {
+					//self.$electron.remote.BrowserWindow.getFocusedWindow().setFullScreen();
+					self.$electron.remote.BrowserWindow.getFocusedWindow().unmaximize();
+				} else {
+					self.$electron.remote.BrowserWindow.getFocusedWindow().maximize();
+				}
+			}
+		},
+		/**
 		 * toggle Menu
 		 * toggles display of ub menu items.
 		 */
@@ -1042,10 +1068,11 @@ html, body {
 	margin:0px;
 	padding:0px;
 	overflow: hidden;
+	height:100%;
 }
 
 body {
-	padding:2px;
+	/*padding:2px;*/
 	font-size: 16px;
 	font-family: 'Nunito', sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -1224,7 +1251,7 @@ tbody td {
 }
 
 header {
-	background-image: url("assets/images/header_login.png");
+	background-image: url("assets/images/header_loginv2.png");
 	background-repeat:no-repeat;
 	background-position:  center;
 	background-size: cover;
@@ -1239,6 +1266,10 @@ header {
     /*border-bottom: solid 1px #ddd;*/
 }
 
+.platformDesktop.max header {
+	height:75px;
+}
+
 .max.light header {
 	background:#fff;
 	box-shadow:0px 0.5px 0px 0px #ddd !important;
@@ -1249,10 +1280,28 @@ header {
 }
 
 .platformWeb.min header {
-     background-position: 0px -4px;
+    background-position: 0px -4px;
 	height: 56px;
 }
 
+#JSEA-desktopLogo {
+	background-image: url("assets/images/header_desktop_logo.png");
+	background-repeat:no-repeat;
+	background-position:  center;
+	background-size: cover;
+	/*border-bottom: solid 10px #f5f7fb;*/
+	
+	height:45px;
+	width:189px;
+	margin:12px auto 0px;
+}
+#JSEA-headerBar {
+	height:20px;
+	background: rgba(0,0,0,0.3);
+}
+.max #JSEA-headerBar {
+	background: #010814;
+}
 .cf:before,
 .cf:after {
     content: " "; /* 1 */
@@ -1366,10 +1415,14 @@ header {
 	background:#fff;
 	/*box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3);*/
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-	border-radius: 8px;
+	/*border-radius: 8px;*/
 	overflow: hidden;
 	height:648px;
 	transition: all 0.2s;
+}
+
+.platformDesktop #JSEA-desktop {
+	height:100%;
 }
 .platformWeb {
 	background: #000812;
@@ -1428,7 +1481,7 @@ header {
 	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
 }
 #JSEA-desktop.active {
-	background:#fff;
+	background:#fafbfd;
 }
 #JSEA-desktop.active.loggedIn {
 	background:#fafbfd;
@@ -1438,9 +1491,7 @@ header {
 	display:none;
 }
 header .fa-close {
-	background:#001757;
-	border-radius: 50px;
-	color:#fff;
+	color:#999;
 	text-align: center;
     height: 20px;
     width: 20px;
@@ -1448,8 +1499,8 @@ header .fa-close {
     font-size: 0.7em;
 	position: absolute;
 	z-index:1000;
-	top:5px;
-	right:5px;
+	top:0px;
+	right:0px;
 	cursor: pointer;
 	display: block;
 	-webkit-app-region: no-drag;
@@ -1457,13 +1508,19 @@ header .fa-close {
 }
 
 header .fa-close:hover {
+	color:#fff;
 	background:#e81123;
 }
 
 header .fa-minus {
-	background:#001757;
-	border-radius: 50px;
-	color:#fff;
+	right:40px;
+}
+header .fa-square-o  {
+	right:20px;
+}
+header .fa-minus,
+header .fa-square-o {
+	color:#999;
 	text-align: center;
     height: 20px;
     width: 20px;
@@ -1472,17 +1529,17 @@ header .fa-minus {
     font-size: 0.7em;
 	position: absolute;
 	z-index:1000;
-	top:5px;
-	right:30px;
+	top:0px;
 	cursor: pointer;
 	display: block;
 	-webkit-app-region: no-drag;
 	transition:background 0.2s, color 0.2s;
 }
 
-header .fa-minus:hover {
-	background:#e5e5e5;
-	color:#666;
+header .fa-minus:hover,
+header .fa-square-o:hover {
+	background:rgba(255,255,255,0.1);
+	color:#fff;
 }
 
 
@@ -1577,10 +1634,12 @@ header .fa-minus:hover {
 
 /* Night Theme */
 
-.light header,
+.light header {
+	box-shadow: 0px 8px 0px 0px #ecf1f5;
+}
 .night header {
     /*border-bottom: solid 10px #171820;*/
-	box-shadow: inset 0px -8px 0px 0px rgba(0,0,0,0.4);
+	box-shadow: 0px 8px 0px 0px rgba(0,0,0,0.4);
 }
 
 #JSEA-desktop.active.night {
@@ -1590,6 +1649,11 @@ header .fa-minus:hover {
 #JSEA-desktop.active.light {
 	/*box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);*/
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.platformDesktop #JSEA-desktop.active.night,
+.platformDesktop #JSEA-desktop.active.light {
+	box-shadow: none;
 }
 
 /* xNight Theme */
@@ -2215,6 +2279,9 @@ header .fa-minus:hover {
     width: 22px;
 	transition: height 0.4s;
 	height:56px;
+}
+.platformDesktop #JSEA-toggleSideBar {
+	top:20px;
 }
 
 #JSEA-toggleSideBar * {
