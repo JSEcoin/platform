@@ -1,12 +1,12 @@
 <template>
 	<div>
-		SearchResults
+		All Transactions
 	</div>
 </template>
 
 <script>
 export default {
-  name: 'SearchResults',
+  name: 'AllTransactions-Page',
 };
 </script>
 

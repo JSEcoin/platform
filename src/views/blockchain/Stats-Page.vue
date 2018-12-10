@@ -32,7 +32,7 @@
 import moment from 'moment';
 
 export default {
-  name: 'Stats',
+  name: 'Stats-Page',
 	data() {
 		return {
 			coins: 0,

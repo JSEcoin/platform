@@ -41,18 +41,18 @@ const earnings = () => import(/* webpackChunkName: "mine" */ '@/views/mine/Earni
 
 //Block Explorer
 //import Charts from '@/views/blockchain/Charts';
-const Blocks = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Blocks');
-const Ledger = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Ledger');
-const APIs = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/APIs');
-const Block = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Block');
-const Transaction = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Transaction');
-const AllBlocks = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/AllBlocks');
-const AllTransactions = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/AllTransactions');
-const Search = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Search');
-const Stats = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Stats');
+const Blocks = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Blocks-Page');
+const Ledger = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Ledger-Page');
+const APIs = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/APIs-Page');
+const Block = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Block-Page');
+const Transaction = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Transaction-Page');
+const AllBlocks = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/AllBlocks-Page');
+const AllTransactions = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/AllTransactions-Page');
+const Search = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Search-Page');
+const Stats = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Stats-Page');
 
 //import Wall from '@/views/crypto/Wall';
-const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/views/crypto/Stats');
+const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/views/crypto/Stats-Page');
 
 Vue.use(Router);
 

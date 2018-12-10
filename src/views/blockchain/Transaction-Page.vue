@@ -107,7 +107,7 @@ import NavWidget from '@/components/widgets/NavWidget.vue';
 import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
 
 export default {
-  name: 'Block',
+  name: 'Transaction-Page',
 	components: {
 		AppWrapperWidget,
 		ContentWidget,

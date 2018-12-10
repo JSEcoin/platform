@@ -1,19 +1,12 @@
 <template>
 	<div>
-		<div class="box">
-			<h3 class="title">
-
-			</h3>
-		</div>
+		SearchResults
 	</div>
 </template>
 
 <script>
 export default {
-	mounted() {
-		window.location.href = 'https://developer.jsecoin.com';
-	},
-	name: 'APIs',
+  name: 'SearchResults-Page',
 };
 </script>
 

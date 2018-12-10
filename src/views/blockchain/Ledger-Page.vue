@@ -15,7 +15,7 @@
 import moment from 'moment';
 
 export default {
-  name: 'Ledger',
+  name: 'Ledger-Page',
 	data() {
 		return {
 			ledger: {},

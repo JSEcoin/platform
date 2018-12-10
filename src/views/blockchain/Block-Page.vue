@@ -195,7 +195,7 @@ import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 
 
 export default {
-	name: 'Block',
+	name: 'Block-Page',
 	components: {
 		AppWrapperWidget,
 		ContentWidget,

@@ -86,7 +86,7 @@ import Chart from 'chart.js';
 import moment from 'moment';
 
 export default {
-	name: 'Charts',
+	name: 'Charts-Page',
 	//DB container
 	firebase: {},
 	//data

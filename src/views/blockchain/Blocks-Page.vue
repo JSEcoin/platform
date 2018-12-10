@@ -180,7 +180,7 @@ import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 
 export default {
 	//component name
-	name: 'Blocks',
+	name: 'Blocks-Page',
 	components: {
 		AppWrapperWidget,
 		ContentWidget,
