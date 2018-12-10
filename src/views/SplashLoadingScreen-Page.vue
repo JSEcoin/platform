@@ -6,7 +6,7 @@
 
 <script>
 import axios from 'axios';
-import SplashAnimation from '@/components/widgets/SplashV3.vue';
+import SplashAnimation from '@/components/widgets/SplashV4.vue';
 
 /**
  * @description

@@ -155,6 +155,7 @@ dl {
 	color:#606060;
 	position: relative;
 	overflow: hidden;
+	width: -webkit-fill-available;
 }
 
 dl.noExt {

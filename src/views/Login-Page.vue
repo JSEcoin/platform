@@ -614,12 +614,13 @@ export default {
     display: flex;
 }
 #JSEA-loginWrapper {
-    align-self: center;
+    /*align-self: center;*/
     width: 100%;
 }
 .platformWeb.min #JSEA-loginWrapper {
     align-self: inherit;
 	margin-top: 20px;
+	padding:16px;
 }
 
 .night #JSEA-loginHeader {
@@ -725,34 +726,40 @@ footer {
 	color:#042a7a;
 }
 
-.max #JSEA-loginPage {
+#JSEA-loginPage {
     width: 450px;
-    margin: 80px auto;
     border-radius: 10px;
     height: 440px;
 }
+.min #JSEA-loginPage,
+.med #JSEA-loginPage {
+    margin: 40px auto;
+}
+.max #JSEA-loginPage {
+    margin: 80px auto;
+}
 
-.max.light #JSEA-loginPage {
+.light #JSEA-loginPage {
     background: #fff;
     box-shadow: rgba(210, 214, 217,1) 0px 1px 3px 0px;
 }
-.max.night #JSEA-loginPage {
+.night #JSEA-loginPage {
     background: #20222e;
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.6);
 }
 
-.max.night #JSEA-loginPage .loginFormContainer {
+.night #JSEA-loginPage .loginFormContainer {
    background: #1c1e28;
 }
-.max #JSEA-loginForm {
+#JSEA-loginForm {
 	width:90%;
 }
-.max #JSEA-loginPage dl {
+#JSEA-loginPage dl {
 	width:auto;
 }
 
 
-.max #JSEA-loginPage a {
+#JSEA-loginPage a {
     color: #666;
     font-size: 0.9em;
     display: inline-block;

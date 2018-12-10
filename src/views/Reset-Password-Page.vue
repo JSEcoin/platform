@@ -6,11 +6,6 @@
 			<!-- Reset Password Page -->
 			<div id="JSEA-resetPasswordPage">
 				<div id="JSEA-resetWrapper">
-					<!-- Register Form -->
-					<div>
-						<h2 id="JSEA-resetHeader" class="center">Reset Your Password</h2>
-						<h4 id="JSEA-resetSubHeader" class="center">Request a security code to create a new password.</h4>
-					</div>
 
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
@@ -20,6 +15,12 @@
 					<form id="JSEA-resetPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" class="row" id="JSEA-resetPasswordWrapper">
 							<ContentWidget class="resetFormContainer">
+								<!-- Register Form -->
+								<div>
+									<h2 id="JSEA-resetHeader" class="center">Reset Your Password</h2>
+									<h4 id="JSEA-resetSubHeader" class="center">Request a security code to create a new password.</h4>
+								</div>
+
 								<h4 class="title">(Step 1) Request a security code.</h4>
 								<!-- Error display -->
 								<FormErrorDisplayWidget v-on:click.native="closeError('error1')" v-if="form.error1.display" :errorMsg="form.error1.msg"  style="width: 60%; margin: 10px auto;" />
@@ -358,13 +359,14 @@ export default {
     margin: 10px 0px;
     padding: 16px;
 }
+/*
 .max.light .formWrapper {
 	background: #f8fafb;
 }
 
 .max.night .formWrapper {
 	background: #1c1e28;
-}
+}*/
 .buttonRow {
 	justify-content: center;
 	align-items: center;
@@ -379,19 +381,18 @@ export default {
 }
 
 #JSEA-resetHeader {
-	margin-bottom:0px;
+	margin: 0px;
 	padding-bottom:0px;
 	font-size:1.1em;
 }
 
-.max #JSEA-resetHeader {
-	margin-top: 40px;
-}
 
 #JSEA-resetSubHeader {
-	margin:0px 0px 20px 0px;
+	margin:0px -16px 20px -16px;
 	padding:0px;
 	color:#bababa;
 	font-size:0.9em;
+	padding-bottom: 16px;
+    border-bottom: solid 6px rgba(0,0,0,0.06);
 }
 </style>

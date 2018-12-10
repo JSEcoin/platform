@@ -6,11 +6,6 @@
 			<!-- register Page -->
 			<div id="JSEA-registerPage">
 				<div id="JSEA-registerWrapper">
-					<!-- Register Form -->
-					<div>
-						<h2 id="JSEA-registerHeader" class="center">Registration</h2>
-						<h4 id="JSEA-registerSubHeader" class="center">Setup your account</h4>
-					</div>
 
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
@@ -24,6 +19,11 @@
 					<form id="JSEA-registerForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-registerFormWrapper">
 							<ContentWidget class="registerFormContainer">
+								<!-- Register Form -->
+								<div>
+									<h2 id="JSEA-registerHeader" class="center">Registration</h2>
+									<h4 id="JSEA-registerSubHeader" class="center">Setup your account</h4>
+								</div>
 								<h4 class="title">Account Details</h4>
 								<!-- User Pass register interface -->
 								<div class="formWrapper">
@@ -655,20 +655,19 @@ export default {
 }
 
 #JSEA-registerHeader {
-	margin-bottom:0px;
+	margin:0px;
 	padding-bottom:0px;
 	font-size:1.1em;
-}
-.max #JSEA-registerHeader {
-	margin-top: 40px;
 }
 
 
 #JSEA-registerSubHeader {
-	margin:0px 0px 20px 0px;
+	margin:0px -16px 20px -16px;
 	padding:0px;
 	color:#bababa;
 	font-size:0.9em;
+	padding-bottom: 16px;
+    border-bottom: solid 6px rgba(0,0,0,0.06);
 }
 
 #JSEA-registerForm {
@@ -682,14 +681,14 @@ export default {
 .platformWeb.min #JSEA-registerForm {
 	width:90%;
 }
-
+/*
 .night .registerFormContainer {
 	background: #20222e;
 }
 
 .light .registerFormContainer {
 	background: #f8fafb;
-}
+}*/
 
 
 .max.light .registerFormContainer {
@@ -712,8 +711,8 @@ export default {
 	margin: 10px 0px 20px 0px !important;
 	overflow: hidden !important;
 	position: relative !important;
-	overflow: hidden !important;
-	box-shadow:none !important;
+	/*overflow: hidden !important;
+	box-shadow:none !important;*/
 }
 
 #JSEA-timeout {

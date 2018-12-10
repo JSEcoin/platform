@@ -6,13 +6,6 @@
 			<!-- Restore 2FA Page -->
 			<div id="JSEA-restore2FAPage">
 				<div id="JSEA-restore2FAWrapper">
-					<!-- Register Form -->
-					<div>
-						<h2 id="JSEA-restore2FAHeader" class="center">Restore Two Factor Authentication</h2>
-						<h4 id="JSEA-restore2FASubHeader" class="center">
-                            Generate 2FA QR Setup Code.
-                        </h4>
-					</div>
 
 					<!-- Animation to display during server requests -->
 					<SpinnerWidget :class="{active:loading}"/>
@@ -22,6 +15,14 @@
 					<form id="JSEA-restore2FAPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" class="row" id="JSEA-restore2FAPasswordWrapper">
 							<ContentWidget class="restore2FAFormContainer">
+								<!-- Register Form -->
+								<div>
+									<h2 id="JSEA-restore2FAHeader" class="center">Restore Two Factor Authentication</h2>
+									<h4 id="JSEA-restore2FASubHeader" class="center">
+										Generate 2FA QR Setup Code.
+									</h4>
+								</div>
+
 								<h4 class="title">To restore your 2FA</h4>
 
 								<!-- Error display -->
@@ -308,19 +309,17 @@ export default {
 }
 
 #JSEA-restore2FAHeader {
-	margin-bottom:0px;
+	margin: 0px;
 	padding-bottom:0px;
 	font-size:1.1em;
 }
 
-.max #JSEA-restore2FAHeader {
-	margin-top: 40px;
-}
-
 #JSEA-restore2FASubHeader {
-	margin:0px 0px 20px 0px;
+	margin:0px -16px 20px -16px;
 	padding:0px;
 	color:#bababa;
 	font-size:0.9em;
+	padding-bottom: 16px;
+    border-bottom: solid 6px rgba(0,0,0,0.06);
 }
 </style>
