@@ -1,7 +1,7 @@
 <template>
 	<ContentWidget titleTxt="Console:" class="console mini" v-bind="{consoleEnabled: true}">
 		<div style="height:110px" class="consoleContent">
-			<p v-for="(msg, i) in consoleMsg" v-html="msg"></p>
+			<p v-for="(msg, i) in consoleMsg" :key="i" v-html="msg"></p>
 		</div>
 	</ContentWidget>
 </template>

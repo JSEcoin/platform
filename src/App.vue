@@ -1224,7 +1224,7 @@ tbody td {
 }
 
 header {
-	background-image: url("assets/header_login.png");
+	background-image: url("assets/images/header_login.png");
 	background-repeat:no-repeat;
 	background-position:  center;
 	background-size: cover;
@@ -1648,7 +1648,7 @@ header .fa-minus:hover {
 	margin:6px;
 }
 #JSEA-QRBGImage {
-	background-image: url('./assets/images/QR_logo3.png');
+	background-image: url('assets/images/QR_logo3.png');
 	background-repeat:no-repeat;
 	background-size:12%;
 	background-position: center;
@@ -1866,11 +1866,11 @@ header .fa-minus:hover {
     margin-left: 14px;
 }
 .max.light #JSEA-sideLogoHeader {
-	background-image: url("assets/jseLogo.svg");
+	background-image: url("assets/images/jseLogo.svg");
 }
 
 .max.night #JSEA-sideLogoHeader {
-	background-image: url("assets/jseLogo_night.svg");
+	background-image: url("assets/images/jseLogo_night.svg");
 }
 #JSEA-sideLogo {
 	height:55px;
@@ -1881,12 +1881,12 @@ header .fa-minus:hover {
 	cursor: pointer;
 }
 .max.light #JSEA-sideLogo {
-	background-image: url("assets/jseLogo.svg");
+	background-image: url("assets/images/jseLogo.svg");
 	box-shadow: inset 0px -0.5px 0px 0px #ddd, inset -0.5px 0px 0px 0px #ddd;
 }
 
 .max.night #JSEA-sideLogo {
-	background-image: url("assets/jseLogo_night.svg");
+	background-image: url("assets/images/jseLogo_night.svg");
 	box-shadow: inset 0px -0.5px 0px 0px #171820, inset -0.5px 0px 0px 0px #171820;
 }
 
@@ -2138,10 +2138,10 @@ header .fa-minus:hover {
 	overflow:hidden;
 }
 .light #JSEA-profileWrap {
-	background-image: url("assets/profile_wrap.svg");
+	background-image: url("assets/images/profile_wrap.svg");
 }
 .night #JSEA-profileWrap {
-	background-image: url("assets/profile_wrap_night.svg");
+	background-image: url("assets/images/profile_wrap_night.svg");
 }
 
 #JSEA-profileMenu {
@@ -2408,7 +2408,7 @@ header .fa-minus:hover {
 	border:0px;
 }
 #JSEA-googleTranslate i {
-	background-image: url("assets/google_translate_logo.svg");
+	background-image: url("assets/images/google_translate_logo.svg");
 	background-repeat:no-repeat;
 	background-size:60%;
 	background-position:center;

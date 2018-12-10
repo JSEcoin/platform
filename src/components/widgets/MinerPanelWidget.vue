@@ -42,7 +42,6 @@ import { mapState } from 'vuex';
 import moment from 'moment';
 import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import Coin from '@/components/widgets/Coin.vue';
-import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWidget.vue';
 import MinedOverviewChartWidgetC3 from '@/components/widgets/MinedOverviewChartWidgetC3.vue';
 
 /**
@@ -59,7 +58,6 @@ export default {
 	components: {
 		ContentWidget,
 		Coin,
-		OptionsListWrapperWidget,
 		MinedOverviewChartWidgetC3,
 	},
 	computed: mapState({
@@ -128,7 +126,7 @@ export default {
 	margin-right:4px;
 }
 .hash {
-	background-image:url('../../assets/hashes.png');
+	background-image:url('../../assets/images/hashes.png');
 	background-repeat:no-repeat;
 	background-size: contain;
 	width: 20px;
@@ -136,7 +134,7 @@ export default {
     min-width: 20px;
 }
 .cpu {
-	background-image:url('../../assets/cpu.png');
+	background-image:url('../../assets/images/cpu.png');
 	background-repeat:no-repeat;
 	background-size: contain;
 	width: 20px;
@@ -145,7 +143,7 @@ export default {
 }
 
 .miner {
-	background-image:url('../../assets/ico_users.png');
+	background-image:url('../../assets/images/ico_users.png');
 	background-repeat:no-repeat;
 	background-size: contain;
 	width: 20px;

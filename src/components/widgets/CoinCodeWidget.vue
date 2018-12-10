@@ -40,11 +40,11 @@ export default {
 <style scoped>
 
 .night .coincode {
-	background-image:url('../../assets/coincode_night.png');
+	background-image:url('../../assets/images/coincode_night.png');
 	background-repeat: no-repeat;
 }
 .light .coincode {
-	background-image:url('../../assets/coincode_light.png');
+	background-image:url('../../assets/images/coincode_light.png');
 	background-repeat: no-repeat;
 }
 

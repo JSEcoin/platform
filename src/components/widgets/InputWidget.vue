@@ -8,7 +8,7 @@
 
 			<!-- Input plus Ico -->
 			<div v-if="Object.keys(iconClass).length > 0" class="amountInput coin" :class="iconClass">
-				<div class="interactiveIco":class="{'showPointer': ($store.getters.whichPlatform === 'mobile')}"" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
+				<div class="interactiveIco" :class="{'showPointer': ($store.getters.whichPlatform === 'mobile')}" v-if="((iconClass.coincode) && (eventaction.length > 0))" v-on:click="emitEvent(eventaction, $event);"></div>
 				<input autocapitalize="off" :type="inputType" ref="input" :maxlength="maxlength" :name="name" :placeholder="placeholder" :value="value" v-on:keyup="keyUp($event.target.value)" autocomplete="false" />
 			</div>
 			<!-- xInput plus Ico -->
@@ -477,11 +477,11 @@ export default {
 <style scoped>
 
 .night .coincode {
-	background-image:url('../../assets/coincode_night.png');
+	background-image:url('../../assets/images/coincode_night.png');
 	background-repeat: no-repeat;
 }
 .light .coincode {
-	background-image:url('../../assets/coincode_light.png');
+	background-image:url('../../assets/images/coincode_light.png');
 	background-repeat: no-repeat;
 }
 
@@ -569,14 +569,14 @@ input[name="password"] {
 .night .amountInput.coin.gold,
 .light .amountInput.coin.gold,
 .coin.gold {
-	background-image:url('../../assets/coin_gold.png');
+	background-image:url('../../assets/images/coin_gold.png');
 	background-repeat: no-repeat;
 }
 
 .night .amountInput.coin.silver,
 .light .amountInput.coin.silver,
 .coin.silver {
-	background-image:url('../../assets/coin_silver.png');
+	background-image:url('../../assets/images/coin_silver.png');
 	background-repeat: no-repeat;
 }
 

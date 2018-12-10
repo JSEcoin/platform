@@ -333,13 +333,13 @@ dt button {
 	width:20px;
 }
 .titleInfo .hash {
-	background-image:url('../../assets/hashes_light.png');
+	background-image:url('../../assets/images/hashes_light.png');
 }
 .night .titleButton .booklet {
-	background-image:url('../../assets/booklet.png');
+	background-image:url('../../assets/images/booklet.png');
 }
 .light .titleButton .booklet {
-	background-image:url('../../assets/booklet_light.png');
+	background-image:url('../../assets/images/booklet_light.png');
 }
 .titleButton .booklet {
 	background-repeat: no-repeat;

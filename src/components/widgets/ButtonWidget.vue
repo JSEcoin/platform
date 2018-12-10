@@ -181,8 +181,8 @@ button.red:hover {
     margin-left: -20px;
 	display: inline-block;
 
-	-webkit-mask: url('../../assets/pickaxe.svg') no-repeat 50% 50%;
-	mask: url('../../assets/pickaxe.svg') no-repeat 50% 50%;
+	-webkit-mask: url('../../assets/images/pickaxe.svg') no-repeat 50% 50%;
+	mask: url('../../assets/images/pickaxe.svg') no-repeat 50% 50%;
 	-webkit-mask-size: cover;
 	mask-size: cover;
 }

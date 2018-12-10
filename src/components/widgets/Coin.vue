@@ -42,11 +42,11 @@ export default {
 }
 
 .coin.gold {
-	background-image:url('../../assets/coin_gold.png');
+	background-image:url('../../assets/images/coin_gold.png');
 	border-radius: 55px;
 }
 .coin.silver {
-	background-image:url('../../assets/coin_silver.png');
+	background-image:url('../../assets/images/coin_silver.png');
 	border-radius: 20px;
 }
 

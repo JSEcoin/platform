@@ -5,54 +5,54 @@ import Router from 'vue-router';
 import store from '@/store';
 
 //splashLoadingScreen
-import splashLoadingScreen from '@/components/SplashLoadingScreen-Page';
+import splashLoadingScreen from '@/views/SplashLoadingScreen-Page';
 
 //upgradeApp\
-const upgradeApp = () => import(/* webpackChunkName: "upgradeApp" */ '@/components/UpgradeApp-Page');
+const upgradeApp = () => import(/* webpackChunkName: "upgradeApp" */ '@/views/UpgradeApp-Page');
 
 //login
-const login = () => import(/* webpackChunkName: "login" */ '@/components/Login-Page');
-const resetPassword = () => import(/* webpackChunkName: "login" */ '@/components/Reset-Password-Page');
-const restore2FA = () => import(/* webpackChunkName: "login" */ '@/components/Restore2FA-Page');
+const login = () => import(/* webpackChunkName: "login" */ '@/views/Login-Page');
+const resetPassword = () => import(/* webpackChunkName: "login" */ '@/views/Reset-Password-Page');
+const restore2FA = () => import(/* webpackChunkName: "login" */ '@/views/Restore2FA-Page');
 
 //Security Pin Setup
-const enterSecurityPin = () => import(/* webpackChunkName: "enterSecurityPin" */ '@/components/EnterSecurityPin-Page');
+const enterSecurityPin = () => import(/* webpackChunkName: "enterSecurityPin" */ '@/views/EnterSecurityPin-Page');
 
 //Register
-const register = () => import(/* webpackChunkName: "login" */ '@/components/Register-Page');
+const register = () => import(/* webpackChunkName: "login" */ '@/views/Register-Page');
 
 //settings
-const settings = () => import(/* webpackChunkName: "settings" */ '@/components/settings/Settings-Page');
+const settings = () => import(/* webpackChunkName: "settings" */ '@/views/settings/Settings-Page');
 
 //dashboard
-const overview = () => import(/* webpackChunkName: "overview" */ '@/components/dashboard/Overview-Page');
-const desktopOverview = () => import(/* webpackChunkName: "overview" */ '@/components/desktop/dashboard/Overview-Page');
-const account = () => import(/* webpackChunkName: "overview" */ '@/components/dashboard/Account-Page');
+const overview = () => import(/* webpackChunkName: "overview" */ '@/views/dashboard/Overview-Page');
+const desktopOverview = () => import(/* webpackChunkName: "overview" */ '@/views/desktop/dashboard/Overview-Page');
+const account = () => import(/* webpackChunkName: "overview" */ '@/views/dashboard/Account-Page');
 
 //wallet
-const transfer = () => import(/* webpackChunkName: "wallet" */ '@/components/wallet/Transfer-Page');
-const walletTransactions = () => import(/* webpackChunkName: "wallet" */ '@/components/wallet/WalletTransactions-Page');
-const exportJSE = () => import(/* webpackChunkName: "wallet" */ '@/components/wallet/Export-Page');
-const importJSE = () => import(/* webpackChunkName: "wallet" */ '@/components/wallet/Import-Page');
+const transfer = () => import(/* webpackChunkName: "wallet" */ '@/views/wallet/Transfer-Page');
+const walletTransactions = () => import(/* webpackChunkName: "wallet" */ '@/views/wallet/WalletTransactions-Page');
+const exportJSE = () => import(/* webpackChunkName: "wallet" */ '@/views/wallet/Export-Page');
+const importJSE = () => import(/* webpackChunkName: "wallet" */ '@/views/wallet/Import-Page');
 
 //mine
-const platformMiner = () => import(/* webpackChunkName: "mine" */ '@/components/mine/PlatformMiner-Page');
-const earnings = () => import(/* webpackChunkName: "mine" */ '@/components/mine/Earnings-Page');
+const platformMiner = () => import(/* webpackChunkName: "mine" */ '@/views/mine/PlatformMiner-Page');
+const earnings = () => import(/* webpackChunkName: "mine" */ '@/views/mine/Earnings-Page');
 
 //Block Explorer
-//import Charts from '@/components/blockchain/Charts';
-const Blocks = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/Blocks');
-const Ledger = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/Ledger');
-const APIs = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/APIs');
-const Block = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/Block');
-const Transaction = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/Transaction');
-const AllBlocks = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/AllBlocks');
-const AllTransactions = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/AllTransactions');
-const Search = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/Search');
-const Stats = () => import(/* webpackChunkName: "block" */ '@/components/blockchain/Stats');
+//import Charts from '@/views/blockchain/Charts';
+const Blocks = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Blocks');
+const Ledger = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Ledger');
+const APIs = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/APIs');
+const Block = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Block');
+const Transaction = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Transaction');
+const AllBlocks = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/AllBlocks');
+const AllTransactions = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/AllTransactions');
+const Search = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Search');
+const Stats = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/Stats');
 
-//import Wall from '@/components/crypto/Wall';
-const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/components/crypto/Stats');
+//import Wall from '@/views/crypto/Wall';
+const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/views/crypto/Stats');
 
 Vue.use(Router);
 

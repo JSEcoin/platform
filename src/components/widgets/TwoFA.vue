@@ -122,7 +122,7 @@ export default {
 			}
 
 			//number pressed
-			if (isFinite(e.key)) {
+			if (Number.isFinite(e.key)) {
 				//console.log(e.key);
 				self.form.authCode[val] = e.key;
 				/**
@@ -227,14 +227,14 @@ input[name="password"] {
 .night .amountInput.coin.gold,
 .light .amountInput.coin.gold,
 .coin.gold {
-	background-image:url('../../assets/coin_gold.png');
+	background-image:url('../../assets/images/coin_gold.png');
 	background-repeat: no-repeat;
 }
 
 .night .amountInput.coin.silver,
 .light .amountInput.coin.silver,
 .coin.silver {
-	background-image:url('../../assets/coin_silver.png');
+	background-image:url('../../assets/images/coin_silver.png');
 	background-repeat: no-repeat;
 }
 
