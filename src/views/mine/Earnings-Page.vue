@@ -23,7 +23,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(coin, i) in miningRewardHistory">
+					<tr v-for="(coin, i) in miningRewardHistory" :key="i">
 						<td>
 							<CoinCodeWidget
 								v-bind="{

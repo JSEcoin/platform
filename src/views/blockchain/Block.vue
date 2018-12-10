@@ -78,7 +78,7 @@
 							<li v-if="transactions.minedTotal > 0" v-on:click="filterTabs('mining')" :class="{ active:isActive('mining') }">Mined [{{transactions.minedTotal}}]</li>
 							<li v-if="transactions.exportedTotal > 0" v-on:click="filterTabs('export')" :class="{ active:isActive('export') }">Exported [{{transactions.exportedTotal}}]</li>
 							<li v-if="transactions.importedTotal > 0" v-on:click="filterTabs('import')" :class="{ active:isActive('import') }">Imported [{{transactions.importedTotal}}]</li>
-							<li v-if="transactions.transferTotal > 0" v-on:click="filterTabs('transfer')" :class="{ active:isActive('transfer') }"i>Transfer [{{transactions.transferTotal}}]</li>
+							<li v-if="transactions.transferTotal > 0" v-on:click="filterTabs('transfer')" :class="{ active:isActive('transfer') }">Transfer [{{transactions.transferTotal}}]</li>
 						</ul>
 
 						<div class="connected box" v-if="exists">

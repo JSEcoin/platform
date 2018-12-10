@@ -87,7 +87,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-if="coin.used === false" v-for="(coin, i) in exportCoinHistory">
+						<tr v-for="(coin, i) in initAvailableCoins" :key="i">
 							<td>
 								<CoinCodeWidget
 									v-on:click.native="showQRCode(coin, i)"
@@ -143,7 +143,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(coin, i) in importHistory">
+						<tr v-for="(coin, i) in importHistory" :key="i">
 							<td>
 								<CoinCodeWidget
 									v-bind="{
@@ -283,9 +283,16 @@ export default {
 				// to their device settings with
 				QRScanner.getStatus((status) => {
 					if ((!status.authorized) && (status.canOpenSettings)) {
-						if (confirm('Would you like to enable QR code scanning? You can allow camera access in your settings.')) {
-							QRScanner.openSettings();
-						}
+						self.$swal({
+							title: 'Enable QR Scanning?',
+							text: 'Would you like to enable QR code scanning? You can allow camera access in your settings.',
+							icon: 'info',
+							buttons: true,
+						}).then((confirmed) => {
+							if (confirmed) {
+								QRScanner.openSettings();
+							}
+						});
 					}
 				});
 			} else {
@@ -458,13 +465,7 @@ export default {
 					self.exportCoinHistory = res.data.reverse();
 					self.initAvailableCoins = self.exportCoinHistory.filter(coin => !coin.used);
 					self.loading = false;
-					self.exportCoinHistory.forEach(function(coin, i) {
-						if (!coin.used) {
-							self.availableCoinCodes = true;
-							return false;
-						}
-						return true;
-					});
+					self.availableCoinCodes = (self.initAvailableCoins.length > 0);
 				}
 			}).catch((err) => {
 				self.$store.commit('ajaxError', err.response);

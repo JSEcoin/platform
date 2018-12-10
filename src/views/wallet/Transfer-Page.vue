@@ -440,10 +440,10 @@ export default {
 	height:55px;
 }
 .coin.gold {
-	background-image:url('../../assets/coin_gold.png');
+	background-image:url('../../assets/images/coin_gold.png');
 }
 .coin.silver {
-	background-image:url('../../assets/coin_silver.png');
+	background-image:url('../../assets/images/coin_silver.png');
 }
 
 */

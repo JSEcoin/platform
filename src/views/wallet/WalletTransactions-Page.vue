@@ -11,15 +11,14 @@
 			<!-- xNo Transactions -->
 
 			<!-- Sent -->
-			<ContentWidget titleTxt="Sent JSE To" v-if="(userHistory.length > 0)">
+			<ContentWidget titleTxt="Sent JSE To" v-if="(sentCoins.length > 0)">
 				<ContentWidget
 					class="containedTransferItem"
 					:titleTxt="coinDate(transaction.ts)"
 					:infoPanelTxt="`${transaction.value}`"
 					:infoPanelIcoClassName="{gold:((transaction.value >= 1) || (transaction.value <= -1)), silver:((transaction.value < 1) && (transaction.value > -1))}"
 					:key="`id${i}`"
-					v-if="((transaction.command === 'transfer') && (transaction.value < 0))"
-					v-for="(transaction, i) in userHistory">
+					v-for="(transaction, i) in sentCoins">
 
 					<dl class="transactionRef">
 						<dt style="font-weight:bold;">SENT: </dt>
@@ -33,15 +32,14 @@
 			<!-- xSent -->
 
 			<!-- Received -->
-			<ContentWidget titleTxt="Received JSE From" v-if="(userHistory.length > 0)">
+			<ContentWidget titleTxt="Received JSE From" v-if="(receivedCoins.length > 0)">
 				<ContentWidget
 					class="containedTransferItem"
 					:titleTxt="coinDate(transaction.ts)"
 					:infoPanelTxt="`${transaction.value}`"
 					:infoPanelIcoClassName="{gold:transaction.value >= 1, silver:transaction.value < 1}"
 					:key="`id${i}`"
-					v-if="((transaction.command === 'transfer') && (transaction.value > 0))"
-					v-for="(transaction, i) in userHistory">
+					v-for="(transaction, i) in receivedCoins">
 
 					<dl class="transactionRef">
 						<dt style="font-weight:bold;">RECEIVED: </dt>
@@ -80,12 +78,17 @@ export default {
 		return {
 			user: {},
 			userHistory: [],
+			sentCoins: [],
+			receivedCoins: [],
 		};
 	},
 	created() {
-		this.user = window.user;
+		const self = this;
+		self.user = window.user;
 		//rever history obj list and create easy loopabe array
-		this.userHistory = Object.values(this.user.history).slice().reverse();
+		self.userHistory = Object.values(self.user.history).slice().reverse();
+		self.sentCoins.filter(transaction => ((transaction.command === 'transfer') && (transaction.value < 0)));
+		self.receivedCoins.filter(transaction => ((transaction.command === 'transfer') && (transaction.value > 0)));
 	},
 	methods: {
 		/**

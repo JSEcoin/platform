@@ -37,7 +37,7 @@ export default {
 	},
 	//before component is destroyed cleanup
 	beforeDestroy() {
-		console.log('destroy');
+		const self = this;
 		clearInterval(self.interval);
 	},
 };

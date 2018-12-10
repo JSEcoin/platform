@@ -79,7 +79,7 @@
 							</div>
 
 							<!--<div class="summaryPanel">
-								<div v-for="(value, key) in transaction"><label>{{key}}</label><span>{{ value }}</span></div>
+								<div :key="key" v-for="(value, key) in transaction"><label>{{key}}</label><span>{{ value }}</span></div>
 							</div>-->
 						</div>
 					</div>

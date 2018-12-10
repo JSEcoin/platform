@@ -9,10 +9,8 @@
 
 <script>
 import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
-import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import NavWidget from '@/components/widgets/NavWidget.vue';
 import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
-import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 import CandleStickChart from '@/components/widgets/CandleStickChart.vue';
 
 /**
@@ -28,10 +26,8 @@ export default {
 	name: 'Statsx',
 	components: {
 		AppWrapperWidget,
-		ContentWidget,
 		ScrollWidget,
 		NavWidget,
-		ButtonWidget,
 		CandleStickChart,
 	},
 };

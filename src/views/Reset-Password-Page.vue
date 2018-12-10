@@ -1,17 +1,15 @@
 <template>
 	<AppWrapperWidget>
-		<!-- Restore 2FA -->
+		<!-- Reset Password -->
 		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=2"></iframe>
         <ScrollWidget v-bind="{noNav:true}">
-			<!-- Restore 2FA Page -->
-			<div id="JSEA-restore2FAPage">
-				<div id="JSEA-restore2FAWrapper">
+			<!-- Reset Password Page -->
+			<div id="JSEA-resetPasswordPage">
+				<div id="JSEA-resetWrapper">
 					<!-- Register Form -->
 					<div>
-						<h2 id="JSEA-restore2FAHeader" class="center">Restore Two Factor Authentication</h2>
-						<h4 id="JSEA-restore2FASubHeader" class="center">
-                            Generate 2FA QR Setup Code.
-                        </h4>
+						<h2 id="JSEA-resetHeader" class="center">Reset Your Password</h2>
+						<h4 id="JSEA-resetSubHeader" class="center">Request a security code to create a new password.</h4>
 					</div>
 
 					<!-- Animation to display during server requests -->
@@ -19,16 +17,16 @@
 					<!-- xAnimation to display during server requests -->
 
 					<!-- register Form -->
-					<form id="JSEA-restore2FAPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
-						<div v-if="status.displayForm" class="row" id="JSEA-restore2FAPasswordWrapper">
-							<ContentWidget class="restore2FAFormContainer">
-								<h4 class="title">To restore your 2FA</h4>
-
+					<form id="JSEA-resetPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+						<div v-if="status.displayForm" class="row" id="JSEA-resetPasswordWrapper">
+							<ContentWidget class="resetFormContainer">
+								<h4 class="title">(Step 1) Request a security code.</h4>
 								<!-- Error display -->
-								<FormErrorDisplayWidget v-on:click.native="closeError('error1')" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
+								<FormErrorDisplayWidget v-on:click.native="closeError('error1')" v-if="form.error1.display" :errorMsg="form.error1.msg"  style="width: 60%; margin: 10px auto;" />
 								<!-- xError display -->
                                 <p>
-                                    Enter your platform account email and your backup key that was generated when you setup your 2FA.<br />
+                                    Enter your registered platform account email.<br />
+									You will receive an email with your new security code. <br />
                                 </p>
 								<!-- User Pass register interface -->
 								<div class="formWrapper">
@@ -45,37 +43,87 @@
 											@keyup="keyWatch('accountEmail')" />
 									</div>
 									<!-- xFull Name Input -->
-									<!-- Full Name Input -->
-									<div class="row">
-										<InputWidget
-											v-model="form.backupKey.val"
-											placeholder="2FA Backup Key *"
-											name="backupKey"
-											maxlength="254"
-											ref="backupKey"
-											:showLabel="form.backupKey.displayLabel"
-											:flag="!form.backupKey.valid || form.backupKey.flag"
-											@keyup="keyWatch('backupKey')" />
-									</div>
-									<!-- xFull Name Input -->
 								</div>
 
 								<div class="row buttonRow" style="min-height:60px;">
 									<ButtonWidget type="submit" v-on:click.native="emailCode"
-										buttonTxt="Generate QR Code" style="margin-right:5px; margin-left:15px;" />
+										buttonTxt="Email Security Code" style="margin-right:5px; margin-left:15px;" />
 
 									<ButtonWidget type="button"
 										buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancel" />
 								</div>
+							</ContentWidget>
+
+							<ContentWidget class="resetFormContainer">
+								<h4 class="title">(Step 2) Create a new password.</h4>
+                                <p>
+                                    When you have received your security code you will be able to change your password from here:<br />
+                                </p>
+
+								<!-- Error display -->
+								<FormErrorDisplayWidget v-on:click.native="closeError('error2')" v-if="form.error2.display" :errorMsg="form.error2.msg"  style="width: 60%; margin: 10px auto;" />
+								<!-- xError display -->
+								<!-- User Pass register interface -->
+								<div class="formWrapper">
+									<!-- Full Name Input -->
+									<div class="row">
+                                        <InputWidget
+                                            inputType="password"
+                                            newpassword="new-password"
+                                            v-bind="{hideShow: true, passwordStrength:true}"
+                                            v-model="form.password.val"
+                                            placeholder="New Password *"
+                                            name="password"
+                                            maxlength="254"
+                                            ref="password"
+                                            :showLabel="form.password.displayLabel"
+                                            :flag="form.password.flag"
+                                            @keyup="keyWatch('password')" />
+									</div>
+									<!-- xFull Name Input -->
+									<!-- Full Name Input -->
+									<div class="row">
+                                        <InputWidget
+                                            inputType="password"
+                                            v-bind="{hideShow: true}"
+                                            v-model="form.passwordMatch.val"
+                                            newpassword="new-password"
+                                            placeholder="Re-Type New Password *"
+                                            name="password"
+                                            maxlength="254"
+                                            ref="password"
+                                            :showLabel="form.passwordMatch.displayLabel"
+											:flag="!form.passwordMatch.valid || form.passwordMatch.flag"
+                                            @keyup="keyWatch('passwordMatch')" />
+									</div>
+									<!-- xFull Name Input -->
+								</div>
+								<div class="formWrapper">
+									<!-- Full Name Input -->
+									<div class="row">
+										<InputWidget
+											v-model="form.securityCode.val"
+											placeholder="Enter Security Code Received *"
+											name="securityCode"
+											maxlength="254"
+											ref="securityCode"
+											:showLabel="form.securityCode.displayLabel"
+											:flag="!form.securityCode.valid || form.securityCode.flag"
+											@keyup="keyWatch('securityCode')" />
+									</div>
+									<!-- xFull Name Input -->
+								</div>
+
+                                <ButtonWidget type="submit" v-on:click.native="updatePassword" buttonTxt="Change Password" />
 							</ContentWidget>
 						</div>
 					</form>
 					<!-- xregister Form -->
 				</div>
 			</div>
-			<!-- xRestore 2FA Page -->
+			<!-- xReset Password Page -->
 		</ScrollWidget>
-		<!-- xRestore 2FA -->
+		<!-- xReset Password -->
 	</AppWrapperWidget>
 </template>
 
@@ -88,15 +136,13 @@ import SpinnerWidget from '@/components/widgets/SpinnerWidget.vue';
 import InputWidget from '@/components/widgets/InputWidget.vue';
 import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
-import ToggleSwitchWidget from '@/components/widgets/ToggleSwitchWidget.vue';
-import SettingsItemRowWidget from '@/components/widgets/SettingsItemRowWidget.vue';
 
 /**
  * @description
- * <p>Restore 2FA page</b></p>
+ * <p>Reset Password page</b></p>
  */
 export default {
-	name: 'Restore2FA-Page',
+	name: 'Reset-Password-Page',
 	components: {
 		//VueRecaptcha,
 		AppWrapperWidget,
@@ -106,8 +152,6 @@ export default {
 		InputWidget,
 		ButtonWidget,
 		ScrollWidget,
-		ToggleSwitchWidget,
-		SettingsItemRowWidget,
 	},
 	data() {
 		return {
@@ -139,14 +183,30 @@ export default {
 					valid: true,			//valid value
 					flag: false,			//has value length
                 },
-				backupKey: {
+				password: {
+					val: '',				//field value
+					displayLabel: false,	//field label
+					valid: true,			//valid value
+					flag: false,			//has value length
+                },
+				passwordMatch: {
+					val: '',				//field value
+					displayLabel: false,	//field label
+					valid: true,			//valid value
+					flag: false,			//has value length
+                },
+				securityCode: {
 					val: '',				//field value
 					displayLabel: false,	//field label
 					valid: true,			//valid value
 					flag: false,			//has value length
                 },
 				//form error display
-				error: {
+				error1: {
+					msg: '',		//form error messages
+					display: false, //display error message
+				},
+				error2: {
 					msg: '',		//form error messages
 					display: false, //display error message
 				},
@@ -223,10 +283,17 @@ export default {
 				if (input === 'accountEmail') {
 					self.checkEmail(input);
 				}
-                //clean strings entered
-                setTimeout(() => {
-                    self.form[input].val = window.cleanString(self.form[input].val);
-                },10);
+				if (input === 'password') {
+					if (!window.goodPassword(self.form[input].val)) {
+						self.form[input].valid = false;
+						self.form[input].flag = true;
+					}
+				} else {
+					//clean strings entered
+					setTimeout(() => {
+						self.form[input].val = window.cleanString(self.form[input].val);
+					},10);
+				}
 			//no value reset field
 			} else {
 				self.form[input].displayLabel = false;
@@ -282,7 +349,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-#JSEA-restore2FAPasswordWrapper {
+#JSEA-resetPasswordWrapper {
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -311,17 +378,17 @@ export default {
 	color:#3c3c3c;
 }
 
-#JSEA-restore2FAHeader {
+#JSEA-resetHeader {
 	margin-bottom:0px;
 	padding-bottom:0px;
 	font-size:1.1em;
 }
 
-.max #JSEA-restore2FAHeader {
+.max #JSEA-resetHeader {
 	margin-top: 40px;
 }
 
-#JSEA-restore2FASubHeader {
+#JSEA-resetSubHeader {
 	margin:0px 0px 20px 0px;
 	padding:0px;
 	color:#bababa;
