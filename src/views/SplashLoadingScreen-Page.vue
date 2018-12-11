@@ -66,11 +66,7 @@ export default {
 				} else {
 					clearInterval(self.checkSizeInterval);
 					//detect resize and force correct size
-					self.$electron.remote.getCurrentWindow().on('resize',() => {
-						if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-							self.setWindowSize(false, true);
-						}
-					});
+					self.$electron.remote.getCurrentWindow().on('resize', self.resize);
 					//app loading complete
 					self.$store.commit('loading', false);
 					//redirect to [dashboard,login] page
@@ -118,7 +114,18 @@ export default {
 			localStorage.removeItem('userSession');
 		}
 	},
+	//before component is destroyed cleanup
+	beforeDestroy() {
+		const self = this;
+		self.$electron.remote.getCurrentWindow().removeListener('resize', self.resize);
+	},
 	methods: {
+		resize() {
+			const self = this;
+			if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+				self.setWindowSize(false, true);
+			}
+		},
 		/**
 		 * If mouse down delay route redirect
 		 *
@@ -169,8 +176,10 @@ export default {
 				//set size
 				if (init) {
 					appWindow.setSize(305, 222);
+					appWindow.setMinimumSize(305, 222);
 				} else {
 					appWindow.setSize(510, 656);
+					appWindow.setMinimumSize(510, 400);
 				}
 				//centerise
 				if (typeof (disableCenter) === 'undefined') {
