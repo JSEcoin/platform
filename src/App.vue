@@ -10,60 +10,17 @@
 				Please Reconnect!
 			</ContentWidget>
 		</div>
-		<!-- xOffline Detection -->
-		<div id="JSEA-appWrapper">
-			<!-- Web Header -->
-			<header v-if="($store.state.app.platformURL !== '')">
-				<div v-if="($store.state.app.platform === 'desktop')" id="JSEA-headerBar" class="draggable-area">
+		<header id="JSEA-desktopAppHeader" class="draggable-area" v-if="(($store.state.app.platform === 'desktop') && ($route.path !== '/'))">
+			<div id="JSEA-headerBar">
+				<div id="JSEA-headerBarContainer">
 					<i class="fa fa-close" v-on:click="closeWindow()"></i>
 					<i class="fa fa-square-o" v-on:click="ExpandWindow()"></i>
 					<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
 				</div>
-				<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
-				<ul id="JSEA-headerItems">
-					<li id="JSEA-googleTranslate"><i class="button"></i></li>
-					<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
-					<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
-					<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
-						<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
-							<div>
-								<network network="facebook">
-									<i class="fa fa-fw fa-facebook"></i>
-								</network>
-								<network network="googleplus">
-									<i class="fa fa-fw fa-google-plus"></i>
-								</network>
-								<network network="linkedin">
-									<i class="fa fa-fw fa-linkedin"></i>
-								</network>
-								<network network="reddit">
-									<i class="fa fa-fw fa-reddit"></i>
-								</network>
-								<network network="twitter">
-									<i class="fa fa-fw fa-twitter"></i>
-								</network>
-								<network network="vk">
-									<i class="fa fa-vk"></i>
-								</network>
-								<network network="weibo">
-									<i class="fa fa-weibo"></i>
-								</network>
-							</div>
-						</social-sharing>
-					</li>
-					<li v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
-						<div id="JSEA-profileWrap">
-							<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
-						</div>
-						<div>
-							<div id="JSEA-profileUserName">{{user.name}}</div>
-							<div id="JSEA-profilePublicKey">{{user.publicKey}}</div>
-						</div>
-						<i class="fa fa-angle-down"></i>
-					</li>
-				</ul>
-			</header>
-			<!-- xWeb Header -->
+			</div>
+		</header>
+		<!-- xOffline Detection -->
+		<div id="JSEA-appWrapper" :class="{'hideApp':hideApp}">
 			<div id="JSEA-sideBar" :class="{'showSideBar':sideBarActive}">
 				<div id="JSEA-toggleSideBar" v-intro="'Expand or collapse the side bar'" v-on:click="toggleSideBar">
 					<nav>
@@ -84,7 +41,7 @@
 										<ul>
 											<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-columns"></i> Overview</router-link>
 											<router-link v-bind:to="`/dashboard/account`" tag="li"><i class="fa fa-user-circle-o"></i> Account</router-link>
-											<router-link v-bind:to="`/dashboard/exchange`" tag="li"><i class="fa fa-exchange"></i> Exchange</router-link>
+											<!--<router-link v-bind:to="`/dashboard/exchange`" tag="li"><i class="fa fa-exchange"></i> Exchange</router-link>-->
 										</ul>
 									</li>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.wallet}"><span v-on:click="toggleMenu('wallet')">Wallet</span>
@@ -97,7 +54,7 @@
 									</li>
 									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain Explorer</span>
 										<ul>
-											<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>
+											<!--<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>-->
 											<router-link v-bind:to="`/blockchain`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
 											<!--<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>-->
 										</ul>
@@ -108,6 +65,7 @@
 											<router-link v-bind:to="`/mine/earnings`" tag="li"><i class="fa fa-bank"></i> Earnings</router-link>
 										</ul>
 									</li>
+									<!--
 									<li :class="{'showMenu':nav.system}"><span v-on:click="toggleMenu('system')">System</span>
 										<ul>
 											<router-link v-bind:to="`/system`" tag="li"><i class="fa fa-bell"></i> Server Status</router-link>
@@ -135,10 +93,10 @@
 											<router-link v-bind:to="`/affiliates`" tag="li"><i class="fa fa-columns"></i> Dashboard</router-link>
 											<router-link v-bind:to="`/affiliates/resources`" tag="li"><i class="fa fa-exchange"></i> Resources</router-link>
 										</ul>
-									</li>
+									</li>-->
 									<li :class="{'showMenu':nav.developers}"><span v-on:click="toggleMenu('developers')">Developers</span>
 										<ul>
-											<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`/developers`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>
+											<!--<router-link v-if="($store.state.user.loggedIn)" v-bind:to="`/developers`" tag="li"><i class="fa fa-magic"></i> Dashboard</router-link>-->
 											<li v-on:click="openExternalWindow('https://github.com/jsecoin/')"><i class="fa fa-github"></i> Github</li>
 											<li v-on:click="openExternalWindow('https://developer.jsecoin.com/')"><i class="fa fa-globe"></i> API Documentation</li>
 											<li v-on:click="openExternalWindow('https://jsecoin.com/styleguide/')"><i class="fa fa-paint-brush"></i> Platform UI</li>
@@ -153,10 +111,10 @@
 											<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-lock"></i> Authentication</router-link>-->
 											<li v-on:click="openExternalWindow('https://jsecoin.com/support')"><i class="fa fa-info-circle"></i> Support Center</li>
 											<li v-on:click="openExternalWindow('https://t.me/jsetelegram')"><i class="fa fa-telegram"></i> Telegram</li>
-											<li><i class="fa fa-user-circle"></i> Virtual Assistant</li>
+											<!--<li><i class="fa fa-user-circle"></i> Virtual Assistant</li>-->
 										</ul>
 									</li>
-									<li v-if="($store.state.user.loggedIn)"><span>Log Out</span></li>
+									<li v-if="($store.state.user.loggedIn)" v-on:click="logout()"><span>Log Out</span></li>
 									<router-link v-if="(!$store.state.user.loggedIn)" v-bind:to="`/login`" tag="li"><span>Log In</span></router-link>
 								</ul>
 							</li>
@@ -168,22 +126,63 @@
 
 			<div id="JSEA-contentWrapper">
 				<div id="JSEA-content">
-				<!-- App Header -->
-				<header v-if="($store.state.app.platformURL === '')">
-					<div v-if="($store.state.app.platform === 'desktop')" id="JSEA-headerBar" class="draggable-area">
-						<i class="fa fa-close" v-on:click="closeWindow()"></i>
-						<i class="fa fa-square-o" v-on:click="ExpandWindow()"></i>
-						<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
-					</div>
-					<div id="JSEA-desktopLogo"></div>
-					<div id="JSEA-loadingDisplay" :style="{width: waitTimer + '%'}"></div>
-				</header>
-				<!-- xApp Header -->
-				
+					<!-- Web Header -->
+					<header v-if="($store.state.app.platformURL !== '')">
+						<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
+						<ul id="JSEA-headerItems">
+							<li id="JSEA-googleTranslate"><i class="button"></i></li>
+							<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
+							<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
+							<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
+								<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
+									<div>
+										<network network="facebook">
+											<i class="fa fa-fw fa-facebook"></i>
+										</network>
+										<network network="googleplus">
+											<i class="fa fa-fw fa-google-plus"></i>
+										</network>
+										<network network="linkedin">
+											<i class="fa fa-fw fa-linkedin"></i>
+										</network>
+										<network network="reddit">
+											<i class="fa fa-fw fa-reddit"></i>
+										</network>
+										<network network="twitter">
+											<i class="fa fa-fw fa-twitter"></i>
+										</network>
+										<network network="vk">
+											<i class="fa fa-vk"></i>
+										</network>
+										<network network="weibo">
+											<i class="fa fa-weibo"></i>
+										</network>
+									</div>
+								</social-sharing>
+							</li>
+							<li v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
+								<div id="JSEA-profileWrap">
+									<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
+								</div>
+								<div>
+									<div id="JSEA-profileUserName">{{user.name}}</div>
+									<div id="JSEA-profilePublicKey">{{user.publicKey}}</div>
+								</div>
+								<i class="fa fa-angle-down"></i>
+							</li>
+						</ul>
+					</header>
+					<!-- xWeb Header -->
+					<!-- App Header -->
+					<header v-if="($store.state.app.platformURL === '')">
+						<div id="JSEA-desktopLogo"></div>
+						<div id="JSEA-loadingDisplay" :style="{width: waitTimer + '%'}"></div>
+					</header>
+					<!-- xApp Header -->
 
-				<!-- App Page Content -->
-				<router-view></router-view>
-				<!-- xApp Page Content -->
+					<!-- App Page Content -->
+					<router-view></router-view>
+					<!-- xApp Page Content -->
 				</div>
 			</div>
 		</div>
@@ -212,6 +211,7 @@ export default {
 	},
 	data() {
 		return {
+			hideApp: false,
 			offline: false,
 			resizeTimer: null,
 			nav: {
@@ -775,12 +775,24 @@ export default {
 		ExpandWindow() {
 			const self = this;
 			if (self.$store.getters.whichPlatform === 'desktop') {
-				console.log('d', self.$electron.remote.BrowserWindow.getFocusedWindow().isMaximized());
+				//console.log('d', self.$electron.remote.BrowserWindow.getFocusedWindow().isMaximized());
 				if (self.$electron.remote.BrowserWindow.getFocusedWindow().isMaximized()) {
 					//self.$electron.remote.BrowserWindow.getFocusedWindow().setFullScreen();
-					self.$electron.remote.BrowserWindow.getFocusedWindow().unmaximize();
+					self.hideApp = true;
+					setTimeout(() => {
+						self.$electron.remote.BrowserWindow.getFocusedWindow().unmaximize();
+					}, 10);
+					setTimeout(() => {
+						self.hideApp = false;
+					}, 400);
 				} else {
-					self.$electron.remote.BrowserWindow.getFocusedWindow().maximize();
+					self.hideApp = true;
+					setTimeout(() => {
+						self.$electron.remote.BrowserWindow.getFocusedWindow().maximize();
+					}, 10);
+					setTimeout(() => {
+						self.hideApp = false;
+					}, 400);
 				}
 			}
 		},
@@ -909,6 +921,20 @@ export default {
 			} else {
 				window.open(url);
 			}
+		},
+		/**
+		 * Logout and redirect to login screen
+		 *
+		 * @returns nothing
+		 * @public
+		 */
+		logout() {
+			const self = this;
+			self.$store.dispatch({
+				type: 'logoutUser',
+			});
+			//load login route
+			//self.$router.push('login');
 		},
 	},
 };
@@ -1129,7 +1155,9 @@ body.QRScanner.min footer {
 .hr hr {
 	display: none;
 }
-
+#JSEA-appWrapper.hideApp {
+	display: none;
+}
 /*iframe*/
 #JSEA-iCaptcha {
 	position: absolute;
@@ -1151,6 +1179,29 @@ body.QRScanner.min footer {
 	z-index:10000000;
 }
 
+#JSEA-desktopAppHeader {
+	height: 20px;
+    position: absolute;
+    z-index: 2147483647;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    overflow: hidden;
+    box-shadow: none;
+    background: none;
+}
+#JSEA-headerBar {
+	background-image: url("assets/images/header_loginv2.png");
+    background-repeat: no-repeat;
+    background-position: center 0px;
+    background-size: cover;
+    height: 84px;
+}
+
+#JSEA-headerBarContainer {
+	height:20px;
+	background:rgba(0,0,0,0.3);
+}
 /* Global Table Format */
 .night table {
 	background:#171820;
@@ -1253,10 +1304,10 @@ tbody td {
 header {
 	background-image: url("assets/images/header_loginv2.png");
 	background-repeat:no-repeat;
-	background-position:  center;
+	background-position:  center -20px;
 	background-size: cover;
 	/*border-bottom: solid 10px #f5f7fb;*/
-	height:84px;
+	height:64px;
 	position: relative;
 	z-index:100000;
 }
@@ -1265,10 +1316,10 @@ header {
 	height: 55px;
     /*border-bottom: solid 1px #ddd;*/
 }
-
+/*
 .platformDesktop.max header {
 	height:75px;
-}
+}*/
 
 .max.light header {
 	background:#fff;
@@ -1290,14 +1341,9 @@ header {
 	background-position:  center;
 	background-size: cover;
 	/*border-bottom: solid 10px #f5f7fb;*/
-	
 	height:45px;
 	width:189px;
-	margin:12px auto 0px;
-}
-#JSEA-headerBar {
-	height:20px;
-	background: rgba(0,0,0,0.3);
+	margin:8px auto 0px;
 }
 .max #JSEA-headerBar {
 	background: #010814;
@@ -1403,6 +1449,7 @@ header {
 #JSEA-desktop.loading.night {
 	background: transparent;
 	box-shadow: none !important;
+	padding:0px;
 }
 #JSEA-desktop.light {
 	background:#fff;
@@ -1418,11 +1465,12 @@ header {
 	/*border-radius: 8px;*/
 	overflow: hidden;
 	height:648px;
-	transition: all 0.2s;
+	/*transition: all 0.2s;*/
 }
 
 .platformDesktop #JSEA-desktop {
 	height:100%;
+	padding-top:20px;
 }
 .platformWeb {
 	background: #000812;
@@ -1627,9 +1675,15 @@ header .fa-square-o:hover {
     flex-grow: 1;
 }
 #JSEA-wrapper {
+	margin-top:8px;
 	position: relative;
 	height:562px;
 	flex:1;
+}
+
+
+.max #JSEA-wrapper {
+	margin-top:0px;
 }
 
 /* Night Theme */
@@ -2133,7 +2187,8 @@ header .fa-square-o:hover {
 	float:right;
 	display: none;
 }
-.platformWeb.max #JSEA-headerItems {
+.platformWeb.max #JSEA-headerItems,
+.platformDesktop.max #JSEA-headerItems {
 	display: flex;
 }
 
@@ -2280,9 +2335,10 @@ header .fa-square-o:hover {
 	transition: height 0.4s;
 	height:56px;
 }
+/*
 .platformDesktop #JSEA-toggleSideBar {
 	top:20px;
-}
+}*/
 
 #JSEA-toggleSideBar * {
 	cursor: pointer;
