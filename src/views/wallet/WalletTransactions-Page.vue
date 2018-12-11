@@ -15,7 +15,7 @@
 				<ContentWidget
 					class="containedTransferItem"
 					:titleTxt="coinDate(transaction.ts)"
-					:infoPanelTxt="`${transaction.value}`"
+					:infoPanelTxt="`${-transaction.value}`"
 					:infoPanelIcoClassName="{gold:((transaction.value >= 1) || (transaction.value <= -1)), silver:((transaction.value < 1) && (transaction.value > -1))}"
 					:key="`id${i}`"
 					v-for="(transaction, i) in sentCoins">
@@ -86,9 +86,10 @@ export default {
 		const self = this;
 		self.user = window.user;
 		//rever history obj list and create easy loopabe array
-		self.userHistory = Object.values(self.user.history).slice().reverse();
-		self.sentCoins.filter(transaction => ((transaction.command === 'transfer') && (transaction.value < 0)));
-		self.receivedCoins.filter(transaction => ((transaction.command === 'transfer') && (transaction.value > 0)));
+		const userHistory = Object.values(self.user.history).slice().reverse();
+		self.userHistory = userHistory;
+		self.sentCoins = userHistory.filter(transaction => ((transaction.command === 'transfer') && (transaction.value < 0)));
+		self.receivedCoins = userHistory.filter(transaction => ((transaction.command === 'transfer') && (transaction.value > 0)));
 	},
 	methods: {
 		/**
