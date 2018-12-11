@@ -13,7 +13,7 @@
 
 					<!-- register Form -->
 					<form id="JSEA-resetPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
-						<div v-if="status.displayForm" class="row" id="JSEA-resetPasswordWrapper">
+						<div v-if="status.displayForm" id="JSEA-resetPasswordWrapper">
 							<ContentWidget class="resetFormContainer">
 								<!-- Register Form -->
 								<div>
@@ -64,6 +64,21 @@
 								<!-- Error display -->
 								<FormErrorDisplayWidget v-on:click.native="closeError('error2')" v-if="form.error2.display" :errorMsg="form.error2.msg"  style="width: 60%; margin: 10px auto;" />
 								<!-- xError display -->
+								<div class="formWrapper">
+									<!-- Full Name Input -->
+									<div class="row">
+										<InputWidget
+											v-model="form.securityCode.val"
+											placeholder="Enter Security Code Received *"
+											name="securityCode"
+											maxlength="254"
+											ref="securityCode"
+											:showLabel="form.securityCode.displayLabel"
+											:flag="!form.securityCode.valid || form.securityCode.flag"
+											@keyup="keyWatch('securityCode')" />
+									</div>
+									<!-- xFull Name Input -->
+								</div>
 								<!-- User Pass register interface -->
 								<div class="formWrapper">
 									<!-- Full Name Input -->
@@ -99,23 +114,14 @@
 									</div>
 									<!-- xFull Name Input -->
 								</div>
-								<div class="formWrapper">
-									<!-- Full Name Input -->
-									<div class="row">
-										<InputWidget
-											v-model="form.securityCode.val"
-											placeholder="Enter Security Code Received *"
-											name="securityCode"
-											maxlength="254"
-											ref="securityCode"
-											:showLabel="form.securityCode.displayLabel"
-											:flag="!form.securityCode.valid || form.securityCode.flag"
-											@keyup="keyWatch('securityCode')" />
-									</div>
-									<!-- xFull Name Input -->
-								</div>
 
-                                <ButtonWidget type="submit" v-on:click.native="updatePassword" buttonTxt="Change Password" />
+								<div class="row buttonRow" style="min-height:60px;">
+									<ButtonWidget type="submit" v-on:click.native="updatePassword" buttonTxt="Change Password" style="margin-right:5px; margin-left:15px;" />
+
+									<ButtonWidget type="button"
+										buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancel" />
+								</div>
+                                
 							</ContentWidget>
 						</div>
 					</form>
@@ -350,11 +356,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+
+#JSEA-resetPasswordForm {
+	margin:20px;
+}
 #JSEA-resetPasswordWrapper {
+	margin-top:40px;
     justify-content: center;
     flex-wrap: wrap;
 }
-.max .formWrapper {
+.formWrapper {
 	border-radius: 8px;
     margin: 10px 0px;
     padding: 16px;
@@ -386,6 +397,14 @@ export default {
 	font-size:1.1em;
 }
 
+.resetFormContainer {
+	padding:0px !important;
+	border-radius:8px !important;
+	margin: 10px 0px 20px 0px !important;
+	overflow: hidden !important;
+	position: relative !important;
+	margin: 10px auto !important;
+}
 
 #JSEA-resetSubHeader {
 	margin:0px -16px 20px -16px;

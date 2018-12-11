@@ -762,22 +762,27 @@ select {
 	background: #101219;
     border-bottom: solid 1px #444;
 }
+
+#JSEA-registerFormWrapper {
+	margin-top:40px;
+}
+
 .max #JSEA-registerFormWrapper .buttonRow {
 	justify-content: center;
 	align-items: center;
 }
 
-.max .formWrapper {
+.formWrapper {
 	border-radius: 8px;
     margin: 10px 0px;
     padding: 16px;
 }
 
-.max.light .formWrapper {
+.light .formWrapper {
 	background: #f8fafb;
 }
 
-.max.night .formWrapper {
+.night .formWrapper {
 	background: #1c1e28;
 }
 </style>

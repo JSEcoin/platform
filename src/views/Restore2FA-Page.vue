@@ -13,7 +13,7 @@
 
 					<!-- register Form -->
 					<form id="JSEA-restore2FAPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
-						<div v-if="status.displayForm" class="row" id="JSEA-restore2FAPasswordWrapper">
+						<div v-if="status.displayForm" id="JSEA-restore2FAPasswordWrapper">
 							<ContentWidget class="restore2FAFormContainer">
 								<!-- Register Form -->
 								<div>
@@ -279,20 +279,24 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+#JSEA-restore2FAPasswordForm {
+	margin:20px;
+}
 #JSEA-restore2FAPasswordWrapper {
+	margin-top:40px;
     justify-content: center;
     flex-wrap: wrap;
 }
-.max .formWrapper {
+.formWrapper {
 	border-radius: 8px;
     margin: 10px 0px;
     padding: 16px;
 }
-.max.light .formWrapper {
+.light .formWrapper {
 	background: #f8fafb;
 }
 
-.max.night .formWrapper {
+.night .formWrapper {
 	background: #1c1e28;
 }
 .buttonRow {
@@ -321,5 +325,13 @@ export default {
 	font-size:0.9em;
 	padding-bottom: 16px;
     border-bottom: solid 6px rgba(0,0,0,0.06);
+}
+.restore2FAFormContainer {
+	padding:0px !important;
+	border-radius:8px !important;
+	margin: 10px 0px 20px 0px !important;
+	overflow: hidden !important;
+	position: relative !important;
+	margin: 10px auto !important;
 }
 </style>
