@@ -7,7 +7,7 @@ import store from '@/store';
 //splashLoadingScreen
 import splashLoadingScreen from '@/views/SplashLoadingScreen-Page';
 
-//upgradeApp\
+//upgradeApp
 const upgradeApp = () => import(/* webpackChunkName: "upgradeApp" */ '@/views/UpgradeApp-Page');
 
 //login
@@ -126,7 +126,7 @@ const router = new Router({
 		//desktop
 		{
 			path: '/desktop/dashboard',
-			name: 'Desktop Overview',
+			name: 'desktopOverview',
 			component: desktopOverview,
 			meta: {
 				requiresAuth: true,
@@ -241,8 +241,8 @@ router.beforeEach((to, from, next) => {
 	const hasDesktopInterface = to.matched.some(record => record.meta.hasDesktopInterface);
 	if ((requiresAuth) && (!store.state.user.loggedIn)) {
 		next('login');
-	} else if ((hasDesktopInterface) && (store.state.app.platformURL === '/desktop')) {
-		next(`${store.state.app.platformURL}${to.path}`);
+	//} else if (hasDesktopInterface) {
+	//	next('desktopOverview');
 	} else {
 		next();
 	}
