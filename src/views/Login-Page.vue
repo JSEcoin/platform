@@ -112,6 +112,9 @@
 						</div>
 					</form>
 					<!-- xLogin Form -->
+					<!-- Version -->
+					<div id="JSEA-loginVersion"><div id="JSEA-loginVersionNo">v{{$store.state.app.version}}-beta</div></div>
+					<!-- xVersion -->
 				</div>
 			</div>
 			<!-- xLogin Page -->
@@ -621,6 +624,7 @@ export default {
     align-self: inherit;
 	margin-top: 20px;
 	padding:16px;
+	position: relative;
 }
 
 .night #JSEA-loginHeader {
@@ -729,7 +733,7 @@ footer {
 #JSEA-loginPage {
     width: 450px;
     border-radius: 10px;
-    height: 440px;
+    height: 390px;
 }
 .min #JSEA-loginPage,
 .med #JSEA-loginPage {
@@ -765,5 +769,29 @@ footer {
     display: inline-block;
     margin: 0px 4px;
     width: 110px;
+}
+.max #JSEA-loginVersion {
+	display: none;
+}
+#JSEA-loginVersion {
+    font-size: 0.8em;
+    position: absolute;
+	top:510px;
+	left:0px;
+	right:0px;
+	text-align: center;
+	margin-bottom:20px;
+}
+.light #JSEA-loginVersionNo {
+	background: #fff;
+}
+.night #JSEA-loginVersionNo {
+	background: #20222e;
+}
+#JSEA-loginVersionNo {
+    padding: 8px 16px;
+    border-radius: 40px;
+	color:#acb2b2;
+    display: inline-block;
 }
 </style>
