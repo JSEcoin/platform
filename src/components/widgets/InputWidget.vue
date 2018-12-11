@@ -626,20 +626,34 @@ input[name="password"] {
 
 .passwordStrengthDisplay {
 	display: flex;
-	border: solid 1px rgba(0,0,0,0.06);
     padding: 4px 0px;
     border-radius: 8px;
     margin: 0px 6px;
+}
+.light .passwordStrengthDisplay {
+	border: solid 1px rgba(0,0,0,0.06);
+}
+.night .passwordStrengthDisplay {
+	border: solid 1px rgba(0,0,0,0.2);
 }
 .passwordStrengthDisplay li {
 	flex:1;
 	height:4px;
 	border-radius:4px;
-	background:#ccc;
 	list-style:none;
 	margin:0px 6px;
 	transition: background 0.2s;
 }
+
+.light .passwordStrengthDisplay li {
+	background:#ccc;
+}
+
+	
+.night .passwordStrengthDisplay li {
+	background:#101219;
+}
+
 .passwordStrengthDisplay li.highlight {
 	background:#3598db;
 }
