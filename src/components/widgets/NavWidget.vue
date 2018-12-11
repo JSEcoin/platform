@@ -49,9 +49,9 @@
 				<router-link v-bind:to="`/dashboard/account`" tag="li"  :class="{'active': activeSubNav === 'account'}">
 					Account
 				</router-link>
-				<router-link v-bind:to="`/dashboard/exchange`" tag="li"  :class="{'active': activeSubNav === 'exchange'}">
+				<!--<router-link v-bind:to="`/dashboard/exchange`" tag="li"  :class="{'active': activeSubNav === 'exchange'}">
 					Exchange
-				</router-link>
+				</router-link>-->
 			</ul>
 
 			<ul v-if="activeNav === 'wallet'">
@@ -117,7 +117,8 @@ export default {
 	position: relative;
 	z-index: 10;
 }
-.platformWeb.min #JSEA-topLvlNav li {
+.platformWeb.min #JSEA-topLvlNav li,
+.platformDesktop.min #JSEA-topLvlNav li {
 	/*font-size:0.6em;*/
 	padding: 8px 0px;
 }
@@ -126,12 +127,14 @@ export default {
 	padding: 8px 0px;
 }
 
-.platformWeb.max #JSEA-topSubLvlNav li {
+.platformWeb.max #JSEA-topSubLvlNav li,
+.platformDesktop.max #JSEA-topSubLvlNav li {
 	padding: 6px 12px;
 	flex-grow: unset;
 }
 
-.platformWeb.max #JSEA-topLvlNav li {
+.platformWeb.max #JSEA-topLvlNav li,
+.platformDesktop.max #JSEA-topLvlNav li {
 	flex-grow: unset;
 }
 
@@ -268,4 +271,5 @@ export default {
 .max.night .hasNoNav {
     box-shadow: inset 0px -0.5px 0px 0px #171820;
 }
+
 </style>
