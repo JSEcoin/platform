@@ -13,7 +13,7 @@
 				<!-- Visuals -->
 				<OptionsListWrapperWidget titleTxt="Visuals">
 					<!-- Toggle Theme -->
-					<SettingsItemRowWidget settingName="Toggle Theme">
+					<SettingsItemRowWidget settingName="Toggle Theme" infoDesc="Changes the app display to light or dark mode.">
 						<i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i>
 					</SettingsItemRowWidget>
 					<!-- xToggle Theme -->
@@ -112,7 +112,7 @@
 
 				<!-- 2FA -->
 				<OptionsListWrapperWidget titleTxt="Security">
-					<SettingsItemRowWidget settingName="Two Factor Authentication" infoDesc="Enhances Security and enables Two Factor Authentication">
+					<SettingsItemRowWidget settingName="Two Factor Authentication" infoDesc="Enhances Security and enables Two Factor Authentication.">
 						<ToggleSwitchWidget
 							v-model="twoFactorAuth"
 							v-bind="{
@@ -123,15 +123,15 @@
 				<!-- x2FA -->
 
 				<!-- Notifications -->
-				<OptionsListWrapperWidget titleTxt="Email Notifications" infoDesc="Enables or disable email notifications">
-					<SettingsItemRowWidget settingName="Transactions">
+				<OptionsListWrapperWidget titleTxt="Email Notifications">
+					<SettingsItemRowWidget settingName="Transactions" infoDesc="Enables or disable email notifications for each transaction oon your account.">
 						<ToggleSwitchWidget
 							v-model="noEmailTransaction"
 							v-bind="{
 								name: 'noEmailTransaction',
 							}" />
 					</SettingsItemRowWidget>
-					<SettingsItemRowWidget settingName="Newsletter" infoDesc="Enable of disable newsletter subscription">
+					<SettingsItemRowWidget settingName="Newsletter" infoDesc="Enable of disable newsletter subscriptions.">
 						<ToggleSwitchWidget
 							v-model="noNewsletter"
 							v-bind="{
@@ -140,12 +140,13 @@
 					</SettingsItemRowWidget>
 				</OptionsListWrapperWidget>
 				<!-- xNotifications -->
-
-				<!-- Logout -->
-				<ButtonWidget v-on:click.native="logout()" buttonTxt="Logout"/>
-				<!-- xLogout -->
 			</ContentWidget>
 			<!-- xSettings -->
+			<!-- Logout -->
+			<div style="text-align:center">
+				<ButtonWidget v-on:click.native="logout()" buttonTxt="Logout" style="margin-bottom:20px;"/>
+			</div>
+			<!-- xLogout -->
 		</ScrollWidget>
 	</AppWrapperWidget>
 </template>
