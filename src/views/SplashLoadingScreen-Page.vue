@@ -68,7 +68,9 @@ export default {
 					//detect resize and force correct size
 					self.$electron.remote.getCurrentWindow().on('resize', self.resize);
 					//app loading complete
-					self.$store.commit('loading', false);
+					setTimeout(() => {
+						self.$store.commit('loading', false);
+					}, 100);
 					//redirect to [dashboard,login] page
 					//self.$router.push(`${self.endRoute}`);
 					self.$router.push(`${self.endRoute}`);
@@ -117,13 +119,17 @@ export default {
 	//before component is destroyed cleanup
 	beforeDestroy() {
 		const self = this;
-		self.$electron.remote.getCurrentWindow().removeListener('resize', self.resize);
+		if (self.$store.getters.whichPlatform === 'desktop') {
+			self.$electron.remote.getCurrentWindow().removeListener('resize', self.resize);
+		}
 	},
 	methods: {
 		resize() {
 			const self = this;
-			if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
-				self.setWindowSize(false, true);
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				if (self.$electron.remote.getCurrentWindow().getSize()[0] < 500) {
+					self.setWindowSize(false, true);
+				}
 			}
 		},
 		/**
@@ -153,7 +159,9 @@ export default {
 				}, 100);
 			} else {
 				//app loading complete
-				self.$store.commit('loading', false);
+				setTimeout(() => {
+					self.$store.commit('loading', false);
+				}, 100);
 				//console.log('splash to', route);
 				//redirect to [dashboard,login] page
 				//self.$router.push(`${route}`);
@@ -175,11 +183,11 @@ export default {
 
 				//set size
 				if (init) {
-					appWindow.setSize(305, 222);
 					appWindow.setMinimumSize(305, 222);
+					appWindow.setSize(305, 222);
 				} else {
-					appWindow.setSize(510, 656);
 					appWindow.setMinimumSize(510, 400);
+					appWindow.setSize(510, 656);
 				}
 				//centerise
 				if (typeof (disableCenter) === 'undefined') {
@@ -327,6 +335,8 @@ export default {
 						if (self.$store.getters.whichLandingPage !== 'splash') {
 							self.endRoute = self.$store.getters.whichLandingPage;
 						}
+						//setup socket connection
+						window.startSocketIOConnection();
 						setTimeout(() => {
 							self.routeDelay(self.endRoute);
 						}, 5000);
