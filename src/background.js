@@ -73,6 +73,7 @@ function createWindow() {
 
 	//Initial window options
 	mainWindow = new BrowserWindow({
+		titleBarStyle: 'hiddenInset',
 		height: 226,//216,//656,
 		show: false,
 		useContentSize: false,
@@ -96,7 +97,7 @@ function createWindow() {
 	});
 
 	//force debug window
-	mainWindow.webContents.openDevTools();
+	//mainWindow.webContents.openDevTools();
 
 	//Load App
 	if ((isDevelopment) || (process.env.IS_TEST)) {
