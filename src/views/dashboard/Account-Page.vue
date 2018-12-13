@@ -194,7 +194,7 @@ export default {
 						identCode = 1;
 					}
 				}
-				identiconFiles[key] = 'https://jsecoin.com/img/identicons/'+key+identCode+'.png';
+				identiconFiles[key] = '/img/identicons/'+key+identCode+'.png';
 				self.identiconImg.push(self.loadImage(identiconFiles[key]));
 				charCount++;
 			});
