@@ -1,5 +1,6 @@
 const path = require('path');
 const PrerenderSpaPlugin = require('prerender-spa-plugin');
+const webpack = require('webpack');
 
 //supported language base dir
 const langSupport = [
@@ -98,6 +99,12 @@ const productionPlugins = [
 	}),
 ];
 
+const IntroJsPlugin = [
+	new webpack.ProvidePlugin({
+		introJs: ['intro.js', 'introJs'],
+	}),
+];
+
 //App version
 const ver = require('./package.json').version;
 const maxVer = parseInt(ver.replace(/\./g,''), 10);
@@ -193,6 +200,7 @@ module.exports = {
 		if ((process.env.NODE_ENV === 'production') && (!process.env.IS_ELECTRON) && (!process.env.CORDOVA_PLATFORM)) {
 			config.plugins.push(...productionPlugins);
 		}
+		config.plugins.push(...IntroJsPlugin);
 	},
 	baseUrl: '',
 	assetsDir: 'assets',
