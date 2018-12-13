@@ -229,7 +229,6 @@ export default {
 			interval: [],
 		};
 	},
-
 	mounted() {
 		//if (parseFloat(this.$route.params.id) < 1000) {
 		//	this.exists = false;
