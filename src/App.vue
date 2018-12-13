@@ -13,9 +13,9 @@
 		<header id="JSEA-desktopAppHeader" class="draggable-area" v-if="(($store.state.app.platform === 'desktop') && ($route.path !== '/'))">
 			<div id="JSEA-headerBar">
 				<div id="JSEA-headerBarContainer">
-					<i class="fa fa-close" v-on:click="closeWindow()"></i>
-					<i class="fa fa-square-o" v-on:click="ExpandWindow()"></i>
-					<i class="fa fa-minus" v-on:click="minimiseWindow()"></i>
+					<i v-if="(platform !== 'darwin')" class="fa fa-close" v-on:click="closeWindow()"></i>
+					<i v-if="(platform !== 'darwin')" class="fa fa-square-o" v-on:click="ExpandWindow()"></i>
+					<i v-if="(platform !== 'darwin')" class="fa fa-minus" v-on:click="minimiseWindow()"></i>
 				</div>
 			</div>
 		</header>
@@ -35,7 +35,7 @@
 				<nav id="JSE-sideNav">
 					<ScrollWidget style="top:55px;">
 						<ul v-intro="'Your side bar navigation elements'">
-							<li><router-link v-if="($store.state.user.loggedIn)" v-bind:to="`/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
+							<li><router-link v-if="($store.state.user.loggedIn)" v-bind:to="`/dashboard`" tag="span" id="JSE-overviewButton"><i class="fa fa-home"></i> Account Overview <router-link v-intro="'Customisable platform user settings'" v-bind:to="`/settings`" tag="i" class="fa fa-cog"></router-link></router-link>
 								<ul>
 									<li v-if="($store.state.user.loggedIn)" :class="{'showMenu':nav.dashboard}"><span v-on:click="toggleMenu('dashboard')">Dashboard</span>
 										<ul>
@@ -116,6 +116,7 @@
 									</li>
 									<li v-if="($store.state.user.loggedIn)" v-on:click="logout()"><span>Log Out</span></li>
 									<router-link v-if="(!$store.state.user.loggedIn)" v-bind:to="`/login`" tag="li"><span>Log In</span></router-link>
+									<router-link v-if="(!$store.state.user.loggedIn)" v-bind:to="`/register`" tag="li"><span>Register</span></router-link>
 								</ul>
 							</li>
 						</ul>
@@ -130,10 +131,25 @@
 					<header v-if="($store.state.app.platformURL !== '')">
 						<router-link v-if="(!sideBarActive)" v-bind:to="`/dashboard`" tag="a" id="JSEA-sideLogoHeader"></router-link>
 						<ul id="JSEA-headerItems">
-							<li id="JSEA-googleTranslate"><i class="button"></i></li>
+							<li v-intro="'Translate JSEcoin to another language'" id="JSEA-googleTranslate" :class="{'activeMenu': translate}">
+								<i class="button" v-on:click="toggleTranslateDisplay"></i>
+								<div id="JSEA-googleTransate">
+									<div id="JSEA-translateTitle">
+										<!--<img id="JSEA-googleArr" width="20px" src="./assets/images/arrow-up.svg" />-->
+										Translate the page
+									</div>
+									<div id="JSEA-translateContent">
+										<div id="google_translate_element"></div>
+										<p>
+											Feel free to ask any questions, leave your comments, wishes and suggestions regarding
+											the Google Translation at our <a id="JSEA-telegramLink" href="https://t.me/jsetelegram">Telegram Chat</a>.
+										</p>
+									</div>
+								</div>
+							</li>
 							<li><i class="button fa fa-magic" v-on:click="siteWizard"></i></li>
 							<li v-intro="'Toggle between themes Night and Light'"><i id="JSEA-themeSelector" v-on:click="toggleTheme" class="fa" :class="{'fa-sun-o':($store.state.app.theme === 'night'),'fa-moon-o':($store.state.app.theme === 'light')}"></i></li>
-							<li v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
+							<li v-if="($store.state.app.platform !== 'desktop')" v-intro="'Share our platform with others in your networks'" :class="{'activeMenu':socialActive}" style="position:relative;"><i v-on:click="toggleSocial" class="button fa" :class="{'fa-share-alt':!socialActive, 'fa-angle-down':socialActive}"></i>
 								<social-sharing id="JSEA-socialLinks" url="https://jsecoin.com" title="JSEcoin" description="Digital Currency - Designed for the web 🤖" twitter-user="JSEcoin" hashtags="altcoin, ad-tech, Cryptocurrency, webmasters" inline-template>
 									<div>
 										<network network="facebook">
@@ -160,16 +176,16 @@
 									</div>
 								</social-sharing>
 							</li>
-							<li v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)">
+							<router-link v-intro="'Your active profile'" id="JSEA-profileMenu" v-if="($store.state.user.loggedIn)" v-bind:to="`/dashboard/account`" tag="li">
 								<div id="JSEA-profileWrap">
-									<canvas ref="indenticon" width="600" height="600" style="width: 50px; height: 50px; margin-left: -6px; margin-top: 6px;"></canvas>
+									<div id="JSEA-avatarHead" :style="{'background-image': `url(${avatarHead})`}"></div>
 								</div>
 								<div>
 									<div id="JSEA-profileUserName">{{user.name}}</div>
 									<div id="JSEA-profilePublicKey">{{user.publicKey}}</div>
 								</div>
-								<i class="fa fa-angle-down"></i>
-							</li>
+								<!--<i class="fa fa-angle-down"></i>-->
+							</router-link>
 						</ul>
 					</header>
 					<!-- xWeb Header -->
@@ -196,7 +212,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import introJs from 'intro.js';
 import 'intro.js/introjs.css';
 import ContentWidget from './components/widgets/ContentWidget.vue';
 import ButtonWidget from './components/widgets/ButtonWidget.vue';
@@ -214,6 +229,9 @@ export default {
 			hideApp: false,
 			offline: false,
 			resizeTimer: null,
+			avatarHead: '',
+			platform: 'web',
+			translate: false, //show hide translate option
 			nav: {
 				dashboard: false,
 				wallet: false,
@@ -229,16 +247,17 @@ export default {
 			},
 			identiconImg: [],
 			identiconParts: {
-				//background: 9,
-				//legs: 6,
-				//arms: 8,
+				background: 9,
+				legs: 6,
+				arms: 8,
 				neck: 3,
 				hat: 9,
-				//body: 7,
+				body: 7,
 				head: 8,
 				eyes: 9,
-				//logo: 8,
+				logo: 8,
 			},
+			identiconGen: ['neck', 'hat', 'head', 'eyes'],
 			identiconTotal: 0,
 			user: {
 				name: '',
@@ -251,6 +270,7 @@ export default {
 	mounted() {
 		const self = this;
 		//self.$electron.getCurrentWindow().removeAllListeners();
+		self.setupGoogleTranslate();
 	},
 	/**
 	 * Created
@@ -261,6 +281,14 @@ export default {
 	 */
 	created() {
 		const self = this;
+		//[win32,sunos,linux,freebsd,darwin]
+		self.platform = process.platform;
+
+		if (typeof (window.googleTranslateElementInit) === 'undefined') {
+			window.googleTranslateElementInit = () => {
+				window.google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+			};
+		}
 		/*window.addEventListener('beforeunload', ()=>{
 			self.$electron.getCurrentWindow().removeListener('blur', titlebarBlur);
 			self.$electron.getCurrentWindow().removeListener('focus', titlebarFocus);
@@ -614,6 +642,33 @@ export default {
 	 * Global App Functions
 	 */
 	methods: {
+		toggleTranslateDisplay() {
+			const self = this;
+			self.setupGoogleTranslate();
+			self.translate = !self.translate;
+		},
+		setupGoogleTranslate() {
+			if (document.getElementById('google_translate_element') !== null) {
+				if (document.getElementById('google_translate_element').children.length > 0) {
+					document.getElementById('google_translate_element').children[0].remove();
+				}
+			}
+
+			if (document.getElementById('JSEA-googleT') !== null) {
+				document.getElementById('JSEA-googleT').remove();
+			}
+			//set tanslate ele
+			const t = document.createElement('script');
+			const s = document.getElementsByTagName('script')[0];
+
+			//script attrs
+			t.async = true;
+			t.defer = true;
+			t.id = 'JSEA-googleT';
+			t.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+			//inject
+			s.parentNode.insertBefore(t, s);
+		},
 		initSocketConnection() {
 			const self = this;
 			const socketConnectionMade = () => {
@@ -856,8 +911,12 @@ export default {
 						identCode = 1;
 					}
 				}
-				identiconFiles[key] = 'https://jsecoin.com/img/identicons/'+key+identCode+'.png';
-				self.identiconImg.push(self.loadImage(identiconFiles[key]));
+				//console.log('key', key);
+				if (self.identiconGen.indexOf(key) >= 0) {
+					//console.log('>', key);
+					identiconFiles[key] = '/img/identicons/'+key+identCode+'.png';
+					self.identiconImg.push(self.loadImage(identiconFiles[key]));
+				}
 				charCount++;
 			});
 			//console.log(identiconFiles);
@@ -871,10 +930,13 @@ export default {
 		},
 		updateCanvas() {
 			const self = this;
+			//console.log('updateCanvas');
 			self.identiconTotal++;
-			if (Object.values(self.identiconParts).length === self.identiconTotal) {
-				const canvas = self.$refs.indenticon;
-				if (typeof (canvas) !== 'undefined') {
+			if (self.identiconTotal === self.identiconGen.length) {
+				const canvas = document.createElement('canvas'); //document.getElementById('JSEA-identiconHead');//self.$refs.indenticon;
+				canvas.width = '600';
+				canvas.height = '600';
+				//if (typeof (canvas) !== 'undefined') {
 					const ctx = canvas.getContext('2d');
 					//console.log('x',self.identiconImg);
 					self.identiconImg.forEach((i, k) => {
@@ -882,7 +944,8 @@ export default {
 						ctx.imageSmoothingQuality = 'high';
 						ctx.drawImage(i, 0, 0);
 					});
-				}
+					self.avatarHead = canvas.toDataURL();
+				//}
 			}
 		},
 		toggleSocial() {
@@ -895,7 +958,7 @@ export default {
 		},
 		siteWizard() {
 			const self = this;
-			console.log(self.$intro());
+			//console.log(self.$intro());
 			//self.$intro().start();
 			self.$intro().setOptions({
 				helperElementPadding: 0,
@@ -1103,6 +1166,7 @@ body {
 	font-family: 'Nunito', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	top:0px !important /*google translate fix*/
 }
 body.platformWeb.min {
 	font-size:12px;
@@ -1187,7 +1251,7 @@ body.QRScanner.min footer {
     right: 0px;
     top: 0px;
     overflow: hidden;
-    box-shadow: none;
+    box-shadow: none !important;
     background: none;
 }
 #JSEA-headerBar {
@@ -1197,7 +1261,14 @@ body.QRScanner.min footer {
     background-size: cover;
     height: 84px;
 }
-
+.min .introjs-tooltipReferenceLayer,
+.med .introjs-tooltipReferenceLayer,
+.min .introjs-helperLayer,
+.med .introjs-helperLayer,
+.min .introjs-overlay,
+.med .introjs-overlay {
+	display:none;
+}
 #JSEA-headerBarContainer {
 	height:20px;
 	background:rgba(0,0,0,0.3);
@@ -1497,6 +1568,19 @@ header {
 	margin-left:-251px;
 	width:502px;
 	margin-top:-324px;
+}
+.platformWeb #JSEA-desktop.loading,
+.platformWeb.max #JSEA-desktop.loading,
+.platformWeb.min #JSEA-desktop.loading,
+.platformWeb.med #JSEA-desktop.loading {
+	display: block;;
+	position: absolute;
+	top:50%;
+	left:50%;
+	margin-left:-153px;
+	width:306px;
+	height:222px;
+	margin-top:-111px;
 }
 
 .platformWeb.min #JSEA-desktop {
@@ -2094,12 +2178,18 @@ header .fa-square-o:hover {
 }
 
 #JSE-sideNav .fa.fa-cog {
-	position: absolute;
-	right:10px;
-	font-size:1.3em;
-    padding-left: 10px;
-	cursor:pointer;
-	transition:color 0.2s;
+      position: absolute;
+    right: 0px;
+    font-size: 1.3em;
+    /* padding-left: 10px; */
+    cursor: pointer;
+    transition: color 0.2s;
+    top: 5px;
+    bottom: 5px;
+    text-align: center;
+    line-height: 28px;
+    padding: 0px 10px;
+    margin: 0px;
 }
 
 .light #JSE-sideNav .fa.fa-cog {
@@ -2320,8 +2410,8 @@ header .fa-square-o:hover {
 	display:block;
 }
 
-.activeMenu .fa-angle-down {
-	background:#1970c7 !important;
+.activeMenu > i {
+	background-color:#1970c7 !important;
 }
 #JSEA-socialLinks i {
 	margin-top:10px !important;
@@ -2535,5 +2625,120 @@ header .fa-square-o:hover {
 	background-repeat:no-repeat;
 	background-size:60%;
 	background-position:center;
+}
+
+#JSEA-avatarHead {
+	width: 50px;
+	height: 50px;
+    background-size: contain;
+	background-position: -6px 8px;
+    background-repeat: no-repeat;
+}
+
+
+#JSEA-googleTransate {
+	display: none;
+	position: absolute;
+	background:#fff;
+	top:66px;
+	border-radius: 4px;
+	right:-110px;
+	z-index:1000;
+    min-width: 280px;
+	box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+}
+.activeMenu #JSEA-googleTransate {
+	display: block;
+}
+#JSEA-translateTitle {
+	text-align:center;
+	padding:4px 8px;
+	background:#edeef2;
+	color:#000;
+	border-radius: 4px 4px 0px 0px;
+	position: relative;
+}
+#JSEA-translateContent {
+	padding:16px;
+	text-align:center;
+}
+#JSEA-translateContent p {
+	margin:10px 0px 0px 0px;
+	padding:0px;
+	color:#333;
+	line-height:1.2em;
+}
+
+
+
+
+#FB-CB {
+	background-image: url("/static/atlas/cb_button.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	width:99px;
+	height:99px;
+	position: fixed;
+	bottom:0px;
+	right:26px;
+	z-index:1001;
+	opacity: 0;
+	transition: bottom 0.2s, opacity 0.2s;
+	display: none;
+}
+.max #FB-CB {
+	display: block;
+}
+.med #FB-atlasFrame,
+.min #FB-atlasFrame {
+	display: none;
+}
+
+#FB-CB.active {
+	opacity: 1;
+	bottom:10px;
+	cursor: pointer;
+}
+#FB-atlasFrame.floatingButton {
+	z-index: 100000000;
+	position: fixed;
+	height:100%;
+	max-height: 730px;
+	min-height:350px;
+	width: 520px;
+	right: 20px;
+	bottom: 20px;
+}
+
+#FB-atlasFrame.hide {
+	display: none;
+}
+
+@media screen and (max-width: 520px) {
+	#FB-atlasFrame.floatingButton {
+		position: fixed;
+		width: 100%;
+		height: 100% !important;
+		top:0px;
+		bottom:0px;
+		left:0px;
+		right:0px;
+		max-height: inherit;
+	}
+	#FB-CB {
+		right:6px;
+		width: 69px;
+		height: 69px;
+	}
+}
+body > .skiptranslate:first-child {
+	display: none;
+}
+.goog-te-menu-frame {
+	box-shadow: none !important;
+}
+.min .goog-te-menu-frame,
+.med .goog-te-menu-frame {
+	display:none !important;
 }
 </style>
