@@ -48,6 +48,7 @@ import moment from 'moment';
 import ContentWidget from '@/components/widgets/ContentWidget.vue';
 import Coin from '@/components/widgets/Coin.vue';
 import EarningsChartWidgetC3 from '@/components/widgets/EarningsChartWidgetC3.vue';
+import OptionsListWrapperWidget from '@/components/widgets/OptionsListWrapperWidget.vue';
 
 /**
  * @description
@@ -64,6 +65,7 @@ export default {
 		ContentWidget,
 		Coin,
 		EarningsChartWidgetC3,
+		OptionsListWrapperWidget,
 	},
 	computed: mapState({
 		pendingSelfMining: state => state.user.pendingSelfMining,

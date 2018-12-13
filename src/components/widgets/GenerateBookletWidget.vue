@@ -99,6 +99,9 @@ export default {
 				const maskPadding = qr.size / 30;
 
 				ctx.globalCompositeOperation = 'source-over';
+				console.log(self.logo.width);
+				console.log(self.logo.height);
+				console.log(self.logo, 0, 0, logoWidth, logoHeight, x, y, width, height);
 				ctx.drawImage(self.logo, 0, 0, logoWidth, logoHeight, x, y, width, height);
 
 				//calculate table cells/rows
