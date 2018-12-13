@@ -54,10 +54,30 @@ const Stats = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/S
 //import Wall from '@/views/crypto/Wall';
 const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/views/crypto/Stats-Page');
 
+if (typeof (__static) !== 'undefined')  {
+	upgradeApp();
+	login();
+	resetPassword();
+	restore2FA();
+	enterSecurityPin();
+	register();
+	settings();
+	overview();
+	desktopOverview();
+	account();
+	transfer();
+	walletTransactions();
+	exportJSE();
+	importJSE();
+	platformMiner();
+	earnings();
+	Blocks();
+}
+
 Vue.use(Router);
 
 const router = new Router({
-	mode: (process.env.CORDOVA_PLATFORM) ? 'hash' : 'history', //((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) ? 'hash' : 'history',
+	mode: ((process.env.CORDOVA_PLATFORM) || (typeof (__static) !== 'undefined')) ? 'hash' : 'history', //((typeof (process) !== 'undefined') && (typeof (process.browser) === 'undefined')) ? 'hash' : 'history',
 	base: process.env.BASE_URL,
 	routes: [
 		{
@@ -181,7 +201,7 @@ const router = new Router({
 			},
 		},
 		{
-			path: '/blockchain/',
+			path: '/blockchain',
 			name: 'Blocks',
 			component: Blocks,
 		},
@@ -238,11 +258,12 @@ const router = new Router({
  */
 router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-	const hasDesktopInterface = to.matched.some(record => record.meta.hasDesktopInterface);
+	const hasDesktopInterface = to.matched.some(record => record.meta.hasDesktopInterface) || false;
+	//console.log('has', hasDesktopInterface);
 	if ((requiresAuth) && (!store.state.user.loggedIn)) {
-		next('login');
-	//} else if (hasDesktopInterface) {
-	//	next('desktopOverview');
+		next('/login');
+	} else if (hasDesktopInterface) {
+		next('/desktop/dashboard');
 	} else {
 		next();
 	}
