@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <head>
@@ -25,19 +24,14 @@
 				var self = this;
 				
 				//listen to messages from app
-				window.addEventListener('message', function(e) {
+				window.addEventListener('message', function(e) { 
 					//dev or prod apps
-					if ((~e.origin.indexOf('https://localhost:8080')) || (~e.origin.indexOf('jsecoin://index.html')) || (~e.origin.indexOf('app://index.html'))) { 
+					if ((~e.origin.indexOf('http://localhost:9080')) || (~e.origin.indexOf('jsecoin://index.html'))) { 
 						console.log(e.data); 
 						if (e.data.call === 'iCaptcha') {
 							self.captchaRender();
 						}
 					}
-				}); 
-				window.addEventListener('click', function(e) {
-					self.sendMessage({
-						closeCaptcha: true
-					});
 				}); 
 			},
 			/**
@@ -52,7 +46,6 @@
 					self.captchaID = grecaptcha.render('iCaptcha', {
 						'sitekey': '6Lfl8S8UAAAAAAWfKHLDyRbcanMwKKSBckVYuQLZ',
 						'size': 'invisible',
-						'theme': 'dark',
 						'callback': function(token) {
 							//send message back to app with token
 							self.sendMessage({
@@ -89,14 +82,6 @@
 	/*hide captchabadge*/
 	.grecaptcha-badge {
 		display: none;	
-	}
-	div {
-	    background: none !important;
-		opacity: 1;
-		border: 0px !important;
-	}
-	body > div {
-		width:100% !important;
 	}
 	</style>
 </head>

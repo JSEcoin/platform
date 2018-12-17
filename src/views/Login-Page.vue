@@ -1,7 +1,6 @@
 <template>
 	<AppWrapperWidget>
 		<!-- login -->
-		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" :src="captchaUrl"></iframe>
 		<ScrollWidget v-bind="{noNav:true}">
 			<!-- Login Page -->
 			<div id="JSEA-loginPage">
@@ -33,7 +32,7 @@
 					<!-- xAnimation to display during server requests -->
 
 					<!-- Login error display -->
-					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
+					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 90%; margin: 10px auto;" />
 					<!--<div v-if="form.error.display" class="errorMsg cf" style="width: 60%; margin: 10px auto;">
 						<div><b>Error:</b> "{{}}"</div>
 					</div>-->
@@ -129,7 +128,7 @@
 </template>
 
 <script>
-//import VueRecaptcha from 'vue-recaptcha';
+import { mapState } from 'vuex';
 import axios from 'axios';
 import AppWrapperWidget from '@/components/widgets/AppWrapperWidget.vue';
 import ContentWidget from '@/components/widgets/ContentWidget.vue';
@@ -163,8 +162,8 @@ export default {
 	},
 	data() {
 		return {
-			showCaptcha: false, 		//show iframe captcha
-			captchaUrl: 'https://jsecoin.com/iCaptcha/iCaptcha.html', //captcha url
+			//showCaptcha: false, 		//show iframe captcha
+			//captchaUrl: 'https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alphax1', //captcha url
 			showPass: false,			//password input set eye icon
 			passDisplay: 'password',	//password input type ['password','text']
 			TwoFaInterval: false,		//2FA 60 second countdown : setInterval ();
@@ -209,6 +208,12 @@ export default {
 			sitekey: '6Lfl8S8UAAAAAAWfKHLDyRbcanMwKKSBckVYuQLZ', //captcha key TODO:move out into global conf
 		};
 	},
+	/**
+	 * Computed
+	 * */
+	computed: mapState({
+		captchaUrl: state => state.app.captchaUrl,
+	}),
 	/**
 	 * Created
 	 * on app init
@@ -271,7 +276,7 @@ export default {
 		},
 		/**
 		 * Processes captcha iframe response success/fail from the server
-		 * https://jsecoin.com/iCaptcha/iCaptcha.html?x=1
+		 * https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alpha
 		 * and initialises verification method to display 2FA or proceed and authenticate
 		 *
 		 * @param {object} e - Event response from captcha message listener
@@ -287,9 +292,21 @@ export default {
 					//store token
 					self.captchaResponse = e.data.token;
 					//hide iframe
-					self.showCaptcha = false;
+					//self.showCaptcha = false;
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
 					//verify and login
 					self.onVerify(self.captchaResponse);
+				} else if ((e.data) && (e.data.closeCaptcha)) {
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
+					self.form.error.display = true;
+					self.form.error.msg = 'Exited Captcha security check - unable to login';
+					self.loading = false;
 				}
 			}
 		},
@@ -426,20 +443,22 @@ export default {
 					const myRequest = new Request(self.captchaUrl, myInit);
 
 					fetch(myRequest).then((response) => {
-						//
-						console.log('');
+						console.log('..');
 						return response;
 					}).then((response) => {
-						//console.log(response);
-						self.showCaptcha = true; //shows jsecoin.com captcha screen
+						self.$store.commit('updateAppState', {
+							val: true,
+							state: 'showCaptcha',
+						}); //shows jsecoin.com captcha screen
 					}).catch((e) => {
-						//console.log(e);
-						self.showCaptcha = false;
+						self.$store.commit('updateAppState', {
+							val: false,
+							state: 'showCaptcha',
+						});
 						self.form.error.display = true;
 						self.form.error.msg = 'Unable to connect to server please check your connection.';
 						self.loading = false;
 					});
-					//self.$refs.invisibleRecaptcha.execute();
 				}
 			} else {
 				self.form.error.display = true;
@@ -619,6 +638,7 @@ export default {
 #JSEA-loginWrapper {
     /*align-self: center;*/
     width: 100%;
+	padding-bottom:40px;
 }
 .platformWeb.min #JSEA-loginWrapper {
     align-self: inherit;
@@ -733,7 +753,7 @@ footer {
 #JSEA-loginPage {
     width: 450px;
     border-radius: 10px;
-    height: 390px;
+    /*height: 390px;*/
 }
 .min #JSEA-loginPage,
 .med #JSEA-loginPage {

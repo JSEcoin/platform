@@ -1,7 +1,6 @@
 <template>
 	<AppWrapperWidget>
 		<!-- Restore 2FA -->
-		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=2"></iframe>
         <ScrollWidget v-bind="{noNav:true}">
 			<!-- Restore 2FA Page -->
 			<div id="JSEA-restore2FAPage">
@@ -12,7 +11,7 @@
 					<!-- xAnimation to display during server requests -->
 
 					<!-- register Form -->
-					<form id="JSEA-restore2FAPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+					<form id="JSEA-restore2FAPasswordForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-restore2FAPasswordWrapper">
 							<ContentWidget class="restore2FAFormContainer">
 								<!-- Register Form -->
@@ -109,7 +108,6 @@ export default {
 	data() {
 		return {
             loading: false,	//communicating with the server.
-			showCaptcha: false,
             badEmailProviders: [
 				'cobin2hood.com',
 				'mailinator',
@@ -179,7 +177,7 @@ export default {
 	methods: {
 		/**
 		 * Processes captcha iframe response success/fail from the server
-		 * https://jsecoin.com/iCaptcha/iCaptcha.html?x=1
+		 * https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alpha
 		 * and initialises verification method to display 2FA or proceed and authenticate
 		 *
 		 * @param {object} e - Event response from captcha message listener
@@ -195,9 +193,21 @@ export default {
 					//store token
 					self.captchaResponse = e.data.token;
 					//hide iframe
-					self.showCaptcha = false;
+					//self.showCaptcha = false;
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
 					//verify and login
 					self.onVerify(self.captchaResponse);
+				} else if ((e.data) && (e.data.closeCaptcha)) {
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
+					self.form.error.display = true;
+					self.form.error.msg = 'Exited Captcha security check - unable to restore 2FA';
+					self.loading = false;
 				}
 			}
 		},

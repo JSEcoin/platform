@@ -1,5 +1,6 @@
 <template>
 	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, 'loggedIn':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
+		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" :src="captchaUrl"></iframe>
 		<iframe id="JSEA-registerFrame" v-if="registered" src="https://jsecoin.com/pixels.php?conversion=signup" frameborder="0" width="1" height="1"></iframe>
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
@@ -142,7 +143,7 @@
 										<div id="google_translate_element"></div>
 										<p>
 											Feel free to ask any questions, leave your comments, wishes and suggestions regarding
-											the Google Translation at our <a id="JSEA-telegramLink" href="https://t.me/jsetelegram">Telegram Chat</a>.
+											the Google Translation at our <a id="JSEA-telegramLink" v-on:click="openExternalWindow('https://t.me/jsetelegram')">Telegram Chat</a>.
 										</p>
 									</div>
 								</div>
@@ -589,7 +590,7 @@ export default {
 						type: 'resetUserState',
 					});
 					//redirect to app upgrade page.
-					self.$router.push('upgradeApp');
+					self.$router.push('/upgradeApp');
 					return;
 				}
 
@@ -637,6 +638,8 @@ export default {
 		hashRateAcc: state => state.miner.hashRateAcc,
 		silentMode: state => state.app.silentMode,
 		registered: state => state.user.registered,
+		showCaptcha: state => state.app.showCaptcha,
+		captchaUrl: state => state.app.captchaUrl,
 	}),
 	/**
 	 * Global App Functions
@@ -1233,6 +1236,17 @@ body.QRScanner.min footer {
     height: 100%;
 	z-index:10000000;
 }
+.platformDesktop #JSEA-iCaptcha {
+	top:20px;
+}
+.light #JSEA-iCaptcha {
+	background: rgba(255,255,255,0.5);
+}
+
+.night #JSEA-iCaptcha {
+	background: rgba(0,0,0,0.5);
+}
+
 #JSEA-registerFrame {
 	position: absolute;
 	bottom:0px;

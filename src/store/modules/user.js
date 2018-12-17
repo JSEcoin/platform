@@ -287,7 +287,7 @@ const mutations = {
 		//if (self.getters.whichPlatform === 'web') {
 			import('../../nav').then((nav) => {
 				//console.log('router');
-				nav.default.push('login');
+				nav.default.push('/login');
 			}).catch((error) => {
 				console.error(error);
 			});

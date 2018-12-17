@@ -1,7 +1,6 @@
 <template>
 	<AppWrapperWidget>
 		<!-- Reset Password -->
-		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=2"></iframe>
         <ScrollWidget v-bind="{noNav:true}">
 			<!-- Reset Password Page -->
 			<div id="JSEA-resetPasswordPage">
@@ -12,7 +11,7 @@
 					<!-- xAnimation to display during server requests -->
 
 					<!-- register Form -->
-					<form id="JSEA-resetPasswordForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+					<form id="JSEA-resetPasswordForm" @submit.prevent="emailCode" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-resetPasswordWrapper">
 							<ContentWidget class="resetFormContainer">
 								<!-- Register Form -->
@@ -23,7 +22,7 @@
 
 								<h4 class="title">(Step 1) Request a security code.</h4>
 								<!-- Error display -->
-								<FormErrorDisplayWidget v-on:click.native="closeError('error1')" v-if="form.error1.display" :errorMsg="form.error1.msg"  style="width: 60%; margin: 10px auto;" />
+								<FormErrorDisplayWidget v-on:click.native="closeError('formSec')" v-if="formSec.error.display" :errorMsg="formSec.error.msg"  style="width: 90%; margin: 10px auto;" />
 								<!-- xError display -->
                                 <p>
                                     Enter your registered platform account email.<br />
@@ -34,14 +33,14 @@
 									<!-- Full Name Input -->
 									<div class="row">
 										<InputWidget
-											v-model="form.accountEmail.val"
+											v-model="formSec.accountEmail.val"
 											placeholder="Account Email *"
 											name="accountEmail"
 											maxlength="254"
 											ref="accountEmail"
-											:showLabel="form.accountEmail.displayLabel"
-											:flag="!form.accountEmail.valid || form.accountEmail.flag"
-											@keyup="keyWatch('accountEmail')" />
+											:showLabel="formSec.accountEmail.displayLabel"
+											:flag="!formSec.accountEmail.valid || formSec.accountEmail.flag"
+											@keyup="keyWatch('formSec', 'accountEmail')" />
 									</div>
 									<!-- xFull Name Input -->
 								</div>
@@ -54,6 +53,10 @@
 										buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancel" />
 								</div>
 							</ContentWidget>
+						</div>
+					</form>
+					<form id="JSEA-resetPasswordForm" @submit.prevent="updatePassword" :class="{hide:loading}" autocomplete="off">
+						<div v-if="status.displayForm" id="JSEA-resetPasswordWrapper">
 
 							<ContentWidget class="resetFormContainer">
 								<h4 class="title">(Step 2) Create a new password.</h4>
@@ -62,20 +65,20 @@
                                 </p>
 
 								<!-- Error display -->
-								<FormErrorDisplayWidget v-on:click.native="closeError('error2')" v-if="form.error2.display" :errorMsg="form.error2.msg"  style="width: 60%; margin: 10px auto;" />
+								<FormErrorDisplayWidget v-on:click.native="closeError('formPass')" v-if="formPass.error.display" :errorMsg="formPass.error.msg"  style="width: 90%; margin: 10px auto;" />
 								<!-- xError display -->
 								<div class="formWrapper">
 									<!-- Full Name Input -->
 									<div class="row">
 										<InputWidget
-											v-model="form.securityCode.val"
+											v-model="formPass.securityCode.val"
 											placeholder="Enter Security Code Received *"
 											name="securityCode"
 											maxlength="254"
 											ref="securityCode"
-											:showLabel="form.securityCode.displayLabel"
-											:flag="!form.securityCode.valid || form.securityCode.flag"
-											@keyup="keyWatch('securityCode')" />
+											:showLabel="formPass.securityCode.displayLabel"
+											:flag="!formPass.securityCode.valid || formPass.securityCode.flag"
+											@keyup="keyWatch('formPass', 'securityCode')" />
 									</div>
 									<!-- xFull Name Input -->
 								</div>
@@ -87,14 +90,14 @@
                                             inputType="password"
                                             newpassword="new-password"
                                             v-bind="{hideShow: true, passwordStrength:true}"
-                                            v-model="form.password.val"
+                                            v-model="formPass.password.val"
                                             placeholder="New Password *"
                                             name="password"
                                             maxlength="254"
                                             ref="password"
-                                            :showLabel="form.password.displayLabel"
-                                            :flag="form.password.flag"
-                                            @keyup="keyWatch('password')" />
+                                            :showLabel="formPass.password.displayLabel"
+                                            :flag="formPass.password.flag"
+                                            @keyup="keyWatch('formPass', 'password')" />
 									</div>
 									<!-- xFull Name Input -->
 									<!-- Full Name Input -->
@@ -102,15 +105,15 @@
                                         <InputWidget
                                             inputType="password"
                                             v-bind="{hideShow: true}"
-                                            v-model="form.passwordMatch.val"
+                                            v-model="formPass.passwordMatch.val"
                                             newpassword="new-password"
                                             placeholder="Re-Type New Password *"
                                             name="password"
                                             maxlength="254"
                                             ref="password"
-                                            :showLabel="form.passwordMatch.displayLabel"
-											:flag="!form.passwordMatch.valid || form.passwordMatch.flag"
-                                            @keyup="keyWatch('passwordMatch')" />
+                                            :showLabel="formPass.passwordMatch.displayLabel"
+											:flag="!formPass.passwordMatch.valid || formPass.passwordMatch.flag"
+                                            @keyup="keyWatch('formPass', 'passwordMatch')" />
 									</div>
 									<!-- xFull Name Input -->
 								</div>
@@ -163,7 +166,6 @@ export default {
 	data() {
 		return {
             loading: false,	//communicating with the server.
-			showCaptcha: false,
             badEmailProviders: [
 				'cobin2hood.com',
 				'mailinator',
@@ -181,15 +183,25 @@ export default {
 				'crymail2.com',
 				'ax80mail.com',
 			],
+			activeForm: '', //[formSec,formPass]
 			//form modal
-			form: {
-				//required: ['fullName', 'email', 'confirmEmail', 'password'], //required fields
+			formSec: {
+				required: ['accountEmail'], //required fields
 				accountEmail: {
 					val: '',				//field value
 					displayLabel: false,	//field label
 					valid: true,			//valid value
 					flag: false,			//has value length
                 },
+				//form error display
+				error: {
+					msg: '',		//form error messages
+					display: false, //display error message
+				},
+            },
+			//form modal
+			formPass: {
+				required: ['password', 'passwordMatch', 'securityCode'], //required fields
 				password: {
 					val: '',				//field value
 					displayLabel: false,	//field label
@@ -209,11 +221,7 @@ export default {
 					flag: false,			//has value length
                 },
 				//form error display
-				error1: {
-					msg: '',		//form error messages
-					display: false, //display error message
-				},
-				error2: {
+				error: {
 					msg: '',		//form error messages
 					display: false, //display error message
 				},
@@ -249,7 +257,7 @@ export default {
 	methods: {
 		/**
 		 * Processes captcha iframe response success/fail from the server
-		 * https://jsecoin.com/iCaptcha/iCaptcha.html?x=1
+		 * https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alpha
 		 * and initialises verification method to display 2FA or proceed and authenticate
 		 *
 		 * @param {object} e - Event response from captcha message listener
@@ -265,9 +273,21 @@ export default {
 					//store token
 					self.captchaResponse = e.data.token;
 					//hide iframe
-					self.showCaptcha = false;
+					//self.showCaptcha = false;
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
 					//verify and login
 					self.onVerify(self.captchaResponse);
+				} else if ((e.data) && (e.data.closeCaptcha)) {
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
+					self.form.error.display = true;
+					self.form.error.msg = 'Exited Captcha security check - unable to reset password';
+					self.loading = false;
 				}
 			}
 		},
@@ -279,32 +299,33 @@ export default {
 		 * @returns nothing
 		 * @public
 		 */
-		keyWatch(input) {
+		keyWatch(form, input) {
 			const self = this;
+			//console.log(form, input,self[form][input].val);
 			//if input value remove placeholder and show label above input
-			if (self.form[input].val.length > 0) {
-				self.form[input].valid = true;
-				self.form[input].flag = false;
-				self.form[input].displayLabel = true;
+			if (self[form][input].val.length > 0) {
+				self[form][input].valid = true;
+				self[form][input].flag = false;
+				self[form][input].displayLabel = true;
 				//if input email check format
 				if (input === 'accountEmail') {
 					self.checkEmail(input);
 				}
-				if (input === 'password') {
-					if (!window.goodPassword(self.form[input].val)) {
-						self.form[input].valid = false;
-						self.form[input].flag = true;
+				if ((input === 'password') || (input === 'passwordMatch')) {
+					if (!window.goodPassword(self[form][input].val)) {
+						self[form][input].valid = false;
+						self[form][input].flag = true;
 					}
 				} else {
 					//clean strings entered
 					setTimeout(() => {
-						self.form[input].val = window.cleanString(self.form[input].val);
+						self[form][input].val = window.cleanString(self[form][input].val);
 					},10);
 				}
 			//no value reset field
 			} else {
-				self.form[input].displayLabel = false;
-				self.form[input].flag = true;
+				self[form][input].displayLabel = false;
+				self[form][input].flag = true;
 			}
         },
 		cancel() {
@@ -313,41 +334,176 @@ export default {
 		},
 		checkEmail(input) {
 			const self = this;
-			self.form.error.display = false;
+			self.formSec.error.display = false;
 
 			//email has value
-			if (self.form[input].val.length > 0) {
-				self.form[input].flag = false;
-				self.form[input].valid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.form[input].val);
+			if (self.formSec[input].val.length > 0) {
+				self.formSec[input].flag = false;
+				self.formSec[input].valid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(self.formSec[input].val);
 				//check against bad domains
 				const result = self.badEmailProviders.filter((domain) => {
-					if (self.form[input].val.indexOf(domain) >= 0) {
+					if (self.formSec[input].val.indexOf(domain) >= 0) {
 						return domain;
 					}
 					return false;
 				});
 				if (result.length > 0) {
-					self.form[input].flag = true;
-					self.form[input].valid = false;
-					self.form.error.msg = 'This domain has been blacklisted - please use another email provider.';
-					self.form.error.display = true;
+					self.formSec[input].flag = true;
+					self.formSec[input].valid = false;
+					self.formSec.error.msg = 'This domain has been blacklisted - please use another email provider.';
+					self.formSec.error.display = true;
 				}
 			//no value reset
 			} else {
-				self.form[input].valid = true;
-				self.form[input].flag = false;
+				self.formSec[input].valid = true;
+				self.formSec[input].flag = false;
 			}
 		},
 		emailCode() {
+			const self = this;
 
+			//check scrollTo available - customised code
+			if (typeof (self.$vuebar.scrollTo) !== 'undefined') {
+				const bodyScroll = document.getElementById('JSEA-appBody');
+				self.$vuebar.scrollTo(bodyScroll,0);
+			}
+
+			//
+			self.formSec.error.msg = '';
+			self.formSec.error.display = false;
+			
+			let checkRequiredFields = true;
+			//check required fields have data
+			self.formSec.required.forEach(function(value) {
+				self.formSec[value].flag = false;
+				if (self.formSec[value].val.length === 0) {
+					self.formSec[value].flag = true;
+					checkRequiredFields = false;
+				}
+			});
+
+			//if form pass check then submit captcha
+			if (checkRequiredFields) {
+				self.loading = true;
+				self.formSec.error.display = false;
+				self.activeForm = 'formSec',
+				self.$store.commit('updateAppState', {
+					val: true,
+					state: 'showCaptcha',
+				});//shows jsecoin.com captcha screen
+			} else {
+				self.formSec.error.msg = 'Please check all highlighted fields are complete.';
+				self.formSec.error.display = true;
+			}
 		},
 		updatePassword() {
-
-		},
-		closeError(field) {
 			const self = this;
-			self.form[field].msg = '';
-			self.form[field].display = false;
+			//check scrollTo available - customised code
+			if (typeof (self.$vuebar.scrollTo) !== 'undefined') {
+				const bodyScroll = document.getElementById('JSEA-appBody');
+				self.$vuebar.scrollTo(bodyScroll,0);
+			}
+			self.formPass.error.msg = '';
+			self.formPass.error.display = false;
+			
+			let checkRequiredFields = true;
+			//check required fields have data
+			self.formPass.required.forEach(function(value) {
+				self.formPass[value].flag = false;
+				if (self.formPass[value].val.length === 0) {
+					self.formPass[value].flag = true;
+					checkRequiredFields = false;
+				}
+			});
+
+			if (self.formPass.password.val !== self.formPass.passwordMatch.val) {
+				self.status.displayForm = true;
+				self.formPass.error.display = true;
+				self.loading = false;
+				self.formPass.error.msg = 'Passwords do not match!';
+				return false;
+			}
+
+			//if form pass check then submit captcha
+			if (checkRequiredFields) {
+				const passwordReset = {
+					newPassword: self.formPass.password.val,
+					passwordReset: self.formPass.securityCode.val,
+					app: self.$store.getters.whichPlatform,
+				};
+
+				//post registration params
+				axios.post(
+					`${self.$store.state.app.jseCoinServer}/password/change/`,
+					passwordReset,
+				).then((res) => {
+					//show form
+					self.loading = false;
+					self.status.displayForm = true;
+					//failed
+					if (self.user.fail === 1) {
+						self.formPass.error.display = true;
+						self.formPass.error.msg = res.data.notification;
+						return false;
+					}
+					self.$router.push('/login');
+					return true;
+				}).catch((err) => {
+					console.log(err);
+					self.status.displayForm = true;
+					self.formPass.error.display = true;
+					self.loading = false;
+					if (err.response.data.notification) {
+						self.formPass.error.msg = err.response.data.notification;
+					} else {
+						self.formPass.error.msg = 'Failed to submit form - please check your connection';
+					}
+				});
+			} else {
+				self.formPass.error.msg = 'Please check all highlighted fields are complete.';
+				self.formPass.error.display = true;
+			}
+		},
+		
+		onVerify(response) {
+			const self = this;
+			const reqSecurityCode = {
+				email: self.formSec.accountEmail.val,
+				'g-recaptcha-response': response,
+				app: self.$store.getters.whichPlatform,
+			};
+
+			//post registration params
+			axios.post(
+				`${self.$store.state.app.jseCoinServer}/password/reset/`,
+				reqSecurityCode,
+			).then((res) => {
+				//show form
+				self.loading = false;
+				self.status.displayForm = true;
+				//failed
+				if (self.user.fail === 1) {
+					self.formSec.error.display = true;
+					self.formSec.error.msg = res.data.notification;
+					return false;
+				}
+				return true;
+			}).catch((err) => {
+				console.log(err);
+				self.status.displayForm = true;
+				self.formSec.error.display = true;
+				self.loading = false;
+				if (err.response.data.notification) {
+					self.formSec.error.msg = err.response.data.notification;
+				} else {
+					self.formSec.error.msg = 'Failed to submit form - please check your connection';
+				}
+			});
+		},
+		closeError(form) {
+			const self = this;
+			self[form].error.msg = '';
+			self[form].error.display = false;
 		},
     },
 };

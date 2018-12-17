@@ -1,7 +1,6 @@
 <template>
 	<AppWrapperWidget>
 		<!-- register -->
-		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" src="https://jsecoin.com/iCaptcha/iCaptcha.html?x=2"></iframe>
 		<ScrollWidget v-bind="{noNav:true}">
 			<!-- register Page -->
 			<div id="JSEA-registerPage">
@@ -16,7 +15,7 @@
 					<!-- xregister error display -->
 
 					<!-- register Form -->
-					<form id="JSEA-registerForm" @submit.stop.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+					<form id="JSEA-registerForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-registerFormWrapper">
 							<ContentWidget class="registerFormContainer">
 								<!-- Register Form -->
@@ -243,7 +242,6 @@ export default {
 	},
 	data() {
 		return {
-			showCaptcha: false, 		//show iframe captcha
 			captchaResponse: '',		//store captcha response
 			acceptTerms: false,
 			loading: false,	//communicating with the server.
@@ -365,7 +363,7 @@ export default {
 	methods: {
 		/**
 		 * Processes captcha iframe response success/fail from the server
-		 * https://jsecoin.com/iCaptcha/iCaptcha.html?x=1
+		 * https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alpha
 		 * and initialises verification method to display 2FA or proceed and authenticate
 		 *
 		 * @param {object} e - Event response from captcha message listener
@@ -381,9 +379,21 @@ export default {
 					//store token
 					self.captchaResponse = e.data.token;
 					//hide iframe
-					self.showCaptcha = false;
+					//self.showCaptcha = false;
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
 					//verify and login
 					self.onVerify(self.captchaResponse);
+				} else if ((e.data) && (e.data.closeCaptcha)) {
+					self.$store.commit('updateAppState', {
+						val: false,
+						state: 'showCaptcha',
+					});
+					self.form.error.display = true;
+					self.form.error.msg = 'Exited Captcha security check - unable to register';
+					self.loading = false;
 				}
 			}
 		},
@@ -422,7 +432,10 @@ export default {
 
 				self.loading = true;
 				self.form.error.display = false;
-				self.showCaptcha = true; //shows jsecoin.com captcha screen
+				self.$store.commit('updateAppState', {
+					val: true,
+					state: 'showCaptcha',
+				});//shows jsecoin.com captcha screen
 			} else {
 				self.form.error.msg = 'Please check all highlighted fields are complete.';
 				self.form.error.display = true;

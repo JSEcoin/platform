@@ -9,6 +9,8 @@ const state = {
 	loading: true, //app loading indicator
 	theme: 'light', //app theme ['light','night]
 	autoLaunch: true, //on boot autolaunch app
+	showCaptcha: false, //display captcha security check
+	captchaUrl: 'https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alphax1', //captcha url
 	autoMine: false, //on login start mining
 	mobileBackgroundMode: false, //allows mobile to mine in the background
 	silentMode: false, //enables mobile background mining in silent mode
