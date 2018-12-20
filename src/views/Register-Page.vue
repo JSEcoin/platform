@@ -10,10 +10,6 @@
 					<SpinnerWidget :class="{active:loading}"/>
 					<!-- xAnimation to display during server requests -->
 
-					<!-- register error display -->
-					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
-					<!-- xregister error display -->
-
 					<!-- register Form -->
 					<form id="JSEA-registerForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-registerFormWrapper">
@@ -23,6 +19,11 @@
 									<h2 id="JSEA-registerHeader" class="center">Registration</h2>
 									<h4 id="JSEA-registerSubHeader" class="center">Setup your account</h4>
 								</div>
+
+								<!-- register error display -->
+								<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin:10px auto 20px;" />
+								<!-- xregister error display -->
+
 								<h4 class="title">Account Details</h4>
 								<!-- User Pass register interface -->
 								<div class="formWrapper">
@@ -247,6 +248,8 @@ export default {
 			loading: false,	//communicating with the server.
 			badEmailProviders: [
 				'cobin2hood.com',
+				'jsecoin.com',
+				'jsecoins.com',
 				'mailinator',
 				'inboxalias',
 				'maildrop.cc',

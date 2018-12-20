@@ -2,6 +2,34 @@
 	<AppWrapperWidget>
 		<!-- Restore 2FA -->
         <ScrollWidget v-bind="{noNav:true}">
+			{{twoFACode}}
+			<div id="JSEA-QRMask" class="active" v-if="(twoFACode)">
+				<div>
+					<div class="popupHeader">
+						Setup Two Factor Authentication
+						<i class="fa fa-close" v-on:click="exit2FA"></i>
+					</div>
+					<div class="popupContent">
+						<ScrollWidget style="top:50px;">
+							<div style="padding: 20px;">
+								<div style="position:relative;">
+									<div id="JSEA-QRBGImage"></div>
+									<qriously v-if="twoFACode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="twoFACode" foreground="#0d152c" :size="250" />
+								</div>
+								<p class="subInfo" style="margin-top:0px;">
+									<b>Step 2.</b> Scan with <a v-on:click="openExternalWindow('https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en')">Google Authenticator</a>
+									or
+									<a v-on:click="openExternalWindow('https://authy.com/download/')">Authy</a>
+									App
+								</p>
+							</div>
+							<div>
+								<ButtonWidget style="width:auto" buttonTxt="Close" v-on:click.native="exit2FA" />
+							</div>
+						</ScrollWidget>
+					</div>
+				</div>
+			</div>
 			<!-- Restore 2FA Page -->
 			<div id="JSEA-restore2FAPage">
 				<div id="JSEA-restore2FAWrapper">
@@ -11,7 +39,7 @@
 					<!-- xAnimation to display during server requests -->
 
 					<!-- register Form -->
-					<form id="JSEA-restore2FAPasswordForm" @submit.prevent="onSubmit" :class="{hide:loading}" autocomplete="off">
+					<form id="JSEA-restore2FAPasswordForm" @submit.prevent="reset2FA" :class="{hide:loading}" autocomplete="off">
 						<div v-if="status.displayForm" id="JSEA-restore2FAPasswordWrapper">
 							<ContentWidget class="restore2FAFormContainer">
 								<!-- Register Form -->
@@ -23,13 +51,16 @@
 								</div>
 
 								<h4 class="title">To restore your 2FA</h4>
+                                <p>
+								    Enter your platform account email and your backup key that was generated when you setup your 2FA.
+								</p>
+                                <p class="subInfo">
+									<b>Step 1.</b> You will be able to scan and re-setup 2FA with Google Authenticator or Authy on generating a QR code.
+                                </p>
 
 								<!-- Error display -->
-								<FormErrorDisplayWidget v-on:click.native="closeError('error1')" v-if="form.error.display" :errorMsg="form.error.msg"  style="width: 60%; margin: 10px auto;" />
+								<FormErrorDisplayWidget v-on:click.native="closeError('error')" v-if="form.error.display" :errorMsg="form.error.msg" style="margin: 10px auto;" />
 								<!-- xError display -->
-                                <p>
-                                    Enter your platform account email and your backup key that was generated when you setup your 2FA.<br />
-                                </p>
 								<!-- User Pass register interface -->
 								<div class="formWrapper">
 									<!-- Full Name Input -->
@@ -61,7 +92,7 @@
 								</div>
 
 								<div class="row buttonRow" style="min-height:60px;">
-									<ButtonWidget type="submit" v-on:click.native="emailCode"
+									<ButtonWidget type="submit"
 										buttonTxt="Generate QR Code" style="margin-right:5px; margin-left:15px;" />
 
 									<ButtonWidget type="button"
@@ -109,6 +140,8 @@ export default {
 		return {
             loading: false,	//communicating with the server.
             badEmailProviders: [
+				'jsecoin.com',
+				'jsecoins.com',
 				'cobin2hood.com',
 				'mailinator',
 				'inboxalias',
@@ -127,7 +160,7 @@ export default {
 			],
 			//form modal
 			form: {
-				//required: ['fullName', 'email', 'confirmEmail', 'password'], //required fields
+				required: ['accountEmail', 'backupKey'], //required fields
 				accountEmail: {
 					val: '',				//field value
 					displayLabel: false,	//field label
@@ -145,7 +178,8 @@ export default {
 					msg: '',		//form error messages
 					display: false, //display error message
 				},
-            },
+			},
+			twoFACode: '', //otpauth://totp/JSEcoin:[email]?secret=[key]&issuer=JSEcoin&algorithm=SHA1&digits=6&period=30
 			status: {
 				displayForm: true,		//display register form
 				submittedForm: false,	//form succesfully submitted
@@ -154,63 +188,9 @@ export default {
 		};
     },
 	/**
-	 * Created
-	 * on app init
-	 * - make sure loggedIn flag is off
-	 */
-	created() {
-		//console.log('register init');
-		const self = this;
-		//listen to messages from iframe
-		window.addEventListener('message', self.captureMsg);
-	},
-	/**
-	 * before leaving remove event listeners
-	 */
-	beforeDestroy() {
-		const self = this;
-		window.removeEventListener('message', self.captureMsg);
-	},
-	/**
 	 * Register Functions
 	 */
 	methods: {
-		/**
-		 * Processes captcha iframe response success/fail from the server
-		 * https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alpha
-		 * and initialises verification method to display 2FA or proceed and authenticate
-		 *
-		 * @param {object} e - Event response from captcha message listener
-		 * @param {object} e.data - Captcha data obj response
-		 * @param {string} e.data.token - Captcha token
-		 * @returns nothing
-		 * @public
-		 */
-		captureMsg(e) {
-			const self = this;
-			if (-1*e.origin.indexOf('https://jsecoin.com') <= 0) {
-				if ((e.data) && (e.data.token)) {
-					//store token
-					self.captchaResponse = e.data.token;
-					//hide iframe
-					//self.showCaptcha = false;
-					self.$store.commit('updateAppState', {
-						val: false,
-						state: 'showCaptcha',
-					});
-					//verify and login
-					self.onVerify(self.captchaResponse);
-				} else if ((e.data) && (e.data.closeCaptcha)) {
-					self.$store.commit('updateAppState', {
-						val: false,
-						state: 'showCaptcha',
-					});
-					self.form.error.display = true;
-					self.form.error.msg = 'Exited Captcha security check - unable to restore 2FA';
-					self.loading = false;
-				}
-			}
-		},
 		/**
 		 * onKeyUp set field display and check field value is correct (email etc)
 		 * TODO - tidy up and replace with ButtonWidget
@@ -271,8 +251,36 @@ export default {
 				self.form[input].flag = false;
 			}
 		},
-		emailCode() {
+		reset2FA() {
+			const self = this;
+			//check scrollTo available - customised code
+			if (typeof (self.$vuebar.scrollTo) !== 'undefined') {
+				const bodyScroll = document.getElementById('JSEA-appBody');
+				self.$vuebar.scrollTo(bodyScroll,0);
+			}
 
+			//
+			self.form.error.msg = '';
+			self.form.error.display = false;
+
+			let checkRequiredFields = true;
+			//check required fields have data
+			self.form.required.forEach(function(value) {
+				self.form[value].flag = false;
+				if (self.form[value].val.length === 0) {
+					self.form[value].flag = true;
+					checkRequiredFields = false;
+				}
+			});
+
+			//if form pass check then submit captcha
+			if (checkRequiredFields) {
+				self.form.error.display = false;
+				self.twoFACode = `otpauth://totp/JSEcoin:${self.form.accountEmail}?secret=${self.form.backupKey}&issuer=JSEcoin&algorithm=SHA1&digits=6&period=30`;
+			} else {
+				self.form.error.msg = 'Please check all highlighted fields are complete.';
+				self.form.error.display = true;
+			}
 		},
 		updatePassword() {
 
@@ -281,6 +289,31 @@ export default {
 			const self = this;
 			self.form[field].msg = '';
 			self.form[field].display = false;
+		},
+		/**
+		 * Opens an external browser window and takes the user to the official upgrade forum post
+		 * https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/
+		 *
+		 * @param {string} url Web address to open in a new browser window
+		 * @public
+		 */
+		openExternalWindow(url) {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
+			}
+		},
+		exit2FA() {
+			const self = this;
+			self.twoFACode = '';
+			self.form.accountEmail.val = '';
+			self.form.accountEmail.displayLabel = false;
+			self.form.backupKey.val = '';
+			self.form.backupKey.displayLabel = false;
 		},
     },
 };

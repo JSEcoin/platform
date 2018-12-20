@@ -100,10 +100,10 @@
 								<ButtonWidget type="submit"
 									buttonTxt="Login" style="flex:1;" :class="{'singleButton':!show2FA_interface}" />
 
-								<ButtonWidget v-if="!show2FA_interface" type="button"
+								<ButtonWidget v-if="(!show2FA_interface)" type="button"
 									buttonTxt="Register" style="flex:1;margin-left:5px;" v-on:click.native="registerUser"/>
 							</div>
-							<div style="margin:10px auto; text-align:center; width:270px;">
+							<div v-if="(!show2FA_interface)" style="margin:10px auto; text-align:center; width:270px;">
 								<router-link style="text-align:right;" v-bind:to="`/resetPassword`" tag="a">Reset Password</router-link>
 								|
 								<router-link style="text-align:left;" v-bind:to="`/restore2FA`" tag="a">Restore 2FA</router-link>
@@ -642,7 +642,7 @@ export default {
 }
 .platformWeb.min #JSEA-loginWrapper {
     align-self: inherit;
-	margin-top: 20px;
+	/*margin-top: 20px;*/
 	padding:16px;
 	position: relative;
 }
@@ -673,7 +673,7 @@ export default {
 
 
 .platformWeb.min #JSEA-loginForm {
-	width:90%;
+	width:auto;
 }
 
 .night .loginFormContainer {
@@ -755,7 +755,13 @@ footer {
     border-radius: 10px;
     /*height: 390px;*/
 }
-.min #JSEA-loginPage,
+
+
+.min #JSEA-loginPage {
+	width: auto;
+	margin: 40px 10px;
+}
+
 .med #JSEA-loginPage {
     margin: 40px auto;
 }

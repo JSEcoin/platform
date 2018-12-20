@@ -124,7 +124,7 @@
 									<ButtonWidget type="button"
 										buttonTxt="Cancel" style="margin-left:5px; margin-right:15px;" v-on:click.native="cancel" />
 								</div>
-                                
+
 							</ContentWidget>
 						</div>
 					</form>
@@ -371,7 +371,7 @@ export default {
 			//
 			self.formSec.error.msg = '';
 			self.formSec.error.display = false;
-			
+
 			let checkRequiredFields = true;
 			//check required fields have data
 			self.formSec.required.forEach(function(value) {
@@ -386,7 +386,7 @@ export default {
 			if (checkRequiredFields) {
 				self.loading = true;
 				self.formSec.error.display = false;
-				self.activeForm = 'formSec',
+				self.activeForm = 'formSec';
 				self.$store.commit('updateAppState', {
 					val: true,
 					state: 'showCaptcha',
@@ -405,7 +405,7 @@ export default {
 			}
 			self.formPass.error.msg = '';
 			self.formPass.error.display = false;
-			
+
 			let checkRequiredFields = true;
 			//check required fields have data
 			self.formPass.required.forEach(function(value) {
@@ -463,8 +463,9 @@ export default {
 				self.formPass.error.msg = 'Please check all highlighted fields are complete.';
 				self.formPass.error.display = true;
 			}
+			return false;
 		},
-		
+
 		onVerify(response) {
 			const self = this;
 			const reqSecurityCode = {

@@ -12,19 +12,35 @@
 					<form id="JSEA-Pin" @submit.prevent autocomplete="off">
 
 						<!-- pin widget display -->
-						<Pin v-on:submit-pin="setupPIN" v-bind="{enableCancelButton:false, submitButtonTxt:'Set Pin'}" @keypress="closeError">
+						<Pin v-on:submit-pin="setupPIN" v-bind="{enableCancelButton:false, pinTitle:'Create Your Pin', submitButtonTxt:'Set Pin'}" @keypress="closeError">
 
 							<!-- register error display -->
 							<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px auto;" />
 							<!-- xregister error display -->
-							<p class="info">
-								Please note that pin numbers can not be recovered so please write it down and keep it somewhere safe
-								in case you forget. If you lose your pin number you will not be able to withdraw or transfer funds
-								from your account.
-							</p>
-							<p>
-								Pin numbers should be between 4 and 12 digits and only standard numbers 0-9.
-							</p>
+							<div class="warningInfo">
+								<div class="warningInfoIcon">
+									<i class="fa fa-warning"></i>
+								</div>
+								<div class="warningContent">
+									<h5>Please note:</h5>
+									<p>
+										Pin numbers <b><u>can not be recovered!</u></b>
+									</p>
+									<p>
+										Please write it down and keep it somewhere safe
+										in case you forget it.
+									</p>
+									<p>
+										If you lose your pin number you will not be able to withdraw or transfer funds
+										from your account.
+									</p>
+								</div>
+							</div>
+							<div>
+								<p class="subInfo">
+									<b>Step 1. </b> Enter your unique PIN for your JSEcoin account:<br /> - it can be between 4 to 12 digits in length.
+								</p>
+							</div>
 						</Pin>
 						<!-- xpin widget display -->
 					</form>
@@ -110,6 +126,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-
-
 </style>

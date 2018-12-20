@@ -63,7 +63,6 @@
 				</ContentWidget>
 				xMined Lifetime -->
 
-
 				<div v-if="(minedLifetime > 0)"  class="hr split"><hr /></div>
 
 				<!-- Mining Overview -->

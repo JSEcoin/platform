@@ -42,7 +42,7 @@
 			<!-- xAnimation to display during server requests -->
 
 			<!-- Account Overview -->
-			<ContentWidget titleTxt="Signed In" v-if="!loading">
+			<ContentWidget titleTxt="Signed In" v-if="((!loading) && (loginsRes.length > 0))">
 				<OptionsListWrapperWidget style="text-transform:capitalize;" :titleTxt="`${loginRecord.app} - ${date(loginRecord.ts)}`" :key="i" v-for="(loginRecord, i) in loginsRes">
 					<ul class="tableListDisplay">
 						<li>
@@ -149,9 +149,11 @@ export default {
 				`${self.$store.state.app.jseCoinServer}/lastlogins/`,
 				lastLoginReq,
 			).then((res) => {
-				console.log(res);
-				const dataset = Object.values(res.data);
-				self.loginsRes = dataset.slice().reverse();
+				//console.log(res);
+				if (res.data !== null) {
+					const dataset = Object.values(res.data);
+					self.loginsRes = dataset.slice().reverse();
+				}
 				self.loading = false;
 			}).catch((err) => {
 				self.loading = false;

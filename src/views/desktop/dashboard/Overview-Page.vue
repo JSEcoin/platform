@@ -33,6 +33,7 @@
 
 				<!-- Mining Overview -->
 				<ContentWidget
+					v-if="(minedLifetime > 0)"
 					titleTxt="Mining Overview"
 					:infoPanelTxt="`Registered ${registrationDate}`">
 					<MinerPanelWidget />
