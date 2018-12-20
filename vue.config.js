@@ -35,26 +35,27 @@ const coreRoutes = [
 	'/login',
 	'/resetPassword',
 	'/restore2FA',
-	'/enterSecurityPin',
+//	'/enterSecurityPin',
 	'/register',
-	'/settings',
-	'/dashboard',
-	'/dashboard/account',
-	'/desktop/dashboard',
-	'/wallet',
-	'/wallet/transactions',
-	'/wallet/export',
-	'/wallet/import',
-	'/mine',
-	'/mine/earnings',
-	'/blockchain',
-	'/blockchain/Ledger',
-	'/blockchain/APIs',
-	'/blockchain/AllTransactions',
-	'/blockchain/Stats',
+//	'/upgradeApp',
+//	'/settings',
+//	'/dashboard',
+//	'/dashboard/account',
+//	'/desktop/dashboard',
+//	'/wallet',
+//	'/wallet/transactions',
+//	'/wallet/export',
+//	'/wallet/import',
+//	'/mine',
+//	'/mine/earnings',
+//	'/blockchain',
+//	'/blockchain/Ledger',
+//	'/blockchain/APIs',
+//	'/blockchain/AllTransactions',
+//	'/blockchain/Stats',
 ];
 
-const siteRoutes = ['/'];
+const siteRoutes = [];
 //add local support for all routes
 langSupport.forEach((lang) => {
 	coreRoutes.forEach((route) => {
@@ -83,7 +84,7 @@ const productionPlugins = [
 			return renderedRoute;
 		},
 		//renderer: new Renderer({
-		renderer: new PrerenderSpaPlugin.PuppeteerRenderer({
+		/*renderer: new PrerenderSpaPlugin.PuppeteerRenderer({
 			//headless: false // Display the browser window when rendering. Useful for debugging.
 			maxConcurrentRoutes: 4,
 			timeout: 0,
@@ -95,6 +96,14 @@ const productionPlugins = [
 			// so we create a snapshot of the page after the
 			// `data-view` attribute exists in the DOM.
 			//renderAfterElementExists: '[data-view]',
+		}),*/
+		//renderer: new Renderer({
+		renderer: new PrerenderSpaPlugin.PuppeteerRenderer({
+			headless: false, // Display the browser window when rendering. Useful for debugging.
+			maxConcurrentRoutes: 4,
+			timeout: 20000,
+			renderAfterTime: 20000,
+			inject: {},
 		}),
 	}),
 ];
