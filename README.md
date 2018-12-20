@@ -67,11 +67,22 @@ npm run web:dev
 # DESKTOP
 npm run desktop:dev
 # ANDROID
-npm run android:dev
+npm run mobile:android:dev
 # IOS
-npm run ios:dev
+npm run mobile:ios:dev
 # STYLEGUIDE DOCS
 npm run styleguide:dev
+```
+
+#### Mobile info
+
+When running the mobile app in dev mode this will start a local webserver on your machine.
+The mobile app will try to connect to this; this allows for faster testing and development on the mobile platform so you won't need to rebuild and test.
+chrome://inspect will allow you to inspect any errors from google on your desktop.
+
+Make sure to update the script in the header with your local IP - 
+```
+src\index.html
 ```
 
 ### Build & Package Binaries
@@ -88,9 +99,9 @@ npm run web:build
 # DESKTOP - ./dist_desktop
 npm run desktop:build
 # ANDROID
-npm run android:build
+npm run mobile:android:build
 # IOS
-npm run ios:build
+npm run mobile:ios:build
 # STYLEGUIDE DOCS - ./dist_styleguide
 npm run styleguide:build
 ```
