@@ -122,7 +122,7 @@ export default {
 			}
 
 			//number pressed
-			if (Number.isFinite(e.key)) {
+			if (Number.isFinite(Number(e.key))) {
 				//console.log(e.key);
 				self.form.authCode[val] = e.key;
 				/**
@@ -136,7 +136,7 @@ export default {
 				refNext = (refNext === 6)?1:refNext+1;
 				self.$refs['authCode'+refNext].focus();
 			} else {
-				let inputVal = e.target.valueAsNumber;
+				let inputVal = Number(e.target.valueAsNumber);
 				if (inputVal >= 0) {
 					inputVal = Number(String(inputVal).substr(String(inputVal).length - 1));
 				} else {

@@ -649,7 +649,7 @@ input[name="password"] {
 	background:#ccc;
 }
 
-	
+
 .night .passwordStrengthDisplay li {
 	background:#101219;
 }

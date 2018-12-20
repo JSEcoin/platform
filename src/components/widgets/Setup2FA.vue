@@ -6,37 +6,50 @@
 				<i class="fa fa-close" v-on:click="exit2FA(true)"></i>
 			</div>
 			<div class="popupContent">
-				<div style="position:relative;">
-					<div id="JSEA-QRBGImage"></div>
-					<qriously v-if="twoFACode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="twoFACode" foreground="#0d152c" :size="250" />
-				</div>
-				<p style="margin-top:0px;">
-					Scan with <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en" target="_Blank">Google Authenticator</a>
-					or
-					<a href="https://authy.com/download/" target="_Blank">Authy</a>
-					App
-				</p>
-				<div class="warningInfo">
-					<div class="warningInfoIcon">
-						<i class="fa fa-warning"></i>
-					</div>
-					<div>
-						<p>
-							Please make a note of your back up key:<br />
-							<b id="JSEA-secretKey">{{secretKey}}</b>
+				<ScrollWidget style="top:50px;">
+					<div style="padding: 20px;">
+						<div style="position:relative;">
+							<div id="JSEA-QRBGImage"></div>
+							<qriously v-if="twoFACode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="twoFACode" foreground="#0d152c" :size="250" />
+						</div>
+						<p class="subInfo" style="margin-top:0px;">
+							<b>Step 1.</b> Scan with <a v-on:click="openExternalWindow('https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en')">Google Authenticator</a>
+							or
+							<a v-on:click="openExternalWindow('https://authy.com/download/')">Authy</a>
+							App
 						</p>
+						<div class="warningInfo">
+							<div class="warningInfoIcon">
+								<i class="fa fa-warning"></i>
+							</div>
+							<div class="warningContent">
+								<h5>Important:</h5>
+								<p>
+									Please write down your <b>2FA Security key</b> and keep it some where safe!
+								</p>
+								<p>
+									<b id="JSEA-secretKey">{{secretKey}}</b>
+								</p>
+								<p>
+									Two Factor Authentication <b>can not currently be recovered or disabled</b> without your key!
+								</p>
+							</div>
+						</div>
+						<p class="subInfo">
+							<b>Step 2.</b> Enter your Two Factor Authentication code supplied by Google Authenticator or Authy.
+						</p>
+						<div>
+							<!-- error display -->
+							<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px 20px;" />
+
+							<TwoFA id="JSEA-2FA"
+								v-on:key-up="updateKey"
+								v-on:submit-code="submitCode" />
+
+							<ButtonWidget style="width:auto" buttonTxt="Setup Two Factor Authentication" v-on:click.native="onSubmit" />
+						</div>
 					</div>
-				</div>
-				<div>
-					<!-- error display -->
-					<FormErrorDisplayWidget v-on:click.native="closeError" v-if="form.error.display" :errorMsg="form.error.msg"  style="margin: 10px 20px;" />
-
-					<TwoFA id="JSEA-2FA"
-						v-on:key-up="updateKey"
-						v-on:submit-code="submitCode" />
-
-					<ButtonWidget style="width:auto" buttonTxt="Setup Two Factor Authentication" v-on:click.native="onSubmit" />
-				</div>
+				</ScrollWidget>
 			</div>
 		</div>
 	</div>
@@ -49,6 +62,7 @@ import axios from 'axios';
 import ButtonWidget from '@/components/widgets/ButtonWidget.vue';
 import TwoFA from '@/components/widgets/TwoFA.vue';
 import FormErrorDisplayWidget from '@/components/widgets/FormErrorDisplayWidget.vue';
+import ScrollWidget from '@/components/widgets/ScrollWidget.vue';
 
 /**
  * @description
@@ -77,6 +91,7 @@ export default {
 		ButtonWidget,
 		TwoFA,
 		FormErrorDisplayWidget,
+		ScrollWidget,
 	},
 	data() {
 		return {
@@ -98,6 +113,23 @@ export default {
 		};
 	},
 	methods: {
+		/**
+		 * Opens an external browser window and takes the user to the official upgrade forum post
+		 * https://jsecoin.com/topic/jsecoin-desktop-mining-app-0-4-0-download/
+		 *
+		 * @param {string} url Web address to open in a new browser window
+		 * @public
+		 */
+		openExternalWindow(url) {
+			const self = this;
+			if (self.$store.getters.whichPlatform === 'desktop') {
+				this.$electron.shell.openExternal(url);
+			} else if (self.$store.getters.whichPlatform === 'mobile'){
+				cordova.InAppBrowser.open(url, '_system');
+			} else {
+				window.open(url);
+			}
+		},
 		/**
 		 * Update authcode on enter
 		 * @param {object} codes - object of codes to update dataset with
@@ -187,34 +219,27 @@ export default {
 
 <style scoped>
 #JSEA-2FA {
-    margin: 10px 20px;
-    border: solid 1px #ddd;
+    margin: 10px 0px;
     border-radius: 6px;
     position: relative;
     padding: 8px;
     box-shadow: 0px 2px 1px 0px rgba(0,0,0,0.1);
 }
+.light #JSEA-2FA {
+    border: solid 1px #ddd;
+}
+.night #JSEA-2FA {
+    border: solid 1px #171820;
+}
 #JSEA-secretKey {
     letter-spacing: 1.6px;
+	background:#e1efef;
+	border-radius:6px;
+	padding:4px 8px;
+	font-size: 0.85em;
 }
 a {
+	text-decoration: underline;
 	cursor:pointer;
-}
-
-.warningInfo {
-    box-shadow: 0 0 0 1px #a9d5de inset, 0 0 0 0 transparent;
-    background-color: #f8ffff;
-    color: #276f86;
-    border-radius: 6px;
-    position: relative;
-    padding: 0px 10px;
-    margin: 10px 20px;
-    text-align: left;
-    display: flex;
-}
-.warningInfoIcon {
-    align-self: center;
-    font-size: 2.6em;
-    padding: 0px 10px;
 }
 </style>

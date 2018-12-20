@@ -6,8 +6,8 @@
 			Your pin is 4-12 characters long<br />
 			<i>Please make sure you have set it within the web platform interface.</i>
 		</p>-->
-		<label style="margin-bottom:10px;">
-			<div class="inputLabel" style="opacity:1">User Pin *</div>
+		<label class="pinWrapper" style="margin-bottom:10px;">
+			<div class="inputLabel" style="opacity:1">{{pinTitle}} *</div>
 			<input class="pin" :class="{'show':form.showPin.val1}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode1" @touchend="focusInput('val1', 1, $event)" @keyup="focusInput('val1', 1, $event)" v-model="form.pinCode.val1" />
 			<input class="pin" :class="{'show':form.showPin.val2}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode2" @touchend="focusInput('val2', 2, $event)" @keyup="focusInput('val2', 2, $event)" v-model="form.pinCode.val2" />
 			<input class="pin" :class="{'show':form.showPin.val3}" maxlength="1" :type="inputType" :placeholder="0" ref="pinCode3" @touchend="focusInput('val3', 3, $event)" @keyup="focusInput('val3', 3, $event)" v-model="form.pinCode.val3" />
@@ -98,6 +98,10 @@ export default {
 				'',
 				'',
 			],
+		},
+		pinTitle: {
+			type: String,
+			default: 'User Pin',
 		},
 		/**
 		 * submit button text
@@ -232,7 +236,7 @@ export default {
 			}
 
 			//number pressed
-			if (Number.isFinite(e.key)) {
+			if (Number.isFinite(Number(e.key))) {
 				/**
 				 * key-up event.
 				 *
@@ -254,7 +258,7 @@ export default {
 					self.$refs['pinCode'+refNextItem].focus();
 				}, 10);
 			} else {
-				let inputVal = e.target.valueAsNumber;
+				let inputVal = Number(e.target.valueAsNumber);
 				if (inputVal >= 0) {
 					inputVal = Number(String(inputVal).substr(String(inputVal).length - 1));
 				} else {
@@ -424,5 +428,18 @@ input[name="password"] {
 	width:20px;
 	margin:26px 2px 8px;
 	text-align:center;
+}
+
+.pinWrapper {
+	border-radius: 16px;
+	padding:16px 8px;
+}
+
+.light .pinWrapper {
+	border:solid 4px #eee;
+}
+
+.night .pinWrapper {
+	border:solid 4px #171820;
 }
 </style>
