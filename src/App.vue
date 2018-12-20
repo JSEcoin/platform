@@ -56,7 +56,9 @@
 									<li :class="{'showMenu':nav.blockchain}"><span v-on:click="toggleMenu('blockchain')">Blockchain Explorer</span>
 										<ul>
 											<!--<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-search"></i> Search</router-link>-->
-											<router-link v-bind:to="`/blockchain`" tag="li"><i class="fa fa-link"></i> Latest</router-link>
+											<router-link v-bind:to="`/blockchain`" tag="li"><i class="fa fa-link"></i> Alpha</router-link>
+											<li v-on:click="openExternalWindow('https://blockchain.jsecoin.com/')"><i class="fa fa-external-link-square"></i> Original</li>
+											
 											<!--<router-link v-bind:to="`/dashboard`" tag="li"><i class="fa fa-arrows-h"></i> My Transfers</router-link>-->
 										</ul>
 									</li>
@@ -373,12 +375,6 @@ export default {
 		//check if window resize on mobile/web app and browser
 		window.addEventListener('resize', self.getWindowWidth);
 
-		//console.log('set splash landing route ', self.$route, self.$route.name);
-		//store initial landing page to redirect - after splash screen loaded.
-		self.$store.commit('updateAppState', {
-			val: (self.$route.name)?`${self.$route.name}` : '/login',
-			state: 'initLander',
-		});
 		//on app load redirect to splash screen to regenerate and redirect to login or dashboard
 		self.$router.push('/');
 
@@ -1205,9 +1201,8 @@ body.QRScanner footer {
 	position: fixed;
 	z-index:1000;
     bottom: 5px;
-    left: 4px;
-    right: 4px;
-    border-radius: 0px 0px 4px 4px;
+    left: 0px;
+    right: 0px;
     border-bottom: solid 1px #000;
 }
 
@@ -1518,13 +1513,16 @@ header {
 #JSEA-offline {
 	background:rgba(0,0,0,0.6);
 	position: fixed;
-    top: 86px;
+    top: 0px;
 	left: 0px;
 	right:0px;
 	bottom:0px;
 	z-index:1000000000;
     margin: 0px 4px 8px 4px;
     border-radius: 0px 0px 4px 4px;
+}
+.platformDesktop #JSEA-offline {
+	top:20px;
 }
 /* xTemplate*/
 
@@ -1831,8 +1829,7 @@ header .fa-square-o:hover {
 }
 .popupHeader {
 	height: 44px;
-	border-bottom:solid 1px #eee;
-	margin-bottom:20px;
+	/*margin-bottom:20px;*/
     font-weight: bold;
     font-size: 0.8em;
     letter-spacing: 1px;
@@ -1840,6 +1837,20 @@ header .fa-square-o:hover {
 	display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+.light .popupHeader {
+	border-bottom:solid 1px #eee;
+}
+
+.night .popupHeader {
+	border-bottom:solid 1px #171820;
+	color: #afafaf;
+}
+
+.night .popupHeader i {
+	color:#fff;
 }
 
 .platformWeb.min .popupHeader {
@@ -1858,10 +1869,14 @@ header .fa-square-o:hover {
 	color:red;
 }
 .popupContent {
-	margin:10px;
+	padding:10px;
+	height:520px;
+	overflow:auto;
 }
 .platformWeb.min .popupContent {
 	margin:6px;
+	height:inherit;
+	overflow:auto;
 }
 #JSEA-QRBGImage {
 	background-image: url('assets/images/QR_logo3.png');
@@ -1911,23 +1926,21 @@ header .fa-square-o:hover {
     font-size: 0.6em;
 }
 
-.platformWeb #JSEA-QRMask {
-	top:0px;
-	bottom:0px;
-	left: 0px;
-	right:0px;
-}
 
+.platformDesktop #JSEA-QRMask {
+	top: 20px;
+}
 #JSEA-QRMask {
 	background:rgba(0,0,0,0.6);
 	position: fixed;
-	top: 90px;
-	left: 4px;
-	right: 4px;
-	bottom: 4px;
-	border-radius: 0px 0px 4px 4px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border-radius: 0px;
 	z-index:10000000000;
 	display:none;
+	overflow: hidden;
 }
 
 #JSEA-QRMask.active {
@@ -1936,14 +1949,26 @@ header .fa-square-o:hover {
 
 #JSEA-QRMask > div {
 	position: absolute;
-	text-align: center;
-	width:440px;
-	top:42%;
-	left:50%;
-	margin-left:-220px;
-	margin-top:-222px;
-	background:#fff;
-	border-radius:4px;
+    text-align: center;
+    width: 440px;
+    top: 50%;
+    left: 50%;
+    margin-left: -220px;
+    margin-top: -303px;
+    border-radius: 4px;
+}
+
+.light #JSEA-QRMask > div {
+    background: #fff;
+}
+.night #JSEA-QRMask > div {
+    background: #20222e;
+}
+
+.popupContent canvas {
+	background: #fff;
+    border-radius: 4px;
+    padding: 4px;
 }
 .platformWeb.min #JSEA-QRMask > div {
 	/*width:340px;
@@ -1989,13 +2014,16 @@ header .fa-square-o:hover {
 	right:0px;
      z-index: 10000000;
 }
+.platformDesktop .swal-overlay {
+	top:20px;
+}
 .swal-overlay {
-	top:90px;
-	bottom:4px;
-	left: 4px;
-	right: 4px;
+	top:0px;
+	bottom:0px;
+	left: 0px;
+	right: 0px;
     overflow-y: hidden;
-	border-radius: 0px 0px 4px 4px;
+	border-radius: 0px;
 }
 .swal-overlay--show-modal .swal-modal {
 	-webkit-animation:none;
@@ -2684,8 +2712,6 @@ header .fa-square-o:hover {
 }
 
 
-
-
 #FB-CB {
 	background-image: url("/static/atlas/cb_button.png");
 	background-repeat: no-repeat;
@@ -2754,5 +2780,51 @@ body > .skiptranslate:first-child {
 .min .goog-te-menu-frame,
 .med .goog-te-menu-frame {
 	display:none !important;
+}
+
+
+.warningInfo {
+    box-shadow: 0 0 0 1px #a9d5de inset, 0 0 0 0 transparent;
+    background-color: #f8ffff;
+    color: #276f86;
+    border-radius: 6px;
+    position: relative;
+    padding: 0px 10px 0px 0px;
+	margin:10px 0px;
+    text-align: left;
+    display: flex;
+	align-items: stretch;
+}
+.warningContent {
+	padding:10px;
+}
+.warningInfoIcon {
+    font-size: 2.6em;
+    padding: 0px 10px;
+    display: flex;
+	background: #d2e5e5;
+    border-radius: 6px 0px 0px 6px;
+	opacity:0.6;
+}
+.warningInfoIcon i {
+	align-self: center;
+}
+
+.warningInfo h5 {
+	margin:10px 0px;
+}
+
+.subInfo {
+	border-radius: 6px;
+    padding: 10px;
+	text-align:left;
+}
+
+.light .subInfo {
+	background:#eee;
+}
+
+.night .subInfo {
+	background: #171820;
 }
 </style>
