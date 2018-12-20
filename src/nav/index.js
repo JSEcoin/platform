@@ -54,7 +54,7 @@ const Stats = () => import(/* webpackChunkName: "block" */ '@/views/blockchain/S
 //import Wall from '@/views/crypto/Wall';
 const JSEStats = () => import(/* webpackChunkName: "crypto" */ '@/views/crypto/Stats-Page');
 
-if (typeof (__static) !== 'undefined')  {
+//if (typeof (__static) !== 'undefined')  {
 	upgradeApp();
 	login();
 	resetPassword();
@@ -72,7 +72,7 @@ if (typeof (__static) !== 'undefined')  {
 	platformMiner();
 	earnings();
 	Blocks();
-}
+//}
 
 Vue.use(Router);
 
@@ -257,6 +257,13 @@ const router = new Router({
  * Before each route check user is authenticated on next path else redirect to login
  */
 router.beforeEach((to, from, next) => {
+	const routeName = to.name;
+	if (routeName !== 'splash') {
+		store.commit('updateAppState', {
+			val: ((routeName === 'upgradeApp') || (routeName === 'resetPassword') || (routeName === 'upgradeApp') || (routeName === 'restore2FA') || (routeName === 'register'))?`${to.path}` : '/login',
+			state: 'initLander',
+		});
+	}
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 	const hasDesktopInterface = to.matched.some(record => record.meta.hasDesktopInterface) || false;
 	//console.log('has', hasDesktopInterface);
