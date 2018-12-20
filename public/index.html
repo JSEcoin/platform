@@ -3,7 +3,12 @@
 
 <head>
 	<script>
-		if ((location.protocol !== 'https:') && (location.protocol !== 'app:') && (location.href.indexOf('localhost') === -1)) {
+		if (
+			(location.protocol !== 'https:') && 
+			(location.protocol !== 'app:') && 
+			(location.href.indexOf('localhost') === -1) &&
+			(location.href.indexOf('192.168.1.65') === -1)
+		) {
 			if (location.href.indexOf('/alpha/') > 0) {
 				location.href = 'https://alpha.jsecoin.com';
 			} else {
@@ -28,7 +33,7 @@
 <!-- built files will be auto injected -->
 <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 <!-- load jquery - used with core code -->
-<script src="static/jquery-3.3.1.min.js"></script>
+<script src="/static/jquery-3.3.1.min.js"></script>
 <script>if (window.module) module = window.module;</script>
 <!--<script src="/iframe.js"></script>-->
 
