@@ -80,6 +80,8 @@ When running the mobile app in dev mode this will start a local webserver on you
 The mobile app will try to connect to this; this allows for faster testing and development on the mobile platform so you won't need to rebuild and test.
 chrome://inspect will allow you to inspect any errors from google on your desktop.
 
+#### Mobile Development
+
 Make sure to update the script in the header with your local IP - 
 ```
 src\index.html
@@ -104,6 +106,15 @@ npm run mobile:android:build
 npm run mobile:ios:build
 # STYLEGUIDE DOCS - ./dist_styleguide
 npm run styleguide:build
+```
+
+#### Mobile Build
+
+You have to manually sign the app by using the following cordova command.
+
+```
+cd mobile
+cordova build android --release --buildConfig=../../signAndroidBuild.json
 ```
 
 ---
