@@ -686,7 +686,7 @@ export default {
 			self.resizeTimer = setTimeout(() => {
 				let screenType = 'med';
 				let platformURL = '';
-				if (window.innerWidth < 520) {
+				if (window.innerWidth < 510) {
 					screenType = 'min';
 					window.process = {
 						type: 'mobile', //['mobile','web','tablet','desktop']
@@ -1425,6 +1425,12 @@ header {
 	width:189px;
 	margin:8px auto 0px;
 }
+.min #JSEA-desktopLogo {
+    height: 30px;
+    width: 140px;
+    margin-top: 15px;
+}
+
 .max #JSEA-headerBar {
 	background: #010814;
 }
