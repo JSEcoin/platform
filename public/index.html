@@ -7,7 +7,8 @@
 			(location.protocol !== 'https:') && 
 			(location.protocol !== 'app:') && 
 			(location.href.indexOf('localhost') === -1) &&
-			(location.href.indexOf('192.168.1.65') === -1)
+			(location.href.indexOf('192.168.1.65') === -1) &&
+			(location.href.indexOf('android_asset') === -1)
 		) {
 			if (location.href.indexOf('/alpha/') > 0) {
 				location.href = 'https://alpha.jsecoin.com';

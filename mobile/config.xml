@@ -7,7 +7,8 @@
     <author email="support@jsecoin.com" href="https://jsecoin.com">
         JSEcoin Ltd
     </author>
-    <content src="index.html" />
+    <content src="http://192.168.43.230:8080" />
+    <allow-navigation href="http://192.168.43.230:8080" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
