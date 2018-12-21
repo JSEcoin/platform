@@ -15,8 +15,8 @@
 								<div style="position:relative;">
 									<div id="JSEA-QRBGImage"></div>
 									<qriously v-if="twoFACode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="twoFACode" foreground="#0d152c" :size="250" />
-								</div>
-								<p class="subInfo" style="margin-top:0px;">
+								</div><br />
+								<p class="subInfo" style="margin-top:0px; text-align:center;">
 									<b>Step 2.</b> Scan with <a v-on:click="openExternalWindow('https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en')">Google Authenticator</a>
 									or
 									<a v-on:click="openExternalWindow('https://authy.com/download/')">Authy</a>

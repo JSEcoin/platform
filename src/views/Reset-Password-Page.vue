@@ -20,11 +20,12 @@
 									<h4 id="JSEA-resetSubHeader" class="center">Request a security code to create a new password.</h4>
 								</div>
 
-								<h4 class="title">(Step 1) Request a security code.</h4>
+								<h4 class="title">Request a security code.</h4>
 								<!-- Error display -->
 								<FormErrorDisplayWidget v-on:click.native="closeError('formSec')" v-if="formSec.error.display" :errorMsg="formSec.error.msg"  style="width: 90%; margin: 10px auto;" />
 								<!-- xError display -->
-                                <p>
+                                <p class="subInfo">
+									<b>Step 1.</b> 
                                     Enter your registered platform account email.<br />
 									You will receive an email with your new security code. <br />
                                 </p>
@@ -59,8 +60,9 @@
 						<div v-if="status.displayForm" id="JSEA-resetPasswordWrapper">
 
 							<ContentWidget class="resetFormContainer">
-								<h4 class="title">(Step 2) Create a new password.</h4>
-                                <p>
+								<h4 class="title">Create a new password.</h4>
+                                <p class="subInfo">
+									<b>Step 2.</b> 
                                     When you have received your security code you will be able to change your password from here:<br />
                                 </p>
 
@@ -516,6 +518,9 @@ export default {
 
 #JSEA-resetPasswordForm {
 	margin:20px;
+}
+#JSEA-resetPasswordForm h4.title {
+    margin: 0px 8px;
 }
 #JSEA-resetPasswordWrapper {
 	margin-top:40px;

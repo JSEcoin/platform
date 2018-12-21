@@ -53,8 +53,18 @@ export default {
 <!-- scoped not working with hypenated cssnames -->
 <style>
 .platformWeb.min #JSEA-desktop #JSEA-appBody {
-	position:relative !important;
-	top:0px;
+	/*top:0px;
+	position:relative !important;*/
+}
+
+.platformWeb.min #JSEA-desktop #JSEA-appBody.vb {
+	
+}
+.min .popupContent #JSEA-appBody {
+	top: 30px;
+}
+.popupContent #JSEA-appBody {
+	top: 44px;
 }
 #JSEA-appBody {
 	top:73px;

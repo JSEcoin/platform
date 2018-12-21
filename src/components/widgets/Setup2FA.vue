@@ -6,24 +6,14 @@
 				<i class="fa fa-close" v-on:click="exit2FA(true)"></i>
 			</div>
 			<div class="popupContent">
-				<ScrollWidget style="top:50px;">
+				<ScrollWidget>
 					<div style="padding: 20px;">
-						<div style="position:relative;">
-							<div id="JSEA-QRBGImage"></div>
-							<qriously v-if="twoFACode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="twoFACode" foreground="#0d152c" :size="250" />
-						</div>
-						<p class="subInfo" style="margin-top:0px;">
-							<b>Step 1.</b> Scan with <a v-on:click="openExternalWindow('https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en')">Google Authenticator</a>
-							or
-							<a v-on:click="openExternalWindow('https://authy.com/download/')">Authy</a>
-							App
-						</p>
-						<div class="warningInfo">
+						<div class="warningInfo" style="margin-bottom:40px;">
 							<div class="warningInfoIcon">
 								<i class="fa fa-warning"></i>
 							</div>
 							<div class="warningContent">
-								<h5>Important:</h5>
+								<h5>Step 1.<br /> Important:</h5>
 								<p>
 									Please write down your <b>2FA Security key</b> and keep it some where safe!
 								</p>
@@ -35,8 +25,17 @@
 								</p>
 							</div>
 						</div>
+						<p class="subInfo" style="margin-top:0px;">
+							<b>Step 2.</b> Scan the QR code below with either<br /> <a v-on:click="openExternalWindow('https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en')">Google Authenticator</a>
+							or
+							<a v-on:click="openExternalWindow('https://authy.com/download/')">Authy</a>
+						</p>
+						<div style="position:relative;">
+							<div id="JSEA-QRBGImage"></div>
+							<qriously v-if="twoFACode" v-bind="{foregroundAlpha:1, backgroundAlpha:0}" :value="twoFACode" foreground="#0d152c" :size="250" />
+						</div>
 						<p class="subInfo">
-							<b>Step 2.</b> Enter your Two Factor Authentication code supplied by Google Authenticator or Authy.
+							<b>Step 3.</b> Enter your Two Factor Authentication code supplied by Google Authenticator or Authy.
 						</p>
 						<div>
 							<!-- error display -->
@@ -45,7 +44,8 @@
 							<TwoFA id="JSEA-2FA"
 								v-on:key-up="updateKey"
 								v-on:submit-code="submitCode" />
-
+						</div>
+						<div>
 							<ButtonWidget style="width:auto" buttonTxt="Setup Two Factor Authentication" v-on:click.native="onSubmit" />
 						</div>
 					</div>
@@ -237,6 +237,8 @@ export default {
 	border-radius:6px;
 	padding:4px 8px;
 	font-size: 0.85em;
+    word-break: break-word;
+    display: block;
 }
 a {
 	text-decoration: underline;

@@ -562,10 +562,11 @@ export default {
 	transition: background 0.2s;
 }
 
+
 .platformWeb.min #JSEA-themeSelector {
-	width: 34px;
-	height: 34px;
-	line-height:34px;
+	width: 24px;
+	height: 24px;
+	line-height:24px;
 }
 
 .max .settingsPanel {
@@ -581,5 +582,8 @@ export default {
 }
 .max .settingsPanel fieldset {
 	min-width: 360px;
+}
+.fa-info-circle {
+	font-size:1.5em;
 }
 </style>

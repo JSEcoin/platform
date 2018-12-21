@@ -6,7 +6,7 @@
 				<i class="fa fa-close"></i>
 			</div>
 			<div class="popupContent">
-				<ScrollWidget style="top:50px;">
+				<ScrollWidget>
 					<div style="padding: 10px;">
 						<div style="position:relative;">
 							<i v-if="coinCodePos !== 0" class="fa fa-angle-left" v-on:click="prevCoinCode"></i>

@@ -799,6 +799,9 @@ footer {
 .max #JSEA-loginVersion {
 	display: none;
 }
+.min #JSEA-loginVersion {
+	top: 360px;
+}
 #JSEA-loginVersion {
     font-size: 0.8em;
     position: absolute;

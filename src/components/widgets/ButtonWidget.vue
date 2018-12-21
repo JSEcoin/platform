@@ -72,6 +72,7 @@ button * {
 	padding:0px 16px;
 	font-family: 'Nunito', sans-serif;
 	justify-content: center;
+	white-space: nowrap;
 }
 
 .platformWeb.min button {
