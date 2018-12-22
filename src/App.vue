@@ -316,7 +316,7 @@ export default {
 
 		//build for google
 		self.$store.commit('updateAppState', {
-			val: (typeof (process.env.ISGOOGLE) !== 'undefined')? process.env.ISGOOGLE : false,
+			val: (typeof (process.env.VUE_APP_ISGOOGLE) !== 'undefined')? process.env.VUE_APP_ISGOOGLE : false,
 			state: 'isGoogle',
 		});
 
@@ -404,18 +404,18 @@ export default {
 		//mobile background mining support - silent mode
 		if (localStorage.getItem('silentMode') !== null) {
 			self.$store.commit('updateAppState', {
-				val: ((String(localStorage.getItem('silentMode')) === 'true') && (!process.env.ISGOOGLE)),
+				val: ((String(localStorage.getItem('silentMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)),
 				state: 'silentMode',
 			});
 		}
 		//mobile background mining support
 		if (localStorage.getItem('mobileBackgroundMode') !== null) {
 			self.$store.commit('updateAppState', {
-				val: ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.ISGOOGLE)),
+				val: ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)),
 				state: 'mobileBackgroundMode',
 			});
 
-			if ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.ISGOOGLE)) {
+			if ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)) {
 				console.log('enabling background mode');
 				cordova.plugins.backgroundMode.enable();
 			}
@@ -424,7 +424,7 @@ export default {
 		//should app auto mine
 		if (localStorage.getItem('autoMine') !== null) {
 			self.$store.commit('updateAppState', {
-				val: ((String(localStorage.getItem('autoMine')) === 'true') && (!process.env.ISGOOGLE)),
+				val: ((String(localStorage.getItem('autoMine')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)),
 				state: 'autoMine',
 			});
 		}
@@ -432,7 +432,7 @@ export default {
 		//should app auto mine only when plugged in
 		if (localStorage.getItem('mineWhenpluggedIn') !== null) {
 			self.$store.commit('updateAppState', {
-				val: ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')),
+				val: ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.VUE_APP_ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')),
 				state: 'mineWhenpluggedIn',
 			});
 		}
@@ -549,7 +549,7 @@ export default {
 			if (typeof (cordova) !== 'undefined') {
 				//start mining if automine enabled and minewhenpluggedin is disabled
 				//else allow events to to start mining when device plugged in.
-				if ((!self.$store.state.app.mineWhenpluggedIn) && (!process.env.ISGOOGLE)) {
+				if ((!self.$store.state.app.mineWhenpluggedIn) && (!process.env.VUE_APP_ISGOOGLE)) {
 					self.initSocketConnection();
 				}
 			//desktop / browser make connection
@@ -723,7 +723,7 @@ export default {
 				//confirm user is logged in
 				if (self.$store.state.user.loggedIn) {
 					//if automine enabled & only mine when plugged in is enabled
-					if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
+					if ((String(localStorage.getItem('mineWhenpluggedIn')) === 'true') && (!process.env.VUE_APP_ISGOOGLE) && (String(localStorage.getItem('autoMine')) === 'true')) {
 						//check if device is plugged in and start mining
 						if (status.isPlugged) {
 							self.$store.dispatch({
