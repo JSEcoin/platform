@@ -10,6 +10,9 @@
   "scripts": {
     "lint": "vue-cli-service lint",
     "mobile:android:build": "vue-cli-service cordova-build-android",
+    "mobile:build": "vue-cli-service build --dest mobile/www ",
+    "mobile:android:build:github": "npm run mobile:build && cordova build --release --buildConfig=../../signAndroidBuild.json",
+    "mobile:android:build:google": "cross-env ISGOOGLE=TRUE npm run mobile:build && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:browser:build": "vue-cli-service cordova-build-browser",
     "mobile:ios:build": "vue-cli-service cordova-build-ios",
     "mobile:android:dev": "vue-cli-service cordova-serve-android",
@@ -21,7 +24,8 @@
     "docs:build": "vue-cli-service styleguidist:build",
     "docs:dev": "vue-cli-service styleguidist",
     "web:build": "vue-cli-service build",
-    "web:dev": "vue-cli-service serve --https --open --mode development --host localhost"
+    "web:dev": "vue-cli-service serve --https --open --mode development --host localhost",
+    "all:build": "npm run docs:build && npm run desktop:build && npm run web:build && npm run mobile:android:build:github"
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
