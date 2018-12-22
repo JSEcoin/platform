@@ -119,6 +119,10 @@ const ver = require('./package.json').version;
 const maxVer = parseInt(ver.replace(/\./g,''), 10);
 process.env.VUE_APP_VERSION = ver;
 process.env.VUE_APP_MJRVERSION = maxVer;
+//add support for google disable miner
+if (process.env.ISGOOGLE === 'TRUE') {
+	process.env.VUE_APP_ISGOOGLE = true;
+}
 console.log('------------------------', ver);
 
 module.exports = {
