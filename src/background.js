@@ -9,7 +9,7 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib';
 
 //version
-const appVersion = '0.5.9';//process.env.VUE_APP_VERSION;
+const appVersion = '0.6.0';//process.env.VUE_APP_VERSION;
 console.log(process.env.VUE_APP_VERSION);
 
 //test
@@ -33,8 +33,10 @@ let mainWindow;
 
 //https://github.com/electron/electron/blob/master/docs/api/protocol.md
 //change file protocal to enables recaptcha capabilities
-protocol.registerStandardSchemes(['app'], { secure: true });
-
+//protocol.registerStandardSchemes(['app'], { secure: true });
+protocol.registerSchemesAsPrivileged([{
+	scheme: 'app', privileges: {standard: true, secure: true, supportFetchAPI: true},
+}]);
 /**
  * Initialise and create application Window
  */
@@ -87,6 +89,7 @@ function createWindow() {
 		webPreferences: {
 			backgroundThrottling: false,
 			nodeIntegrationInWorker: true,
+			nodeIntegration: true,
 		},
 	});
 
