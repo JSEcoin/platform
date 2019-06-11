@@ -215,7 +215,8 @@ module.exports = {
 		}
 		config.plugins.push(...IntroJsPlugin);
 	},
-	baseUrl: '',
+	//baseUrl: '',
+	publicPath: '',
 	assetsDir: 'assets',
 	runtimeCompiler: undefined,
 	productionSourceMap: false,

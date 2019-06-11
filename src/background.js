@@ -90,6 +90,8 @@ function createWindow() {
 			backgroundThrottling: false,
 			nodeIntegrationInWorker: true,
 			nodeIntegration: true,
+			//webSecurity: false,
+			//allowRunningInsecureContent: true,
 		},
 	});
 

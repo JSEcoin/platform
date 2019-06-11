@@ -440,7 +440,7 @@ export default {
 						headers,
 					};
 
-					const myRequest = new Request(self.captchaUrl, myInit);
+					const myRequest = new Request('https://server.jsecoin.com/login/', myInit);
 
 					fetch(myRequest).then((response) => {
 						console.log('..');
