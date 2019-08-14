@@ -406,7 +406,7 @@ export default {
 							coinCode: coin.coinCode,
 						};
 						axios.post(
-							`${self.$store.state.app.jseCoinServer}/removecoincode/`,
+							`${self.$store.state.app.jseCoinServer}/account/removecoincode/`,
 							removeCoinsReq,
 						).then((res) => {
 							self.$swal('Your coin code has been removed and is no longer displayed on your account.', {
@@ -451,7 +451,7 @@ export default {
 				session: self.$store.state.user.session,
 			};
 			axios.post(
-				`${self.$store.state.app.jseCoinServer}/myexports/`,
+				`${self.$store.state.app.jseCoinServer}/account/myexports/`,
 				exportedCoinsReq,
 			).then((res) => {
 				if (!res.data.fail) {

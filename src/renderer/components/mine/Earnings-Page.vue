@@ -81,7 +81,7 @@ export default {
 		//get active miners
 		/*
 		axios.post(
-			`${self.$store.state.app.jseCoinServer}pubStats/`,
+			`${self.$store.state.app.jseCoinServer}/account/pubStats/`,
 			statsReq,
 		).then((res) => {
 			if (type of(res.data.statsDaily) !== 'undefined') {
