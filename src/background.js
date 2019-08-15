@@ -130,15 +130,15 @@ function createWindow() {
 
 	mainWindow.on('show', () => {
 		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
-		tray.setHighlightMode('always');
+		//tray.setHighlightMode('always');
 	});
 	mainWindow.on('restore', () => {
 		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
-		tray.setHighlightMode('always');
+		//tray.setHighlightMode('always');
 	});
 	mainWindow.on('hide', () => {
 		mainWindow.webContents.send('disableMiningChart'); //fix app freeze issue
-		tray.setHighlightMode('never');
+		//tray.setHighlightMode('never');
 	});
 	//easy targetable traymenu ref
 	const arrayRef = [
