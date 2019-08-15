@@ -82,7 +82,7 @@ export default {
 					session: self.$store.state.user.session,
 				};
 				axios.post(
-					`${self.$store.state.app.jseCoinServer}/account/setpin/`,
+					`${self.$store.state.app.jseCoinServer}/setpin/`,
 					setupPinReq,
 				).then((res) => {
 					self.loading = false;
