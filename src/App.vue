@@ -1,6 +1,7 @@
 <template>
 	<div id="JSEA-desktop" :class="{'active':!$store.state.app.loading, 'loggedIn':$store.state.user.loggedIn, loading:$store.state.app.loading, night:$store.state.app.theme === 'night', light:$store.state.app.theme === 'light'}">
-		<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" :src="captchaUrl"></iframe>
+		<!--<iframe id="JSEA-iCaptcha" v-if="showCaptcha" frameborder="0" :src="captchaUrl"></iframe>-->
+		<div id="JSE-captcha" v-if="showCaptcha"></div>
 		<iframe id="JSEA-registerFrame" v-if="registered" src="https://jsecoin.com/pixels.php?conversion=signup" frameborder="0" width="1" height="1"></iframe>
 		<!-- Hashrate acc need to remove -->
 		<input type="hidden" id="hashrateacceleration" v-model="hashRateAcc" />
@@ -1240,6 +1241,25 @@ body.QRScanner.min footer {
 
 .night #JSEA-iCaptcha {
 	background: rgba(0,0,0,0.5);
+}
+
+#JSE-captcha {
+	position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 100000000000000000;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+#JSE-captcha jse-captcha {
+	margin:0px auto;
+	min-width: 312px;
 }
 
 #JSEA-registerFrame {

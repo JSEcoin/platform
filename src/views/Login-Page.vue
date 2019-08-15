@@ -163,7 +163,7 @@ export default {
 	data() {
 		return {
 			//showCaptcha: false, 		//show iframe captcha
-			//captchaUrl: 'https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alphax1', //captcha url
+			//captchaUrl: 'https://jsecoin.com/iCaptcha/iCaptcha.html?JSE=alphax2', //captcha url
 			showPass: false,			//password input set eye icon
 			passDisplay: 'password',	//password input type ['password','text']
 			TwoFaInterval: false,		//2FA 60 second countdown : setInterval ();
@@ -297,6 +297,7 @@ export default {
 						val: false,
 						state: 'showCaptcha',
 					});
+					
 					//verify and login
 					self.onVerify(self.captchaResponse);
 				} else if ((e.data) && (e.data.closeCaptcha)) {
@@ -430,6 +431,7 @@ export default {
 				//run recaptcha.
 				} else {
 					//prevent cached request
+					/*
 					const headers = new Headers();
 					headers.append('pragma', 'no-cache');
 					headers.append('cache-control', 'no-cache');
@@ -440,16 +442,52 @@ export default {
 						headers,
 					};
 
-					const myRequest = new Request('https://server.jsecoin.com/login/', myInit);
+					const myRequest = new Request(self.captchaUrl, myInit);
 
 					fetch(myRequest).then((response) => {
 						console.log('..');
 						return response;
 					}).then((response) => {
+						*/
 						self.$store.commit('updateAppState', {
 							val: true,
 							state: 'showCaptcha',
-						}); //shows jsecoin.com captcha screen
+						}); 
+						
+						setTimeout(() => {
+							//shows jsecoin.com captcha screen
+							const jseCaptcha = new Jsecaptcha({
+								target: document.getElementById('JSE-captcha'), //injection point
+								props: {
+									size: 'S', // ['','S','M','L']
+									theme: 'flat', //['','flat']
+									//captchaServer: 'https://load.jsecoin.com', //just for JSE devs
+								}
+							});
+							//success response
+							jseCaptcha.$on('success', (res) => {
+								console.log('Success: ', res.detail);
+								self.$store.commit('updateAppState', {
+									val: false,
+									state: 'showCaptcha',
+								});
+								self.onVerify();
+							});
+
+							//failed reponse
+							jseCaptcha.$on('fail', (res) => {
+								console.log('Fail: ', res.detail);
+								self.$store.commit('updateAppState', {
+									val: false,
+									state: 'showCaptcha',
+								});
+								self.form.error.display = true;
+								self.form.error.msg = 'Unable to connect to server please check your connection.';
+								self.loading = false;
+							});
+						}, 100);
+						
+/*
 					}).catch((e) => {
 						self.$store.commit('updateAppState', {
 							val: false,
@@ -459,6 +497,7 @@ export default {
 						self.form.error.msg = 'Unable to connect to server please check your connection.';
 						self.loading = false;
 					});
+					*/
 				}
 			} else {
 				self.form.error.display = true;
@@ -493,13 +532,13 @@ export default {
 
 			//if captcha then send captcha else must be 2fa
 			if (typeof (response) !== 'undefined') {
-				self.captchaResponse = response;
-				loginInfo['g-recaptcha-response'] = response;
+				//self.captchaResponse = response;
+				//loginInfo['g-recaptcha-response'] = response;
 			} else {
 				const AC = self.form.authCode;
 				const completeAuthCode = AC.val1+AC.val2+AC.val3+AC.val4+AC.val5+AC.val6;
 				loginInfo.authCode = completeAuthCode;
-				loginInfo['g-recaptcha-response'] = self.captchaResponse;
+				//loginInfo['g-recaptcha-response'] = self.captchaResponse;
 			}
 
 			axios.post(
