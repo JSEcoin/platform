@@ -290,7 +290,7 @@ export default {
 				session: self.$store.state.user.session,
 			};
 			axios.post(
-				`${self.$store.state.app.jseCoinServer}/myexports/`,
+				`${self.$store.state.app.jseCoinServer}/account/myexports/`,
 				exportedCoinsReq,
 			).then((res) => {
 				self.exportCoinHistory = res.data.reverse();

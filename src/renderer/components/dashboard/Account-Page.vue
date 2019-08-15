@@ -148,7 +148,7 @@ export default {
 
 			//post req for login info
 			axios.post(
-				`${self.$store.state.app.jseCoinServer}/lastlogins/`,
+				`${self.$store.state.app.jseCoinServer}/account/lastlogins/`,
 				lastLoginReq,
 			).then((res) => {
 				console.log(res);
