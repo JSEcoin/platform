@@ -78,10 +78,10 @@ const mutations = {
 	updateHashInterval(state) {
 		const hashRate = parseInt(Number(window.hashRate),10);
 		const hps = Number(window.hps);
-		if (!isNaN(hps)) {
+		if (!Number.isNaN(hps)) {
 			state.hps = Number(hps);
 		}
-		if (!isNaN(hashRate)) {
+		if (!Number.isNaN(hashRate)) {
 			state.hashRate = hashRate;
 			if (state.hashRateChartItems.length === 16) {
 				//state.hashRateChartItems.shift();
