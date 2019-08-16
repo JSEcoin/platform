@@ -1,3 +1,6 @@
+# WARNING DO NOT USE THIS BRANCH until 5/9/19
+## - Server side updates are required for full functionality of this build
+
 # JSE Platform
 
 **[JSECOIN](https://jsecoin.com/)** [THE FUTURE BLOCKCHAIN & ECOSYSTEM FOR ECOMMERCE AND DIGITAL ADVERTISING]
