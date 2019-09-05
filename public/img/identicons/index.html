@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<style>
+		#identicon { position: relative; height: 160px; width: 160px; border: 3px solid #CCC; border-radius: 3px;  }
+		.identicon-layer { position: absolute; height: 160px; width: 160px; }
+		#identicon2 { position: relative; height: 600px; width: 600px; border: 3px solid #CCC; border-radius: 3px;  }
+		.identicon-layer2 { position: absolute; height: 600px; width: 600px; }
+	</style>
+</head>
+<body>
+
+<div id="identicon"></div>
+
+<div id="publickey"></div>
+<br><br>
+<button onclick="createNewPublicKey();">Create New Public Key</button>
+
+<br><hr><br>
+
+<div id="identicon2"></div>
+<script>
+
+var publicKey = '04edfe4b6ce76d233ec7b1630766444debff1dd5b178188b77eb4a13f3aed6f021c2fbb2d48dd528e07caf6d3e050f791c536e955e9d7c590b4d5bff47d5d7b4ae';
+//var publicKey = '04edd3e050f791c536e955e9d7c590b4d5bff47d5fe4b6ce76d233ec7b16160766444debff1dd5b178188b77eb4a13f3aed6f021c2fbb2d48dd528e07caf6d7b4ae';
+
+$('#publickey').html(publicKey);
+
+function generateIdneticon(publicKey,containerDivID) {
+	var identiconParts = {};
+	identiconParts['background'] = 9; // 5 background files parts/background1.png to parts/background5.png 
+	identiconParts['legs'] = 6;
+	identiconParts['arms'] = 8;
+	identiconParts['neck'] = 3;
+	identiconParts['hat'] = 9;
+	identiconParts['body'] = 7;
+	identiconParts['head'] = 8;
+	identiconParts['eyes'] = 9;
+	identiconParts['logo'] = 8;
+
+	var identiconFiles = {};
+
+	//'#'+Math.floor(Math.random()*16777215).toString(16);
+	console.log('-------------');
+
+	var charCount = 4; // skip the first few
+	for (var key in identiconParts) {
+	  if (!identiconParts.hasOwnProperty(key)) continue;
+		var charCode = publicKey.charCodeAt(charCount);
+		var identCode = 1;
+		var tmpCode = 0;
+		// limit identCode to max number of parts via a basic math loop
+		while (tmpCode <= charCode) {
+			identCode += 1; 
+			tmpCode += 1;
+			if (identCode > identiconParts[key]) { identCode = 1; }
+		}
+		identiconFiles[key] = key+identCode+'.png'; // put directory before key if applicable
+		console.log(identCode + ' - ' + charCode + ' - ' + key);
+		charCount ++;
+	}
+
+	for (var key in identiconFiles) {
+	  if (!identiconFiles.hasOwnProperty(key)) continue;
+		$('#'+containerDivID).html($('#'+containerDivID).html() + '<img src="'+identiconFiles[key]+'" class="identicon-layer" style="z-index: '+charCount+'" />');
+		var containerDivID2 = 'identicon2';
+		$('#'+containerDivID2).html($('#'+containerDivID2).html() + '<img src="'+identiconFiles[key]+'" class="identicon-layer2" style="z-index: '+charCount+'" />');
+		charCount ++;
+	}
+
+}
+
+generateIdneticon(publicKey,'identicon');
+////////////////// following is only needed for demo //////////////////////
+
+function shuffle(array) {
+		var counter = array.length, temp, index;
+		while (counter > 0) {
+				index = Math.floor(Math.random() * counter);
+				counter--;
+				temp = array[counter];
+				array[counter] = array[index];
+				array[index] = temp;
+		}
+		return array;
+}
+
+
+function createNewPublicKey() {
+	$('#identicon').html('');
+	$('#identicon2').html('');
+
+	var chars = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	var randString 
+
+	publicKey = '04'+ shuffle(chars).join('').slice(0,129);
+
+	$('#publickey').html(publicKey);
+
+ 	generateIdneticon(publicKey,'identicon');
+}
+
+
+
+</script>
+
+</body>
+</html>
