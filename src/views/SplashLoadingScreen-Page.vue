@@ -196,7 +196,7 @@ export default {
 			}
 		},
 		/**
-		 * Connection Error - Countdown 30 seconds and try to access JSECoin again
+		 * Connection Error - Countdown 30 seconds and try to access JSEcoin again
 		 *
 		 * @returns nothing
 		 * @public
@@ -209,7 +209,7 @@ export default {
 			},1000);
 		},
 		/**
-		 * Script Load Error - Countdown 30 seconds and try to access JSECoin again
+		 * Script Load Error - Countdown 30 seconds and try to access JSEcoin again
 		 *
 		 * @returns nothing
 		 * @public
