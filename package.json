@@ -17,7 +17,7 @@
     "electron:build": "vue-cli-service electron:build",
     "electron:serve": "vue-cli-service electron:serve",
     "mobile:android:build": "vue-cli-service cordova-build-android",
-    "mobile:android:build:github": "npm run mobile:build && cordova build --release --buildConfig=../../signAndroidBuild.json",
+    "mobile:android:build:github": "npm run mobile:build && cd mobile && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:build:google": "cross-env ISGOOGLE=TRUE npm run mobile:build && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:dev": "vue-cli-service cordova-serve-android",
     "mobile:browser:build": "vue-cli-service cordova-build-browser",

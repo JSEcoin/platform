@@ -220,7 +220,7 @@ function createWindow() {
 			visible: false,
 		},
 		{
-			label: 'Quit JSECoin',
+			label: 'Quit JSEcoin',
 			click: () => {
 				mainWindow.close();
 				app.quit();
@@ -315,7 +315,7 @@ function createWindow() {
 
 			//setup autolauncher
 			const JSECoinAutoLauncher = new AutoLaunch({
-				name: 'JSECoin',
+				name: 'JSEcoin',
 				path: app.getPath('exe'),
 			});
 			if (action.start) {

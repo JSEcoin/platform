@@ -120,7 +120,7 @@
 			<!-- Footer -->
 			<footer>
 				<div class="hr"></div>
-				<div class="loginCopy center">Copyright JSECoin.com 2018</div>
+				<div class="loginCopy center">Copyright JSEcoin.com 2018</div>
 			</footer>
 			<!-- xFooter -->
 		</ScrollWidget>

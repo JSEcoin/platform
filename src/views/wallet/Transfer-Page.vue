@@ -305,7 +305,7 @@ export default {
 			});
 		},
 		/**
-		 * Charity donation option - autopopulates form fields to allow user to donate to JSECoin Charity Fund.
+		 * Charity donation option - autopopulates form fields to allow user to donate to JSEcoin Charity Fund.
 		 *
 		 * @param {string} val - email to populate on form field
 		 * @returns nothing

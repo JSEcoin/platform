@@ -762,7 +762,7 @@ export default {
 			});
 			cordova.plugins.backgroundMode.on('enable', () => {
 				cordova.plugins.backgroundMode.setDefaults({
-					title: 'JSECoin Mobile',
+					title: 'JSEcoin Mobile',
 					text: 'Altcoin Miner app',
 					silent: self.silentMode,
 				});

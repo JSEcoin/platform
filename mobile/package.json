@@ -1,8 +1,8 @@
 {
     "name": "com.jsecoin.alpha",
     "displayName": "JSEcoin",
-    "version": "0.5.9",
-    "description": "JSECoin Mobile Wallet Designed to manage and transfer JSE Tokens.",
+    "version": "0.6.1",
+    "description": "JSEcoin Mobile Wallet Designed to manage and transfer JSE Tokens.",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
