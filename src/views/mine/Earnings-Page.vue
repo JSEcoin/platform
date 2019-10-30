@@ -78,10 +78,10 @@ export default {
 			session: self.$store.state.user.session,
 		};
 
-		//get active miners
+		//get active miners -jfup1
 		/*
 		axios.post(
-			`${self.$store.state.app.jseCoinServer}account/pubStats/`,
+			`${self.$store.state.app.jseCoinServer}/account/pubStats/`,
 			statsReq,
 		).then((res) => {
 			if (type of(res.data.statsDaily) !== 'undefined') {
