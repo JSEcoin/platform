@@ -1,0 +1,82 @@
+{
+	"comments": false,
+	"presets": ["env", "stage-2"],
+	"plugins": ["transform-runtime", "syntax-dynamic-import"],
+	"env": {
+		"test": {
+			"presets": [
+				["env", {
+					"targets": {
+						"node": 7
+					}
+				}],
+				"stage-0"
+			],
+			"plugins": ["istanbul"]
+		},
+		"main": {
+			"presets": [
+				["env", {
+					"targets": {
+						"node": 7
+					}
+				}],
+				"stage-0"
+			]
+		},
+		"renderer": {
+			"presets": [
+				["env", {
+					"modules": false
+				}],
+				"stage-0"
+			]
+		},
+		"web": {
+			"presets": [
+				["env", {
+					"modules": false
+				}],
+				"stage-2"
+			]
+		},
+		"webdev": {
+			"presets": [
+				["env", {
+					"modules": false
+				}],
+				"stage-2"
+			]
+		},
+		"mobile": {
+			"presets": [
+				["env", {
+					"modules": false
+				}],
+				"stage-0"
+			]
+		},
+		"mobiledev": {
+			"presets": [
+				["env", {
+					"modules": false
+				}],
+				"stage-0"
+			]
+		},
+		"development": {
+			"presets": [
+				["env", {
+					"modules": false
+				}],
+				"stage-2"
+			]
+		},
+		"styleguide": {
+			"presets": ["env", "stage-2"],
+			"plugins": ["transform-runtime"],
+			"comments": false
+		}
+	}
+}
+
