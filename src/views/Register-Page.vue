@@ -381,7 +381,6 @@ export default {
 						self.onVerify();
 					});
 				}, 100);
-
 			} else {
 				self.form.error.msg = 'Please check all highlighted fields are complete.';
 				self.form.error.display = true;
