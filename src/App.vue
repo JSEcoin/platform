@@ -1257,7 +1257,8 @@ body.QRScanner.min footer {
     align-items: center;
     text-align: center;
 }
-#JSE-captcha jse-captcha {
+#JSE-captcha jse-captcha,
+#JSE-captcha > div {
 	margin:0px auto;
 	min-width: 312px;
 }
