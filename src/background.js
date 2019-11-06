@@ -9,7 +9,7 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib';
 
 //version
-const appVersion = '0.6.1';//process.env.VUE_APP_VERSION;
+const appVersion = '0.6.3';//process.env.VUE_APP_VERSION;
 console.log(process.env.VUE_APP_VERSION);
 
 //test
