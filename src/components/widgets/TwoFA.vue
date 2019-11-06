@@ -31,7 +31,7 @@ export default {
 					val5: this.val[4],
 					val6: this.val[5],
 				},
-				inputType: 'text',
+				inputType: 'number',
 			},
 		};
 	},
@@ -81,6 +81,7 @@ export default {
 		 */
 		focusInput(val, refNext, e) {
 			const self = this;
+			//console.log(e.which);
 			//enter
 			if (e.which === 13) {
 				/**
