@@ -74,7 +74,7 @@ export default {
 					//redirect to [dashboard,login] page
 					//self.$router.push(`${self.endRoute}`);
 					self.$router.push(`${self.endRoute}`);
-					self.$electron.remote.getCurrentWindow().setMovable(true);
+					//self.$electron.remote.getCurrentWindow().setMovable(true);
 				}
 			});
 		}
@@ -144,7 +144,7 @@ export default {
 			if (self.$store.getters.whichPlatform === 'desktop') {
 				self.endRoute = route;
 				//disable moving capability during route and screensize change
-				self.$electron.remote.getCurrentWindow().setMovable(false);
+				//self.$electron.remote.getCurrentWindow().setMovable(false);
 				//hide animation transition to dash
 				self.show = false;
 				//add delay to hide splash animation and transition to page

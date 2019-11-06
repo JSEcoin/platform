@@ -82,6 +82,7 @@ function createWindow() {
 		width: 309,//216,//510,
 		// /transparent: true,
 		frame: false,
+		movable: true,
 		center: true,
 		//resizable: true,
 		icon: appIcon,
