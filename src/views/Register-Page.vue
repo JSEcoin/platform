@@ -88,76 +88,8 @@
 							</ContentWidget>
 
 							<ContentWidget class="registerFormContainer">
-								<h4 class="title">Address Information</h4>
-
+								<h4 class="title">Country Information</h4>
 								<div class="formWrapper">
-									<!-- Postal Address Line 1 Input -->
-									<div class="row">
-										<InputWidget
-											v-model="form.addressLine1.val"
-											placeholder="Address Line 1"
-											name="Address Line 1"
-											maxlength="254"
-											ref="addressLine1"
-											:showLabel="form.addressLine1.displayLabel"
-											:flag="!form.addressLine1.valid || form.addressLine1.flag"
-											@keyup="keyWatch('addressLine1')" />
-									</div>
-									<!-- xPostal Address Line 1 Input -->
-									<!-- Postal Address Line 2 Input -->
-									<div class="row">
-										<InputWidget
-											v-model="form.addressLine2.val"
-											placeholder="Address Line 2"
-											name="addressLine2"
-											maxlength="254"
-											ref="addressLine2"
-											:showLabel="form.addressLine2.displayLabel"
-											:flag="!form.addressLine2.valid || form.addressLine2.flag"
-											@keyup="keyWatch('addressLine2')" />
-									</div>
-									<!-- xPostal Address Line 2 Input -->
-									<!-- Postal City Town Input -->
-									<div class="row">
-										<InputWidget
-											v-model="form.cityTown.val"
-											placeholder="City / Town"
-											name="cityTown"
-											maxlength="254"
-											ref="cityTown"
-											:showLabel="form.cityTown.displayLabel"
-											:flag="!form.cityTown.valid || form.cityTown.flag"
-											@keyup="keyWatch('cityTown')" />
-									</div>
-									<!-- xPostal City Town Input -->
-									<div class="row" style="flex-wrap: wrap;">
-										<div class="col">
-											<!-- Postal State Province Region Input -->
-											<InputWidget
-												v-model="form.stateProvinceRegion.val"
-												placeholder="State / Province / Region"
-												name="stateProvinceRegion"
-												maxlength="254"
-												ref="stateProvinceRegion"
-												:showLabel="form.stateProvinceRegion.displayLabel"
-												:flag="!form.stateProvinceRegion.valid || form.stateProvinceRegion.flag"
-												@keyup="keyWatch('stateProvinceRegion')" />
-											<!-- xPostal State Province Region Input -->
-										</div>
-										<div class="col">
-											<!-- Postal Zip Postal Code Input -->
-											<InputWidget
-												v-model="form.zipPostalCode.val"
-												placeholder="Zip / Postal Code"
-												name="zipPostalCode"
-												maxlength="254"
-												ref="zipPostalCode"
-												:showLabel="form.zipPostalCode.displayLabel"
-												:flag="!form.zipPostalCode.valid || form.zipPostalCode.flag"
-												@keyup="keyWatch('zipPostalCode')" />
-											<!-- xPostal Zip Postal Code Input -->
-										</div>
-									</div>
 									<!-- Country Input -->
 									<div class="row">
 										<InputWidget
@@ -439,6 +371,16 @@ export default {
 					val: true,
 					state: 'showCaptcha',
 				});//shows jsecoin.com captcha screen
+				setTimeout(() => {
+					JSECaptcha();
+					document.addEventListener('JSECaptchaPass', () => {
+						self.$store.commit('updateAppState', {
+							val: false,
+							state: 'showCaptcha',
+						});
+						self.onVerify();
+					});
+				}, 100);
 			} else {
 				self.form.error.msg = 'Please check all highlighted fields are complete.';
 				self.form.error.display = true;
@@ -448,14 +390,14 @@ export default {
 			const self = this;
 			const localTime = new Date();
 			const localTS = localTime.getTime();
-			const address = `${self.form.addressLine1.val}, ${self.form.addressLine2.val}, ${self.form.cityTown.val}, ${self.form.stateProvinceRegion.val}, ${self.form.zipPostalCode.val}`;
+			//const address = `${self.form.addressLine1.val}, ${self.form.addressLine2.val}, ${self.form.cityTown.val}, ${self.form.stateProvinceRegion.val}, ${self.form.zipPostalCode.val}`;
 
 			const registerUserInfo = {
 				name: self.form.fullName.val,
 				email: self.form.email.val,
-				address,
+				//address,
 				country: self.form.country.val,
-				'g-recaptcha-response': response,
+				//'g-recaptcha-response': response,
 				password: self.form.password.val,
 				app: self.$store.getters.whichPlatform,
 				preRegHashes: 0,

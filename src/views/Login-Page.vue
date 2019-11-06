@@ -456,6 +456,7 @@ export default {
 						
 						setTimeout(() => {
 							//shows jsecoin.com captcha screen
+							/*
 							const jseCaptcha = new Jsecaptcha({
 								target: document.getElementById('JSE-captcha'), //injection point
 								props: {
@@ -473,7 +474,6 @@ export default {
 								});
 								self.onVerify();
 							});
-
 							//failed reponse
 							jseCaptcha.$on('fail', (res) => {
 								console.log('Fail: ', res.detail);
@@ -484,6 +484,15 @@ export default {
 								self.form.error.display = true;
 								self.form.error.msg = 'Unable to connect to server please check your connection.';
 								self.loading = false;
+							});
+							*/
+							JSECaptcha();
+							document.addEventListener('JSECaptchaPass', () => {
+								self.$store.commit('updateAppState', {
+									val: false,
+									state: 'showCaptcha',
+								});
+								self.onVerify();
 							});
 						}, 100);
 						
