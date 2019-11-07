@@ -30,3 +30,8 @@ yarn-error.log*
 /mobile/platforms
 /mobile/plugins
 /public/cordova.js
+
+# Cordova
+/mobile/platforms
+/mobile/plugins
+/public/cordova.js
