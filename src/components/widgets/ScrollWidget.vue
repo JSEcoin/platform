@@ -66,6 +66,9 @@ export default {
 .popupContent #JSEA-appBody {
 	top: 44px;
 }
+.mobile #JSEA-appBody {
+	top:60px;
+}
 #JSEA-appBody {
 	top:73px;
 	bottom:0px;
