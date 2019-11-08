@@ -10,7 +10,7 @@ import {
 
 //version
 const appVersion = '0.6.3';//process.env.VUE_APP_VERSION;
-console.log(process.env.VUE_APP_VERSION);
+console.log('[ver]',process.env.VUE_APP_VERSION);
 
 //test
 app.disableHardwareAcceleration();
@@ -22,6 +22,7 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.setAppUserModelId('com.jsecoin.desktop');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+console.log('[isDev]',isDevelopment);
 /*
 if (!isDevelopment) {
 	global.__static = join(__dirname, '/static').replace(/\\/g, '\\\\'); // eslint-disable-line
@@ -41,11 +42,13 @@ protocol.registerSchemesAsPrivileged([{
  * Initialise and create application Window
  */
 function createWindow() {
+	console.log('[Preparing Window]')
 	//setup app ico
 	let iconPath = join(__static, 'app/icon.png');
 	let iconTrayPath = join(__static, 'app/trayIco.png');
 	switch (process.platform) {
 		case 'win32':
+			console.log('[TrayIco][Win32]');
 			iconPath = join(__static, 'app/windows-icon.png');
 			iconTrayPath = join(__static, 'app/windows-trayIco.png');
 		break;
@@ -99,6 +102,7 @@ function createWindow() {
 	//clean display of page loader approach
 	//prevent flicker and display of loader until DOM ready
 	mainWindow.once('ready-to-show', () => {
+		console.log('[Show Window');
 		mainWindow.show();
 	});
 
@@ -110,9 +114,11 @@ function createWindow() {
 		// Load the url of the dev server if in development mode
 		mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
 		if (!process.env.IS_TEST) {
+			console.log('[Enabling DevTools]');
 			mainWindow.webContents.openDevTools();
 		}
 	} else {
+		console.log('[init App]');
 		//protocol.registerServiceWorkerSchemes(['app']);
 		createProtocol('app');
 		// Load the index.html when not in development
@@ -126,6 +132,7 @@ function createWindow() {
 		tray = new Tray(iconTrayPath);
 		tray.setPressedImage(iconTrayPath);
 	} else {
+		console.log('[Setting Tray Ico]', iconPath);
 		tray = new Tray(iconPath);
 	}
 
@@ -243,6 +250,7 @@ function createWindow() {
 
 	//on tray icon click hide or show
 	tray.on('click', () => {
+		console.log('[Toogle Tray', mainWindow.isVisible());
 		if (mainWindow.isVisible()) {
 			mainWindow.hide();
 			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
@@ -256,7 +264,7 @@ function createWindow() {
 
 	//on close app hide it in tray
 	ipcMain.on('hideApp', (event, arg) => {
-		console.log('hide');
+		console.log('[Hide Window]');
 		mainWindow.hide();
 		contextMenu.items[arrayRef.indexOf('hide')].visible = false;
 		contextMenu.items[arrayRef.indexOf('show')].visible = true;
@@ -338,11 +346,12 @@ function createWindow() {
 	//set tray icon tooltip
 	tray.setToolTip('Right Click Icon for Options.');
 	//add context menu options
-	tray.setContextMenu(contextMenu);
+	//tray.setContextMenu(contextMenu);
 	//before app quit store user session to enable autologin
 
-	//mainWindow.hide();
+	//mainWindow.show();
 	mainWindow.on('closed', () => {
+		console.log('[Closing Window]');
 		mainWindow = null;
 	});
 }
@@ -351,9 +360,11 @@ const gotTheLock = app.requestSingleInstanceLock();
 
 //found second instance close this as prior is now open
 if (!gotTheLock) {
-  app.quit();
+	console.log('...Found Second Instance closing');
+	app.quit();
 } else {
 	app.on('second-instance', (event, commandLine, workingDirectory) => {
+		console.log('[Trying to load second instance]', event, commandLine, workingDirectory);
 		// Someone tried to run a second instance, we should focus our window.
 		if (mainWindow) {
 			if (mainWindow.isMinimized()) {
@@ -365,12 +376,17 @@ if (!gotTheLock) {
 
 	//on ready initialise app
 	app.on('ready', async () => {
+		console.log('[App Ready]');
 		if ((isDevelopment) && (!process.env.IS_TEST)) {
+			console.log('[Setting Vue Tools]');
 			// Install Vue Devtools
 			await installVueDevtools();
 		}
 		//fix splash white bg
-		setTimeout(createWindow, 100);
+		setTimeout(() => {
+			console.log('[Creating Window]');
+			createWindow();
+		}, 100);
 		//autoUpdater.checkForUpdatesAndNotify();
 	});
 }
@@ -406,6 +422,7 @@ autoUpdater.on('update-downloaded', (info) => {
 //quit app
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
+		console.log('[closing win]');
 		app.quit();
 	}
 });
@@ -415,6 +432,7 @@ app.on('window-all-closed', () => {
 // Some APIs can only be used after this event occurs.
 app.on('activate', () => {
 	if (mainWindow === null) {
+		console.log('[creating win]');
 		createWindow();
 	}
 });
@@ -424,6 +442,7 @@ if (isDevelopment) {
 	if (process.platform === 'win32') {
 		process.on('message', (data) => {
 			if (data === 'graceful-exit') {
+				console.log('[graceful exit]');
 				app.quit();
 			}
 		});
