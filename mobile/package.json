@@ -1,7 +1,7 @@
 {
     "name": "com.jsecoin.alpha",
     "displayName": "JSEcoin",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "description": "JSEcoin Mobile Wallet Designed to manage and transfer JSE Tokens.",
     "main": "index.js",
     "scripts": {
@@ -13,7 +13,7 @@
     },
     "license": "Apache-2.0",
     "dependencies": {
-        "cordova-android": "^7.1.4",
+        "cordova-android": "^8.1.0",
         "cordova-android-support-gradle-release": "^2.1.0",
         "cordova-browser": "^5.0.4",
         "cordova-ios": "^4.5.5",
@@ -44,9 +44,9 @@
             "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
-            "android",
             "ios",
-            "browser"
+            "browser",
+            "android"
         ]
     }
 }
