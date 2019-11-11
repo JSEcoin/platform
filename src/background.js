@@ -265,6 +265,8 @@ function createWindow() {
 	//on close app hide it in tray
 	ipcMain.on('hideApp', (event, arg) => {
 		console.log('[Hide Window]');
+		console.log('Tray Destroyed', tray.isDestroyed());
+
 		mainWindow.hide();
 		contextMenu.items[arrayRef.indexOf('hide')].visible = false;
 		contextMenu.items[arrayRef.indexOf('show')].visible = true;
