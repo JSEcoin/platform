@@ -1260,7 +1260,6 @@ body.QRScanner.min footer {
 #JSE-captcha jse-captcha,
 #JSE-captcha > div {
 	margin:0px auto;
-	min-width: 312px;
 }
 
 #JSEA-registerFrame {

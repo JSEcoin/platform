@@ -9,8 +9,8 @@ import {
 } from 'vue-cli-plugin-electron-builder/lib';
 
 //version
-const appVersion = '0.6.1';//process.env.VUE_APP_VERSION;
-console.log(process.env.VUE_APP_VERSION);
+const appVersion = '0.6.4';//process.env.VUE_APP_VERSION;
+console.log('[ver]',process.env.VUE_APP_VERSION);
 
 //test
 app.disableHardwareAcceleration();
@@ -22,6 +22,7 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.setAppUserModelId('com.jsecoin.desktop');
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
+console.log('[isDev]',isDevelopment);
 /*
 if (!isDevelopment) {
 	global.__static = join(__dirname, '/static').replace(/\\/g, '\\\\'); // eslint-disable-line
@@ -37,15 +38,18 @@ let mainWindow;
 protocol.registerSchemesAsPrivileged([{
 	scheme: 'app', privileges: {standard: true, secure: true, supportFetchAPI: true},
 }]);
+
 /**
  * Initialise and create application Window
  */
 function createWindow() {
+	console.log('[Preparing Window]')
 	//setup app ico
 	let iconPath = join(__static, 'app/icon.png');
 	let iconTrayPath = join(__static, 'app/trayIco.png');
 	switch (process.platform) {
 		case 'win32':
+			console.log('[TrayIco][Win32]');
 			iconPath = join(__static, 'app/windows-icon.png');
 			iconTrayPath = join(__static, 'app/windows-trayIco.png');
 		break;
@@ -69,9 +73,20 @@ function createWindow() {
 			app.dock.hide();
 		break;
 	}
-
+	
 	//generate nativeImg app icon
 	const appIcon = nativeImage.createFromPath(iconPath);
+
+	//add tray icon support
+	//const trayIcon = nativeImage.createFromPath(iconPath);
+	let tray = '';
+	if (process.platform === 'darwin') {
+		tray = new Tray(iconTrayPath);
+		tray.setPressedImage(iconTrayPath);
+	} else {
+		console.log('[Setting Tray Ico]', iconPath);
+		tray = new Tray(appIcon);
+	}
 
 	//Initial window options
 	mainWindow = new BrowserWindow({
@@ -82,6 +97,7 @@ function createWindow() {
 		width: 309,//216,//510,
 		// /transparent: true,
 		frame: false,
+		movable: true,
 		center: true,
 		//resizable: true,
 		icon: appIcon,
@@ -98,35 +114,10 @@ function createWindow() {
 	//clean display of page loader approach
 	//prevent flicker and display of loader until DOM ready
 	mainWindow.once('ready-to-show', () => {
+		console.log('[Show Window]');
+		console.log('Tray Destroyed', tray.isDestroyed());
 		mainWindow.show();
 	});
-
-	//force debug window
-	//mainWindow.webContents.openDevTools();
-
-	//Load App
-	if ((isDevelopment) || (process.env.IS_TEST)) {
-		// Load the url of the dev server if in development mode
-		mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-		if (!process.env.IS_TEST) {
-			mainWindow.webContents.openDevTools();
-		}
-	} else {
-		//protocol.registerServiceWorkerSchemes(['app']);
-		createProtocol('app');
-		// Load the index.html when not in development
-		mainWindow.loadURL('app://./index.html');
-	}
-
-	//add tray icon support
-	const trayIcon = nativeImage.createFromPath(iconPath);
-	let tray = '';
-	if (process.platform === 'darwin') {
-		tray = new Tray(iconTrayPath);
-		tray.setPressedImage(iconTrayPath);
-	} else {
-		tray = new Tray(iconPath);
-	}
 
 	mainWindow.on('show', () => {
 		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
@@ -140,6 +131,12 @@ function createWindow() {
 		mainWindow.webContents.send('disableMiningChart'); //fix app freeze issue
 		//tray.setHighlightMode('never');
 	});
+	
+	mainWindow.on('closed', () => {
+		console.log('[Closing Window]');
+		mainWindow = null;
+	});
+
 	//easy targetable traymenu ref
 	const arrayRef = [
 		'title',
@@ -153,6 +150,7 @@ function createWindow() {
 		'show',
 		'quit',
 	];
+
 	//tray menu arr structure
 	const contextMenu = Menu.buildFromTemplate([
 		{
@@ -207,13 +205,6 @@ function createWindow() {
 		{
 			label: 'Hide App',
 			visible: true,
-			/*click: () => {
-				if (mainWindow.isVisible()) {
-					mainWindow.hide();
-				} else {
-					mainWindow.show();
-				}
-			},*/
 		},
 		{
 			label: 'Show App',
@@ -240,22 +231,11 @@ function createWindow() {
 		contextMenu.items[arrayRef.indexOf('show')].visible = false;
 	};
 
-	//on tray icon click hide or show
-	tray.on('click', () => {
-		if (mainWindow.isVisible()) {
-			mainWindow.hide();
-			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
-			contextMenu.items[arrayRef.indexOf('show')].visible = true;
-		} else {
-			mainWindow.show();
-			contextMenu.items[arrayRef.indexOf('hide')].visible = true;
-			contextMenu.items[arrayRef.indexOf('show')].visible = false;
-		}
-	});
-
 	//on close app hide it in tray
 	ipcMain.on('hideApp', (event, arg) => {
-		console.log('hide');
+		console.log('[Hide Window]');
+		console.log('Tray Destroyed', tray.isDestroyed());
+
 		mainWindow.hide();
 		contextMenu.items[arrayRef.indexOf('hide')].visible = false;
 		contextMenu.items[arrayRef.indexOf('show')].visible = true;
@@ -299,6 +279,7 @@ function createWindow() {
 		contextMenu.items[arrayRef.indexOf('stopMining')].enabled = false;
 		contextMenu.items[arrayRef.indexOf('stopMining')].visible = false;
 	});
+
 	//Retrieve app version and send
 	ipcMain.on('getAppVersion', (event, arg) => {
 		event.sender.send('updateAppVersion', appVersion);
@@ -334,25 +315,55 @@ function createWindow() {
 			}
 		}
 	});
+	
+	//on tray icon click hide or show
+	tray.on('click', () => {
+		console.log('[Toogle Tray', mainWindow.isVisible());
+		if (mainWindow.isVisible()) {
+			mainWindow.hide();
+			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
+			contextMenu.items[arrayRef.indexOf('show')].visible = true;
+		} else {
+			mainWindow.show();
+			contextMenu.items[arrayRef.indexOf('hide')].visible = true;
+			contextMenu.items[arrayRef.indexOf('show')].visible = false;
+		}
+	});
+
 	//set tray icon tooltip
 	tray.setToolTip('Right Click Icon for Options.');
 	//add context menu options
 	tray.setContextMenu(contextMenu);
-	//before app quit store user session to enable autologin
+	
+	//force debug window
+	//mainWindow.webContents.openDevTools();
 
-	//mainWindow.hide();
-	mainWindow.on('closed', () => {
-		mainWindow = null;
-	});
+	//Load App
+	if ((isDevelopment) || (process.env.IS_TEST)) {
+		// Load the url of the dev server if in development mode
+		mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+		if (!process.env.IS_TEST) {
+			console.log('[Enabling DevTools]');
+			mainWindow.webContents.openDevTools();
+		}
+	} else {
+		console.log('[init App]');
+		//protocol.registerServiceWorkerSchemes(['app']);
+		createProtocol('app');
+		// Load the index.html when not in development
+		mainWindow.loadURL('app://./index.html');
+	}
 }
 
 const gotTheLock = app.requestSingleInstanceLock();
 
 //found second instance close this as prior is now open
 if (!gotTheLock) {
-  app.quit();
+	console.log('...Found Second Instance closing this');
+	app.quit();
 } else {
 	app.on('second-instance', (event, commandLine, workingDirectory) => {
+		console.log('[Trying to load second instance]', event, commandLine, workingDirectory);
 		// Someone tried to run a second instance, we should focus our window.
 		if (mainWindow) {
 			if (mainWindow.isMinimized()) {
@@ -364,12 +375,17 @@ if (!gotTheLock) {
 
 	//on ready initialise app
 	app.on('ready', async () => {
+		console.log('[App Ready]');
 		if ((isDevelopment) && (!process.env.IS_TEST)) {
+			console.log('[Setting Vue Tools]');
 			// Install Vue Devtools
 			await installVueDevtools();
 		}
 		//fix splash white bg
-		setTimeout(createWindow, 100);
+		setTimeout(() => {
+			console.log('[Creating Window]');
+			createWindow();
+		}, 100);
 		//autoUpdater.checkForUpdatesAndNotify();
 	});
 }
@@ -405,6 +421,7 @@ autoUpdater.on('update-downloaded', (info) => {
 //quit app
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
+		console.log('[Closing win]');
 		app.quit();
 	}
 });
@@ -414,6 +431,7 @@ app.on('window-all-closed', () => {
 // Some APIs can only be used after this event occurs.
 app.on('activate', () => {
 	if (mainWindow === null) {
+		console.log('[Creating win]');
 		createWindow();
 	}
 });
@@ -423,6 +441,7 @@ if (isDevelopment) {
 	if (process.platform === 'win32') {
 		process.on('message', (data) => {
 			if (data === 'graceful-exit') {
+				console.log('[graceful exit]');
 				app.quit();
 			}
 		});

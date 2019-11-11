@@ -46,17 +46,17 @@ export default {
 
 		c3.chart.internal.fn.isOrderDesc = function () {
 			const config = this.config;
-			if (this.isFunction(config.data_order)) {
+			/*if (this.isFunction(config.data_order)) {
 				return false;
-			}
+			}*/
 			return config.data_order && config.data_order.toLowerCase() === 'desc';
 		};
 
 		c3.chart.internal.fn.isOrderAsc = function () {
 			const config = this.config;
-			if (this.isFunction(config.data_order)) {
+			/*if (this.isFunction(config.data_order)) {
 				return false;
-			}
+			}*/
 			return config.data_order && config.data_order.toLowerCase() === 'asc';
 		};
 
