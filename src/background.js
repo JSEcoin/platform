@@ -102,7 +102,7 @@ function createWindow() {
 	//clean display of page loader approach
 	//prevent flicker and display of loader until DOM ready
 	mainWindow.once('ready-to-show', () => {
-		console.log('[Show Window');
+		console.log('[Show Window]');
 		mainWindow.show();
 	});
 
@@ -133,7 +133,7 @@ function createWindow() {
 		tray.setPressedImage(iconTrayPath);
 	} else {
 		console.log('[Setting Tray Ico]', iconPath);
-		tray = new Tray(iconPath);
+		tray = new Tray(trayIcon);
 	}
 
 	mainWindow.on('show', () => {
@@ -215,13 +215,6 @@ function createWindow() {
 		{
 			label: 'Hide App',
 			visible: true,
-			/*click: () => {
-				if (mainWindow.isVisible()) {
-					mainWindow.hide();
-				} else {
-					mainWindow.show();
-				}
-			},*/
 		},
 		{
 			label: 'Show App',
@@ -235,6 +228,14 @@ function createWindow() {
 			},
 		},
 	]);
+/*
+	const contextMenu = Menu.buildFromTemplate([
+		{ id: '1', label: 'one' },
+		{ id: '2', label: 'two' },
+		{ id: '3', label: 'three' },
+		{ id: '4', label: 'four' }
+	]);
+*/
 
 	contextMenu.items[arrayRef.indexOf('hide')].click = () => {
 		mainWindow.hide();
@@ -247,7 +248,6 @@ function createWindow() {
 		contextMenu.items[arrayRef.indexOf('hide')].visible = true;
 		contextMenu.items[arrayRef.indexOf('show')].visible = false;
 	};
-
 	//on tray icon click hide or show
 	tray.on('click', () => {
 		console.log('[Toogle Tray', mainWindow.isVisible());
@@ -308,6 +308,7 @@ function createWindow() {
 		contextMenu.items[arrayRef.indexOf('stopMining')].enabled = false;
 		contextMenu.items[arrayRef.indexOf('stopMining')].visible = false;
 	});
+
 	//Retrieve app version and send
 	ipcMain.on('getAppVersion', (event, arg) => {
 		event.sender.send('updateAppVersion', appVersion);
@@ -346,7 +347,7 @@ function createWindow() {
 	//set tray icon tooltip
 	tray.setToolTip('Right Click Icon for Options.');
 	//add context menu options
-	//tray.setContextMenu(contextMenu);
+	tray.setContextMenu(contextMenu);
 	//before app quit store user session to enable autologin
 
 	//mainWindow.show();
