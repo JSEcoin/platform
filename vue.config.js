@@ -135,7 +135,7 @@ module.exports = {
                 '!node_modules'
               ],
               productName: 'JSECoin',
-              appId: 'com.jsecoin.desktop',
+			  appId: 'com.jsecoin.desktop',
               dmg: {
                 contents: [
                   {
@@ -160,6 +160,7 @@ module.exports = {
                 internetEnabled: true
               },
               mac: {
+				darkModeSupport: true,
                 icon: 'src/main/mac/icon.icns'
               },
               win: {
