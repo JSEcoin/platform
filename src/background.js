@@ -119,25 +119,6 @@ function createWindow() {
 		mainWindow.show();
 	});
 
-	//force debug window
-	//mainWindow.webContents.openDevTools();
-
-	//Load App
-	if ((isDevelopment) || (process.env.IS_TEST)) {
-		// Load the url of the dev server if in development mode
-		mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-		if (!process.env.IS_TEST) {
-			console.log('[Enabling DevTools]');
-			mainWindow.webContents.openDevTools();
-		}
-	} else {
-		console.log('[init App]');
-		//protocol.registerServiceWorkerSchemes(['app']);
-		createProtocol('app');
-		// Load the index.html when not in development
-		mainWindow.loadURL('app://./index.html');
-	}
-
 	mainWindow.on('show', () => {
 		mainWindow.webContents.send('enableMiningChart'); //fix app freeze issue
 		//tray.setHighlightMode('always');
@@ -150,6 +131,12 @@ function createWindow() {
 		mainWindow.webContents.send('disableMiningChart'); //fix app freeze issue
 		//tray.setHighlightMode('never');
 	});
+	
+	mainWindow.on('closed', () => {
+		console.log('[Closing Window]');
+		mainWindow = null;
+	});
+
 	//easy targetable traymenu ref
 	const arrayRef = [
 		'title',
@@ -163,6 +150,7 @@ function createWindow() {
 		'show',
 		'quit',
 	];
+
 	//tray menu arr structure
 	const contextMenu = Menu.buildFromTemplate([
 		{
@@ -292,21 +280,6 @@ function createWindow() {
 		contextMenu.items[arrayRef.indexOf('stopMining')].visible = false;
 	});
 
-	
-	//on tray icon click hide or show
-	tray.on('click', () => {
-		console.log('[Toogle Tray', mainWindow.isVisible());
-		if (mainWindow.isVisible()) {
-			mainWindow.hide();
-			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
-			contextMenu.items[arrayRef.indexOf('show')].visible = true;
-		} else {
-			mainWindow.show();
-			contextMenu.items[arrayRef.indexOf('hide')].visible = true;
-			contextMenu.items[arrayRef.indexOf('show')].visible = false;
-		}
-	});
-
 	//Retrieve app version and send
 	ipcMain.on('getAppVersion', (event, arg) => {
 		event.sender.send('updateAppVersion', appVersion);
@@ -342,24 +315,51 @@ function createWindow() {
 			}
 		}
 	});
+	
+	//on tray icon click hide or show
+	tray.on('click', () => {
+		console.log('[Toogle Tray', mainWindow.isVisible());
+		if (mainWindow.isVisible()) {
+			mainWindow.hide();
+			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
+			contextMenu.items[arrayRef.indexOf('show')].visible = true;
+		} else {
+			mainWindow.show();
+			contextMenu.items[arrayRef.indexOf('hide')].visible = true;
+			contextMenu.items[arrayRef.indexOf('show')].visible = false;
+		}
+	});
+
 	//set tray icon tooltip
 	tray.setToolTip('Right Click Icon for Options.');
 	//add context menu options
 	tray.setContextMenu(contextMenu);
-	//before app quit store user session to enable autologin
+	
+	//force debug window
+	//mainWindow.webContents.openDevTools();
 
-	//mainWindow.show();
-	mainWindow.on('closed', () => {
-		console.log('[Closing Window]');
-		mainWindow = null;
-	});
+	//Load App
+	if ((isDevelopment) || (process.env.IS_TEST)) {
+		// Load the url of the dev server if in development mode
+		mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
+		if (!process.env.IS_TEST) {
+			console.log('[Enabling DevTools]');
+			mainWindow.webContents.openDevTools();
+		}
+	} else {
+		console.log('[init App]');
+		//protocol.registerServiceWorkerSchemes(['app']);
+		createProtocol('app');
+		// Load the index.html when not in development
+		mainWindow.loadURL('app://./index.html');
+	}
 }
 
 const gotTheLock = app.requestSingleInstanceLock();
 
 //found second instance close this as prior is now open
 if (!gotTheLock) {
-	console.log('...Found Second Instance closing');
+	console.log('...Found Second Instance closing this');
 	app.quit();
 } else {
 	app.on('second-instance', (event, commandLine, workingDirectory) => {
@@ -421,7 +421,7 @@ autoUpdater.on('update-downloaded', (info) => {
 //quit app
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
-		console.log('[closing win]');
+		console.log('[Closing win]');
 		app.quit();
 	}
 });
@@ -431,7 +431,7 @@ app.on('window-all-closed', () => {
 // Some APIs can only be used after this event occurs.
 app.on('activate', () => {
 	if (mainWindow === null) {
-		console.log('[creating win]');
+		console.log('[Creating win]');
 		createWindow();
 	}
 });
