@@ -67,8 +67,8 @@ function createWindow() {
 		break;
 		case 'darwin':
 			//iconPath = join(__static, 'app/mac-icon.png');
-			iconPath = join(__static, 'app/mac-trayIco.png');
-			iconTrayPath = join(__static, 'app/mac-trayIco.png');
+			iconPath = join(__static, 'app/mac-trayIcoTemplate.png');
+			iconTrayPath = join(__static, 'app/mac-trayIcoTemplate.png');
 			// Don't show the app in the doc
 			app.dock.hide();
 		break;
@@ -76,12 +76,14 @@ function createWindow() {
 	
 	//generate nativeImg app icon
 	const appIcon = nativeImage.createFromPath(iconPath);
+	const appIconM = nativeImage.createFromPath(iconTrayPath);
 
 	//add tray icon support
 	//const trayIcon = nativeImage.createFromPath(iconPath);
 	let tray = '';
 	if (process.platform === 'darwin') {
-		tray = new Tray(iconTrayPath);
+		console.log('[Setting Tray Ico]', iconTrayPath);
+		tray = new Tray(iconPath);
 		tray.setPressedImage(iconTrayPath);
 	} else {
 		console.log('[Setting Tray Ico]', iconPath);
