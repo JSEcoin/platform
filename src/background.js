@@ -38,6 +38,7 @@ let mainWindow;
 protocol.registerSchemesAsPrivileged([{
 	scheme: 'app', privileges: {standard: true, secure: true, supportFetchAPI: true},
 }]);
+
 /**
  * Initialise and create application Window
  */
@@ -72,9 +73,20 @@ function createWindow() {
 			app.dock.hide();
 		break;
 	}
-
+	
 	//generate nativeImg app icon
 	const appIcon = nativeImage.createFromPath(iconPath);
+
+	//add tray icon support
+	//const trayIcon = nativeImage.createFromPath(iconPath);
+	let tray = '';
+	if (process.platform === 'darwin') {
+		tray = new Tray(iconTrayPath);
+		tray.setPressedImage(iconTrayPath);
+	} else {
+		console.log('[Setting Tray Ico]', iconPath);
+		tray = new Tray(appIcon);
+	}
 
 	//Initial window options
 	mainWindow = new BrowserWindow({
@@ -103,6 +115,7 @@ function createWindow() {
 	//prevent flicker and display of loader until DOM ready
 	mainWindow.once('ready-to-show', () => {
 		console.log('[Show Window]');
+		console.log('Tray Destroyed', tray.isDestroyed());
 		mainWindow.show();
 	});
 
@@ -123,17 +136,6 @@ function createWindow() {
 		createProtocol('app');
 		// Load the index.html when not in development
 		mainWindow.loadURL('app://./index.html');
-	}
-
-	//add tray icon support
-	const trayIcon = nativeImage.createFromPath(iconPath);
-	let tray = '';
-	if (process.platform === 'darwin') {
-		tray = new Tray(iconTrayPath);
-		tray.setPressedImage(iconTrayPath);
-	} else {
-		console.log('[Setting Tray Ico]', iconPath);
-		tray = new Tray(trayIcon);
 	}
 
 	mainWindow.on('show', () => {
@@ -228,14 +230,6 @@ function createWindow() {
 			},
 		},
 	]);
-/*
-	const contextMenu = Menu.buildFromTemplate([
-		{ id: '1', label: 'one' },
-		{ id: '2', label: 'two' },
-		{ id: '3', label: 'three' },
-		{ id: '4', label: 'four' }
-	]);
-*/
 
 	contextMenu.items[arrayRef.indexOf('hide')].click = () => {
 		mainWindow.hide();
@@ -248,19 +242,6 @@ function createWindow() {
 		contextMenu.items[arrayRef.indexOf('hide')].visible = true;
 		contextMenu.items[arrayRef.indexOf('show')].visible = false;
 	};
-	//on tray icon click hide or show
-	tray.on('click', () => {
-		console.log('[Toogle Tray', mainWindow.isVisible());
-		if (mainWindow.isVisible()) {
-			mainWindow.hide();
-			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
-			contextMenu.items[arrayRef.indexOf('show')].visible = true;
-		} else {
-			mainWindow.show();
-			contextMenu.items[arrayRef.indexOf('hide')].visible = true;
-			contextMenu.items[arrayRef.indexOf('show')].visible = false;
-		}
-	});
 
 	//on close app hide it in tray
 	ipcMain.on('hideApp', (event, arg) => {
@@ -309,6 +290,21 @@ function createWindow() {
 		//hide and disable option as mining stopped
 		contextMenu.items[arrayRef.indexOf('stopMining')].enabled = false;
 		contextMenu.items[arrayRef.indexOf('stopMining')].visible = false;
+	});
+
+	
+	//on tray icon click hide or show
+	tray.on('click', () => {
+		console.log('[Toogle Tray', mainWindow.isVisible());
+		if (mainWindow.isVisible()) {
+			mainWindow.hide();
+			contextMenu.items[arrayRef.indexOf('hide')].visible = false;
+			contextMenu.items[arrayRef.indexOf('show')].visible = true;
+		} else {
+			mainWindow.show();
+			contextMenu.items[arrayRef.indexOf('hide')].visible = true;
+			contextMenu.items[arrayRef.indexOf('show')].visible = false;
+		}
 	});
 
 	//Retrieve app version and send
