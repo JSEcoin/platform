@@ -1,7 +1,7 @@
 {
     "name": "com.jsecoin.alpha",
     "displayName": "JSEcoin",
-    "version": "0.6.4",
+    "version": "0.6.5",
     "description": "JSEcoin Mobile Wallet Designed to manage and transfer JSE Tokens.",
     "main": "index.js",
     "scripts": {
