@@ -1,10 +1,10 @@
 <template>
 	<AppWrapperWidget>
 		<!-- Expired Display -->
-		<ContentWidget titleTxt="Alpha Release Expired!" :infoPanelTxt="`Alpha Release: ${$store.state.app.version}`">
+		<ContentWidget titleTxt="Beta Release Expired!" :infoPanelTxt="`Beta Release: ${$store.state.app.version}`">
 			<!-- Info -->
 			<p>
-				This alpha release {{$store.state.app.version}} - has now expired!
+				This Beta release {{$store.state.app.version}} - has now expired!
 			</p>
 			<p>
 				Please check the JSEcoin GitHub Release for the latest supported app.

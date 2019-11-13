@@ -587,7 +587,7 @@ export default {
 						type: 'resetUserState',
 					});
 					//redirect to app upgrade page.
-					self.$router.push('/upgradeApp');
+					self.$router.push('upgradeApp');
 					return;
 				}
 
