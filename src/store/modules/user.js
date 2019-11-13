@@ -149,6 +149,7 @@ const mutations = {
 	 * @param {*} state
 	 */
 	resetState(state) {
+		const self = this;
 		//stop mining
 		window.stopMining();
 		//clear
@@ -166,6 +167,8 @@ const mutations = {
 		localStorage.removeItem('userSession');
 		//prevent background mining on restart
 		localStorage.setItem('backgroundMiningEnabled', false);
+		
+		self.commit('loggedIn', false);
 	},
 	/**
 	 * Update fromNow
@@ -261,7 +264,7 @@ const mutations = {
 
 		//
 		self.commit('resetState');
-		self.commit('loggedIn', false);
+		//self.commit('loggedIn', false);
 		self.commit('stopMining');
 
 		//
