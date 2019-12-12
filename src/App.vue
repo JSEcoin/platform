@@ -409,19 +409,6 @@ export default {
 				state: 'silentMode',
 			});
 		}
-		//mobile background mining support
-		if (localStorage.getItem('mobileBackgroundMode') !== null) {
-			self.$store.commit('updateAppState', {
-				val: ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)),
-				state: 'mobileBackgroundMode',
-			});
-
-			if ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)) {
-				console.log('enabling background mode');
-				cordova.plugins.backgroundMode.enable();
-			}
-		}
-
 		//should app auto mine
 		if (localStorage.getItem('autoMine') !== null) {
 			self.$store.commit('updateAppState', {
@@ -752,30 +739,45 @@ export default {
 			}
 
 			//background mode
-			cordova.plugins.backgroundMode.on('activate', () => {
-				console.log('activate - disable web optimisations - silent', self.silentMode);
-				//timeout required or disable optimisation ignored when autosleep set
-				setTimeout(() => {
+			if (typeof (cordova.plugins.backgroundMode) !== 'undefined') {
+				cordova.plugins.backgroundMode.on('activate', () => {
+					console.log('activate - disable web optimisations - silent', self.silentMode);
+					//timeout required or disable optimisation ignored when autosleep set
+					setTimeout(() => {
+						cordova.plugins.backgroundMode.disableWebViewOptimizations();
+					}, 5000);
 					cordova.plugins.backgroundMode.disableWebViewOptimizations();
-				}, 5000);
-				cordova.plugins.backgroundMode.disableWebViewOptimizations();
-			});
-			cordova.plugins.backgroundMode.on('enable', () => {
-				cordova.plugins.backgroundMode.setDefaults({
-					title: 'JSEcoin Mobile',
-					text: 'Altcoin Miner app',
-					silent: self.silentMode,
 				});
-			});
-			cordova.plugins.backgroundMode.on('disable', () => {
-				console.log('disable');
-			});
-			cordova.plugins.backgroundMode.on('deactivate', () => {
-				console.log('deactivate');
-			});
-			cordova.plugins.backgroundMode.on('failure', () => {
-				console.log('failure');
-			});
+				cordova.plugins.backgroundMode.on('enable', () => {
+					cordova.plugins.backgroundMode.setDefaults({
+						title: 'JSEcoin Mobile',
+						text: 'Altcoin Miner app',
+						silent: self.silentMode,
+					});
+				});
+				cordova.plugins.backgroundMode.on('disable', () => {
+					console.log('disable');
+				});
+				cordova.plugins.backgroundMode.on('deactivate', () => {
+					console.log('deactivate');
+				});
+				cordova.plugins.backgroundMode.on('failure', () => {
+					console.log('failure');
+				});
+
+				//mobile background mining support
+				if (localStorage.getItem('mobileBackgroundMode') !== null) {
+					self.$store.commit('updateAppState', {
+						val: ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)),
+						state: 'mobileBackgroundMode',
+					});
+
+					if ((String(localStorage.getItem('mobileBackgroundMode')) === 'true') && (!process.env.VUE_APP_ISGOOGLE)) {
+						console.log('enabling background mode');
+						cordova.plugins.backgroundMode.enable();
+					}
+				}
+			}
 		},
 		onPause() {
 			// Handle the pause lifecycle event.
