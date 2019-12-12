@@ -28,6 +28,11 @@
         <preference name="Orientation" value="portrait" />
         <preference name="BackgroundColor" value="0xFF000000" />
         <preference name="AppendUserAgent" value="JSEMobile" />
+        <config-file parent="/*" target="AndroidManifest.xml" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+        </config-file>
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -42,10 +47,10 @@
     <plugin name="cordova-plugin-file" spec="^6.0.2" />
     <plugin name="cordova-plugin-battery-status" spec="^2.0.3" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.2" />
-    <plugin name="cordova-android-support-gradle-release" spec="^2.1.0">
-        <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
-    </plugin>
     <plugin name="cordova-plugin-inappbrowser" spec="^3.1.0" />
+    <plugin name="cordova-android-support-gradle-release" spec="^3.0.1">
+        <variable name="ANDROID_SUPPORT_VERSION" value="28.+" />
+    </plugin>
     <engine name="ios" spec="^4.5.5" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^8.1.0" />
