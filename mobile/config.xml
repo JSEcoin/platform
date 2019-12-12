@@ -43,7 +43,6 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.6.2">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
     </plugin>
-    <plugin name="cordova-plugin-background-mode" spec="^0.7.3" />
     <plugin name="cordova-plugin-file" spec="^6.0.2" />
     <plugin name="cordova-plugin-battery-status" spec="^2.0.3" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.2" />
@@ -51,6 +50,7 @@
     <plugin name="cordova-android-support-gradle-release" spec="^3.0.1">
         <variable name="ANDROID_SUPPORT_VERSION" value="28.+" />
     </plugin>
+    <plugin name="cordova-plugin-background-mode" spec="https://github.com/katzer/cordova-plugin-background-mode" />
     <engine name="ios" spec="^4.5.5" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^8.1.0" />

@@ -18,7 +18,7 @@
         "cordova-browser": "^5.0.4",
         "cordova-ios": "^4.5.5",
         "cordova-plugin-add-swift-support": "^1.7.2",
-        "cordova-plugin-background-mode": "^0.7.3",
+        "cordova-plugin-background-mode": "git+https://github.com/katzer/cordova-plugin-background-mode.git",
         "cordova-plugin-battery-status": "^2.0.3",
         "cordova-plugin-device": "^2.0.3",
         "cordova-plugin-file": "^6.0.2",
@@ -34,14 +34,14 @@
             "cordova-plugin-x-socialsharing": {
                 "ANDROID_SUPPORT_V4_VERSION": "24.1.1+"
             },
-            "cordova-plugin-background-mode": {},
             "cordova-plugin-file": {},
             "cordova-plugin-battery-status": {},
             "cordova-plugin-qrscanner": {},
             "cordova-plugin-inappbrowser": {},
             "cordova-android-support-gradle-release": {
                 "ANDROID_SUPPORT_VERSION": "28.+"
-            }
+            },
+            "cordova-plugin-background-mode": {}
         },
         "platforms": [
             "ios",
