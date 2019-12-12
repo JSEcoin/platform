@@ -14,7 +14,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "cordova-android": "^8.1.0",
-        "cordova-android-support-gradle-release": "^2.1.0",
+        "cordova-android-support-gradle-release": "^3.0.1",
         "cordova-browser": "^5.0.4",
         "cordova-ios": "^4.5.5",
         "cordova-plugin-add-swift-support": "^1.7.2",
@@ -38,10 +38,10 @@
             "cordova-plugin-file": {},
             "cordova-plugin-battery-status": {},
             "cordova-plugin-qrscanner": {},
+            "cordova-plugin-inappbrowser": {},
             "cordova-android-support-gradle-release": {
-                "ANDROID_SUPPORT_VERSION": "27.+"
-            },
-            "cordova-plugin-inappbrowser": {}
+                "ANDROID_SUPPORT_VERSION": "28.+"
+            }
         },
         "platforms": [
             "ios",
