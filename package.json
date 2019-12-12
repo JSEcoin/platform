@@ -34,7 +34,7 @@
     "mobile:android:build:github2": "npm run cordova-build-android && cd mobile && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:build:google": "cross-env ISGOOGLE=TRUE npm run mobile:build && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:build:google2": "cross-env ISGOOGLE=TRUE npm run cordova-build-android && cd mobile && cordova build --release --buildConfig=../../signAndroidBuild.json",
-    "mobile:android:dev": "npm run mobile:build && vue-cli-service cordova-serve-android",
+    "mobile:android:dev": "npm run mobile:build && npm run cordova-serve-android",
     "mobile:browser:build": "vue-cli-service cordova-build-browser",
     "mobile:browser:dev": "vue-cli-service cordova-serve-browser",
     "mobile:build": "vue-cli-service build --dest mobile/www ",
