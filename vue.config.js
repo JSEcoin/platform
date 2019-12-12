@@ -134,7 +134,7 @@ module.exports = {
               files: [
                 '!node_modules'
               ],
-              productName: 'JSECoin',
+              productName: 'JSEcoin',
 			  appId: 'com.jsecoin.desktop',
               dmg: {
                 contents: [
@@ -198,7 +198,7 @@ module.exports = {
 	},
 	pwa: {
 		cacheId: 'JSEPlatform',
-		name: 'JSECoin Ltd Official Platform',
+		name: 'JSEcoin Ltd Official Platform',
 		themeColor: '#4DBA87',
 		msTileColor: '#000000',
 		appleMobileWebAppCapable: 'yes',

@@ -1,6 +1,6 @@
 <div align="center">
 
-![JSECoin Ltd](https://jsecoin.com/docs/images/JSECoin_logo.png)
+![JSEcoin Ltd](https://jsecoin.com/docs/images/JSECoin_logo.png)
 </div>
 
 # Contributions

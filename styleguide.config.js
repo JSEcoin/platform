@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-	title: 'JSECoin Platform Guide',
+	title: 'JSEcoin Platform Guide',
 	//defaultExample: true,
 	components: './src/components/**/*.vue',
 	usageMode: 'expand',//showUsage: true,
@@ -13,7 +13,7 @@ module.exports = {
 	renderRootJsx: path.join(__dirname, 'public/docs/styleguide.root.js'),
 	ribbon: {
 		url: 'https://github.com/jsecoin',
-		text: 'JSECoin on GitHub',
+		text: 'JSEcoin on GitHub',
 	},
 	styleguideComponents: {
 		'@': path.join(__dirname, './src'),

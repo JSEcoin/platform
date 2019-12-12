@@ -15,7 +15,7 @@
 
 ## Resources
 
-- [White Paper](https://jsecoin.com/whitepaper.pdf): Introduction to JSECoin Project.
+- [White Paper](https://jsecoin.com/whitepaper.pdf): Introduction to JSEcoin Project.
 - [Platfom StyleGuide](https://jsecoin.com/styleguide): Reusable Platform Components overview.
 - [API Documentation](https://developer.jsecoin.com/API): API Reference and Sample code.
 

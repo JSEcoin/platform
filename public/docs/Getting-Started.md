@@ -21,9 +21,9 @@ It is possible to carry out SHA256 and other encryption in a standard web browse
 
 By using surplus CPU power, huge energy and cost savings could be made over traditional cryptocurrency networks.
 
-As part of this we also offer the ability for users without website to mine JSECoin. They can do this by accessing the JSECoin platform and act as miners through either a Web Browser, Desktop or Mobile App. 
+As part of this we also offer the ability for users without website to mine JSEcoin. They can do this by accessing the JSEcoin platform and act as miners through either a Web Browser, Desktop or Mobile App. 
 
-We have now Open Sourced the JSECoin Project and you can explore our code and repositorys [here](https://github.com/jsecoin).
+We have now Open Sourced the JSEcoin Project and you can explore our code and repositorys [here](https://github.com/jsecoin).
 
 
 ## The Platform
@@ -53,7 +53,7 @@ npm run web
 ```
 
 We are still heavily working on this and adding full browser support.
-In the meantime head over to [The JSECoin Platform](https://platform.jsecoin.com) to take a look at our original project.
+In the meantime head over to [The JSEcoin Platform](https://platform.jsecoin.com) to take a look at our original project.
 
 #### Mobile
 
