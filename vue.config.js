@@ -157,7 +157,7 @@ module.exports = {
                   height: 300
                 },
                 background: 'src/main/mac/background.png',
-                internetEnabled: true
+                internetEnabled: true,
               },
               mac: {
 				darkModeSupport: true,
@@ -173,11 +173,16 @@ module.exports = {
                       'x64'
                     ]
                   }
-                ]
+				]
               },
               linux: {
                 icon: 'src/main/linux'
-              }
+              },
+			  nsis: {
+				  oneClick: false,
+				  perMachine: true
+
+			  }
             },
 			removeElectronJunk: true,
 			chainWebpackRendererProcess: (config) => {

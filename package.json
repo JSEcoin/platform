@@ -1,6 +1,6 @@
 {
   "name": "jse-desktop",
-  "version": "0.6.4",
+  "version": "0.6.6",
   "private": true,
   "description": "JSE Platfrom Agnostic APP - Web/Desktop/Mobile/PWA",
   "author": {
@@ -33,6 +33,7 @@
     "mobile:android:build:github": "npm run mobile:build && cd mobile && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:build:github2": "npm run cordova-build-android && cd mobile && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:build:google": "cross-env ISGOOGLE=TRUE npm run mobile:build && cordova build --release --buildConfig=../../signAndroidBuild.json",
+    "mobile:android:build:google2": "cross-env ISGOOGLE=TRUE npm run cordova-build-android && cd mobile && cordova build --release --buildConfig=../../signAndroidBuild.json",
     "mobile:android:dev": "npm run mobile:build && vue-cli-service cordova-serve-android",
     "mobile:browser:build": "vue-cli-service cordova-build-browser",
     "mobile:browser:dev": "vue-cli-service cordova-serve-browser",
@@ -79,7 +80,7 @@
     "@vue/cli-service": "^3.12.1",
     "@vue/eslint-config-airbnb": "^4.0.1",
     "babel-eslint": "^10.0.3",
-    "electron": "^7.1.1",
+    "electron": "^7.1.4",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "prerender-spa-plugin": "^3.4.0",

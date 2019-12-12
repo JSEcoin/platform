@@ -266,7 +266,7 @@ router.beforeEach((to, from, next) => {
 	const routeName = to.name;
 	if (routeName !== 'splash') {
 		store.commit('updateAppState', {
-			val: ((routeName === 'upgradeApp') || (routeName === 'resetPassword') || (routeName === 'upgradeApp') || (routeName === 'restore2FA') || (routeName === 'register'))?`${to.path}` : '/login',
+			val: ((routeName === 'upgradeApp') || (routeName === 'resetPassword') || (routeName === 'restore2FA') || (routeName === 'register'))?`${to.path}` : '/login',
 			state: 'initLander',
 		});
 	}
