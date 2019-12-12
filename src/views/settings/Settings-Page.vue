@@ -302,7 +302,7 @@ export default {
 		},
 		mobileBackgroundMode: {
 			get() {
-				return this.$store.state.app.minBackgroundMode;
+				return this.$store.state.app.mobileBackgroundMode;
 			},
 			set(val) {
 				this.$store.commit('updateAppState', {
@@ -330,11 +330,14 @@ export default {
 					state: 'silentMode',
 				});
 				localStorage.setItem('silentMode', val);
-				cordova.plugins.backgroundMode.setDefaults({
+				/*cordova.plugins.backgroundMode.setDefaults({
 					title: 'JSEcoin Mobile',
 					text: 'Altcoin Miner app',
 					silent: val,
-				});
+				});*/
+				console.log('silent', val);
+				//cordova.plugins.backgroundMode.setDefaults({ silent: val });
+				cordova.plugins.backgroundMode.configure({ silent: val });
 			},
 		},
 		appQuitLogout: {
