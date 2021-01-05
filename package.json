@@ -48,7 +48,7 @@
   "main": "background.js",
   "dependencies": {
     "auto-launch": "^5.0.5",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "c3": "^0.6.14",
     "electron-updater": "^4.2.0",
     "intro.js": "^2.9.3",
