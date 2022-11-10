@@ -80,7 +80,7 @@
     "@vue/cli-service": "^3.12.1",
     "@vue/eslint-config-airbnb": "^4.0.1",
     "babel-eslint": "^10.0.3",
-    "electron": "^7.1.4",
+    "electron": "^18.3.7",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
     "prerender-spa-plugin": "^3.4.0",
